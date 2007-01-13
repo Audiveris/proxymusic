@@ -1,0 +1,286 @@
+//----------------------------------------------------------------------------//
+//                                                                            //
+//                            H e l l o W o r l d                             //
+//                                                                            //
+//  Copyright (C) Herve Bitteur 2000-2006. All rights reserved.               //
+//  This software is released under the terms of the GNU General Public       //
+//  License. Please contact the author at herve.bitteur@laposte.net           //
+//  to report bugs & suggestions.                                             //
+//----------------------------------------------------------------------------//
+//
+package proxymusic.util;
+
+import junit.framework.*;
+
+import proxymusic.*;
+
+import proxymusic.util.Marshalling;
+
+import java.io.*;
+import java.lang.String;
+
+/**
+ * Class <code>HelloWorld</code> mimics the usual "HelloWorld" as found in the
+ * MusicXML tutorial, by marshalling and unmarshalling a hierarchy of Java
+ * objects rooted at a ScorePartwise instance to and from a proper XML file.
+ * It does so by using the Marshalling utility class.
+ *
+ * @author Herv&eacute Bitteur
+ * @version $Id$
+ */
+public class HelloWorld
+    extends TestCase
+{
+    //~ Instance fields --------------------------------------------------------
+
+    /** Name of the XML file */
+    private final String FILE_NAME = "src/test/proxymusic/util/HelloWorld.xml";
+
+    //~ Constructors -----------------------------------------------------------
+
+    /**
+     * Creates a new HelloWorld object.
+     *
+     * @param testName name of the test
+     */
+    public HelloWorld (String testName)
+    {
+        super(testName);
+    }
+
+    //~ Methods ----------------------------------------------------------------
+
+    //------//
+    // main //
+    //------//
+    public static void main(String... args)
+    {
+        HelloWorld instance = new HelloWorld("Stand-Alone");
+        instance.testMarshal();
+        instance.testUnmarshal();
+    }
+
+    //-------------//
+    // testMarshal //
+    //-------------//
+    public void testMarshal ()
+    {
+        // Get a populated score partwise
+        ScorePartwise scorePartwise = getScorePartwise();
+
+        //  Finally, marshal the proxy
+        try {
+            File         xmlFile = new File(FILE_NAME);
+            OutputStream os = new FileOutputStream(xmlFile);
+
+            Marshalling.marshal(scorePartwise, os);
+            System.out.println("Score exported to " + xmlFile);
+            os.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //---------------//
+    // testUnmarshal //
+    //---------------//
+    public void testUnmarshal ()
+    {
+        //  Unmarshal the proxy
+        try {
+            File          xmlFile = new File(FILE_NAME);
+            InputStream   is = new FileInputStream(xmlFile);
+
+            ScorePartwise scorePartwise = Marshalling.unmarshal(is);
+            System.out.println("Score imported from " + xmlFile);
+            is.close();
+
+            // Basic dump of the java objects
+            dumpScorePartwise(scorePartwise);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //------------------//
+    // getScorePartwise //
+    //------------------//
+    private ScorePartwise getScorePartwise ()
+    {
+        // Allocate the score partwise
+        ScorePartwise scorePartwise = new ScorePartwise();
+
+        // Version
+        scorePartwise.setVersion("1.1");
+
+        // PartList
+        PartList partList = new PartList();
+        scorePartwise.setPartList(partList);
+
+        // Scorepart in partList
+        ScorePart scorePart = new ScorePart();
+        partList.getPartGroupOrScorePart()
+                .add(scorePart);
+        scorePart.setId("P1");
+
+        PartName partName = new PartName();
+        scorePart.setPartName(partName);
+        partName.setContent("Music");
+
+        // ScorePart in scorePartwise
+        Part part = new Part();
+        scorePartwise.getPart()
+                     .add(part);
+        part.setId(scorePart);
+
+        // Measure
+        Measure measure = new Measure();
+        part.getMeasure()
+            .add(measure);
+        measure.setNumber("1");
+
+        // Attributes
+        Attributes attributes = new Attributes();
+        measure.getNoteOrBackupOrForward()
+               .add(attributes);
+
+        // Divisions
+        Divisions divisions = new Divisions();
+        attributes.setDivisions(divisions);
+        divisions.setContent("1");
+
+        // Key
+        Key key = new Key();
+        attributes.setKey(key);
+
+        Fifths fifths = new Fifths();
+        key.setFifths(fifths);
+        fifths.setContent("0");
+
+        // Time
+        Time time = new Time();
+        attributes.setTime(time);
+
+        Beats beats = new Beats();
+        time.getBeatsAndBeatType()
+            .add(beats);
+        beats.setContent("4");
+
+        BeatType beatType = new BeatType();
+        time.getBeatsAndBeatType()
+            .add(beatType);
+        beatType.setContent("4");
+
+        // Clef
+        Clef clef = new Clef();
+        attributes.getClef()
+                  .add(clef);
+
+        Sign sign = new Sign();
+        clef.setSign(sign);
+        sign.setContent("G");
+
+        Line line = new Line();
+        clef.setLine(line);
+        line.setContent("2");
+
+        // Note
+        Note note = new Note();
+        measure.getNoteOrBackupOrForward()
+               .add(note);
+
+        // Pitch
+        Pitch pitch = new Pitch();
+        note.setPitch(pitch);
+
+        Step step = new Step();
+        pitch.setStep(step);
+        step.setContent("C");
+
+        Octave octave = new Octave();
+        pitch.setOctave(octave);
+        octave.setContent("4");
+
+        // Duration
+        Duration duration = new Duration();
+        note.setDuration(duration);
+        duration.setContent("4");
+
+        // Type
+        Type type = new Type();
+        note.setType(type);
+        type.setContent("whole");
+
+        return scorePartwise;
+    }
+
+    //-------------------//
+    // dumpScorePartwise //
+    //-------------------//
+    private void dumpScorePartwise (ScorePartwise scr)
+    {
+        System.out.println("version=" + scr.getVersion());
+
+        PartList  partList = scr.getPartList();
+        ScorePart scorepart = partList.getScorePart();
+        System.out.println("scorepart.id=" + scorepart.getId());
+        System.out.println(
+            "scorepart.partname=" + scorepart.getPartName().getContent());
+
+        for (Part part : scr.getPart()) {
+            System.out.println("part:");
+
+            for (Measure measure : part.getMeasure()) {
+                System.out.println("measure.number=" + measure.getNumber());
+
+                for (Object obj : measure.getNoteOrBackupOrForward()) {
+                    if (obj instanceof Attributes) {
+                        Attributes attr = (Attributes) obj;
+                        System.out.println(
+                            "attributes.divisions=" +
+                            attr.getDivisions().getContent());
+                        System.out.println(
+                            "attributes.key.fifths=" +
+                            attr.getKey().getFifths().getContent());
+
+                        for (Object o : attr.getTime()
+                                            .getBeatsAndBeatType()) {
+                            if (o instanceof Beats) {
+                                Beats beats = (Beats) o;
+                                System.out.println(
+                                    "attributes.time.beats=" +
+                                    beats.getContent());
+                            } else if (o instanceof BeatType) {
+                                BeatType beatType = (BeatType) o;
+                                System.out.println(
+                                    "attributes.time.beatType=" +
+                                    beatType.getContent());
+                            }
+                        }
+
+                        for (Clef clef : attr.getClef()) {
+                            System.out.println(
+                                "attributes.clef.sign=" +
+                                clef.getSign().getContent());
+                            System.out.println(
+                                "attributes.clef.line=" +
+                                clef.getLine().getContent());
+                        }
+                    } else if (obj instanceof Note) {
+                        Note note = (Note) obj;
+                        System.out.println(
+                            "note.pitch.step=" +
+                            note.getPitch().getStep().getContent());
+                        System.out.println(
+                            "note.pitch.octave=" +
+                            note.getPitch().getOctave().getContent());
+                        System.out.println(
+                            "note.duration=" + note.getDuration().getContent());
+                        System.out.println(
+                            "note.type=" + note.getType().getContent());
+                    }
+                }
+            }
+        }
+    }
+}
