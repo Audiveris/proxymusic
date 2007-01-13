@@ -1,0 +1,138 @@
+<!-- +=====================================================================+ -->
+<!-- |                                                                     | -->
+<!-- |                  b u i l d - e p i l o g . x m l                    | -->
+<!-- |                                                                     | -->
+<!-- | abstract: Common elements of ant build for proxymusic project       | -->
+<!-- | location: ${basedir}/src/build-common.xml                           | -->
+<!-- | author:   herve.bitteur@laposte.net                                 | -->
+<!-- |                                                                     | -->
+<!-- +=====================================================================+ -->
+
+<project name="proxymusic-epilog" basedir="..">
+    
+    <description>
+	This project gathers all the targets that are common to NetBeans and
+	Emacs/Ant building tasks.
+        $Id$
+    </description>
+    
+    <!-- Tools classpath -->
+    <path id="tools.classpath">
+	<fileset dir="${jaxb.dir}/lib" includes="*.jar"/>
+    </path>
+    
+    <!-- JAXB Java-to-Schema task definition -->
+<!--     <taskdef name="schemagen" -->
+<!-- 	     classname="com.sun.tools.jxc.SchemaGenTask"> -->
+<!-- 	<classpath> -->
+<!-- 	    <fileset dir="${jaxb.dir}/lib" includes="*.jar" /> -->
+<!-- 	</classpath> -->
+<!--     </taskdef> -->
+    
+    <!-- JAXB Schema-to-Java task definition -->
+<!--     <taskdef name="xjc" -->
+<!-- 	     classname="com.sun.tools.xjc.XJCTask"> -->
+<!-- 	<classpath> -->
+<!-- 	    <fileset dir="${jaxb.dir}/lib" includes="*.jar" /> -->
+<!-- 	</classpath> -->
+<!--     </taskdef> -->
+    
+    <!-- ===================== -->
+    <!--  - C L E A N - G E N  -->
+    <!-- ===================== -->
+    <target name="-clean-gen">
+	<!-- description="Remove all *generated* java classes." -->
+        <delete verbose="${verbose}">
+	    <fileset dir="${src.dir}/proxymusic" includes="*.java"/>
+        </delete>
+    </target>
+    
+    <!-- ============================= -->
+    <!--  - C O P Y - C O M M E N T S  -->
+    <!-- ============================= -->
+    <target name="copy-comments"
+	    depends="xjc"
+	    description="Copy the DTD comments">
+	<echo message="-- Copying DTD comments to Java classes ..." />
+
+	<mkdir dir="${build.classes.dir}" />
+        <javac
+            destdir      = "${build.classes.dir}"
+            srcdir       = "${src.dir}">
+	    <include name="**/CopyComments.java" />
+	</javac>
+	
+        <java
+	    classpath="${build.classes.dir}"
+	    classname="proxymusic.util.CopyComments">
+	    <arg path="${model.dir}/dtd"/>	    
+	    <arg path="src/main/proxymusic"/>	    
+	</java>
+
+    </target>
+
+    <!-- ========================= -->
+    <!--  - D E L E T E - C O P Y  -->
+    <!-- ========================= -->
+    <target name="-delete-copy">
+        <delete verbose="${verbose}">
+	    <fileset dir="${build.classes.dir}"
+		     includes="**/CopyComments*.class"/>
+	</delete>
+    </target>
+    
+    <!-- ===================== -->
+    <!--  P R O P E R T I E S  -->
+    <!-- ===================== -->
+    <target name="properties"
+        description="Print out all properties for the build file.">
+        <echoproperties/>
+    </target>
+    
+    <!-- ======= -->
+    <!--  X J C  -->
+    <!-- ======= -->
+    <target name="xjc"
+	description="Generate Java classes, using JABX." >
+	<echo message="-- Generating Java classes ..." />
+	<mkdir dir="${src.dir}" />
+
+	<!-- Using ant task -->
+<!-- 	<xjc schema="${model.dir}/xsd/partwise.xsd" -->
+<!-- 	     package="proxymusic" -->
+<!-- 	     destdir="${src.dir}" -->
+<!-- 	     header="false"> -->
+<!-- 	    <produces dir="${src.dir}/proxymusic" includes="*.java" /> -->
+<!-- 	    <classpath refid="tools.classpath" /> -->
+<!-- 	</xjc> -->
+
+	<!-- Not using ant task -->
+	<exec  executable="xjc.exe">
+	    <arg line="-p proxymusic"/>
+	    <arg line="-d ${src.dir}"/>
+	    <arg line="${model.dir}/xsd/partwise.xsd"/>
+	</exec>
+    </target>
+
+    <!-- ================= -->
+    <!--  - D O C - J A R  -->
+    <!-- ================= -->
+    <target name="-doc-jar">
+        <mkdir dir="${dist.dir}"/>
+        <jar basedir="${dist.javadoc.dir}"
+	     jarfile="${dist.doc.jar}">
+        </jar>
+    </target>
+
+    <!-- ================= -->
+    <!--  - S R C - J A R  -->
+    <!-- ================= -->
+    <target name="-src-jar">
+        <mkdir dir="${dist.dir}"/>
+        <jar basedir="${src.dir}"
+	     jarfile="${dist.src.jar}">
+        </jar>
+    </target>
+
+</project>
+

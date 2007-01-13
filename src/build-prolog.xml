@@ -1,0 +1,48 @@
+<!-- +=====================================================================+ -->
+<!-- |                                                                     | -->
+<!-- |                  b u i l d - p r o l o g . x m l                    | -->
+<!-- |                                                                     | -->
+<!-- | abstract: Common prolog for ant builds for proxymusic project       | -->
+<!-- | location: ${basedir}/src/build-prolog.xml                           | -->
+<!-- | author:   herve.bitteur@laposte.net                                 | -->
+<!-- |                                                                     | -->
+<!-- +=====================================================================+ -->
+
+<project name="proxymusic-prolog" basedir="..">
+    
+    <description>
+	Prolog to set up user properties for all ant builds.
+        $Id$
+    </description>
+
+    <!-- Give users first chance to override properties -->
+    <property file="${user.home}/.proxymusic/build.properties" />
+    
+    <property name="dev.dir"          location="${basedir}/src"/>
+    <property name="nb.javadoc.dir"   location="${basedir}/dist/javadoc"/>
+    
+    <!-- Give users second chance to override properties -->
+    <property file="${dev.dir}/build.properties" />
+
+    <!-- Finally, get all default property values -->
+    <property file="${dev.dir}/build.default.properties" />
+
+    <!-- ================================================================ -->
+    
+    <target name="default" 
+	    depends="jar, javadoc"
+	    description="Build the whole project."/>
+
+    <target name="-post-clean"
+            depends="-clean-gen" />    
+
+    <target name="-pre-compile"
+            depends="xjc, copy-comments, -src-jar" />
+
+    <target name="-pre-jar"
+	    depends="-delete-copy" />
+   
+    <target name="javadoc"
+	    depends="copy-comments,-javadoc-build,-doc-jar"/>
+    
+</project>
