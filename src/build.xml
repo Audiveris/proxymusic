@@ -1,0 +1,210 @@
+<!-- +=====================================================================+ -->
+<!-- |                                                                     | -->
+<!-- |                         b u i l d . x m l                           | -->
+<!-- |                                                                     | -->
+<!-- | abstract: Emacs/ant build for proxymusic project                    | -->
+<!-- | location: ${basedir}/src/build.xml                                  | -->
+<!-- | author:   herve.bitteur@laposte.net                                 | -->
+<!-- |                                                                     | -->
+<!-- +=====================================================================+ -->
+
+<project name="proxymusic" default="default" basedir="..">
+
+    <description>
+        Build, test, run and document the proxymusic project via Emacs or ant.
+        $Id$
+
+	This 'build.xml' file is located in the 'src' subdirectory to be
+	automatically picked up by Emacs, or used directly with 'ant'
+
+	Use 'ant -projecthelp' to list public defined targets.
+	Targets whose name begins with '-' are only internal targets.
+    </description>
+    
+    <!-- Prolog -->
+    <import file="${basedir}/src/build-prolog.xml"/>
+    
+    <!-- Build Test classpath -->
+    <path id="build.test.classpath">
+        <pathelement path="${build.test.classes.dir}"/>
+        <pathelement path="${build.classes.dir}"/>
+    </path>
+    
+    <!-- Run Test classpath -->
+    <path id="run.test.classpath">
+        <pathelement path="${build.test.classes.dir}"/>
+        <pathelement path="${build.classes.dir}"/>
+        <pathelement path="${dist.jar}"/>
+    </path>
+    
+    <!-- ================================================================ -->
+
+    <target name="jar" depends="compile, -pre-jar, -do-jar"
+	    description="Generate the binary archive."/>
+
+    <!-- ================================================================ -->
+    
+    <!-- =========== -->
+    <!--  C L E A N  -->
+    <!-- =========== -->
+    <target name="clean"
+	    depends="-do-clean, -post-clean"
+	    description="Clean build products."/>
+    
+    <!-- =============== -->
+    <!--  C O M P I L E  -->
+    <!-- =============== -->
+    <target name="compile"
+	    depends="-init, -pre-compile"
+	    description="Compile the java code.">
+	
+        <mkdir dir="${build.classes.dir}"/>
+        
+        <!-- baseline classes -->
+        <javac
+            debug        = "${build.compile.debug}"
+            deprecation  = "${build.compile.deprecation}"
+            destdir      = "${build.classes.dir}"
+            listfiles    = "${build.compile.listfiles}"
+            source       = "${build.compile.source}"
+            srcdir       = "${src.dir}"
+            >
+        </javac>
+    </target>
+
+    <!-- ========= -->
+    <!--  T E S T  -->
+    <!-- ========= -->
+    <target name="test" depends="-compile-tests"
+            description="Run all unit tests in batch." >
+
+	<echo message="Performing unit tests ..."/>
+
+        <delete verbose="${verbose}" dir="${build.test.results.dir}"/>
+        <mkdir dir="${build.test.results.dir}"/>
+	
+	<!-- Specific pattern -->
+     	<property name="tests" value="HelloWorld"/>
+
+	<!-- Default pattern -->
+	<property name="tests" value="*"/>
+	<echo message="Unit test pattern : ${tests}"/>
+	
+        <junit
+	    fork="on"
+	    dir="${basedir}"
+	    printsummary="yes"
+	    haltonfailure="no" >
+            <classpath refid="run.test.classpath"/>
+            <formatter type="plain" usefile="false"/>
+            <formatter type="xml"/>
+
+            <batchtest
+		fork="yes"
+		todir="${build.test.results.dir}">
+                <fileset 
+		    dir="${test.src.dir}"
+		    includes="**/${tests}.java"/>
+            </batchtest>
+        </junit>
+
+	<echo message="Generating reports of unit tests ..."/>
+	<junitreport todir="${build.test.results.dir}">
+	    <fileset dir="${build.test.results.dir}">
+		<include name="TEST-*.xml"/>
+	    </fileset>
+	    <report format="frames" todir="${build.test.results.dir}/html"/>
+	</junitreport>
+	
+    </target>
+
+    <!-- ================================================================ -->
+    
+    <!-- =========== -->
+    <!--  - I N I T  -->
+    <!-- =========== -->
+    <target name="-init">
+        <!-- Create the time stamp -->
+        <tstamp/>
+    </target>
+
+    <!-- =================== -->
+    <!--  - D O - C L E A N  -->
+    <!-- =================== -->
+    <target name="-do-clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <!-- =============== -->
+    <!--  - D O - J A R  -->
+    <!-- =============== -->
+    <target name="-do-jar" >
+        <mkdir dir="${dist.dir}"/>
+        <jar basedir="${build.classes.dir}"
+	     jarfile="${dist.jar}">
+        </jar>
+    </target>
+
+    <!-- ============================= -->
+    <!--  - J A V A D O C - B U I L D  -->
+    <!-- ============================= -->
+    <target name="-javadoc-build">
+        <mkdir dir="${dist.javadoc.dir}"/>
+        <javadoc
+	    author="${javadoc.author}"
+	    destdir="${dist.javadoc.dir}"
+	    failonerror="true"
+	    noindex="${javadoc.noindex}"
+	    nonavbar="${javadoc.nonavbar}"
+	    notree="${javadoc.notree}"
+            overview="${javadoc.overview}"
+	    private="${javadoc.private}"
+	    source="${javac.source}"
+	    splitindex="${javadoc.splitindex}"
+	    use="${javadoc.use}"
+	    useexternalfile="true"
+	    version="${javadoc.version}"
+	    windowtitle="${javadoc.windowtitle}"
+	    >
+            <classpath>
+                <path path="${javac.classpath}"/>
+            </classpath>
+            <sourcepath>
+                <pathelement location="${src.dir}"/>
+            </sourcepath>
+            <packageset dir="${src.dir}" includes="*/**"/>
+            <fileset dir="${src.dir}" includes="*.java"/>
+        </javadoc>
+    </target>
+    
+    <!-- ============================= -->
+    <!--  - C O M P I L E - T E S T S  -->
+    <!-- ============================= -->
+    <target name="-compile-tests"
+        depends="jar">
+<!--         description="Compile the unit tests." -->
+
+        <mkdir dir="${build.test.classes.dir}"/>
+        
+        <javac
+            classpathref = "build.test.classpath"
+            debug        = "${build.compile.debug}"
+            deprecation  = "${build.compile.deprecation}"
+            destdir      = "${build.test.classes.dir}"
+            listfiles    = "${build.compile.listfiles}"
+            source       = "${build.compile.source}"
+            srcdir       = "${test.src.dir}"
+            >
+            <compilerarg value="-Xlint"/>
+            <compilerarg value="-Xlint:-serial"/>
+            <compilerarg value="-Xlint:-path"/>
+        </javac>
+    </target>
+    
+    <!-- ================================================================ -->
+    
+    <!-- Load internal targets common to Emacs and NetBeans -->
+    <import file="${dev.dir}/build-epilog.xml"/>
+    
+</project>
