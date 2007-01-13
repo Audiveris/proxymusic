@@ -1,0 +1,30 @@
+<!-- +=====================================================================+ -->
+<!-- |                                                                     | -->
+<!-- |                         b u i l d . x m l                           | -->
+<!-- |                                                                     | -->
+<!-- | abstract: Netbeans/ant build for proxymusic project                 | -->
+<!-- | location: ${basedir}/build.xml                                      | -->
+<!-- | author:   herve.bitteur@laposte.net                                 | -->
+<!-- |                                                                     | -->
+<!-- +=====================================================================+ -->
+
+<project name="proxymusic" default="default" basedir=".">
+    
+    <description>
+        Build, test, run and document the proxymusic project via NetBeans.
+        $Id$
+	
+	This build.xml file is meant to be used from NetBeans.
+	Use src/build.xml file instead for a direct 'ant' use.
+    </description>
+    
+    <!-- Prolog -->
+    <import file="${basedir}/src/build-prolog.xml"/>
+
+    <!-- Load NetBeans implementation targets -->
+    <import file="nbproject/build-impl.xml"/>
+    
+    <!-- Load internal targets common to Emacs and NetBeans -->
+    <import file="${dev.dir}/build-epilog.xml"/>
+    
+</project>
