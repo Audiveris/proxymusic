@@ -1,0 +1,6 @@
+.cvsignore
+build
+build.xml
+catalog.xml
+dist
+nbproject
