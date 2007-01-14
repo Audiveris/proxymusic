@@ -2,7 +2,7 @@
 //                                                                            //
 //                            H e l l o W o r l d                             //
 //                                                                            //
-//  Copyright (C) Herve Bitteur 2000-2006. All rights reserved.               //
+//  Copyright (C) Herve Bitteur 2007. All rights reserved.                    //
 //  This software is released under the terms of the GNU General Public       //
 //  License. Please contact the author at herve.bitteur@laposte.net           //
 //  to report bugs & suggestions.                                             //
@@ -33,7 +33,7 @@ public class HelloWorld
 {
     //~ Instance fields --------------------------------------------------------
 
-    /** Name of the XML file */
+    /** Name of the temporary XML file */
     private final String FILE_NAME = "src/test/proxymusic/util/HelloWorld.xml";
 
     //~ Constructors -----------------------------------------------------------
@@ -53,7 +53,12 @@ public class HelloWorld
     //------//
     // main //
     //------//
-    public static void main(String... args)
+    /**
+     * Method for stand-alone execution (outside of Junit environment)
+     *
+     * @param notUsed
+     */
+    public static void main(String... notUsed)
     {
         HelloWorld instance = new HelloWorld("Stand-Alone");
         instance.testMarshal();
@@ -63,6 +68,9 @@ public class HelloWorld
     //-------------//
     // testMarshal //
     //-------------//
+    /**
+     * Test the marshalling of a ScorePartwise instance
+     */
     public void testMarshal ()
     {
         // Get a populated score partwise
@@ -84,6 +92,10 @@ public class HelloWorld
     //---------------//
     // testUnmarshal //
     //---------------//
+    /**
+     * Test the unmarshalling of a ScorePartwise instance from the XML file
+     * written by the testmarshal() method.
+     */
     public void testUnmarshal ()
     {
         //  Unmarshal the proxy
@@ -105,6 +117,12 @@ public class HelloWorld
     //------------------//
     // getScorePartwise //
     //------------------//
+    /**
+     * Build a ScorePartwise instance from scratch, using the same musical
+     * information as provided on MusicXML site through the HelloWorld example.
+     *
+     * @return the populated instance
+     */
     private ScorePartwise getScorePartwise ()
     {
         // Allocate the score partwise
@@ -217,6 +235,11 @@ public class HelloWorld
     //-------------------//
     // dumpScorePartwise //
     //-------------------//
+    /**
+     * A very simplistic dump of a ScorePartwise instance
+     *
+     * @param scr the instance to dump
+     */
     private void dumpScorePartwise (ScorePartwise scr)
     {
         System.out.println("version=" + scr.getVersion());
