@@ -55,7 +55,7 @@
     <!--  C O M P I L E  -->
     <!-- =============== -->
     <target name="compile"
-	    depends="-init, -pre-compile"
+	    depends="init, -pre-compile"
 	    description="Compile the java code.">
 	
         <mkdir dir="${build.classes.dir}"/>
@@ -120,10 +120,10 @@
 
     <!-- ================================================================ -->
     
-    <!-- =========== -->
-    <!--  - I N I T  -->
-    <!-- =========== -->
-    <target name="-init">
+    <!-- ========= -->
+    <!--  I N I T  -->
+    <!-- ========= -->
+    <target name="init">
         <!-- Create the time stamp -->
         <tstamp/>
     </target>
