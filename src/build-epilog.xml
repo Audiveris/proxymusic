@@ -108,6 +108,7 @@
 
 	<!-- Not using ant task -->
 	<exec  executable="xjc.exe">
+	    <arg line="-no-header"/>
 	    <arg line="-p proxymusic"/>
 	    <arg line="-d ${src.dir}"/>
 	    <arg line="${model.dir}/xsd/partwise.xsd"/>
