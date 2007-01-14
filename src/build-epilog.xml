@@ -133,6 +133,47 @@
 	     jarfile="${dist.src.jar}">
         </jar>
     </target>
+    
+    <!-- ========= -->
+    <!--  P A C K  -->
+    <!-- ========= -->
+    <target name="pack"
+	    depends="init"
+	    description="Pack up the whole project">
+	
+        <delete verbose="${verbose}">
+	    <fileset file="${pack.zip}"/>
+        </delete>
+
+	<zip destfile="${pack.zip}"
+	     excludes="${dist.excludes}">
+	    <fileset dir="${basedir}" includes="build.netbeans.xml" />
+	    <fileset dir="${basedir}" includes="model*/**" />
+	    <fileset dir="${basedir}" includes="src/**" />
+	    <fileset dir="${basedir}" includes="www/**" />
+	    <fileset dir="${basedir}" includes="build/**" />
+	    <fileset dir="${basedir}" includes="dist/**" />
+	</zip>
+
+    </target>
+    
+    <!-- ========= -->
+    <!--  C O R E  -->
+    <!-- ========= -->
+    <target name="core"
+	    depends="init"
+	    description="Pack only the core of the project">
+
+	<zip destfile="${core.zip}"
+	     excludes="${dist.excludes}">
+	    <fileset dir="${basedir}" includes="build.netbeans.xml" />
+	    <fileset dir="${basedir}" includes="model*/**" />
+	    <fileset dir="${basedir}" includes="src/**"
+		     excludes="src/main/proxymusic/*.java" />
+	    <fileset dir="${basedir}" includes="www/**" />
+	</zip>
+
+    </target>
 
 </project>
 
