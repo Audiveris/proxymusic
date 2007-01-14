@@ -1,45 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<head>
-<title>Project Home Page</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-</head>
+    <head>
+	<!-- $Id$ -->
+	<meta http-equiv="CONTENT-TYPE" content="text/html";/>
+	<title>ProxyMusic Home Page</title>
+	<meta name="author" content="Herv&eacute; Bitteur"/>
+	<!-- The following links are meant to be solved on my local PC --><!-- The java.net site uses its own style sheets -->
+	<link rel="stylesheet" type="text/css" href="../../branding/css/tigris.css"/>
+	<link rel="stylesheet" type="text/css" href="../../branding/css/inst.css"/>
+	<script>
+	    function getCVSDate(s)
+	    {
+	    var as = s.split(" ");
+	    var d = new Date(as[3]);
+	    var months = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+	    return d.getDate() + "-" + months[d.getMonth()] + "-" + d.getFullYear()
+	    }
+	</script>
+    </head>
+    
+    <body>
+	<div class="app" style="text-align: justify;">
+	    <h1 style="text-align: center;">ProxyMusic</h1>
+	    <i>Author:</i> <a
+	    href="mailto://herve.bitteur@laposte.net">Herv&eacute
+	    Bitteur</a><br/>
+	    <i>Updated:</i>
+		<script type="text/javascript">
+		    document.write(getCVSDate("$Id$"));
+		</script>
+	    <div class="donemessage">ProxyMusic was released on
+		14-Jan-2007, under the GPL v2 license.
+	    </div>
+	    
+	    <h3>Project Goals</h3>
+	    
+	    <p> <b>ProxyMusic</b> provides a binding between <b>Java
+		objects</b> in memory and an XML file using
+		the <b>MusicXML V1.1</b> format. It should provide an
+		easy way for Java programs dealing with music
+		information (such as score scanners, music editors,
+		music sequencers, etc) to read or write files in
+		MusicXML.</p>
+	    <p> The binding is made available for any Java application
+		as a dedicated jar file.</p>
+	    
+	    <h3>Requirements</h3>
 
-<body bgcolor="#FFFFFF" text="#000000">
-<h1>Default project home page </h1>
-<p>Congratulations on your new java.net project! </p>
-<p>This page is the home page for your new project. This content is appearing 
-  because you have selected the option <b>Use project index.html</b>. To edit 
-  the information displayed on this page, just use CVS to check out your project's 
-  CVS repository and edit index.html in directory www. You can get more information 
-  on how to set-up your local CVS client, click on <b>Version Control</b> on the 
-  left nav bar. </p>
-<p>If you don't want to use CVS to manage your home page, click on the <b>Edit 
-  project</b> link on this page and unclick the option <b>Use project index.html</b>. 
-  Your project home page contents will be generated from the <b>Edit project</b> 
-  field <b>Description</b>. Edit the text on that field to change your home page 
-  contents. Click on <b>Submit changes</b> to save your edits. </p>
-<p>If you are looking for <a href="https://java-net.dev.java.net/ProjectPages.html#templates">sample 
-  home page templates</a>, check out the <a href="https://java-net.dev.java.net/ProjectPages.html">java.net 
-  Project Starter Kit</a>. Copy either of the templates into your project's html 
-  to get started on your project's home page. </p>
-<p>You can find lots of helpful information in the Starter Kit to get your project 
-  started. Some of the things you will find in there include:</p>
-<ul>
-  <li>Hints on how to <a href="https://java-net.dev.java.net/ProjectPages.html#pages">set-up 
-    your project's</a> home page</li>
-  <li>Ideas on how to <a href="https://java-net.dev.java.net/ProjectPages.html#publicity">publicize 
-    your project</a> including RSS feeds</li>
-  <li>Hints on <a href="https://java-net.dev.java.net/pagedesign.html">project 
-    page HTML</a></li>
-  <li>Setting up project <a href="https://java-net.dev.java.net/ProjectPages.html#wiki">wiki 
-    pages</a></li>
-  <li>And places to go if <a href="https://java-net.dev.java.net/ProjectPages.html#feedback">you 
-    have questions</a>.</li>
-</ul>
-<p>Remember that you will attract more new members and your project team will 
-  work more effectively if you, as the project owner, supply sufficient information 
-  about your project for visitors to your project space. Good luck with your new 
-  project! </p>
-</body>
+	    <p> <b>JAXB2</b> is needed at run-time to perform
+		marshalling or unmarshalling. If you are using the
+		latest Java version (<b>Java 6</b> as recently
+		released), JAXB2 is already included in the Java
+		distribution. If you are using Java 5, you will need
+		to download a separate JAXB2 implementation (such as
+		2.0.4 or 2.1), from <a
+		href="https://jaxb.dev.java.net/">Jaxb web
+		site</a>. And since generics are used by the binding,
+		you should forget about Java 1.4.</p>
+
+	    <p> If you want to rebuild the binding, besides JAXB2,
+		you'll need a tool to generate an XML schema from the
+		original DTD files. JAXB2 is not currently able to do
+		the job, but you can use a small utility
+		called <b>dtd2xs</b>, free for non-commercial use,
+		that is available on <a
+		href="http://www.syntext.com/products/index.htm">Syntext
+		site</a>.
+	    
+	    <h3>Download</h3>
+	    
+	    <div class="filebrowse">
+		<ul>
+		    <li class="leafnode"> The <a
+			href="https://proxymusic.dev.java.net/servlets/ProjectDocumentList?folderID=0">
+			download area</a>&nbsp;contains the latest
+			stable release. On this area you'll find:</li>
+		    <ul>
+			<li> The binding jar
+			file <b>proxymusic-1.1.jar</b>. This is the
+			only file you actually need to just use the
+			binding.</li>
+			<li> If you are using an IDE such as NetBeans,
+			you should be interested in feeding the IDE
+			with two related archives: the
+			javadoc <b>proxymusic-1.1-doc.jar</b> and the
+			source <b>proxymusic-1.1-src.jar</b>.</li>
+			<li>If you want to regenerate the binding (for
+			version V1.1 of MusicXML or for another one),
+			here is the core
+			material <b>proxymusic-core.zip</b>. Or if you
+			prefer everything baked, get
+			<b>proxymusic-pack.zip</b>.</li>
+		    </ul>
+		    <li class="leafnode"> The <a
+			href="https://proxymusic.dev.java.net/source/browse/proxymusic/">
+			CVS repository</a> can be accessed to retrieve
+			any version of all software pieces.</li>
+		</ul>
+	    </div>
+
+	    <h3>Documentation</h3>
+
+		<div  class="filebrowse" >
+		    
+		    <dl>
+			<dt><b>Use</b> of the binding</dt>
+			<dd class="leaf">A small <a
+			    href="https://proxymusic.dev.java.net/source/browse/proxymusic/src/test/proxymusic/util/HelloWorld.java?rev=HEAD&view=auto&content-type=text/vnd.viewcvs-markup">
+			    example</a>&nbsp;is available in the Test
+			    repository, performing marshalling and
+			    unmarshalling of the classical HelloWorld
+			    as available in the MusicXML
+			    tutorial.</dd>
+			<dt><b> Regeneration</b> of the binding</dt>
+			<dd class="leaf">A detailed <a
+			    href="recipy.html">recipy</a> is provided,
+			    that describes the proper sequence of
+			    steps, manual and automatic. Note that the
+			    regeneration of the binding is not a
+			    mandatory task as the jar file from the
+			    download area can be used as is.
+			    <p> In short, the binding is generated
+				from the original set of DTD files
+				found on <a
+				href="http://www.recordare.com/xml.html">Recordare
+				web site</a>. A few manual
+				modifications have to be done in the
+				DTD files as described in the recipy,
+				and the rest of the generation is
+				performed automatically via an 'ant'
+				build file (or via a NetBeans
+				project). The resulting 300+ Java
+				files use the JAXB2 binding for
+				marshalling and unmarshalling. The
+				comments found in the original DTD
+				files are also copied into the proper
+				Java files.</p>
+			</dd>
+		    </ul>
+		</div>
+		
+	    <h3>Current Status</h3>
+
+	    <p>	ProxyMusic is available today in version 1.1, since it
+		uses the MusicXML version 1.1. </p>
+	    <p>	When the new MusicXML version (V1.2) gets published,
+		one can expect that a proxymusic version 1.2 will be
+		easily generated.</p>
+	    
+	    <h3>Foreseen Contributions</h3>
+
+	    <p>	This work started as a companion of <a
+		href="https://audiveris.dev.java.net">Audiveris</a>
+		project, for which I needed a suitable binding to
+		write MusicXML. After a few discussions on MusicXML
+		forum, especially the help provided by Dominik
+		Wei-Fieg,&nbsp;I developed this binding, documented
+		the process, and made the result available as a
+		project separate from Audiveris.</p>
+
+	    <p>	Through Audiveris, I use this binding for marshalling
+		only, and my experience as an end-user is
+		satisfactory. The unmarshalling aspect has not been
+		thoroughly tested and would benefit&nbsp;from
+		another&nbsp;project interested in unmarshalling
+		MusicXML files to Java.</p>
+	</div>
+    </body>
 </html>
-
