@@ -29,21 +29,30 @@
 		<script type="text/javascript">
 		    document.write(getCVSDate("$Id$"));
 		</script>
-	    <div class="donemessage">ProxyMusic was released on
-		14-Jan-2007, under the GPL v2 license.
+	    <div class="donemessage">A new version of ProxyMusic has
+		been released on 10-Apr-2007, to support MusicXML
+		V2.0beta.
 	    </div>
 	    
 	    <h3>Project Goals</h3>
 	    
 	    <p> <b>ProxyMusic</b> provides a binding between <b>Java
 		objects</b> in memory and an XML file using
-		the <b>MusicXML V1.1</b> format. It should provide an
-		easy way for Java programs dealing with music
+		the <b>MusicXML</b> format. It should provide an easy
+		way for Java programs dealing with music symbolic
 		information (such as score scanners, music editors,
 		music sequencers, etc) to read or write files in
-		MusicXML.</p>
+		MusicXML. It is released under the GNU Public License
+		version 2.</p>
 	    <p> The binding is made available for any Java application
 		as a dedicated jar file.</p>
+	    <p> There is one jar file per supported version of
+		MusicXML:
+		<ul>
+		    <li>V1.1</li>
+		    <li>V2.0beta</li>
+		</ul>
+	    </p>
 	    
 	    <h3>Requirements</h3>
 
@@ -58,12 +67,12 @@
 		site</a>. And since generics are used by the binding,
 		you should forget about Java 1.4.</p>
 
-	    <p> If you want to rebuild the binding, besides JAXB2,
-		you'll need a tool to generate an XML schema from the
-		original DTD files. JAXB2 is not currently able to do
-		the job, but you can use a small utility
-		called <b>dtd2xs</b>, free for non-commercial use,
-		that is available on <a
+	    <p> If ever you want to rebuild the binding by yourself,
+		besides JAXB2, you'll need a tool to generate an XML
+		schema from the original DTD files. JAXB2 is not
+		currently able to do the job, but you can use a small
+		utility called <b>dtd2xs</b>, free for non-commercial
+		use, that is available on <a
 		href="http://www.syntext.com/products/index.htm">Syntext
 		site</a>.
 	    
@@ -74,24 +83,21 @@
 		    <li class="leafnode"> The <a
 			href="https://proxymusic.dev.java.net/servlets/ProjectDocumentList?folderID=0">
 			download area</a>&nbsp;contains the latest
-			stable release. On this area you'll find:</li>
-		    <ul>
-			<li> The binding jar
-			file <b>proxymusic-1.1.jar</b>. This is the
-			only file you actually need to just use the
-			binding.</li>
-			<li> If you are using an IDE such as NetBeans,
-			you should be interested in feeding the IDE
-			with two related archives: the
-			javadoc <b>proxymusic-1.1-doc.jar</b> and the
-			source <b>proxymusic-1.1-src.jar</b>.</li>
-			<li>If you want to regenerate the binding (for
-			version V1.1 of MusicXML or for another one),
-			here is the core
-			material <b>proxymusic-core.zip</b>. Or if you
-			prefer everything baked, get
-			<b>proxymusic-pack.zip</b>.</li>
-		    </ul>
+			stable releases. On this area you'll
+			find:</li>
+
+		    <ul><li>
+			<table>
+			    <tr><th>proxymusic-1.1-doc.jar</th><td>The JavaDoc archive of the generated Java classes</td></tr>
+			    <tr><th>proxymusic-1.1-src.jar</th><td>The source of generated Java classes</td></tr>
+			    <tr><th>proxymusic-1.1.jar</th><td>The binding package (the only one you really need)</td></tr>
+			    <tr><th>proxymusic-2.0-doc.jar</th><td>Idem for V2.0</td></tr>
+			    <tr><th>proxymusic-2.0-src.jar</th><td>Idem for V2.0</td></tr>
+			    <tr><th>proxymusic-2.0.jar</th><td>Idem for V2.0</td></tr>
+			    <tr><th>proxymusic-core.zip</th><td>The material to regenerate the binding for the various versions</td></tr>
+			    <tr><th>proxymusic-pack.zip</th><td>The whole project with all the baked files</td></tr>
+			</table>
+			</li></ul>
 		    <li class="leafnode"> The <a
 			href="https://proxymusic.dev.java.net/source/browse/proxymusic/">
 			CVS repository</a> can be accessed to retrieve
@@ -105,30 +111,38 @@
 		    
 		    <dl>
 			<dt><b>Use</b> of the binding</dt>
-			<dd class="leaf">A small <a
-			    href="https://proxymusic.dev.java.net/source/browse/proxymusic/src/test/proxymusic/util/HelloWorld.java?rev=HEAD&view=auto&content-type=text/vnd.viewcvs-markup">
-			    example</a>&nbsp;is available in the Test
-			    repository, performing marshalling and
-			    unmarshalling of the classical HelloWorld
-			    as available in the MusicXML
-			    tutorial.</dd>
+			<dd class="leaf">A small example is available
+			    in two versions in
+			    the <b>proxymusic.examples</b> package
+			    (there are slight differences implied by
+			    V1.1 and V2.0). It performs marshalling
+			    and unmarshalling of the classical
+			    HelloWorld as available in the MusicXML
+			    tutorial.
+			    <p>A utility class
+				named <b>proxymusic.util.Marshalling</b>
+				is available to simplify the handling
+				of both marshalling and
+				unmarshalling.</p></dd>
 			<dt><b> Regeneration</b> of the binding</dt>
 			<dd class="leaf">A detailed <a
 			    href="recipy.html">recipy</a> is provided,
 			    that describes the proper sequence of
-			    steps, manual and automatic. Note that the
-			    regeneration of the binding is not a
-			    mandatory task as the jar file from the
-			    download area can be used as is.
+			    steps (all the steps are now performed
+			    automatically). Note that the regeneration
+			    of the binding is not a mandatory task as
+			    the jar file from the download area can be
+			    used as is.
 			    <p> In short, the binding is generated
 				from the original set of DTD files
 				found on <a
 				href="http://www.recordare.com/xml.html">Recordare
-				web site</a>. A few manual
-				modifications have to be done in the
-				DTD files as described in the recipy,
-				and the rest of the generation is
-				performed automatically via an 'ant'
+				web site</a>. A few modifications are
+				performed on the DTD files, the
+				corresponding schema is generated and
+				corrected and finally the various Java
+				classes are generated. These steps are
+				carried out automatically via an 'ant'
 				build file (or via a NetBeans
 				project). The resulting 300+ Java
 				files use the JAXB2 binding for
@@ -142,11 +156,14 @@
 		
 	    <h3>Current Status</h3>
 
-	    <p>	ProxyMusic is available today in version 1.1, since it
-		uses the MusicXML version 1.1. </p>
-	    <p>	When the new MusicXML version (V1.2) gets published,
-		one can expect that a proxymusic version 1.2 will be
-		easily generated.</p>
+	    <p> ProxyMusic is available today in version 1.1 and
+		version 2.0 beta to support the corresponding versions
+		of MusicXML.</p>
+	    <p> The modifications needed for MusicXML V2.0beta have
+		also been the opportunity to implement a more
+		automated way for generating the various artifacts of
+		the binding, which have been retrofitted in V1.1 as
+		well.</p>
 	    
 	    <h3>Foreseen Contributions</h3>
 
