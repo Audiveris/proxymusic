@@ -33,8 +33,32 @@ public class Marshalling
 {
     //~ Static fields/initializers ---------------------------------------------
 
-    /** Un/marshalling context for use with JAXB */
+    /** Containing package */
+    private static final Package thisPackage = Marshalling.class.getPackage();
+
+    /** Tool name, example: "ProxyMusic" */
+    private static final String specificationTitle = thisPackage.getSpecificationTitle();
+
+    /** Tool version, example: "1.1", "2.0"*/
+    private static final String specificationVersion = thisPackage.getSpecificationVersion();
+
+    /** Tool build,, example "1.1 a", "2.0 beta" */
+    private static final String implementationVersion = thisPackage.getImplementationVersion();
+
+    /** [Un]marshalling context for use with JAXB */
     private static JAXBContext jaxbContext;
+
+    /** The xml document statement */
+    private static final String XML_LINE = "<?xml version=\"1.0\"" +
+                                           " encoding=\"UTF-8\"" +
+                                           " standalone=\"no\"?>\n";
+
+    /** The DOCTYPE statement for xml */
+    private static final String DOCTYPE_LINE = "<!DOCTYPE score-partwise PUBLIC" +
+                                               " \"-//Recordare//DTD MusicXML " +
+                                               specificationVersion +
+                                               " Partwise//EN\"" +
+                                               " \"http://www.musicxml.org/dtds/partwise.dtd\">";
 
     //~ Constructors -----------------------------------------------------------
 
@@ -65,32 +89,111 @@ public class Marshalling
         return jaxbContext;
     }
 
-    //---------//
-    // Marshal //
-    //---------//
+    //--------------------//
+    // getMusicXmlVersion //
+    //--------------------//
     /**
-     * Marshal the hierarchy rooted at provided ScorePartwise instance to an
-     * OutputStream
+     * Report the version of MusicXML being used (e.g. "2.0")
      *
-     * @param scorePartwise the root element
-     * @param os the output stream
-     * @exception JAXBException if marshalling goes wrong
+     * @return the MusicXML version being used
      */
-    public static void marshal (ScorePartwise scorePartwise,
-                                OutputStream  os)
-        throws JAXBException
+    public static String getMusicXmlVersion ()
     {
-        Marshaller m = getContext()
-                           .createMarshaller();
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        m.marshal(scorePartwise, os);
+        return specificationVersion;
     }
 
     //---------//
     // marshal //
     //---------//
     /**
-     * Unmarshal a ScorePartwise instance from an InputStream
+     * Marshal the hierarchy rooted at provided ScorePartwise instance to an
+     * OutputStream, ProxyMusic being referenced as an encoder.
+     * (The output stream is not closed by this method)
+     *
+     * @param scorePartwise the root element
+     * @param os the output stream
+     * @exception JAXBException if marshalling goes wrong
+     * @exception IOException for output error
+     */
+    public static void marshal (ScorePartwise scorePartwise,
+                                OutputStream  os)
+        throws JAXBException, IOException
+    {
+        marshal(scorePartwise, os, true);
+    }
+
+    //---------//
+    // marshal //
+    //---------//
+    /**
+     * Marshal the hierarchy rooted at provided ScorePartwise instance to an
+     * OutputStream
+     * (The output stream is not closed by this method)
+     *
+     * @param scorePartwise the root element
+     * @param os the output stream
+     * @param injectSignature false if ProxyMusic encoder must not be referenced
+     * @exception JAXBException if marshalling goes wrong
+     * @exception IOException for output error
+     */
+    public static void marshal (ScorePartwise scorePartwise,
+                                OutputStream  os,
+                                boolean       injectSignature)
+        throws JAXBException, IOException
+    {
+        // Inject version
+        if (specificationVersion != null) {
+            scorePartwise.setVersion(specificationVersion);
+        }
+
+        // Inject signature if so desired
+        if (injectSignature &&
+            (specificationTitle != null) &&
+            (implementationVersion != null)) {
+            // Identification
+            Identification identification = scorePartwise.getIdentification();
+
+            if (identification == null) {
+                identification = new Identification();
+                scorePartwise.setIdentification(identification);
+            }
+
+            // Encoding
+            Encoding encoding = identification.getEncoding();
+
+            if (encoding == null) {
+                encoding = new Encoding();
+                identification.setEncoding(encoding);
+            }
+
+            // [Encoding]/Software
+            Software software = new Software();
+            encoding.getEncodingDateOrEncoderOrSoftware()
+                    .add(software);
+            software.setContent(
+                specificationTitle + " " + implementationVersion);
+        }
+
+        // Take care of first statements
+        os.write(XML_LINE.getBytes());
+        os.write(DOCTYPE_LINE.getBytes());
+
+        // Then the object to marshal
+        Marshaller m = getContext()
+                           .createMarshaller();
+        m.setProperty(Marshaller.JAXB_FRAGMENT, true);
+        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        m.marshal(scorePartwise, os);
+
+        // We don't close os
+    }
+
+    //-----------//
+    // unmarshal //
+    //-----------//
+    /**
+     * Unmarshal a ScorePartwise instance from an InputStream.
+     * (The input stream is not closed by this method)
      *
      * @param is the input stream
      * @return the scorePartwise root element
@@ -101,6 +204,7 @@ public class Marshalling
     {
         Unmarshaller um = getContext()
                               .createUnmarshaller();
+        um.setSchema(null);
 
         return (ScorePartwise) um.unmarshal(is);
     }

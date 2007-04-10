@@ -12,37 +12,108 @@
     
     <description>
 	Prolog to set up user properties for all ant builds.
+	Targets that override normal NetBeans targets must be defined here
+	
         $Id$
     </description>
+
+    <!-- =================================================================== -->
 
     <!-- Give users first chance to override properties -->
     <property file="${user.home}/.proxymusic/build.properties" />
     
-    <property name="dev.dir"          location="${basedir}/src"/>
-    <property name="nb.javadoc.dir"   location="${basedir}/dist/javadoc"/>
-    
     <!-- Give users second chance to override properties -->
-    <property file="${dev.dir}/build.properties" />
+    <property file="${basedir}/src/build.properties" />
 
     <!-- Finally, get all default property values -->
-    <property file="${dev.dir}/build.default.properties" />
+    <property file="${basedir}/src/build.default.properties" />
 
-    <!-- ================================================================ -->
+    <!-- Proper name of the HelloWorld class that fits desired version -->
+    <property name="hello.name" value="HelloWorld_${spec.java.version}" />
+
+    <!-- =================================================================== -->
     
     <target name="default" 
 	    depends="jar, javadoc"
-	    description="Build the whole project."/>
+	    description="Build the whole project (jar + javadoc)"/>
+
+    <target name="hello"
+	    depends="proxymusic-epilog.hello"
+	    description="Test the proper version of HelloWorld"/>
 
     <target name="-post-clean"
-            depends="-clean-gen" />    
+            depends="-clean-gen-java" />    
+
+    <target name="get-schema"
+	    depends="proxymusic-epilog.get-schema" />
 
     <target name="-pre-compile"
-            depends="xjc, copy-comments, -src-jar" />
+            depends="-clean-build, get-schema, -clean-gen-java, xjc, -copy-comments, -src-jar" />
 
     <target name="-pre-jar"
 	    depends="-delete-copy" />
    
     <target name="javadoc"
-	    depends="copy-comments,-javadoc-build,-doc-jar"/>
+	    depends="-copy-comments,-javadoc-build,-doc-jar"
+	    description="Generate the javadoc archive" />
+
+    <!-- =================================================================== -->
+
+    <!-- =================== -->
+    <!--  - P R E - I N I T  -->
+    <!-- =================== -->
+    <target name="-pre-init">
+        <condition property="have.hello">
+            <or>
+                <available file="${src.dir}/proxymusic/examples/${hello.name}.java"/>
+            </or>
+        </condition>
+    </target>
+    
+    <!-- =============== -->
+    <!--  C O M P I L E  -->
+    <!-- =============== -->
+    <target name="compile"
+	    depends="init, -pre-compile">
+	
+        <mkdir dir="${build.classes.dir}"/>
+        
+        <!-- baseline classes -->
+        <javac
+            debug        = "${build.compile.debug}"
+            deprecation  = "${build.compile.deprecation}"
+            destdir      = "${build.classes.dir}"
+            listfiles    = "${build.compile.listfiles}"
+            source       = "${build.compile.source}"
+            srcdir       = "${src.dir}"
+	    excludes     = "proxymusic/examples/*.java"
+            >
+        </javac>
+    </target>
+    
+    <!-- ================================================= -->
+    <!--  - D O - J A R - W I T H O U T - M A N I F E S T  -->
+    <!-- ================================================= -->
+    <target name="-do-jar-without-manifest">
+	<!-- void -->
+    </target>
+
+    <!-- =========================================== -->
+    <!--  - D O - J A R - W I T H - M A N I F E S T  -->
+    <!-- =========================================== -->
+    <target name="-do-jar-with-manifest">
+        <mkdir dir="${dist.dir}"/>
+        <jar basedir="${build.classes.dir}"
+	     jarfile="${dist.jar}">
+            <manifest>
+                <attribute name="Specification-Title"
+                           value="${spec.title}"/>
+                <attribute name="Specification-Version"
+                           value="${spec.version}"/>
+                <attribute name="Implementation-Version"
+                           value="${impl.version}"/>
+            </manifest>
+        </jar>
+    </target>
     
 </project>

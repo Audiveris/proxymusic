@@ -13,13 +13,14 @@
     <description>
 	This project gathers all the targets that are common to NetBeans and
 	Emacs/Ant building tasks.
+	
         $Id$
     </description>
     
     <!-- Tools classpath -->
-    <path id="tools.classpath">
-	<fileset dir="${jaxb.dir}/lib" includes="*.jar"/>
-    </path>
+<!--     <path id="tools.classpath"> -->
+<!-- 	<fileset dir="${jaxb.dir}/lib" includes="*.jar"/> -->
+<!--     </path> -->
     
     <!-- JAXB Java-to-Schema task definition -->
 <!--     <taskdef name="schemagen" -->
@@ -36,23 +37,240 @@
 <!-- 	    <fileset dir="${jaxb.dir}/lib" includes="*.jar" /> -->
 <!-- 	</classpath> -->
 <!--     </taskdef> -->
+
+    <target name="get-schema"
+	    depends="-extract-dtds, -simplify-dtds, -gen-schema, -fix-schema" />
     
-    <!-- ===================== -->
-    <!--  - C L E A N - G E N  -->
-    <!-- ===================== -->
-    <target name="-clean-gen">
+    <!-- =========================== -->
+    <!--  - E X T R A C T - D T D S  -->
+    <!-- =========================== -->
+    <target name="-extract-dtds">
+        <echo message="Unzipping the archive of DTD files ..." />
+	<mkdir dir="${model.dir}/dtd" />
+	<unzip dest="${model.dir}/dtd"
+	       overwrite="true" >
+	    <fileset dir="${model.dir}">
+		<include name="*.zip"/>
+	    </fileset>
+	</unzip>
+
+    </target>
+    
+    <!-- ============================= -->
+    <!--  - S I M P L I F Y - D T D S  -->
+    <!-- ============================= -->
+    <target name="-simplify-dtds"
+ 	    depends="-other-part-of-simplify-dtds">
+
+        <!-- layout.dtd -->
+        <echo message="Processing 'page-layout' element ..." />
+        <replaceregexp
+	    flags="mg"
+	    match="page-margins\s*\?\s*,\s*page-margins\s*\?" 
+	    replace="page-margins*"
+	    >
+            <fileset
+		dir="${model.dir}/dtd" 
+		includes="*.dtd" 
+		/>
+        </replaceregexp>
+
+        <!-- score.dtd -->
+	<!-- To avoid [ERROR] cos-nonambig: link and link (or elements from their substitution group) violate "Unique Particle Attribution". During validation against this schema, ambiguity would be created for those two particles. -->
+	
+        <echo message="Processing 'credit' element ..." />
+        <replaceregexp
+	    flags="mg"
+	    match="\(\s*\(\s*link\s*\*\s*,\s*bookmark\s*\*\s*,\s*credit-words\s*\)\s*\+\s*\)\s*\|\s*\(\s*link\s*\*\s*,\s*bookmark\s*\*\s*,\s*credit-image\s*\)"
+	    replace="(link*, bookmark*, (credit-words|credit-image))+"
+	    >
+            <fileset
+		dir="${model.dir}/dtd" 
+		includes="*.dtd" 
+		/>
+        </replaceregexp>
+
+    </target>
+
+    <!-- Needed if simpleMode is not used for xjc -->
+    <target name="-other-part-of-simplify-dtds" >
+	<!-- barline.dtd -->
+        <echo message="Processing 'barline' element ..." />
+        <replaceregexp
+	    flags="mg"
+	    match="\(\s*fermata\s*,\s*fermata\s*\?\s*\)\s*\?" 
+	    replace="fermata*"
+	    >
+            <fileset
+		dir="${model.dir}/dtd" 
+		includes="*.dtd" 
+		/>
+        </replaceregexp>
+	
+        <!-- direction.dtd -->
+        <echo message="Processing 'metronome' element ..." />
+        <replaceregexp
+	    flags="m"
+	    match="\(\s*beat-unit\s*,\s*beat-unit-dot\*\s*,\s*\(\s*per-minute\s*\|\s*\(\s*beat-unit\s*,\s*beat-unit-dot\*\s*\)\s*\)\s*\)" 
+	    replace="(per-minute?, (beat-unit, beat-unit-dot*))*"
+	    >
+            <fileset
+		dir="${model.dir}/dtd" 
+		includes="*.dtd" 
+		/>
+        </replaceregexp>
+
+        <!-- note.dtd -->
+        <echo message="Processing 'note' element ..." />
+        <replaceregexp
+	    flags="mg"
+	    match="\(\s*\(\s*grace\s*,\s*%full-note;\s*,\s*\(\s*tie\s*,\s*tie\s*\?\s*\)\s*\?\s*\)\s*\|\s*\(\s*cue\s*,\s*%full-note;\s*,\s*duration\s*\)\s*\|\s*\(\s*%full-note;\s*,\s*duration\s*,\s*\(\s*tie\s*,\s*tie\s*\?\s*\)\s*\?\s*\)\s*\)" 
+	    replace="(grace|cue)?, %full-note;, duration, tie*"
+	    >
+            <fileset
+		dir="${model.dir}/dtd" 
+		includes="*.dtd" 
+		/>
+        </replaceregexp>
+
+        <!-- note.dtd -->
+        <echo message="Processing 'lyric' element ..." />
+        <replaceregexp
+	    flags="mg"
+	    match="\(\s*\(\s*syllabic\s*\?\s*,\s*text\s*\)\s*,\s*\(\s*elision\s*\?\s*,\s*syllabic\s*\?\s*,\s*text\s*\)\s*\*\s*,\s*extend\s*\?\s*\)\s*\|\s*extend"
+	    replace="((elision?, syllabic?, text)*, extend?)"
+	    >
+            <fileset
+		dir="${model.dir}/dtd" 
+		includes="*.dtd" 
+		/>
+        </replaceregexp>
+    </target>
+
+    <!-- ======================= -->
+    <!--  - G E N - S C H E M A  -->
+    <!-- ======================= -->
+    <target name="-gen-schema">
+        <echo message="Generating schema from DTDs" />
+	<mkdir dir="${model.dir}/xsd" />
+	<exec executable="dtd2xs.exe">
+	    <arg value="-q"/>
+	    <arg path="${model.dir}/dtd/partwise.dtd"/>
+	    <arg path="${model.dir}/xsd/partwise.xsd"/>
+	</exec>
+    </target>
+    
+    <!-- ======================= -->
+    <!--  - F I X - S C H E M A  -->
+    <!-- ======================= -->
+    <target name="-fix-schema">
+        <!-- Comments on processing -->
+        <echo message="Commenting out illegal comments" />
+        <replaceregexp
+	    flags="mg"
+	    match="^\s*--(.*)--\s*$"
+	    replace="&lt;!-- \1 --&gt;"
+	    >
+            <fileset
+		dir="${model.dir}/xsd" 
+		includes="partwise.xsd" 
+		/>
+        </replaceregexp>
+
+        <!-- <xs:attribute name='href' use='required'/> -->
+        <echo message="Commenting out illegal statement" />
+        <replaceregexp
+	    flags="m"
+	    match="^\s*(&lt;xs:attribute name='href' use='required'/&gt;)\s*$"
+	    replace="&lt;!-- \1 --&gt;"
+	    >
+            <fileset
+		dir="${model.dir}/xsd" 
+		includes="partwise.xsd" 
+		/>
+        </replaceregexp>
+
+    </target>
+
+    <!-- No longer used, replaced by external customization -->
+    <target name="-was-part-of-fix-schema">
+
+        <!-- Introduce jaxb name space for Customization  -->
+        <echo message="Adding jaxb name space" />
+        <replaceregexp
+	    flags="m"
+	    match="(xmlns:xs='http://www.w3.org/2001/XMLSchema')\s*&gt;"
+	    replace="\1 xmlns:jaxb='http://java.sun.com/xml/ns/jaxb' jaxb:version='2.0'&gt;"
+	    >
+            <fileset
+		dir="${model.dir}/xsd" 
+		includes="partwise.xsd" 
+		/>
+        </replaceregexp>
+
+	<!-- Customizing segno attribute -->
+        <echo message="Customizing 'segno' attribute" />
+        <replaceregexp
+	    flags="m"
+	    match="^\s*&lt;(xs:attribute name='segno')\s*/&gt;\s*$"
+	    replace="  &lt;\1 &gt;
+		     &lt;xs:annotation&gt;
+		     &lt;xs:appinfo&gt;
+		     &lt;jaxb:property name='segnoAttribute'/&gt;
+		     &lt;/xs:appinfo&gt;
+		     &lt;/xs:annotation&gt;       
+		     &lt;/xs:attribute&gt;"
+	    >
+            <fileset
+		dir="${model.dir}/xsd" 
+		includes="partwise.xsd" 
+		/>
+        </replaceregexp>
+
+	<!-- Customizing coda attribute -->
+        <echo message="Customizing 'coda' attribute" />
+        <replaceregexp
+	    flags="m"
+	    match="^\s*&lt;(xs:attribute name='coda')\s*/&gt;\s*$"
+	    replace="  &lt;\1 &gt;
+		     &lt;xs:annotation&gt;
+		     &lt;xs:appinfo&gt;
+		     &lt;jaxb:property name='codaAttribute'/&gt;
+		     &lt;/xs:appinfo&gt;
+		     &lt;/xs:annotation&gt;       
+		     &lt;/xs:attribute&gt;"
+	    >
+            <fileset
+		dir="${model.dir}/xsd" 
+		includes="partwise.xsd" 
+		/>
+        </replaceregexp>
+	
+    </target>
+    
+    <!-- =============================== -->
+    <!--  - C L E A N - G E N - J A V A  -->
+    <!-- =============================== -->
+    <target name="-clean-gen-java">
 	<!-- description="Remove all *generated* java classes." -->
         <delete verbose="${verbose}">
 	    <fileset dir="${src.dir}/proxymusic" includes="*.java"/>
         </delete>
     </target>
     
+    <!-- ========================= -->
+    <!--  - C L E A N - B U I L D  -->
+    <!-- ========================= -->
+    <target name="-clean-build">
+	<!-- description="Remove the /build folder." -->
+        <delete dir="${build.dir}"/>
+    </target>
+    
     <!-- ============================= -->
     <!--  - C O P Y - C O M M E N T S  -->
     <!-- ============================= -->
-    <target name="copy-comments"
-	    depends="xjc"
-	    description="Copy the DTD comments">
+    <target name="-copy-comments"
+	    depends="xjc">
 	<echo message="-- Copying DTD comments to Java classes ..." />
 
 	<mkdir dir="${build.classes.dir}" />
@@ -84,17 +302,15 @@
     <!-- ===================== -->
     <!--  P R O P E R T I E S  -->
     <!-- ===================== -->
-    <target name="properties"
-        description="Print out all properties for the build file.">
+    <target name="properties">
         <echoproperties/>
     </target>
     
     <!-- ======= -->
     <!--  X J C  -->
     <!-- ======= -->
-    <target name="xjc"
-	description="Generate Java classes, using JABX." >
-	<echo message="-- Generating Java classes ..." />
+    <target name="xjc">
+	<echo message="-- Generating Java classes from Schema ..." />
 	<mkdir dir="${src.dir}" />
 
 	<!-- Using ant task -->
@@ -106,9 +322,13 @@
 <!-- 	    <classpath refid="tools.classpath" /> -->
 <!-- 	</xjc> -->
 
+	
 	<!-- Not using ant task -->
-	<exec  executable="xjc.exe">
+	<exec  executable="${java.home}/../bin/xjc.exe">
+	    <arg line="-verbose"/>
 	    <arg line="-no-header"/>
+<!--  	    <arg line="-extension ${basedir}/src/simpleMode.xsd"/>  -->
+	    <arg line="-b ${model.dir}/custom.xjb"/>
 	    <arg line="-p proxymusic"/>
 	    <arg line="-d ${src.dir}"/>
 	    <arg line="${model.dir}/xsd/partwise.xsd"/>
@@ -124,7 +344,7 @@
 	     jarfile="${dist.doc.jar}">
         </jar>
     </target>
-
+    
     <!-- ================= -->
     <!--  - S R C - J A R  -->
     <!-- ================= -->
@@ -176,5 +396,53 @@
 
     </target>
 
+    <!-- =========== -->
+    <!--  H E L L O  -->
+    <!-- =========== -->
+    <target name="hello"
+	    if="have.hello"
+	    depends="-pre-init, -no-hello">
+
+	<echo message="Compiling ${hello.name} ..."/>
+	<mkdir dir="${build.classes.dir}" />
+        <javac
+            destdir      = "${build.classes.dir}"
+            srcdir       = "${src.dir}">
+	    <include name="proxymusic/examples/${hello.name}.java" />
+	</javac>
+
+	<echo message="Testing ${hello.name} ..."/>
+	<java
+            fork="true"
+	    dir="${src.dir}/proxymusic/examples"
+	    classname="proxymusic.examples.${hello.name}">
+	    <classpath>
+		<pathelement location="${dist.jar}"/>
+		<pathelement path="${build.classes.dir}"/>
+	    </classpath>
+	</java>
+    </target>
+
+    <!-- =================== -->
+    <!--  - N O - H E L L O  -->
+    <!-- =================== -->
+    <target name="-no-hello"
+	    unless="have.hello"
+	    depends="-pre-init">
+	<fail unless="have.hello">You first must write file ${src.dir}/proxymusic/examples/${hello.name}.java</fail>
+    </target>
+    
+    <!-- =============== -->
+    <!--  V E R S I O N  -->
+    <!-- =============== -->
+    <target name="version"
+	    description="Print the configured version parameters ">
+
+	<echo message="spec.version = ${spec.version}" />
+	<echo message="spec.java.version = ${spec.java.version}" />
+	<echo message="impl.version = ${impl.version}" />
+		       
+    </target>
+    
 </project>
 
