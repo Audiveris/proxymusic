@@ -34,7 +34,7 @@
     <!-- =================================================================== -->
     
     <target name="default" 
-	    depends="jar, javadoc"
+	    depends="build, javadoc"
 	    description="Build the whole project (jar + javadoc)"/>
 
     <target name="hello"
