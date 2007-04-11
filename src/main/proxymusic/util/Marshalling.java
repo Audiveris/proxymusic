@@ -50,8 +50,8 @@ public class Marshalling
 
     /** The xml document statement */
     private static final String XML_LINE = "<?xml version=\"1.0\"" +
-                                           " encoding=\"UTF-8\"" +
-                                           " standalone=\"no\"?>\n";
+                                           " encoding=\"UTF-8\"" + //" standalone=\"yes\" +
+                                           "?>\n";
 
     /** The DOCTYPE statement for xml */
     private static final String DOCTYPE_LINE = "<!DOCTYPE score-partwise PUBLIC" +
