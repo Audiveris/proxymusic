@@ -25,6 +25,6 @@
     <import file="nbproject/build-impl.xml"/>
     
     <!-- Load internal targets common to Emacs and NetBeans -->
-    <import file="${dev.dir}/build-epilog.xml"/>
+    <import file="${basedir}/src/build-epilog.xml"/>
     
 </project>
