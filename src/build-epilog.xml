@@ -384,6 +384,10 @@
     <target name="core"
 	    depends="init"
 	    description="Pack only the core of the project">
+	
+        <delete verbose="${verbose}">
+	    <fileset file="${core.zip}"/>
+        </delete>
 
 	<zip destfile="${core.zip}"
 	     excludes="${dist.excludes}">
