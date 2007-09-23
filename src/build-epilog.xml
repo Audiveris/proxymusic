@@ -89,6 +89,24 @@
 		includes="*.dtd" 
 		/>
         </replaceregexp>
+	
+        <echo message="Processing 'part-list' element ..." />
+	<!--
+	     (part-group*, score-part,
+	          (part-group | score-part)*)
+	     to be replaced by:
+	     (part-group | score-part)*
+	     -->
+        <replaceregexp
+	    flags="mg"
+	    match="\(\s*part-group\s*\*\s*,\s*score-part\s*,\s*\(\s*part-group\s*\|\s*score-part\s*\)\s*\*\s*\)"
+	    replace="(part-group | score-part)*"
+	    >
+            <fileset
+		dir="${model.dir}/dtd" 
+		includes="*.dtd" 
+		/>
+        </replaceregexp>
 
     </target>
 
@@ -400,40 +418,45 @@
 
     </target>
 
-    <!-- =========== -->
-    <!--  H E L L O  -->
-    <!-- =========== -->
-    <target name="hello"
-	    if="have.hello"
-	    depends="-pre-init, -no-hello">
+    <!-- ========= -->
+    <!--  T E S T  -->
+    <!-- ========= -->
+    <target name="test">
 
-	<echo message="Compiling ${hello.name} ..."/>
+	<echo message="Compiling ${test.name} ..."/>
 	<mkdir dir="${build.classes.dir}" />
         <javac
             destdir      = "${build.classes.dir}"
             srcdir       = "${src.dir}">
-	    <include name="proxymusic/examples/${hello.name}.java" />
+	    <include name="proxymusic/examples/${test.name}.java" />
 	</javac>
 
-	<echo message="Testing ${hello.name} ..."/>
+	<echo message="Testing ${test.name} ..."/>
 	<java
             fork="true"
 	    dir="${src.dir}/proxymusic/examples"
-	    classname="proxymusic.examples.${hello.name}">
+	    classname="proxymusic.examples.${test.name}">
 	    <classpath>
 		<pathelement location="${dist.jar}"/>
 		<pathelement path="${build.classes.dir}"/>
 	    </classpath>
 	</java>
     </target>
+    
+    <!-- ================= -->
+    <!--  T E S T - A L L  -->
+    <!-- ================= -->
+    <target name="test-all"
+            description="Run all defined tests">
+	
+ 	<antcall target="test">
+ 	    <param name="test.name" value="HelloWorld_${spec.java.version}"/>
+ 	</antcall>
+	
+ 	<antcall target="test">
+ 	    <param name="test.name" value="ScorePartTest"/>
+ 	</antcall>
 
-    <!-- =================== -->
-    <!--  - N O - H E L L O  -->
-    <!-- =================== -->
-    <target name="-no-hello"
-	    unless="have.hello"
-	    depends="-pre-init">
-	<fail unless="have.hello">You first must write file ${src.dir}/proxymusic/examples/${hello.name}.java</fail>
     </target>
     
     <!-- =============== -->

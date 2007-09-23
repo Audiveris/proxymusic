@@ -49,8 +49,7 @@
     <!-- ========= -->
     <!--  I N I T  -->
     <!-- ========= -->
-    <target name="init"
-	    depends="-pre-init">
+    <target name="init">
         <!-- Create the time stamp -->
         <tstamp/>
     </target>

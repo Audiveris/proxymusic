@@ -28,18 +28,19 @@
     <!-- Finally, get all default property values -->
     <property file="${basedir}/src/build.default.properties" />
 
-    <!-- Proper name of the HelloWorld class that fits desired version -->
-    <property name="hello.name" value="HelloWorld_${spec.java.version}" />
-
     <!-- =================================================================== -->
     
     <target name="default" 
 	    depends="build, javadoc"
 	    description="Build the whole project (jar + javadoc)"/>
 
-    <target name="hello"
-	    depends="proxymusic-epilog.hello"
-	    description="Test the proper version of HelloWorld"/>
+<!--     <target name="hello" -->
+<!-- 	    depends="proxymusic-epilog.hello" -->
+<!-- 	    description="Test the proper version of HelloWorld"/> -->
+
+<!--     <target name="test1" -->
+<!-- 	    depends="proxymusic-epilog.test1" -->
+<!-- 	    description="Test #1"/> -->
 
     <target name="-post-clean"
             depends="-clean-gen-java" />    
@@ -58,17 +59,6 @@
 	    description="Generate the javadoc archive" />
 
     <!-- =================================================================== -->
-
-    <!-- =================== -->
-    <!--  - P R E - I N I T  -->
-    <!-- =================== -->
-    <target name="-pre-init">
-        <condition property="have.hello">
-            <or>
-                <available file="${src.dir}/proxymusic/examples/${hello.name}.java"/>
-            </or>
-        </condition>
-    </target>
     
     <!-- =============== -->
     <!--  C O M P I L E  -->
