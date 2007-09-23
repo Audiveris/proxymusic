@@ -118,10 +118,16 @@ public class HelloWorld_1_1
         System.out.println("version=" + scr.getVersion());
 
         PartList  partList = scr.getPartList();
-        ScorePart scorepart = partList.getScorePart();
-        System.out.println("scorepart.id=" + scorepart.getId());
-        System.out.println(
-            "scorepart.partname=" + scorepart.getPartName().getContent());
+        
+        for (Object obj : partList.getPartGroupOrScorePart()) {
+            if (obj instanceof ScorePart) {
+                ScorePart scorePart = (ScorePart) obj;
+                System.out.println("scorePart.id=" + scorePart.getId());
+                System.out.println(
+                    "scorePart.partname=" +
+                    scorePart.getPartName().getContent());
+            }
+        }
 
         for (Part part : scr.getPart()) {
             System.out.println("part:");
