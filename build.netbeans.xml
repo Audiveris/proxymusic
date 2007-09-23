@@ -23,6 +23,9 @@
 
     <!-- Load NetBeans implementation targets -->
     <import file="nbproject/build-impl.xml"/>
+
+    <target name="build" depends="compile, -pre-jar, -do-jar-with-manifest"
+	    description="Generate the binary and source archives."/>
     
     <!-- Load internal targets common to Emacs and NetBeans -->
     <import file="${basedir}/src/build-epilog.xml"/>
