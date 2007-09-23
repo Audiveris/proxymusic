@@ -83,7 +83,9 @@ public class Marshalling
     {
         // Lazy creation
         if (jaxbContext == null) {
-            jaxbContext = JAXBContext.newInstance(ScorePartwise.class);
+            jaxbContext = JAXBContext.newInstance(
+                ScorePartwise.class,
+                Part.class);
         }
 
         return jaxbContext;
