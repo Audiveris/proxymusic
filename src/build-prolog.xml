@@ -34,14 +34,6 @@
 	    depends="build, javadoc"
 	    description="Build the whole project (jar + javadoc)"/>
 
-<!--     <target name="hello" -->
-<!-- 	    depends="proxymusic-epilog.hello" -->
-<!-- 	    description="Test the proper version of HelloWorld"/> -->
-
-<!--     <target name="test1" -->
-<!-- 	    depends="proxymusic-epilog.test1" -->
-<!-- 	    description="Test #1"/> -->
-
     <target name="-post-clean"
             depends="-clean-gen-java" />    
 
