@@ -10,6 +10,8 @@
 //
 package proxymusic.util;
 
+import org.w3c.dom.Node;
+
 import proxymusic.*;
 
 import java.io.*;
@@ -143,6 +145,78 @@ public class Marshalling
                                 boolean       injectSignature)
         throws JAXBException, IOException
     {
+        annotate(scorePartwise, injectSignature);
+
+        // Take care of first statements
+        os.write(XML_LINE.getBytes());
+        os.write(DOCTYPE_LINE.getBytes());
+
+        // Then the object to marshal
+        Marshaller m = getContext()
+                           .createMarshaller();
+        m.setProperty(Marshaller.JAXB_FRAGMENT, true);
+        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        m.marshal(scorePartwise, os);
+
+        // We don't close os
+    }
+
+    //---------//
+    // marshal //
+    //---------//
+    /**
+     * Marshal the hierarchy rooted at provided ScorePartwise instance to an
+     * OutputStream
+     * (The output stream is not closed by this method)
+     *
+     * @param scorePartwise the root element
+     * @param node the DOM node where elements must be added
+     * @param injectSignature false if ProxyMusic encoder must not be referenced
+     * @exception JAXBException if marshalling goes wrong
+     * @exception IOException for output error
+     */
+    public static void marshal (ScorePartwise scorePartwise,
+                                Node          node,
+                                boolean       injectSignature)
+        throws JAXBException
+    {
+        annotate(scorePartwise, injectSignature);
+
+        // Then the object to marshal
+        Marshaller m = getContext()
+                           .createMarshaller();
+        m.setProperty(Marshaller.JAXB_FRAGMENT, true);
+        ///m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        m.marshal(scorePartwise, node);
+    }
+
+    //-----------//
+    // unmarshal //
+    //-----------//
+    /**
+     * Unmarshal a ScorePartwise instance from an InputStream.
+     * (The input stream is not closed by this method)
+     *
+     * @param is the input stream
+     * @return the scorePartwise root element
+     * @exception JAXBException if unmarshalling goes wrong
+     */
+    public static ScorePartwise unmarshal (InputStream is)
+        throws JAXBException
+    {
+        Unmarshaller um = getContext()
+                              .createUnmarshaller();
+        um.setSchema(null);
+
+        return (ScorePartwise) um.unmarshal(is);
+    }
+
+    //----------//
+    // annotate //
+    //----------//
+    private static void annotate (ScorePartwise scorePartwise,
+                                  boolean       injectSignature)
+    {
         // Inject version
         if (specificationVersion != null) {
             scorePartwise.setVersion(specificationVersion);
@@ -175,39 +249,5 @@ public class Marshalling
             software.setContent(
                 specificationTitle + " " + implementationVersion);
         }
-
-        // Take care of first statements
-        os.write(XML_LINE.getBytes());
-        os.write(DOCTYPE_LINE.getBytes());
-
-        // Then the object to marshal
-        Marshaller m = getContext()
-                           .createMarshaller();
-        m.setProperty(Marshaller.JAXB_FRAGMENT, true);
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        m.marshal(scorePartwise, os);
-
-        // We don't close os
-    }
-
-    //-----------//
-    // unmarshal //
-    //-----------//
-    /**
-     * Unmarshal a ScorePartwise instance from an InputStream.
-     * (The input stream is not closed by this method)
-     *
-     * @param is the input stream
-     * @return the scorePartwise root element
-     * @exception JAXBException if unmarshalling goes wrong
-     */
-    public static ScorePartwise unmarshal (InputStream is)
-        throws JAXBException
-    {
-        Unmarshaller um = getContext()
-                              .createUnmarshaller();
-        um.setSchema(null);
-
-        return (ScorePartwise) um.unmarshal(is);
     }
 }
