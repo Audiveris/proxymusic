@@ -71,7 +71,7 @@
 	    >
             <fileset
 		dir="${model.dir}/dtd" 
-		includes="*.dtd" 
+		includes="*.dtd,*.mod" 
 		/>
         </replaceregexp>
 
@@ -86,7 +86,7 @@
 	    >
             <fileset
 		dir="${model.dir}/dtd" 
-		includes="*.dtd" 
+		includes="*.dtd,*.mod" 
 		/>
         </replaceregexp>
 	
@@ -104,7 +104,7 @@
 	    >
             <fileset
 		dir="${model.dir}/dtd" 
-		includes="*.dtd" 
+		includes="*.dtd,*.mod" 
 		/>
         </replaceregexp>
 
@@ -121,7 +121,7 @@
 	    >
             <fileset
 		dir="${model.dir}/dtd" 
-		includes="*.dtd" 
+		includes="*.dtd,*.mod" 
 		/>
         </replaceregexp>
 	
@@ -134,7 +134,7 @@
 	    >
             <fileset
 		dir="${model.dir}/dtd" 
-		includes="*.dtd" 
+		includes="*.dtd,*.mod" 
 		/>
         </replaceregexp>
 
@@ -147,7 +147,7 @@
 	    >
             <fileset
 		dir="${model.dir}/dtd" 
-		includes="*.dtd" 
+		includes="*.dtd,*.mod" 
 		/>
         </replaceregexp>
 
@@ -160,7 +160,7 @@
 	    >
             <fileset
 		dir="${model.dir}/dtd" 
-		includes="*.dtd" 
+		includes="*.dtd,*.mod" 
 		/>
         </replaceregexp>
     </target>
