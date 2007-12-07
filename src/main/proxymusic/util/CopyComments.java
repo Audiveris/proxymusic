@@ -72,7 +72,7 @@ public class CopyComments
             public boolean accept (File   dir,
                                    String name)
             {
-                return name.endsWith(".dtd");
+                return name.endsWith(".dtd") || name.endsWith(".mod");
             }
         };
 
