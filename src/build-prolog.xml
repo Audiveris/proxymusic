@@ -62,6 +62,7 @@
         
         <!-- baseline classes -->
         <javac
+            target       = "${javac.target}"
             debug        = "${build.compile.debug}"
             deprecation  = "${build.compile.deprecation}"
             destdir      = "${build.classes.dir}"
