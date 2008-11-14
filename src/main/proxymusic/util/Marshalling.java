@@ -2,10 +2,9 @@
 //                                                                            //
 //                           M a r s h a l l i n g                            //
 //                                                                            //
-//  Copyright (C) Herve Bitteur 2007. All rights reserved.                    //
-//  This software is released under the terms of the GNU General Public       //
-//  License. Please contact the author at herve.bitteur@laposte.net           //
-//  to report bugs & suggestions.                                             //
+//  Copyright (C) Herve Bitteur 2000-2008. All rights reserved.               //
+//  This software is released under the GNU General Public License.           //
+//  Please contact users@proxymusic.dev.java.net to report bugs & suggestions //
 //----------------------------------------------------------------------------//
 //
 package proxymusic.util;
@@ -16,8 +15,12 @@ import proxymusic.*;
 
 import java.io.*;
 import java.lang.String;
+import java.util.GregorianCalendar;
+import java.util.logging.Logger;
 
 import javax.xml.bind.*;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
 
 /**
  * Class <code>Marshalling</code> gathers static methods to marshal and to
@@ -36,16 +39,16 @@ public class Marshalling
     //~ Static fields/initializers ---------------------------------------------
 
     /** Containing package */
-    private static final Package thisPackage = Marshalling.class.getPackage();
+    private static final Package pmPackage = ObjectFactory.class.getPackage();
 
-    /** Tool name, example: "ProxyMusic" */
-    private static final String specificationTitle = thisPackage.getSpecificationTitle();
+    /** Precise tool name, example: "ProxyMusic" */
+    public static final String specificationTitle = pmPackage.getSpecificationTitle();
 
-    /** Tool version, example: "1.1", "2.0"*/
-    private static final String specificationVersion = thisPackage.getSpecificationVersion();
+    /** Supported MusicXML version, example: "1.1", "2.0"*/
+    public static final String specificationVersion = pmPackage.getSpecificationVersion();
 
-    /** Tool build,, example "1.1 a", "2.0 beta" */
-    private static final String implementationVersion = thisPackage.getImplementationVersion();
+    /** Full binding version, example: "MusicXML-2.0 JAXB-2.0 d" */
+    public static final String implementationVersion = pmPackage.getImplementationVersion();
 
     /** [Un]marshalling context for use with JAXB */
     private static JAXBContext jaxbContext;
@@ -85,25 +88,10 @@ public class Marshalling
     {
         // Lazy creation
         if (jaxbContext == null) {
-            jaxbContext = JAXBContext.newInstance(
-                ScorePartwise.class,
-                Part.class);
+            jaxbContext = JAXBContext.newInstance(ScorePartwise.class);
         }
 
         return jaxbContext;
-    }
-
-    //--------------------//
-    // getMusicXmlVersion //
-    //--------------------//
-    /**
-     * Report the version of MusicXML being used (e.g. "2.0")
-     *
-     * @return the MusicXML version being used
-     */
-    public static String getMusicXmlVersion ()
-    {
-        return specificationVersion;
     }
 
     //---------//
@@ -217,6 +205,9 @@ public class Marshalling
     private static void annotate (ScorePartwise scorePartwise,
                                   boolean       injectSignature)
     {
+        // Predefined factory for all proxymusic elements
+        ObjectFactory factory = new ObjectFactory();
+
         // Inject version
         if (specificationVersion != null) {
             scorePartwise.setVersion(specificationVersion);
@@ -226,11 +217,10 @@ public class Marshalling
         if (injectSignature &&
             (specificationTitle != null) &&
             (implementationVersion != null)) {
-            // Identification
             Identification identification = scorePartwise.getIdentification();
 
             if (identification == null) {
-                identification = new Identification();
+                identification = factory.createIdentification();
                 scorePartwise.setIdentification(identification);
             }
 
@@ -238,16 +228,28 @@ public class Marshalling
             Encoding encoding = identification.getEncoding();
 
             if (encoding == null) {
-                encoding = new Encoding();
+                encoding = factory.createEncoding();
                 identification.setEncoding(encoding);
             }
 
             // [Encoding]/Software
-            Software software = new Software();
             encoding.getEncodingDateOrEncoderOrSoftware()
-                    .add(software);
-            software.setContent(
-                specificationTitle + " " + implementationVersion);
+                    .add(
+                factory.createEncodingSoftware(
+                    specificationTitle + " " + implementationVersion));
+
+            // [Encoding]/EncodingDate
+            ///encodingDate.setContent(java.lang.String.format("%tF", new Date()));
+            try {
+                encoding.getEncodingDateOrEncoderOrSoftware()
+                        .add(
+                    factory.createEncodingEncodingDate(
+                        DatatypeFactory.newInstance().newXMLGregorianCalendar(
+                            new GregorianCalendar())));
+            } catch (DatatypeConfigurationException ex) {
+                Logger.getLogger(Marshalling.class.getName())
+                      .log(java.util.logging.Level.SEVERE, null, ex);
+            }
         }
     }
 }
