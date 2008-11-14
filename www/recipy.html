@@ -1,695 +1,207 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
+<html><head><title>Recipy for generating MusicXML Java binding</title>
 
-
-  
-
-
-  
-  
-  
-  <title>Recipy for generating MusicXML Java binding</title>
-  <style>
-body {
-color: #2F2F2F;
-font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
-}
-  </style>
-</head>
-
-
+<style>
+body { color: #2F2F2F; font-family: Arial, "Arial CE", "Lucida
+Grande CE", lucida, "Helvetica CE", sans-serif; }
+</style><!-- The following links are meant to be solved on my local PC --><!-- The java.net site uses its own style sheets -->
+<link rel="stylesheet" type="text/css" href="../../branding/css/tigris.css">
+<link rel="stylesheet" type="text/css" href="../../branding/css/inst.css"></head>
 <body>
-
-
-
-<h1><a class="mozTocH1" name="mozTocId819802"></a>Recipy for generating MusicXML Java binding</h1>
-
-
-
-This recipy describes the&nbsp;sequence of steps that leads to
-MusicXML Java binding, starting from the original DTD files of MusicXML
-V1.1 available at <a href="http://www.recordare.com/downloads.html#DTD">
-http://www.recordare.com/downloads.html#DTD</a>: <br>
-
-<br>
-
-<ol id="mozToc">
-
-<!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6--><li><a href="#mozTocId819802">Recipy for generating MusicXML Java binding</a>
-    
-    <ol>
-
-      <li><a href="#mozTocId31896">Requirements</a></li>
-
-      <li><a href="#mozTocId628870">Automated generation</a></li>
-
-      <li><a href="#mozTocId104235">Detailed Processing</a>
-        
-        <ol>
-
-          <li><a href="#mozTocId332220">Modifications
-in original DTD files</a>
-            
-            <ol>
-
-              <li><a href="#mozTocId982266">
-Example of File  barline.dtd</a></li>
-
-            
-            </ol>
-
-          </li>
-
-          <li><a href="#mozTocId351333">Generation
-of the XML schema</a>
-            
-            <ol>
-
-              <li><a href="#mozTocId515831">Use
-of dtd2xs</a></li>
-
-              <li><a href="#mozTocId513368">Corrections
-in the schema file partwise.dtd</a></li>
-
-            
-            </ol>
-
-          </li>
-
-          <li><a href="#mozTocId791352">Generation
-of the Java classes</a>
-            
-            <ol>
-
-              <li><a href="#mozTocId279503">Running
-JAXB xjc
-tool</a></li>
-
-              <li><a href="#mozTocId419800">Copying
-initial DTD comments to the generated Java classes</a></li>
-
-              <li><a href="#mozTocId351104">Generating
-the proxymusic-1.1.jar
-archive</a></li>
-
-            
-            </ol>
-
-          </li>
-
-        
-        </ol>
-
-      </li>
-
-    
-    </ol>
-
-  </li>
-
-</ol>
-
-<br>
-
-
-
-
-
-<h2><a class="mozTocH2" name="mozTocId31896"></a>Requirements</h2>
-
-
-
-For regenerating the binding you need :
+<h1 style="text-align: center;">ProxyMusic: Recipy for
+re-building MusicXML Java binding</h1>
+This recipy describes the sequence of steps that leads to MusicXML Java
+binding, starting from the original schema definition of MusicXML.<br>
+<h2>Requirements</h2>
 <dl>
-
-
-
-  <dt><b>DTD files</b></dt>
-
-
-
-  <dd>As input, you have to use the DTD files that describe
-MusicXML, available at <a href="http://www.recordare.com/downloads.html#DTD">http://www.recordare.com/downloads.html#DTD</a></dd>
-
-
-
-  <dt><b>ant</b></dt>
-
-
-
-  <dd>Ant is used to automate the build process, and is widely
+<dt><b>Schema&nbsp; file</b></dt>
+<dd>As input, you have to use the <span style="font-weight: bold;">musicxml.xsd</span> schema
+file that describes MusicXML, available at <a href="http://www.recordare.com/downloads.html#DTD">http://www.recordare.com/downloads.html#DTD</a></dd>
+<dt><b>ant</b></dt>
+<dd>Ant is used to automate the build process, and is widely
 available.</dd>
-
-
-
-  <dt><b>JAXB2</b></dt>
-
-
-
-  <dd> It is part of recently released Java 6, so this is the
-easiest way. You can also use Java 5, provided you also download a
-separate reference implementation of JAXB2 available at&nbsp;<a href="https://jaxb.dev.java.net">https://jaxb.dev.java.net</a>.</dd>
-
-
-
-  <dt><b>dtd2xs</b></dt>
-
-
-
-  <dd>This small utility from Syntext,&nbsp;available at <a href="http://www.syntext.com/">http://www.syntext.com</a>,
-is needed to generate an XML schema from the DTD input files.</dd>
-
-
-
+<dt><b>JAXB2</b></dt>
+<dd> It is part of Java 6. You can also use Java 5, provided
+you also download a separate reference implementation of JAXB2
+available at&nbsp;<a href="https://jaxb.dev.java.net">https://jaxb.dev.java.net</a>.
+You can also use a more recent JAXB&nbsp; implementation (JAXB RI 2.1.9 as of this
+writing).</dd>
 </dl>
-
-
-
-<h2><a class="mozTocH2" name="mozTocId628870"></a>Automated generation</h2>
-
-
-
-The full process is now automated in a series of 'Ant' targets that can
+<h2>Ant automation</h2>
+The&nbsp;process is&nbsp;automated in a series of 'Ant' targets
+that can
 be executed directly at Ant or NetBeans level.<br>
-
-There are 2 '<span style="text-decoration: underline;">build.xml</span>' files:<br>
-
+There are 2 '<span style="text-decoration: underline;">build.xml</span>'
+files:<br>
 <ol>
-
-  <li>One '<span style="text-decoration: underline;">build.xml</span>'
+<li>One '<span style="text-decoration: underline;">build.xml</span>'
 is located at the root of proxymusic hierarchy. This file is meant to
 be used from NetBeans. There is also a copy named 'build.netbeans.xml',
 in case you ask netBeans to create a project there (NetBeans would
 choke on the existence of a 'build.xml' file in this folder).</li>
-
-  <li>Another '<span style="text-decoration: underline;">build.xml</span>' is located in the subdirectory named '<span style="text-decoration: underline;">src</span>'.
-This one is meant to be used directly from Ant, either from a command
-line prompt, or from Emacs. Being located in the 'src' subdirectory,
-Ant will find it while walking up the folder hierarchy before getting
-to the NetBeans file.</li>
-
+<li>Another '<span style="text-decoration: underline;">build.xml</span>'
+is located in the subdirectory named '<span style="text-decoration: underline;">src</span>'. This
+one is meant to be used directly from Ant, either from a command line
+prompt, or from Emacs. Being located in the 'src' subdirectory, Ant
+will find it while walking up the folder hierarchy before getting to
+the NetBeans file.</li>
 </ol>
-
 From NetBeans, the generation can be launched using the <span style="font-style: italic;">clean, build</span> and <span style="font-style: italic;">javadoc</span> commands.<br>
-
-From Ant/Emacs, the generation can be launched using the <span style="font-style: italic;">clean, build</span> and <span style="font-style: italic;">javadoc</span> commands. The '<span style="font-style: italic;">default</span>' target runs the '<span style="font-style: italic;">build</span>' and '<span style="font-style: italic;">javadoc</span>' targets in sequence.<br>
-
+From Ant/Emacs, the generation can be launched using the <span style="font-style: italic;">clean, build</span> and <span style="font-style: italic;">javadoc</span> commands.
+The '<span style="font-style: italic;">default</span>'
+target runs the '<span style="font-style: italic;">build</span>'
+and '<span style="font-style: italic;">javadoc</span>'
+targets in sequence.<br>
 In the following explanations, we'll assume the basic Ant approach.<br>
-
 <br>
-
-The full generation is launched by the simple command in the '<span style="text-decoration: underline;">src</span>' directory:<br>
-
-
+The full generation is launched by the simple command in the '<span style="text-decoration: underline;">src</span>'
+directory:<br>
 <pre style="margin-left: 40px;"><span style="color: rgb(153, 102, 51);">$&gt; </span><span style="font-weight: bold; color: rgb(153, 102, 51);">ant</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);"></span></pre>
-
-
-Here is the output of an "<span style="font-style: italic;">ant -projecthelp</span>" command launched from the 'src' directory:<br>
-
-
-
-<pre style="margin-left: 40px;"><span style="color: rgb(153, 102, 51);">$&gt; </span><span style="font-weight: bold; color: rgb(153, 102, 51);">ant -projecthelp</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">Buildfile: build.xml</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">    Build, test, run and document the proxymusic project via Emacs or ant.</span><br style="color: rgb(153, 102, 51);"><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">&nbsp;&nbsp;&nbsp; This 'build.xml' file is located in the 'src' subdirectory to be</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">&nbsp;&nbsp;&nbsp; automatically picked up by Emacs, or used directly with 'ant'</span><br style="color: rgb(153, 102, 51);"><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">Main targets:</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">&nbsp;build    Generate the binary and source archives.<br> clean&nbsp;&nbsp;&nbsp; Clean build products.</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">&nbsp;core&nbsp;&nbsp;&nbsp;&nbsp; Pack only the core of the project</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">&nbsp;default&nbsp; Build the whole project (build + javadoc)</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">&nbsp;hello&nbsp;&nbsp;&nbsp; Test the proper version of HelloWorld</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">&nbsp;</span><span style="color: rgb(153, 102, 51);">javadoc&nbsp; Generate the javadoc archive</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">&nbsp;pack&nbsp;&nbsp;&nbsp;&nbsp; Pack up the whole project</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">&nbsp;version&nbsp; Print the configured version parameters </span><br style="color: rgb(153, 102, 51);"><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);">Default target: default</span><br></pre>
-
-
-To launch the generation of a binding for a given MusicXML version, here are the required initial actions:<br>
-
-
+Here is the output of an "<span style="font-style: italic;">ant
+-projecthelp</span>" command launched from the 'src' directory:<br>
+<div style="margin-left: 40px; color: rgb(0, 102, 0);">
+<pre> Build, test, run and document the proxymusic project via Emacs or ant.<br>	This 'build.xml' file is located in the 'src' subdirectory to be<br>	automatically picked up by Emacs, or used directly with 'ant'<br> <br>Main targets:<br><br> build Generate the binary and source archives.<br> clean Clean build products.<br> core Pack only the core of the project<br> default Build the whole project jars (binary + src + javadoc)<br> javadoc Generate the javadoc archive<br> pack Pack up the whole project<br> test-all Run all defined tests<br> version Print the configured version parameters<br>Default target: default<br>	</pre>
+</div>
+To launch the generation of a binding for a given MusicXML version,
+here are the required initial actions:<br>
 <ol>
-
-
-  <li>Check the registered version, by using the command: 'ant version'<br>
-
-
-    
-    <pre style="margin-left: 40px;"><span style="color: rgb(153, 102, 51);">$&gt; </span><span style="font-weight: bold; color: rgb(153, 102, 51);">ant version</span></pre>
-
-  </li>
-
-
-  <li>If needed, modify the version numbers in the
-'<span style="text-decoration: underline;">src/build.propertie</span>s' file for 3 variables: <span style="font-style: italic;">spec.version</span>,
-    <span style="font-style: italic;">spec.java.version</span> and <span style="font-style: italic;">impl.version</span>. Here is the current content of this
-property file, which is here set for version 2.0 beta:<br>
-
-
-    
-    
-    <div style="margin-left: 40px; color: rgb(0, 102, 0);"><samp><br>
-
-# Manifest Properties -----------------------------------------------------</samp><br>
-
-
-    <samp>spec.title&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = ProxyMusic</samp><br>
-
-
-    <samp></samp><br>
-
-
-    <samp># spec.version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 1.1</samp><br>
-
-
-    <samp># spec.java.version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 1_1</samp><br>
-
-
-    <samp># impl.version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = ${spec.version} a</samp><br>
-
-
-    <samp></samp><br>
-
-
-    <samp>spec.version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 2.0</samp><br>
-
-
-    <samp>spec.java.version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 2_0</samp><br>
-
-
-    <samp>impl.version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = ${spec.version} beta1<br>
-
-    </samp></div>
-
-
-  </li>
-
-
-  <li>Make sure there is a folder rooted at the proxymusic folder,
-properly named (<span style="text-decoration: underline;">model-1.1</span>, <span style="text-decoration: underline;">model-2.0</span>, etc). This folder must contain:</li>
-
-
-  
-  
-  <ol>
-
-
-    <li>The needed DTD files for this version, gathered in a zip
-archive. More generally, all zip files found in this location will be
-automatically expanded in the dtd subfolder.</li>
-
-
-    <li>A binding customization file, named '<span style="text-decoration: underline;">custom.xjb</span>', which can be empty (as for V1.1) or used for real commands (as for V2.0).</li>
-
-
-  
-  
-  </ol>
-
-  <li>Run the generation by using command: 'ant'. <br>
-
-
-    
-    <pre style="margin-left: 40px;"><span style="color: rgb(153, 102, 51);">$&gt; </span><span style="font-weight: bold; color: rgb(153, 102, 51);">ant</span></pre>
-
-Doing so, you run the default target, which builds the following 3 archives (example for the 2.0 version):</li>
-
-  
-  <ol>
-
-    <li style="text-decoration: underline;">proxymusic-2.0.jar</li>
-
-    <li style="text-decoration: underline;">proxymusic-2.0-src.jar</li>
-
-    <li><span style="text-decoration: underline;">proxymusic-2.0-doc.jar</span></li>
-
-  
-  </ol>
-
-
-</ol>
-
-
-
-<h2><a class="mozTocH2" name="mozTocId104235"></a>Detailed Processing</h2>
-
-The purpose of this section it simply to provide some detailed
-information about the various steps that are performed automatically by
-the binding generator. It is meant for potential maintenance work.
-<h3><a class="mozTocH3" name="mozTocId332220"></a>Modifications
-in original DTD files</h3>
-
-
-
-<p>Five of the original files (four in version 1.1) are slightly modified, in
-order to get a working binding. These files are:</p>
-
+<li>Check the registered versions, by using the command:<br>
+<pre style="margin-left: 40px;"><span style="color: rgb(153, 102, 51);">$&gt; </span><span style="font-weight: bold; color: rgb(153, 102, 51);">ant version</span></pre>
+</li>
+<li>If needed, modify the version numbers in the
+'<span style="text-decoration: underline;">src/build.propertie</span>s'
+file for 3 variables: <span style="font-style: italic;">spec.version</span>,
+<span style="font-style: italic;">jaxb.version</span>
+and <span style="font-style: italic;">impl.version</span>.
+Here is the current content of this
+property file, which is here set for MusicXML version 2.0 and JAXB
+version 2.0:<br>
+<div style="margin-left: 40px; color: rgb(0, 102, 0);">
+<pre># Manifest Properties -----------------------------------------------------<br>spec.title = ProxyMusic<br><br># JAXB Properties ---------------------------------------------------------<br>jaxb.version = 2.0<br><br># MusicXML Properties -----------------------------------------------------<br>spec.version = 2.0<br>impl.version = MusicXML-${spec.version} JAXB-${jaxb.version} d<br>	</pre>
+</div>
+</li>
+<li>Make sure there is a folder rooted at the proxymusic
+folder,
+properly named (<span style="text-decoration: underline;">schema-2.0</span>,
+etc). This folder must contain:</li>
 <ol>
-
-  <li>barline.dtd</li>
-
-  <li>direction.dtd</li>
-
-  <li>layout.dtd</li>
-
-  <li>note.dtd</li>
-
-  <li>score.dtd</li>
-
+<li>A subdirectory <span style="text-decoration: underline;">xsd</span>
+containing the schema file <span style="text-decoration: underline;">musicxml.xsd</span>.</li>
+<li>A binding customization file, named '<span style="text-decoration: underline;">custom.xjb</span>'.</li>
 </ol>
-
-
-
-<p>The reason stems in all cases from constructions which, though
-being perfectly legal DTD constructions, cannot be correctly handled by
-the JAXB xjc tool, at least in its current version (2.1 as of this
-writing). Nota: there exists an experimental mode of JAXB, named the
-simple mode, which is able to handle these cases automatically, however
-it exhibits a few side-effects that are not transparent for the user of
-the binding, so for the time being we stick to this basic approach. </p>
-
-
-
-<p>Note that these modifications still allow the
-writing of all legal MusicXML files. These modifications are just
-simplifications which lower some of the restrictions imposed by the
-original DTD.</p>
-
-
-
-<h4><a class="mozTocH4" name="mozTocId982266"></a>
-Example of File <big style="text-decoration: underline;"> <code style="font-style: italic;">barline.dtd</code></big></h4>
-
-
-
-<p> Around lines 40/41 of this file, the '<span style="font-style: italic;">barline</span>'
-element is modified in the use of the '<span style="font-style: italic;">fermata</span>' element.
-The original intent was to allow 0, 1 or 2 fermata. But JAXB choked on
-the use of duplicate names, leading to a collision in the Java names. Here is the workaround:</p>
-
-
-
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-
-
-
-  <tbody>
-
-
-
-    <tr>
-
-
-
-      <th width="100">Original lines</th>
-
-
-
-      <td style="background-color: rgb(255, 204, 204);">
-      
-      
-      <pre><br> &lt;!ELEMENT barline (bar-style?, %editorial;, wavy-line?,<br> segno?, coda?, (fermata, fermata?)?, ending?, repeat?)&gt;</pre>
-
-
-
-      </td>
-
-
-
-    </tr>
-
-
-
-    <tr>
-
-
-
-      <th>New lines</th>
-
-
-
-      <td style="background-color: rgb(255, 255, 153);">
-      
-      
-      <pre><br> &lt;!ELEMENT barline (bar-style?, %editorial;, wavy-line?,<br> segno?, coda?, fermata*, ending?, repeat?)&gt;</pre>
-
-
-
-      </td>
-
-
-
-    </tr>
-
-
-
-  
-  
-  </tbody>
-</table>
-
-<br>
-
-<h3><a class="mozTocH3" name="mozTocId351333"></a>Generation
-of the XML schema</h3>
-
-
-
-<p>The direct handling of DTD input in JAXB2 is said to be
-experimental and not supported. It is thus mandatory to first generate
-an XML schema from the DTD inputs.</p>
-
-
-
-<h4><a class="mozTocH4" name="mozTocId515831"></a>Use
-of <big style="text-decoration: underline; font-style: italic;"><code>dtd2xs</code></big></h4>
-
-
-
-<p>To process the DTDs and generate the corresponding XML schema,
-I used the dtd2xs tool from Syntext,&nbsp;available at <a href="http://www.syntext.com">http://www.syntext.com</a>.
-The use of <b>dtd2xs</b>&nbsp;is straight-forward. It reads the 'partwise.dtd' as input in the proxymusic/model/dtd
-folder and writes a corresponding 'partwise.xsd' in the
-proxymusic/model/xds folder.</p>
-
-
-
-<h4><a class="mozTocH4" name="mozTocId513368"></a>Corrections
-in the schema file <span style="font-style: italic; text-decoration: underline;">partwise.dtd</span></h4>
-
-
-
-<p> The generated xsd file does not seem to be a valid schema
-file (NetBeans chokes on it, for example). There are two modifications
-to make:</p>
-
-
-
+<li>Fix the schema  file <span style="text-decoration: underline;">musicxml.xsd</span> into another file <span style="text-decoration: underline;">musicxml.fixed.xsd</span>. (See the next section about manual modifications)</li><li>Run the generation by using command: 'ant'. <br>
+<pre style="margin-left: 40px;"><span style="color: rgb(153, 102, 51);">$&gt; </span><span style="font-weight: bold; color: rgb(153, 102, 51);">ant</span></pre>
+Doing so, you run the default target, which builds the following 3
+archives (example for the 2.0 version):</li>
 <ol>
-
-
-
-  <li>
-    
-    
-    <p>Lines 3/5 are comments added by the generator. They should
-be either simply removed or wrapped in an xs:documentation element, as
-in:</p>
-
-
-
-    
-    
-    <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-
-
-
-      <tbody>
-
-
-
-        <tr>
-
-
-
-          <th width="100">Original lines</th>
-
-
-
-          <td style="background-color: rgb(255, 204, 204);">
-          
-          
-          <pre><br> -- This schema was automatically generated by Syntext Dtd2Schema --<br> -- conversion tool (from file: U:\soft\proxy-music\model\dtd\partwise.dtd) --<br> -- Copyright (C) 2002, 2003 Syntext Inc. See http://www.syntext.com for updates. --</pre>
-
-
-
-          </td>
-
-
-
-        </tr>
-
-
-
-        <tr>
-
-
-
-          <th>New lines</th>
-
-
-
-          <td style="background-color: rgb(255, 255, 153);">
-          
-          
-          <pre><br> &lt;xs:documentation&gt;<br> -- This schema was automatically generated by Syntext Dtd2Schema --<br> -- conversion tool (from file: U:\soft\proxy-music\model\dtd\partwise.dtd) --<br> -- Copyright (C) 2002, 2003 Syntext Inc. See http://www.syntext.com for updates. --<br> &lt;/xs:documentation&gt;</pre>
-
-
-
-          </td>
-
-
-
-        </tr>
-
-
-
-      
-      
-      </tbody>
-    
-    
-    </table>
-
-
-
-  </li>
-
-
-
-  <li>
-    
-    
-    <p>The following line (number 7) had to be commented out</p>
-
-
-
-    <span style="font-family: monospace;"></span>
-    
-    
-    <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-
-
-
-      <tbody>
-
-
-
-        <tr>
-
-
-
-          <th width="100">Original lines</th>
-
-
-
-          <td style="background-color: rgb(255, 204, 204);">
-          
-          
-          <pre><br> &lt;xs:attribute name='href' use='required'/&gt;</pre>
-
-
-
-          </td>
-
-
-
-        </tr>
-
-
-
-        <tr>
-
-
-
-          <th>New lines</th>
-
-
-
-          <td style="background-color: rgb(255, 255, 153);">
-          
-          
-          <pre><br> &lt;!-- &lt;xs:attribute name='href' use='required'/&gt; --&gt;</pre>
-
-
-
-          </td>
-
-
-
-        </tr>
-
-
-
-      
-      
-      </tbody>
-    
-    
-    </table>
-
-
-
-    <span style="font-family: monospace;"></span> </li>
-
-
-
+<li style="text-decoration: underline;">proxymusic-2.0.jar</li>
+<li style="text-decoration: underline;">proxymusic-2.0-src.jar</li>
+<li><span style="text-decoration: underline;">proxymusic-2.0-doc.jar</span></li>
 </ol>
-
-
-
-<h3><a class="mozTocH3" name="mozTocId791352"></a>Generation
-of the Java classes</h3>
-
-
-
-<p> For this, I use the JAXB2 utility which is integrated in Java
-6 (and also available as a separate package for earlier Java releases).&nbsp; </p>
-
-
-
-<h4><a class="mozTocH4" name="mozTocId279503"></a>Running
-JAXB <big style="font-style: italic; text-decoration: underline;"><code>xjc</code></big>
-tool</h4>
-
-
-
-<p> This task is defined as an ant task in the
-src/build-targets.xml file. Taking the 'partwise.xsd' file as input, it
-generates the 300+ Java classes using a containing 'proxymusic' package.</p>
-
-<p>The generation of the 'barline' element has to be customized, since
-this element refers to a 'segno' subelement and to a 'segno' attribute.
-It exhibits the same configuration for 'coda' as well. The
-customization is defined in a '<span style="text-decoration: underline;">custom.xjb</span>' file, located in the '<span style="text-decoration: underline;">model-x.y</span>' folder, 
+</ol>
+<h2>Additional Informations</h2>
+<h3>Fixing the Schema</h3>Running XJC with latest JAXB RI (2.1.9) leads to the following error messages:
+<div style="margin-left: 40px; color: rgb(0, 102, 0);">
+<pre>xjc:<br> [echo] -- Generating Java classes from Schema ...<br> [exec] parsing a schema...<br> [exec] [ERROR] Element "link" shows up in more than one properties.<br> [exec] line 3909 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd<br> [exec] <br> [exec] [ERROR] The following location is relevant to the above error<br> [exec] line 3903 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd<br> [exec] <br> [exec] [ERROR] Element "part-group" shows up in more than one properties.<br> [exec] line 4086 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd<br> [exec] <br> [exec] [ERROR] The following location is relevant to the above error<br> [exec] line 4084 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd<br> [exec] <br> [exec] [ERROR] Property "Segno" is already defined. Use &amp;lt;jaxb:property&gt; to resolve this conflict.<br> [exec] line 2061 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd<br> [exec] <br> [exec] [ERROR] The following location is relevant to the above error<br> [exec] line 2068 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd<br> [exec] <br> [exec] [ERROR] Property "Coda" is already defined. Use &amp;lt;jaxb:property&gt; to resolve this conflict.<br> [exec] line 2062 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd<br> [exec] <br> [exec] [ERROR] The following location is relevant to the above error<br> [exec] line 2069 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd<br> [exec] <br> [exec] Failed to parse a schema.<br> [exec] Result: -1<br></pre>
+</div>
+<p>There are 2 kinds of problems to overcome in the
+schema definition:
 </p>
-
-
-
-<h4><a class="mozTocH4" name="mozTocId419800"></a>Copying
-initial DTD comments to the generated Java classes</h4>
-
-
-
-<p> This task is performed by a small utility that I wrote (see
-source code in util/Comment.java), which simply parses all DTD files in
-the model/dtd directory and is able to dispatch each block of comments
-to the first element definition that follows the comments. Very basic
-indeed, but useful.</p>
-
-
-
-<h4><a class="mozTocH4" name="mozTocId351104"></a>Generating
-the <big style="font-style: italic; text-decoration: underline;"><code>proxymusic-1.1.jar</code></big>
-archive</h4>
-
-
-
-<p> This is the final step, where all generated and commented
-Java classes are gathered in this jar file. Any user program now has
-just to reference this archive to make use of the
-binding.&nbsp;Note: From the same 'ant' project, we generate the
-related javadoc and source archives which can then be referenced from
-another NetBeans project for example.</p>
-
-
-
-</body>
-</html>
+<ol>
+<li>One kind occurs with the definition of the
+'<span style="font-weight: bold;">barline</span>'
+type which exhibits both element
+and attribute "<span style="font-weight: bold;">segno</span>"
+as well as both
+element and attribute "<span style="font-weight: bold;">coda</span>".
+<br>
+The solution is, via an <span style="color: rgb(255, 102, 0); font-weight: bold;">external
+customization</span> (see file "<span style="font-weight: bold;">custom.xjb</span>"
+in the
+distribution), to rename attribute <span style="font-style: italic; font-weight: bold;">segno</span><span style="font-weight: bold;"> </span>as
+<span style="font-style: italic; font-weight: bold;">segnoAttribute</span><span style="font-weight: bold;"> </span>and
+similarly&nbsp;attribute
+<span style="font-style: italic; font-weight: bold;">coda</span><span style="font-weight: bold;"> </span>is renamed <span style="font-style: italic; font-weight: bold;">codaAttribute</span><span style="font-weight: bold;">.</span></li>
+<li>Another kind occurs with the definition of
+the '<span style="font-weight: bold;">credit</span>'
+type where the same element
+definition ("<span style="font-weight: bold;">link</span>",
+"<span style="font-weight: bold;">bookmark</span>")
+appears on
+several locations. This also occurs with the
+definition of '<span style="font-weight: bold;">part-list</span>'
+type which mixes
+references to "<span style="font-weight: bold;">part-group</span>"
+and
+"<span style="font-weight: bold;">score-part</span>".
+<br>
+<div style="margin-left: 40px;"> With the standard
+JAXB 2.0 included
+with my Sun JDK 1.6.0 (build 1.6.0-b105 to
+be precise) this situation is silently and
+correctly handled by the XJC utility. However, this leads to some awkward binding, which turns out to be difficult to use. <br>With the most
+recent JAXB RI (2.1.9), the XJC utility
+flags this situation as an error and does
+not generate the binding. We must manually modify the lines at
+stake to come to a simplified, yet correct,
+definition. [A specific mode of XJC, named the "simple" mode, is claimed
+to correctly address this situation among other points. Unfortunately,
+xjc, using this simple mode, gets into an endless loop when parsing the
+musicxml.xsd file].<br>The best solution, both for standard JAXB and for latest JAXB RI, is to <span style="font-weight: bold; color: rgb(255, 102, 0);">manually modify the schema</span> definition file.</div>
+</li>
+</ol>
+<h3>Modifications of the Schema</h3>
+<h4>Attributes problem</h4>
+This is fixed via external customization, thanks to this file:<br>
+<div style="margin-left: 40px; color: rgb(0, 102, 0);">
+<pre>&lt;!-- +=====================================================================+ --&gt;<br>&lt;!-- |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | --&gt;<br>&lt;!-- |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c u s t o m . x j b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | --&gt;<br>&lt;!-- |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | --&gt;<br>&lt;!-- | abstract: Customization for xjc utility&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | --&gt;<br>&lt;!-- | location: ${schema.dir}/custom.xjb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | --&gt;<br>&lt;!-- | author:&nbsp;&nbsp; herve.bitteur@laposte.net&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | --&gt;<br>&lt;!-- |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | --&gt;<br>&lt;!-- +=====================================================================+ --&gt;<br></pre>
+<pre>&lt;bindings xmlns="http://java.sun.com/xml/ns/jaxb"<br>&nbsp;&nbsp;&nbsp; &nbsp; xmlns:xs="http://www.w3.org/2001/XMLSchema"<br>&nbsp;&nbsp;&nbsp; &nbsp; version="2.0"&gt;<br><br>&nbsp;&nbsp;&nbsp; &lt;!-- In 'barline' element, bind the 'segno' attribute to Java 'segnoAttribute' --&gt;<br>&nbsp;&nbsp;&nbsp; &lt;bindings schemaLocation="xsd/musicxml.fixed.xsd"<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='segno']"&gt;<br>&nbsp;&nbsp;&nbsp; &lt;property name="segnoAttribute" /&gt;<br>&nbsp;&nbsp;&nbsp; &lt;/bindings&gt;&nbsp;&nbsp;&nbsp; <br><br>&nbsp;&nbsp;&nbsp; &lt;!-- In 'barline' element, bind the 'coda' attribute to Java 'codaAttribute' --&gt;<br>&nbsp;&nbsp;&nbsp; &lt;bindings schemaLocation="xsd/musicxml.fixed.xsd"<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='coda']"&gt;<br>&nbsp;&nbsp;&nbsp; &lt;property name="codaAttribute" /&gt;<br>&nbsp;&nbsp;&nbsp; &lt;/bindings&gt;<br>&lt;/bindings&gt;</pre>
+</div>
+<h4>Multiple definitions problem</h4>
+The reason stems in all cases from constructions which, though
+being perfectly legal&nbsp;constructions, are
+not&nbsp;correctly handled by
+the JAXB xjc tool, at least in its current version. Note that these
+modifications still allow the
+writing of all legal MusicXML files. These modifications are just
+simplifications which relax some of the restrictions imposed by the
+original schema.
+<br>
+<p>Modification of &nbsp;"<span style="font-weight: bold;">credit</span>"
+type:</p>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<th width="100">Original lines</th>
+<td style="background-color: rgb(255, 204, 204);">
+<pre>		&lt;xs:sequence&gt;<br>			&lt;xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/&gt;<br>			&lt;xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/&gt;<br>			&lt;xs:choice&gt;<br>				&lt;xs:element name="credit-image" type="image"/&gt;<br>				&lt;xs:sequence&gt;<br>					&lt;xs:element name="credit-words" type="formatted-text"/&gt;<br>					&lt;xs:sequence minOccurs="0" maxOccurs="unbounded"&gt;<br>						&lt;xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/&gt;<br>						&lt;xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/&gt;<br>						&lt;xs:element name="credit-words" type="formatted-text"/&gt;<br>					&lt;/xs:sequence&gt;<br>				&lt;/xs:sequence&gt;<br>			&lt;/xs:choice&gt;<br>		&lt;/xs:sequence&gt;<br><br></pre>
+</td>
+</tr>
+<tr>
+<th>New lines</th>
+<td style="background-color: rgb(255, 255, 153);">
+<pre>		&lt;xs:sequence minOccurs="0" maxOccurs="unbounded"&gt;<br>			&lt;xs:choice&gt;<br>			    &lt;xs:element name="link" type="link"/&gt;<br>			    &lt;xs:element name="bookmark" type="bookmark"/&gt;<br>			    &lt;xs:element name="credit-image" type="image"/&gt;<br>			    &lt;xs:element name="credit-words" type="formatted-text"/&gt;<br>			&lt;/xs:choice&gt;<br>		&lt;/xs:sequence&gt;<br><br></pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Modification of &nbsp;"<span style="font-weight: bold;">part-list</span>"
+type:</p>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<th width="100">Original lines</th>
+<td style="background-color: rgb(255, 204, 204);">
+<pre>		&lt;xs:sequence&gt;<br>			&lt;xs:group ref="part-group" minOccurs="0" maxOccurs="unbounded"/&gt;<br>			&lt;xs:group ref="score-part"/&gt;<br>			&lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;<br>				&lt;xs:group ref="part-group"/&gt;<br>				&lt;xs:group ref="score-part"/&gt;<br>			&lt;/xs:choice&gt;<br>		&lt;/xs:sequence&gt;<br><br></pre>
+</td>
+</tr>
+<tr>
+<th>New lines</th>
+<td style="background-color: rgb(255, 255, 153);">
+<pre>		&lt;xs:sequence minOccurs="0" maxOccurs="unbounded"&gt;<br>		    &lt;xs:choice&gt;<br>			&lt;xs:group ref="part-group"/&gt;<br>			&lt;xs:group ref="score-part"/&gt;<br>		    &lt;/xs:choice&gt;<br>		&lt;/xs:sequence&gt;<br><br></pre>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+</body></html>
