@@ -39,6 +39,10 @@
 		document.write(getCVSDate("$Id$"));
 	    </script>
 	    
+	    <div class="donemessage">On 28-Apr-2009, ProxyMusic license switched
+		from GPL to LGPL. Java classes were built with JAXB 2.1.3 tools.
+	    </div>
+	    
 	    <div class="donemessage">On 12-Nov-2008, ProxyMusic was updated to
 		generate MusicXML Java&nbsp;bindings directly from the <span
 		style="font-weight: bold;">schema</span> definition, rather than
@@ -53,7 +57,7 @@
 		should provide an easy way for Java programs dealing with music
 		symbolic information (such as score scanners, music editors,
 		music sequencers, etc) to read or write files in MusicXML. It is
-		released under the GNU Public License version 2.</p>
+		released under the GNU Lesser Public License.</p>
 	    <p>The binding is made available for any Java application as a
 		dedicated jar file, which handles the latest version of
 		MusicXML: 2.0</p>
@@ -164,6 +168,21 @@
 			    href="https://proxymusic.dev.java.net/source/browse/proxymusic/src/test/proxymusic/util/ScorePartTest.java?rev=HEAD&amp;view=markup">proxymusic.util.ScorePartTest.java</a>
 		    </dd>
 		    
+		    
+		    <dd class="leaf">
+			A real size example is provided by the companion
+			<a href="https://audiveris.dev.java.net">Audiveris
+			    project</a> which uses ProxyMusic to handle the
+			    marshalling of internal Java objects to a MusicXML
+			    output.
+
+			This task is handled by the class
+			<a href="https://audiveris.dev.java.net/source/browse/audiveris/src/main/omr/score/visitor/ScoreExporter.java?rev=HEAD&amp;view=markup">
+			    ScoreExporter.java</a>
+			which is helped by the class
+			<a href="https://audiveris.dev.java.net/source/browse/audiveris/src/main/omr/score/visitor/MusicXML.java?rev=HEAD&amp;view=markup">
+			    MusicXML.java</a>.
+		    </dd>
 		    
 		    <dd class="leaf">
 			A utility class
