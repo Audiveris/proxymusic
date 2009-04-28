@@ -2,8 +2,8 @@
 //                                                                            //
 //                            H e l l o W o r l d                             //
 //                                                                            //
-//  Copyright (C) Herve Bitteur 2000-2008. All rights reserved.               //
-//  This software is released under the GNU General Public License.           //
+//  Copyright (C) Herve Bitteur 2000-2009. All rights reserved.               //
+//  This software is released under the GNU Lesser General Public License.    //
 //  Please contact users@proxymusic.dev.java.net to report bugs & suggestions //
 //----------------------------------------------------------------------------//
 //

@@ -2,9 +2,9 @@
 //                                                                            //
 //                           M a r s h a l l i n g                            //
 //                                                                            //
-//  Copyright (C) Herve Bitteur 2000-2008. All rights reserved.               //
-//  This software is released under the GNU General Public License.           //
-//  Please contact users@proxymusic.dev.java.net to report bugs & suggestions //
+//  Copyright (C) Herve Bitteur 2000-2009. All rights reserved.               //
+//  This software is released under the GNU Lesser General Public License.    //
+//  Please contact users@proxymusic.dev.java.net to report bugs & suggestions.//
 //----------------------------------------------------------------------------//
 //
 package proxymusic.util;

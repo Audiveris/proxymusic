@@ -32,22 +32,16 @@
     
     <target name="default" 
 	    depends="build, javadoc"
-	    description="Build the whole project (jar + javadoc)"/>
+	    description="Build the whole project jars (binary + src + javadoc)"/>
 
     <target name="-post-clean"
             depends="-clean-gen-java" />    
 
-    <target name="get-schema"
-	    depends="proxymusic-epilog.get-schema" />
-
     <target name="-pre-compile"
-            depends="-clean-build, get-schema, -clean-gen-java, xjc, -copy-comments, -src-jar" />
-
-    <target name="-pre-jar"
-	    depends="-delete-copy" />
+            depends="-clean-build, -clean-gen-java, xjc, -src-jar" />
    
     <target name="javadoc"
-	    depends="-copy-comments,-javadoc-build,-doc-jar"
+	    depends="-javadoc-build,-doc-jar"
 	    description="Generate the javadoc archive" />
 
     <!-- =================================================================== -->
@@ -69,7 +63,6 @@
             listfiles    = "${build.compile.listfiles}"
             source       = "${build.compile.source}"
             srcdir       = "${src.dir}"
-	    excludes     = "proxymusic/examples/*.java"
             >
         </javac>
     </target>

@@ -3,8 +3,8 @@
 <score-partwise xmlns:ns2="http://www.w3.org/1999/xlink" version="2.0">
     <identification>
         <encoding>
-            <software>ProxyMusic MusicXML-2.0 JAXB-2.0 d</software>
-            <encoding-date>2008-11-14T22:53:19.937+01:00</encoding-date>
+            <software>ProxyMusic MusicXML-2.0 JAXB-2.1.3 e</software>
+            <encoding-date>2009-04-28T21:12:20.453+02:00</encoding-date>
         </encoding>
     </identification>
     <part-list>
