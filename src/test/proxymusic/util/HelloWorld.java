@@ -88,9 +88,63 @@ public class HelloWorld
         HelloWorld instance = new HelloWorld();
         instance.setUp();
         System.out.println("Calling testMarshal...");
-        instance.testMarshal();
+
+        try {
+            instance.testMarshal();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
         System.out.println("Calling testUnmarshal...");
-        instance.testUnmarshal();
+
+        try {
+            instance.testUnmarshal();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //-------------//
+    // testMarshal //
+    //-------------//
+    /**
+     * Test the marshalling of a ScorePartwise instance
+     */
+    public void testMarshal ()
+        throws Exception
+    {
+        // Get a populated score partwise
+        ScorePartwise scorePartwise = getScorePartwise();
+
+        //  Finally, marshal the proxy
+        File         xmlFile = new File(FILE_NAME);
+        OutputStream os = new FileOutputStream(xmlFile);
+
+        Marshalling.marshal(scorePartwise, os);
+        System.out.println("Score exported to " + xmlFile);
+        os.close();
+    }
+
+    //---------------//
+    // testUnmarshal //
+    //---------------//
+    /**
+     * Test the unmarshalling of a ScorePartwise instance from the XML file
+     * written by the testmarshal() method.
+     */
+    public void testUnmarshal ()
+        throws Exception
+    {
+        //  Unmarshal the proxy
+        File          xmlFile = new File(FILE_NAME);
+        InputStream   is = new FileInputStream(xmlFile);
+
+        ScorePartwise scorePartwise = Marshalling.unmarshal(is);
+        System.out.println("Score imported from " + xmlFile);
+        is.close();
+
+        // Basic check of the java objects
+        checkScorePartwise(scorePartwise);
     }
 
     //-------//
@@ -107,53 +161,102 @@ public class HelloWorld
             Marshalling.implementationVersion);
     }
 
-    //-------------//
-    // testMarshal //
-    //-------------//
+    //------------------//
+    // getScorePartwise //
+    //------------------//
     /**
-     * Test the marshalling of a ScorePartwise instance
+     * Build a ScorePartwise instance from scratch, using the same musical
+     * information as provided on MusicXML site through the HelloWorld example.
+     *
+     * @return the populated instance
      */
-    public void testMarshal ()
+    private ScorePartwise getScorePartwise ()
     {
-        try {
-            // Get a populated score partwise
-            ScorePartwise scorePartwise = getScorePartwise();
+        // Generated factory for all proxymusic elements
+        ObjectFactory factory = new ObjectFactory();
 
-            //  Finally, marshal the proxy
-            File         xmlFile = new File(FILE_NAME);
-            OutputStream os = new FileOutputStream(xmlFile);
+        // Allocate the score partwise
+        ScorePartwise scorePartwise = factory.createScorePartwise();
 
-            Marshalling.marshal(scorePartwise, os);
-            System.out.println("Score exported to " + xmlFile);
-            os.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+        // No Version, we leave this to ProxyMusic
+        ///scorePartwise.setVersion("1.1");
 
-    //---------------//
-    // testUnmarshal //
-    //---------------//
-    /**
-     * Test the unmarshalling of a ScorePartwise instance from the XML file
-     * written by the testmarshal() method.
-     */
-    public void testUnmarshal ()
-    {
-        //  Unmarshal the proxy
-        try {
-            File          xmlFile = new File(FILE_NAME);
-            InputStream   is = new FileInputStream(xmlFile);
+        // PartList
+        PartList partList = factory.createPartList();
+        scorePartwise.setPartList(partList);
 
-            ScorePartwise scorePartwise = Marshalling.unmarshal(is);
-            System.out.println("Score imported from " + xmlFile);
-            is.close();
+        // Scorepart in partList
+        ScorePart scorePart = factory.createScorePart();
+        partList.getPartGroupOrScorePart()
+                .add(scorePart);
+        scorePart.setId("P1");
 
-            // Basic check of the java objects
-            checkScorePartwise(scorePartwise);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        PartName partName = factory.createPartName();
+        scorePart.setPartName(partName);
+        partName.setValue("Music");
+
+        // ScorePart in scorePartwise
+        ScorePartwise.Part part = factory.createScorePartwisePart();
+        scorePartwise.getPart()
+                     .add(part);
+        part.setId(scorePart);
+
+        // Measure
+        Measure measure = factory.createScorePartwisePartMeasure();
+        part.getMeasure()
+            .add(measure);
+        measure.setNumber("1");
+
+        // Attributes
+        Attributes attributes = factory.createAttributes();
+        measure.getNoteOrBackupOrForward()
+               .add(attributes);
+
+        // Divisions
+        attributes.setDivisions(new BigDecimal(1));
+
+        // Key
+        Key key = factory.createKey();
+        attributes.getKey()
+                  .add(key);
+        key.setFifths(new BigInteger("0"));
+
+        // Time
+        Time time = factory.createTime();
+        attributes.getTime()
+                  .add(time);
+        time.getBeatsAndBeatType()
+            .add(factory.createTimeBeats("4"));
+        time.getBeatsAndBeatType()
+            .add(factory.createTimeBeatType("4"));
+
+        // Clef
+        Clef clef = factory.createClef();
+        attributes.getClef()
+                  .add(clef);
+        clef.setSign(ClefSign.G);
+        clef.setLine(new BigInteger("2"));
+
+        // Note
+        Note note = factory.createNote();
+        measure.getNoteOrBackupOrForward()
+               .add(note);
+
+        // Pitch
+        Pitch pitch = factory.createPitch();
+        note.setPitch(pitch);
+        pitch.setStep(Step.C);
+        pitch.setOctave(4);
+
+        // Duration
+        note.setDuration(new BigDecimal(4));
+
+        // Type
+        NoteType type = factory.createNoteType();
+        type.setValue("whole");
+        note.setType(type);
+
+        return scorePartwise;
     }
 
     //-----------------//
@@ -241,28 +344,15 @@ public class HelloWorld
         assertNotNull(note);
         Dumper.dump(note);
 
-        for (JAXBElement<?> elem : note.getContent()) {
-            Dumper.dump(elem);
+        Pitch pitch = note.getPitch();
+        assertEquals(noteData.pitchStep, pitch.getStep());
+        assertEquals(noteData.pitchOctave, pitch.getOctave());
 
-            java.lang.String name = elem.getName()
-                                        .getLocalPart();
+        BigDecimal duration = note.getDuration();
+        assertEquals(noteData.duration, duration);
 
-            if (name.equals("pitch")) {
-                Pitch pitch = (Pitch) elem.getValue();
-                assertEquals(noteData.pitchStep, pitch.getStep());
-                assertEquals(noteData.pitchOctave, pitch.getOctave());
-            } else if (name.equals("duration")) {
-                BigDecimal duration = (BigDecimal) elem.getValue();
-                assertEquals(noteData.duration, duration);
-            } else if (name.equals("type")) {
-                NoteType type = (NoteType) elem.getValue();
-                assertEquals(noteData.type, type.getValue());
-            } else {
-                fail(
-                    "Unexpected note item " + "name=" + name + " value=" +
-                    elem.getValue());
-            }
-        }
+        NoteType type = note.getType();
+        assertEquals(noteData.type, type.getValue());
     }
 
     //-----------//
@@ -280,28 +370,6 @@ public class HelloWorld
 
         for (int i = 0; i < partData.measures.size(); i++) {
             checkMeasure(measures.get(i), partData.measures.get(i));
-        }
-    }
-
-    //--------------------//
-    // checkScorePartwise //
-    //--------------------//
-    private void checkScorePartwise (ScorePartwise scr)
-    {
-        Dumper.dump(scr);
-        assertEquals(versionData, scr.getVersion());
-
-        Identification identification = scr.getIdentification();
-        assertNotNull(identification);
-        Dumper.dump(identification);
-
-        checkPartList(scr.getPartList());
-
-        List<Part> parts = scr.getPart();
-        assertTrue(partNb == parts.size());
-
-        for (int i = 0; i < partNb; i++) {
-            checkPart(parts.get(i), partData[i]);
         }
     }
 
@@ -334,105 +402,26 @@ public class HelloWorld
         assertEquals(partData.name, scorePart.getPartName().getValue());
     }
 
-    //------------------//
-    // getScorePartwise //
-    //------------------//
-    /**
-     * Build a ScorePartwise instance from scratch, using the same musical
-     * information as provided on MusicXML site through the HelloWorld example.
-     *
-     * @return the populated instance
-     */
-    private ScorePartwise getScorePartwise ()
+    //--------------------//
+    // checkScorePartwise //
+    //--------------------//
+    private void checkScorePartwise (ScorePartwise scr)
     {
-        // Generated factory for all proxymusic elements
-        ObjectFactory factory = new ObjectFactory();
+        Dumper.dump(scr);
+        assertEquals(versionData, scr.getVersion());
 
-        // Allocate the score partwise
-        ScorePartwise scorePartwise = factory.createScorePartwise();
+        Identification identification = scr.getIdentification();
+        assertNotNull(identification);
+        Dumper.dump(identification);
 
-        // No Version, we leave this to ProxyMusic
-        ///scorePartwise.setVersion("1.1");
+        checkPartList(scr.getPartList());
 
-        // PartList
-        PartList partList = factory.createPartList();
-        scorePartwise.setPartList(partList);
+        List<Part> parts = scr.getPart();
+        assertTrue(partNb == parts.size());
 
-        // Scorepart in partList
-        ScorePart scorePart = factory.createScorePart();
-        partList.getPartGroupOrScorePart()
-                .add(scorePart);
-        scorePart.setId("P1");
-
-        PartName partName = factory.createPartName();
-        scorePart.setPartName(partName);
-        partName.setValue("Music");
-
-        // ScorePart in scorePartwise
-        ScorePartwise.Part part = factory.createScorePartwisePart();
-        scorePartwise.getPart()
-                     .add(part);
-        part.setId(scorePart);
-
-        // Measure
-        Measure measure = factory.createScorePartwisePartMeasure();
-        part.getMeasure()
-            .add(measure);
-        measure.setNumber("1");
-
-        // Attributes
-        Attributes attributes = factory.createAttributes();
-        measure.getNoteOrBackupOrForward()
-               .add(attributes);
-
-        // Divisions
-        attributes.setDivisions(new BigDecimal(1));
-
-        // Key
-        Key key = factory.createKey();
-        attributes.getKey()
-                  .add(key);
-        key.setFifths(new BigInteger("0"));
-
-        // Time
-        Time time = factory.createTime();
-        attributes.getTime()
-                  .add(time);
-        time.getBeatsAndBeatType()
-            .add(factory.createTimeBeats("4"));
-        time.getBeatsAndBeatType()
-            .add(factory.createTimeBeatType("4"));
-
-        // Clef
-        Clef clef = factory.createClef();
-        attributes.getClef()
-                  .add(clef);
-        clef.setSign(ClefSign.G);
-        clef.setLine(new BigInteger("2"));
-
-        // Note
-        Note note = factory.createNote();
-        measure.getNoteOrBackupOrForward()
-               .add(note);
-
-        // Pitch
-        Pitch pitch = factory.createPitch();
-        note.getContent()
-            .add(factory.createNotePitch(pitch));
-        pitch.setStep(Step.C);
-        pitch.setOctave(4);
-
-        // Duration
-        note.getContent()
-            .add(factory.createNoteDuration(new BigDecimal(4)));
-
-        // Type
-        NoteType type = factory.createNoteType();
-        type.setValue("whole");
-        note.getContent()
-            .add(factory.createNoteType(type));
-
-        return scorePartwise;
+        for (int i = 0; i < partNb; i++) {
+            checkPart(parts.get(i), partData[i]);
+        }
     }
 
     //~ Inner Classes ----------------------------------------------------------
