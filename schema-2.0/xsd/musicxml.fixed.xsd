@@ -2496,15 +2496,21 @@ The text attribute describes how the kind should be spelled if not using symbols
 
 	<xs:complexType name="metronome">
 		<xs:annotation>
-			<xs:documentation>The metronome type represents metronome marks and other metric relationships. The beat-unit group and per-minute element specify regular metronome marks. The metronome-note and metronome-relation elements allow for the specification of more complicated metric relationships, such as swing tempo marks where two eighths are equated to a quarter note / eighth note triplet. The parentheses attribute indicates whether or not to put the metronome mark in parentheses; its value is no if not specified. </xs:documentation>
+			<xs:documentation>&lt;B&gt;[JAXB: simplified definition]&lt;/B&gt;&lt;BR/&gt;The metronome type represents metronome marks and other metric relationships. The beat-unit group and per-minute element specify regular metronome marks. The metronome-note and metronome-relation elements allow for the specification of more complicated metric relationships, such as swing tempo marks where two eighths are equated to a quarter note / eighth note triplet. The parentheses attribute indicates whether or not to put the metronome mark in parentheses; its value is no if not specified. </xs:documentation>
 		</xs:annotation>
 		<xs:choice>
 			<xs:sequence>
+			<!-- HB-old
 				<xs:group ref="beat-unit"/>
 				<xs:choice>
 					<xs:element name="per-minute" type="per-minute"/>
 					<xs:group ref="beat-unit"/>
 				</xs:choice>
+			-->
+			<!-- HB-start -->
+				<xs:group ref="beat-unit" maxOccurs="2"/>
+				<xs:element name="per-minute" type="per-minute" maxOccurs="1"/>
+			<!-- HB-stop -->
 			</xs:sequence>
 			<xs:sequence>
 				<xs:element name="metronome-note" type="metronome-note" maxOccurs="unbounded"/>
@@ -2514,7 +2520,7 @@ The text attribute describes how the kind should be spelled if not using symbols
 							<xs:documentation>The metronome-relation element describes the relationship symbol that goes between the two sets of metronome-note elements. The currently allowed value is equals, but this may expand in future versions. If the element is empty, the equals value is used.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="metronome-note" type="metronome-note" maxOccurs="unbounded"/>
+					<xs:element name="related-metronome-note" type="metronome-note" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:sequence>
 		</xs:choice>
@@ -3303,10 +3309,11 @@ Note that the beam number does not distinguish sets of beams that overlap, as it
 
 	<xs:complexType name="lyric">
 		<xs:annotation>
-			<xs:documentation>The lyric type represents text underlays for lyrics, based on Humdrum with support for other formats.  Two text elements that are not separated by an elision element are part of the same syllable, but may have different text formatting. The MusicXML 2.0 schema is more strict than the 2.0 DTD in enforcing this by disallowing a second syllabic element unless preceded by an elision element. The lyric number indicates multiple lines, though a name can be used as well (as in Finale's verse / chorus / section specification). Justification is center by default; placement is below by default.</xs:documentation>
+			<xs:documentation>&lt;B&gt;[JAXB: simplified definition]&lt;/B&gt;&lt;BR/&gt;The lyric type represents text underlays for lyrics, based on Humdrum with support for other formats.  Two text elements that are not separated by an elision element are part of the same syllable, but may have different text formatting. The MusicXML 2.0 schema is more strict than the 2.0 DTD in enforcing this by disallowing a second syllabic element unless preceded by an elision element. The lyric number indicates multiple lines, though a name can be used as well (as in Finale's verse / chorus / section specification). Justification is center by default; placement is below by default.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:choice>
+			<!-- HB-old
 				<xs:sequence>
 					<xs:element name="syllabic" type="syllabic" minOccurs="0"/>
 					<xs:element name="text" type="text-element-data"/>
@@ -3320,6 +3327,18 @@ Note that the beam number does not distinguish sets of beams that overlap, as it
 					<xs:element name="extend" type="extend" minOccurs="0"/>
 				</xs:sequence>
 				<xs:element name="extend" type="extend"/>
+			-->
+			<!-- HB-start -->
+				<xs:sequence>
+					<xs:sequence minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="elision" type="elision" minOccurs="0"/>
+						<xs:element name="syllabic" type="syllabic" minOccurs="0"/>
+						<xs:element name="text" type="text-element-data" minOccurs="0"/>
+					</xs:sequence>
+					<xs:element name="extend" type="extend" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			<!-- HB-stop -->
+				
 				<xs:element name="laughing" type="empty">
 					<xs:annotation>
 						<xs:documentation>The laughing element is taken from Humdrum.</xs:documentation>
@@ -3400,11 +3419,12 @@ Note that the beam number does not distinguish sets of beams that overlap, as it
 
 	<xs:complexType name="note">
 		<xs:annotation>
-			<xs:documentation>Notes are the most common type of MusicXML data. The MusicXML format keeps the MuseData distinction between elements used for sound information and elements used for notation information (e.g., tie is used for sound, tied for notation). Thus grace notes do not have a duration element. Cue notes have a duration element, as do forward elements, but no tie elements. Having these two types of information available can make interchange considerably easier, as some programs handle one type of information much more readily than the other. 
+			<xs:documentation>&lt;B&gt;[JAXB: simplified definition]&lt;/B&gt;&lt;BR/&gt;Notes are the most common type of MusicXML data. The MusicXML format keeps the MuseData distinction between elements used for sound information and elements used for notation information (e.g., tie is used for sound, tied for notation). Thus grace notes do not have a duration element. Cue notes have a duration element, as do forward elements, but no tie elements. Having these two types of information available can make interchange considerably easier, as some programs handle one type of information much more readily than the other. 
 	
 The dynamics and end-dynamics attributes correspond to MIDI 1.0's Note On and Note Off velocities, respectively. They are expressed in terms of percentages of the default forte value (90 for MIDI 1.0). The attack and release attributes are used to alter the staring and stopping time of the note from when it would otherwise occur based on the flow of durations - information that is specific to a performance. They are expressed in terms of divisions, either positive or negative. A note that starts a tie should not have a release attribute, and a note that stops a tie should not have an attack attribute. If a note is played only one time through a repeat, the time-only attribute shows which time to play the note. The pizzicato attribute is used when just this note is sounded pizzicato, vs. the pizzicato element which changes overall playback between pizzicato and arco.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<!-- HB-old
 			<xs:choice>
 				<xs:sequence>
 					<xs:element name="grace" type="grace"/>
@@ -3426,6 +3446,20 @@ The dynamics and end-dynamics attributes correspond to MIDI 1.0's Note On and No
 					<xs:element name="tie" type="tie" minOccurs="0" maxOccurs="2"/>
 				</xs:sequence>
 			</xs:choice>
+			-->
+			<!-- HB-start -->
+				<xs:sequence>
+					<xs:element name="grace" type="grace" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="cue" type="empty" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>The cue element indicates the presence of a cue note.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:group ref="full-note"/>
+					<xs:group ref="duration" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="tie" type="tie" minOccurs="0" maxOccurs="2"/>
+				</xs:sequence>
+			<!-- HB-stop -->
 			<xs:element name="instrument" type="instrument" minOccurs="0"/>
 			<xs:group ref="editorial-voice"/>
 			<xs:element name="type" type="note-type" minOccurs="0"/>
@@ -3899,7 +3933,7 @@ By default, a series of credit-words elements within a single credit element fol
 	
 The page attribute for the credit element, new in Version 2.0, specifies the page number where the credit should appear. This is an integer value that starts with 1 for the first page. Its value is 1 by default. Since credits occur before the music, these page numbers do not refer to the page numbering specified by the print element's page-number attribute.</xs:documentation>
 		</xs:annotation>
-		    <!-- HB
+		<!-- HB-old
 		<xs:sequence>
 			<xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/>
@@ -3914,7 +3948,9 @@ The page attribute for the credit element, new in Version 2.0, specifies the pag
 					</xs:sequence>
 				</xs:sequence>
 			</xs:choice>
-		    -->
+		</xs:sequence>
+		-->
+		<!-- HB-start -->
 		<xs:sequence minOccurs="0" maxOccurs="unbounded">
 			<xs:choice>
 			    <xs:element name="link" type="link"/>
@@ -3923,6 +3959,7 @@ The page attribute for the credit element, new in Version 2.0, specifies the pag
 			    <xs:element name="credit-words" type="formatted-text"/>
 			</xs:choice>
 		</xs:sequence>
+		<!-- HB-stop -->
 		<xs:attribute name="page" type="xs:positiveInteger"/>
 	</xs:complexType>
 
@@ -4089,7 +4126,7 @@ A part-group element is not needed for a single multi-staff part. By default, mu
 		<xs:annotation>
 			<xs:documentation>&lt;B&gt;[JAXB: simplified definition]&lt;/B&gt;&lt;BR/&gt;The part-list identifies the different musical parts in this movement. Each part has an ID that is used later within the musical data. Since parts may be encoded separately and combined later, identification elements are present at both the score and score-part levels. There must be at least one score-part, combined as desired with part-group elements that indicate braces and brackets. Parts are ordered from top to bottom in a score based on the order in which they appear in the part-list.</xs:documentation>
 		</xs:annotation>
-	    <!-- HB
+		<!-- HB-old
 		<xs:sequence>
 			<xs:group ref="part-group" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:group ref="score-part"/>
@@ -4099,12 +4136,14 @@ A part-group element is not needed for a single multi-staff part. By default, mu
 			</xs:choice>
 		</xs:sequence>
 		 -->
+		<!-- HB-start -->
 		<xs:sequence minOccurs="0" maxOccurs="unbounded">
 		    <xs:choice>
 			<xs:group ref="part-group"/>
 			<xs:group ref="score-part"/>
 		    </xs:choice>
 		</xs:sequence>
+		<!-- HB-stop -->
 	</xs:complexType>
 	
 	<xs:complexType name="part-name">

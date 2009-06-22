@@ -53,11 +53,7 @@ target runs the '<span style="font-style: italic;">build</span>'
 and '<span style="font-style: italic;">javadoc</span>'
 targets in sequence.<br>
 In the following explanations, we'll assume the basic Ant approach.<br>
-<br>
-The full generation is launched by the simple command in the '<span style="text-decoration: underline;">src</span>'
-directory:<br>
-<pre style="margin-left: 40px;"><span style="color: rgb(153, 102, 51);">$&gt; </span><span style="font-weight: bold; color: rgb(153, 102, 51);">ant</span><br style="color: rgb(153, 102, 51);"><span style="color: rgb(153, 102, 51);"></span></pre>
-Here is the output of an "<span style="font-style: italic;">ant
+<br>Here is the output of an "<span style="font-style: italic;">ant
 -projecthelp</span>" command launched from the 'src' directory:<br>
 <div style="margin-left: 40px; color: rgb(0, 102, 0);">
 <pre> Build, test, run and document the proxymusic project via Emacs or ant.<br>	This 'build.xml' file is located in the 'src' subdirectory to be<br>	automatically picked up by Emacs, or used directly with 'ant'<br> <br>Main targets:<br><br> build Generate the binary and source archives.<br> clean Clean build products.<br> core Pack only the core of the project<br> default Build the whole project jars (binary + src + javadoc)<br> javadoc Generate the javadoc archive<br> pack Pack up the whole project<br> test-all Run all defined tests<br> version Print the configured version parameters<br>Default target: default<br>	</pre>
@@ -77,7 +73,7 @@ Here is the current content of this
 property file, which is here set for MusicXML version 2.0 and JAXB
 version 2.0:<br>
 <div style="margin-left: 40px; color: rgb(0, 102, 0);">
-<pre># Manifest Properties -----------------------------------------------------<br>spec.title = ProxyMusic<br><br># JAXB Properties ---------------------------------------------------------<br>jaxb.version = 2.0<br><br># MusicXML Properties -----------------------------------------------------<br>spec.version = 2.0<br>impl.version = MusicXML-${spec.version} JAXB-${jaxb.version} d<br>	</pre>
+<pre><br># Manifest Properties -----------------------------------------------------<br>spec.title              = ProxyMusic<br><br># JAXB Properties ---------------------------------------------------------<br>jaxb.version            = 2.1.3<br><br># MusicXML Properties -----------------------------------------------------<br>spec.version            = 2.0<br>impl.version            = MusicXML-${spec.version} JAXB-${jaxb.version} f<br>	</pre>
 </div>
 </li>
 <li>Make sure there is a folder rooted at the proxymusic
@@ -166,7 +162,60 @@ modifications still allow the
 writing of all legal MusicXML files. These modifications are just
 simplifications which relax some of the restrictions imposed by the
 original schema.
-<br>
+<br><p>Modification of &nbsp;"<span style="font-weight: bold;">metronome</span>"
+type:</p>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<th width="100">Original lines</th>
+<td style="background-color: rgb(255, 204, 204);">
+<pre>				&lt;xs:group ref="beat-unit"/&gt;<br>				&lt;xs:choice&gt;<br>					&lt;xs:element name="per-minute" type="per-minute"/&gt;<br>					&lt;xs:group ref="beat-unit"/&gt;<br>				&lt;/xs:choice&gt;<br></pre>
+</td>
+</tr>
+<tr>
+<th>New lines</th>
+<td style="background-color: rgb(255, 255, 153);">
+<pre>				&lt;xs:group ref="beat-unit" maxOccurs="2"/&gt;<br>				&lt;xs:element name="per-minute" type="per-minute" maxOccurs="1"/&gt;<br></pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Modification of &nbsp;"<span style="font-weight: bold;">lyric</span>"
+type:</p>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<th width="100">Original lines</th>
+<td style="background-color: rgb(255, 204, 204);">
+<pre>                                &lt;xs:sequence&gt;<br>                                        &lt;xs:element name="syllabic" type="syllabic" minOccurs="0"/&gt;<br>                                        &lt;xs:element name="text" type="text-element-data"/&gt;<br>                                        &lt;xs:sequence minOccurs="0" maxOccurs="unbounded"&gt;<br>                                                &lt;xs:sequence minOccurs="0"&gt;<br>                                                        &lt;xs:element name="elision" type="elision"/&gt;<br>                                                        &lt;xs:element name="syllabic" type="syllabic" minOccurs="0"/&gt;<br>                                                &lt;/xs:sequence&gt;<br>                                                &lt;xs:element name="text" type="text-element-data"/&gt;<br>                                        &lt;/xs:sequence&gt;<br>                                        &lt;xs:element name="extend" type="extend" minOccurs="0"/&gt;<br>                                &lt;/xs:sequence&gt;<br>                                &lt;xs:element name="extend" type="extend"/&gt;<br></pre>
+</td>
+</tr>
+<tr>
+<th>New lines</th>
+<td style="background-color: rgb(255, 255, 153);">
+<pre>                                &lt;xs:sequence&gt;<br>                                        &lt;xs:sequence minOccurs="0" maxOccurs="unbounded"&gt;<br>                                                &lt;xs:element name="elision" type="elision" minOccurs="0"/&gt;<br>                                                &lt;xs:element name="syllabic" type="syllabic" minOccurs="0"/&gt;<br>                                                &lt;xs:element name="text" type="text-element-data" minOccurs="0"/&gt;<br>                                        &lt;/xs:sequence&gt;<br>                                        &lt;xs:element name="extend" type="extend" minOccurs="0" maxOccurs="1"/&gt;<br>                                &lt;/xs:sequence&gt;<br></pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Modification of &nbsp;"<span style="font-weight: bold;">note</span>"
+type:</p>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<th width="100">Original lines</th>
+<td style="background-color: rgb(255, 204, 204);">
+<pre>                        &lt;xs:choice&gt;<br>                                &lt;xs:sequence&gt;<br>                                        &lt;xs:element name="grace" type="grace"/&gt;<br>                                        &lt;xs:group ref="full-note"/&gt;<br>                                        &lt;xs:element name="tie" type="tie" minOccurs="0" maxOccurs="2"/&gt;<br>                                &lt;/xs:sequence&gt;<br>                                &lt;xs:sequence&gt;<br>                                        &lt;xs:element name="cue" type="empty"&gt;<br>                                                &lt;xs:annotation&gt;<br>                                                        &lt;xs:documentation&gt;The cue element indicates the presence of a cue note.&lt;/xs:documentation&gt;<br>                                                &lt;/xs:annotation&gt;<br>                                        &lt;/xs:element&gt;<br>                                        &lt;xs:group ref="full-note"/&gt;<br>                                        &lt;xs:group ref="duration"/&gt;<br>                                &lt;/xs:sequence&gt;<br>                                &lt;xs:sequence&gt;<br>                                        &lt;xs:group ref="full-note"/&gt;<br>                                        &lt;xs:group ref="duration"/&gt;<br>                                        &lt;xs:element name="tie" type="tie" minOccurs="0" maxOccurs="2"/&gt;<br>                                &lt;/xs:sequence&gt;<br>                        &lt;/xs:choice&gt;<br></pre>
+</td>
+</tr>
+<tr>
+<th>New lines</th>
+<td style="background-color: rgb(255, 255, 153);">
+<pre>                                &lt;xs:sequence&gt;<br>                                        &lt;xs:element name="grace" type="grace" minOccurs="0" maxOccurs="1"/&gt;<br>                                        &lt;xs:element name="cue" type="empty" minOccurs="0" maxOccurs="1"&gt;<br>                                                &lt;xs:annotation&gt;<br>                                                        &lt;xs:documentation&gt;The cue element indicates the presence of a cue note.&lt;/xs:documentation&gt;<br>                                                &lt;/xs:annotation&gt;<br>                                        &lt;/xs:element&gt;<br>                                        &lt;xs:group ref="full-note"/&gt;<br>                                        &lt;xs:group ref="duration" minOccurs="0" maxOccurs="1"/&gt;<br>                                        &lt;xs:element name="tie" type="tie" minOccurs="0" maxOccurs="2"/&gt;<br>                                &lt;/xs:sequence&gt;<br></pre>
+</td>
+</tr>
+</tbody>
+</table>
 <p>Modification of &nbsp;"<span style="font-weight: bold;">credit</span>"
 type:</p>
 <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
@@ -174,13 +223,13 @@ type:</p>
 <tr>
 <th width="100">Original lines</th>
 <td style="background-color: rgb(255, 204, 204);">
-<pre>		&lt;xs:sequence&gt;<br>			&lt;xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/&gt;<br>			&lt;xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/&gt;<br>			&lt;xs:choice&gt;<br>				&lt;xs:element name="credit-image" type="image"/&gt;<br>				&lt;xs:sequence&gt;<br>					&lt;xs:element name="credit-words" type="formatted-text"/&gt;<br>					&lt;xs:sequence minOccurs="0" maxOccurs="unbounded"&gt;<br>						&lt;xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/&gt;<br>						&lt;xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/&gt;<br>						&lt;xs:element name="credit-words" type="formatted-text"/&gt;<br>					&lt;/xs:sequence&gt;<br>				&lt;/xs:sequence&gt;<br>			&lt;/xs:choice&gt;<br>		&lt;/xs:sequence&gt;<br><br></pre>
+<pre>                &lt;xs:sequence&gt;<br>                        &lt;xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/&gt;<br>                        &lt;xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/&gt;<br>                        &lt;xs:choice&gt;<br>                                &lt;xs:element name="credit-image" type="image"/&gt;<br>                                &lt;xs:sequence&gt;<br>                                        &lt;xs:element name="credit-words" type="formatted-text"/&gt;<br>                                        &lt;xs:sequence minOccurs="0" maxOccurs="unbounded"&gt;<br>                                                &lt;xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/&gt;<br>                                                &lt;xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/&gt;<br>                                                &lt;xs:element name="credit-words" type="formatted-text"/&gt;<br>                                        &lt;/xs:sequence&gt;<br>                                &lt;/xs:sequence&gt;<br>                        &lt;/xs:choice&gt;<br>                &lt;/xs:sequence&gt;<br></pre>
 </td>
 </tr>
 <tr>
 <th>New lines</th>
 <td style="background-color: rgb(255, 255, 153);">
-<pre>		&lt;xs:sequence minOccurs="0" maxOccurs="unbounded"&gt;<br>			&lt;xs:choice&gt;<br>			    &lt;xs:element name="link" type="link"/&gt;<br>			    &lt;xs:element name="bookmark" type="bookmark"/&gt;<br>			    &lt;xs:element name="credit-image" type="image"/&gt;<br>			    &lt;xs:element name="credit-words" type="formatted-text"/&gt;<br>			&lt;/xs:choice&gt;<br>		&lt;/xs:sequence&gt;<br><br></pre>
+<pre>                &lt;xs:sequence minOccurs="0" maxOccurs="unbounded"&gt;<br>                        &lt;xs:choice&gt;<br>                            &lt;xs:element name="link" type="link"/&gt;<br>                            &lt;xs:element name="bookmark" type="bookmark"/&gt;<br>                            &lt;xs:element name="credit-image" type="image"/&gt;<br>                            &lt;xs:element name="credit-words" type="formatted-text"/&gt;<br>                        &lt;/xs:choice&gt;<br>                &lt;/xs:sequence&gt;<br></pre>
 </td>
 </tr>
 </tbody>
