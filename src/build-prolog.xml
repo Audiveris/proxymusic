@@ -27,7 +27,7 @@
 
     <!-- Finally, get all default property values -->
     <property file="${basedir}/src/build.default.properties" />
-
+    
     <!-- =================================================================== -->
     
     <target name="default" 
@@ -50,7 +50,7 @@
     <!--  C O M P I L E  -->
     <!-- =============== -->
     <target name="compile"
-	    depends="init, -pre-compile">
+ 	    depends="init, -pre-compile">
 	
         <mkdir dir="${build.classes.dir}"/>
         
@@ -65,6 +65,7 @@
             srcdir       = "${src.dir}"
             >
         </javac>
+	
     </target>
     
     <!-- ================================================= -->
