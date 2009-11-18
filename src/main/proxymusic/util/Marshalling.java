@@ -14,7 +14,7 @@ import org.w3c.dom.Node;
 import proxymusic.*;
 
 import java.io.*;
-import java.lang.String;
+import java.lang.String; // Don't remove this line!
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
@@ -63,7 +63,7 @@ public class Marshalling
                                                " \"-//Recordare//DTD MusicXML " +
                                                specificationVersion +
                                                " Partwise//EN\"" +
-                                               " \"http://www.musicxml.org/dtds/partwise.dtd\">";
+                                               " \"http://www.musicxml.org/dtds/partwise.dtd\">\n";
 
     //~ Constructors -----------------------------------------------------------
 
@@ -119,8 +119,7 @@ public class Marshalling
     //---------//
     /**
      * Marshal the hierarchy rooted at provided ScorePartwise instance to an
-     * OutputStream
-     * (The output stream is not closed by this method)
+     * OutputStream (which is not closed by this method).
      *
      * @param scorePartwise the root element
      * @param os the output stream
@@ -135,16 +134,33 @@ public class Marshalling
     {
         annotate(scorePartwise, injectSignature);
 
-        // Take care of first statements
-        os.write(XML_LINE.getBytes());
-        os.write(DOCTYPE_LINE.getBytes());
-
-        // Then the object to marshal
+        /* Marshal to temporary data */
         Marshaller m = getContext()
                            .createMarshaller();
         m.setProperty(Marshaller.JAXB_FRAGMENT, true);
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        m.marshal(scorePartwise, os);
+
+        StringWriter stringWriter = new StringWriter();
+        m.marshal(scorePartwise, stringWriter);
+        stringWriter.flush();
+
+        String data = stringWriter.toString();
+
+        /** Postprocessing (to remove the xmlns:ns2 stuff) */
+        data = stringWriter.toString()
+                           .replaceAll(
+            " xmlns:ns2=\"http://www.w3.org/1999/xlink\"",
+            "");
+
+        /** Finally, write out data to the stream */
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(os);
+        outputStreamWriter.write(XML_LINE);
+        outputStreamWriter.write(DOCTYPE_LINE);
+        outputStreamWriter.write(data);
+
+        outputStreamWriter.flush();
+        outputStreamWriter.close();
+        stringWriter.close();
 
         // We don't close os
     }
@@ -153,15 +169,13 @@ public class Marshalling
     // marshal //
     //---------//
     /**
-     * Marshal the hierarchy rooted at provided ScorePartwise instance to an
-     * OutputStream
-     * (The output stream is not closed by this method)
+     * Marshal the hierarchy rooted at provided ScorePartwise instance directly
+     * to a DOM node.
      *
      * @param scorePartwise the root element
      * @param node the DOM node where elements must be added
      * @param injectSignature false if ProxyMusic encoder must not be referenced
      * @exception JAXBException if marshalling goes wrong
-     * @exception IOException for output error
      */
     public static void marshal (ScorePartwise scorePartwise,
                                 Node          node,
@@ -174,7 +188,6 @@ public class Marshalling
         Marshaller m = getContext()
                            .createMarshaller();
         m.setProperty(Marshaller.JAXB_FRAGMENT, true);
-        ///m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         m.marshal(scorePartwise, node);
     }
 
@@ -202,6 +215,12 @@ public class Marshalling
     //----------//
     // annotate //
     //----------//
+    /**
+     * Annotate the scorePartwise tree with information about MusicXML version
+     * and, if so desired, with information about ProxyMusic and generation date
+     * @param scorePartwise the tree to annotate
+     * @param injectSignature if true, ProxyMusic information is added
+     */
     private static void annotate (ScorePartwise scorePartwise,
                                   boolean       injectSignature)
     {
@@ -239,7 +258,6 @@ public class Marshalling
                     specificationTitle + " " + implementationVersion));
 
             // [Encoding]/EncodingDate
-            ///encodingDate.setContent(java.lang.String.format("%tF", new Date()));
             try {
                 encoding.getEncodingDateOrEncoderOrSoftware()
                         .add(
