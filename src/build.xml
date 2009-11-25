@@ -14,18 +14,17 @@
         Build, test, run and document the proxymusic project via Emacs or ant.
         $Id$
 
+	Typical sequence is: ant clean default core pack
+
 	This 'build.xml' file is located in the 'src' subdirectory to be
 	automatically picked up by Emacs, or used directly with 'ant'
     </description>
     
-    <!-- Prolog -->
+    <!-- Common Prolog -->
     <import file="${basedir}/src/build-prolog.xml"/>
 
-    <!-- Load Emacs/Ant implementation targets -->
+    <!-- Specific Emacs/Ant implementation targets -->
     <import file="${basedir}/src/build-impl.xml"/>
-    
-    <!-- Load internal targets common to Emacs and NetBeans -->
-    <import file="${basedir}/src/build-epilog.xml"/>
     
 </project>
 				   

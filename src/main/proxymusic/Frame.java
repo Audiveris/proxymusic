@@ -32,10 +32,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="first-fret" type="{}first-fret" minOccurs="0"/>
  *         &lt;element name="frame-note" type="{}frame-note" maxOccurs="unbounded"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}valign"/>
- *       &lt;attGroup ref="{}halign"/>
  *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}position"/>
+ *       &lt;attGroup ref="{}halign"/>
+ *       &lt;attGroup ref="{}valign"/>
  *       &lt;attribute name="height" type="{}tenths" />
  *       &lt;attribute name="width" type="{}tenths" />
  *     &lt;/restriction>
@@ -69,10 +69,6 @@ public class Frame {
     @XmlAttribute
     protected BigDecimal width;
     @XmlAttribute
-    protected Valign valign;
-    @XmlAttribute
-    protected LeftCenterRight halign;
-    @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
     @XmlAttribute(name = "default-x")
@@ -83,6 +79,10 @@ public class Frame {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
+    @XmlAttribute
+    protected LeftCenterRight halign;
+    @XmlAttribute
+    protected Valign valign;
 
     /**
      * Gets the value of the frameStrings property.
@@ -234,54 +234,6 @@ public class Frame {
     }
 
     /**
-     * Gets the value of the valign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Valign }
-     *     
-     */
-    public Valign getValign() {
-        return valign;
-    }
-
-    /**
-     * Sets the value of the valign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Valign }
-     *     
-     */
-    public void setValign(Valign value) {
-        this.valign = value;
-    }
-
-    /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
-    }
-
-    /**
      * Gets the value of the color property.
      * 
      * @return
@@ -399,6 +351,54 @@ public class Frame {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
+     * Gets the value of the valign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Valign }
+     *     
+     */
+    public Valign getValign() {
+        return valign;
+    }
+
+    /**
+     * Sets the value of the valign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Valign }
+     *     
+     */
+    public void setValign(Valign value) {
+        this.valign = value;
     }
 
 }

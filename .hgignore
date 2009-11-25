@@ -1,2 +1,8 @@
 build
 dist
+nbproject
+\.orig\..*$
+\.orig$
+\.chg\..*$
+\.rej$
+\.conflict\~$

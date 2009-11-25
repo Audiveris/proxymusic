@@ -70,42 +70,34 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Dynamics {
 
     @XmlElementRefs({
-        @XmlElementRef(name = "p", type = JAXBElement.class),
-        @XmlElementRef(name = "ffff", type = JAXBElement.class),
-        @XmlElementRef(name = "ff", type = JAXBElement.class),
         @XmlElementRef(name = "pppppp", type = JAXBElement.class),
         @XmlElementRef(name = "ppppp", type = JAXBElement.class),
-        @XmlElementRef(name = "sfp", type = JAXBElement.class),
-        @XmlElementRef(name = "sf", type = JAXBElement.class),
-        @XmlElementRef(name = "fz", type = JAXBElement.class),
-        @XmlElementRef(name = "fff", type = JAXBElement.class),
-        @XmlElementRef(name = "fp", type = JAXBElement.class),
-        @XmlElementRef(name = "sfpp", type = JAXBElement.class),
-        @XmlElementRef(name = "pppp", type = JAXBElement.class),
-        @XmlElementRef(name = "other-dynamics", type = JAXBElement.class),
-        @XmlElementRef(name = "rfz", type = JAXBElement.class),
-        @XmlElementRef(name = "f", type = JAXBElement.class),
-        @XmlElementRef(name = "mp", type = JAXBElement.class),
-        @XmlElementRef(name = "fffff", type = JAXBElement.class),
-        @XmlElementRef(name = "ppp", type = JAXBElement.class),
-        @XmlElementRef(name = "mf", type = JAXBElement.class),
-        @XmlElementRef(name = "rf", type = JAXBElement.class),
         @XmlElementRef(name = "sffz", type = JAXBElement.class),
+        @XmlElementRef(name = "fff", type = JAXBElement.class),
+        @XmlElementRef(name = "ff", type = JAXBElement.class),
+        @XmlElementRef(name = "ppp", type = JAXBElement.class),
+        @XmlElementRef(name = "ffff", type = JAXBElement.class),
+        @XmlElementRef(name = "p", type = JAXBElement.class),
+        @XmlElementRef(name = "rfz", type = JAXBElement.class),
+        @XmlElementRef(name = "fffff", type = JAXBElement.class),
         @XmlElementRef(name = "pp", type = JAXBElement.class),
+        @XmlElementRef(name = "rf", type = JAXBElement.class),
+        @XmlElementRef(name = "sfp", type = JAXBElement.class),
+        @XmlElementRef(name = "ffffff", type = JAXBElement.class),
+        @XmlElementRef(name = "other-dynamics", type = JAXBElement.class),
+        @XmlElementRef(name = "sf", type = JAXBElement.class),
+        @XmlElementRef(name = "mp", type = JAXBElement.class),
+        @XmlElementRef(name = "sfpp", type = JAXBElement.class),
+        @XmlElementRef(name = "f", type = JAXBElement.class),
+        @XmlElementRef(name = "pppp", type = JAXBElement.class),
         @XmlElementRef(name = "sfz", type = JAXBElement.class),
-        @XmlElementRef(name = "ffffff", type = JAXBElement.class)
+        @XmlElementRef(name = "fp", type = JAXBElement.class),
+        @XmlElementRef(name = "mf", type = JAXBElement.class),
+        @XmlElementRef(name = "fz", type = JAXBElement.class)
     })
     protected List<JAXBElement<?>> pOrPpOrPpp;
     @XmlAttribute
     protected AboveBelow placement;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -115,6 +107,14 @@ public class Dynamics {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
@@ -149,10 +149,10 @@ public class Dynamics {
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
+     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
+     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
+     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
@@ -193,102 +193,6 @@ public class Dynamics {
      */
     public void setPlacement(AboveBelow value) {
         this.placement = value;
-    }
-
-    /**
-     * Gets the value of the defaultX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultX() {
-        return defaultX;
-    }
-
-    /**
-     * Sets the value of the defaultX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
-    }
-
-    /**
-     * Gets the value of the defaultY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultY() {
-        return defaultY;
-    }
-
-    /**
-     * Sets the value of the defaultY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
-    }
-
-    /**
-     * Gets the value of the relativeX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeX() {
-        return relativeX;
-    }
-
-    /**
-     * Sets the value of the relativeX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
     }
 
     /**
@@ -385,6 +289,102 @@ public class Dynamics {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
+    }
+
+    /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
     }
 
     /**

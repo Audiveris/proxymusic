@@ -11,7 +11,7 @@
 <project name="proxymusic-prolog" basedir="..">
     
     <description>
-	Prolog to set up user properties for all ant builds.
+	Common prolog to set up user properties for all ant builds.
 	Targets that override normal NetBeans targets must be defined here
 	
         $Id$
@@ -30,55 +30,32 @@
     
     <!-- =================================================================== -->
     
-    <target name="default" 
-	    depends="build, javadoc"
-	    description="Build the whole project jars (binary + src + javadoc)"/>
+    <!--
+      -pre-init:                 called before initialization of project properties
+      -post-init:                called after initialization of project properties
+      -pre-compile:              called before javac compilation
+      -post-compile:             called after javac compilation
+      -pre-compile-single:       called before javac compilation of single file
+      -post-compile-single:      called after javac compilation of single file
+      -pre-compile-test:         called before javac compilation of JUnit tests
+      -post-compile-test:        called after javac compilation of JUnit tests
+      -pre-compile-test-single:  called before javac compilation of single JUnit test
+      -post-compile-test-single: called after javac compilation of single JUunit test
+      -pre-jar:                  called before JAR building
+      -post-jar:                 called after JAR building
+      -post-clean:               called after cleaning build products
+    -->
 
-    <target name="-post-clean"
-            depends="-clean-gen-java" />    
-
+    <!-- ========================= -->
+    <!--  - P R E - C O M P I L E  -->
+    <!-- ========================= -->
     <target name="-pre-compile"
-            depends="-clean-build, -clean-gen-java, xjc, -src-jar" />
-   
-    <target name="javadoc"
-	    depends="-javadoc-build,-doc-jar"
-	    description="Generate the javadoc archive" />
+            depends="xjc, -src-jar" />
 
-    <!-- =================================================================== -->
-    
-    <!-- =============== -->
-    <!--  C O M P I L E  -->
-    <!-- =============== -->
-    <target name="compile"
- 	    depends="init, -pre-compile">
-	
-        <mkdir dir="${build.classes.dir}"/>
-        
-        <!-- baseline classes -->
-        <javac
-            target       = "${javac.target}"
-            debug        = "${build.compile.debug}"
-            deprecation  = "${build.compile.deprecation}"
-            destdir      = "${build.classes.dir}"
-            listfiles    = "${build.compile.listfiles}"
-            source       = "${build.compile.source}"
-            srcdir       = "${src.dir}"
-            >
-        </javac>
-	
-    </target>
-    
-    <!-- ================================================= -->
-    <!--  - D O - J A R - W I T H O U T - M A N I F E S T  -->
-    <!-- ================================================= -->
-    <target name="-do-jar-without-manifest">
-	<!-- void -->
-    </target>
-
-    <!-- =========================================== -->
-    <!--  - D O - J A R - W I T H - M A N I F E S T  -->
-    <!-- =========================================== -->
-    <target name="-do-jar-with-manifest">
+    <!-- =================== -->
+    <!--  - P O S T - J A R  -->
+    <!-- =================== -->
+    <target name="-post-jar">
         <mkdir dir="${dist.dir}"/>
         <jar basedir="${build.classes.dir}"
 	     jarfile="${dist.jar}">
@@ -91,6 +68,200 @@
                            value="${impl.version}"/>
             </manifest>
         </jar>
+    </target>
+
+    <!-- ======================= -->
+    <!--  - P O S T - C L E A N  -->
+    <!-- ======================= -->
+    <target name="-post-clean">
+	<!-- Remove all *generated* java classes -->
+        <delete verbose="${verbose}">
+	    <fileset dir="${src.dir}/proxymusic" includes="*.java"/>
+        </delete>
+	<!-- Remove the /build folder -->
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- =================================================================== -->
+
+    <!-- ================= -->
+    <!--  - D O C - J A R  -->
+    <!-- ================= -->
+    <target name="-doc-jar">
+        <mkdir dir="${dist.dir}"/>
+        <jar basedir="${dist.javadoc.dir}"
+	     jarfile="${dist.doc.jar}">
+        </jar>
+    </target>
+    
+    <!-- ================= -->
+    <!--  - S R C - J A R  -->
+    <!-- ================= -->
+    <target name="-src-jar">
+        <mkdir dir="${dist.dir}"/>
+        <jar destfile="${dist.src.jar}">
+	    <fileset dir="${src.dir}" />
+	    <fileset dir="${test.src.dir}" />
+        </jar>
+    </target>
+
+    <!-- =================== -->
+    <!--  - T E S T - O N E  -->
+    <!-- =================== -->
+    <target name="-test-one">
+
+	<echo message="Compiling ${test.name} ..."/>
+	<mkdir dir="${build.dir}/test/classes" />
+        <javac
+            target    = "${javac.target}"
+	    classpath = "${junit.jar};${dist.jar}"
+            destdir   = "${build.dir}/test/classes"
+            srcdir    = "${test.src.dir}">
+	    <include name="proxymusic/util/${test.name}.java" />
+	</javac>
+
+	<echo message="Testing ${test.name} ..."/>
+	<java
+            fork="true"
+	    dir="${basedir}"
+	    classname="proxymusic.util.${test.name}">
+	    <classpath>
+		<pathelement path="${dist.jar}"/>
+		<pathelement path="${build.dir}/test/classes"/>
+		<pathelement path="${junit.jar}"/>
+	    </classpath>
+	</java>
+    </target>
+
+    <!-- =================================================================== -->
+    
+    <!-- ========= -->
+    <!--  C O R E  -->
+    <!-- ========= -->
+    <target name="core"
+	    depends="init"
+	    description="Pack only the core of the project">
+	
+        <delete verbose="${verbose}">
+	    <fileset file="${core.zip}"/>
+        </delete>
+
+	<zip destfile="${core.zip}"
+	     excludes="${dist.excludes}">
+	    <fileset dir="${basedir}" includes="build.netbeans.xml" />
+	    <fileset dir="${basedir}" includes="schema*/**" />
+	    <fileset dir="${basedir}" includes="src/**"
+		     excludes="src/main/proxymusic/*.java" />
+	    <fileset dir="${basedir}" includes="www/**" />
+	</zip>
+
+    </target>
+    
+    <!-- =============== -->
+    <!--  D E F A U L T  -->
+    <!-- =============== -->
+    <target name="default" 
+	    depends="clean, compile, -post-jar"
+	    description="Build the whole project jars (binary + src + javadoc)" />
+
+    <!-- =============== -->
+    <!--  J A V A D O C  -->
+    <!-- =============== -->
+    <target name="javadoc"
+	    depends="-javadoc-build,-doc-jar"
+	    description="Generate the javadoc archive" />
+    
+    <!-- ========= -->
+    <!--  P A C K  -->
+    <!-- ========= -->
+    <target name="pack"
+	    depends="core, javadoc"
+	    description="Pack up the whole project">
+	
+        <delete verbose="${verbose}">
+	    <fileset file="${pack.zip}"/>
+        </delete>
+
+	<zip destfile="${pack.zip}"
+	     excludes="${dist.excludes}">
+	    <fileset dir="${basedir}" includes="build.netbeans.xml" />
+	    <fileset dir="${basedir}" includes="schema*/**" />
+	    <fileset dir="${basedir}" includes="src/**" />
+	    <fileset dir="${basedir}" includes="www/**" />
+	    <fileset dir="${basedir}" includes="build/**" />
+	    <fileset dir="${basedir}" includes="dist/**" />
+	</zip>
+
+    </target>
+    
+    <!-- ===================== -->
+    <!--  P R O P E R T I E S  -->
+    <!-- ===================== -->
+    <target name="properties">
+        <echoproperties/>
+    </target>
+    
+    <!-- ================= -->
+    <!--  T E S T - A L L  -->
+    <!-- ================= -->
+    <target name="test-all"
+            description="Run all defined tests">
+
+ 	<antcall target="-test-one">
+ 	    <param name="test.name" value="ScorePartTest"/>
+ 	</antcall>
+	
+ 	<antcall target="-test-one">
+ 	    <param name="test.name" value="HelloWorld"/>
+ 	</antcall>
+
+    </target>
+    
+    <!-- =============== -->
+    <!--  V E R S I O N  -->
+    <!-- =============== -->
+    <target name="version"
+	    description="Print the configured version parameters">
+
+	<echo message="spec.version = ${spec.version}" />
+	<echo message="impl.version = ${impl.version}" />
+	<echo message="jaxb.version = ${jaxb.version}" />
+		       
+    </target>
+    
+    <!-- ======= -->
+    <!--  X J C  -->
+    <!-- ======= -->
+    <target name="xjc">
+	<echo message="-- Generating Java classes from Schema ..." />
+	<mkdir dir="${src.dir}" />
+
+	<!-- Using ant task (this needs JAXB RI) -->
+	<!--
+  	<xjc
+	    schema="${schema.dir}/xsd/musicxml.fixed.xsd"
+	    package="proxymusic"
+	    destdir="${src.dir}"
+	    header="true"
+	    extension="true"
+	    binding="${schema.dir}/custom.xjb"
+	    >
+   	    <produces dir="${src.dir}/proxymusic" includes="*.java" />
+  	    <classpath refid="tools.classpath" />
+  	</xjc>
+	     -->
+
+	<!-- Not using ant task (no need for JAXB RI)-->
+   	<exec executable="${java.home}/../bin/xjc.exe">
+<!--   	<exec executable="${jaxb.dir}/bin/xjc.bat"> -->
+ 	    <arg line="-verbose"/>
+ 	    <arg line="-p proxymusic"/>
+ 	    <arg line="-d ${src.dir}"/>
+  	    <arg line="-no-header"/>
+<!--   	    <arg line="-extension"/>  -->
+    	    <arg line="-b ${schema.dir}/custom.xjb"/>
+ 	    <arg line="${schema.dir}/xsd/musicxml.fixed.xsd"/>
+ 	</exec>
     </target>
     
 </project>

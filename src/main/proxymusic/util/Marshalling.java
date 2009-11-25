@@ -144,11 +144,9 @@ public class Marshalling
         m.marshal(scorePartwise, stringWriter);
         stringWriter.flush();
 
-        String data = stringWriter.toString();
-
         /** Postprocessing (to remove the xmlns:ns2 stuff) */
-        data = stringWriter.toString()
-                           .replaceAll(
+        String data = stringWriter.toString()
+                                  .replaceAll(
             " xmlns:ns2=\"http://www.w3.org/1999/xlink\"",
             "");
 

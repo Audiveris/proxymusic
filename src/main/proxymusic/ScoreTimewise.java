@@ -519,19 +519,19 @@ public class ScoreTimewise {
         public static class Part {
 
             @XmlElements({
-                @XmlElement(name = "attributes", type = Attributes.class),
+                @XmlElement(name = "forward", type = Forward.class),
                 @XmlElement(name = "print", type = Print.class),
-                @XmlElement(name = "direction", type = Direction.class),
+                @XmlElement(name = "grouping", type = Grouping.class),
                 @XmlElement(name = "figured-bass", type = FiguredBass.class),
                 @XmlElement(name = "barline", type = Barline.class),
-                @XmlElement(name = "backup", type = Backup.class),
-                @XmlElement(name = "note", type = Note.class),
-                @XmlElement(name = "forward", type = Forward.class),
                 @XmlElement(name = "bookmark", type = Bookmark.class),
-                @XmlElement(name = "sound", type = Sound.class),
-                @XmlElement(name = "grouping", type = Grouping.class),
+                @XmlElement(name = "note", type = Note.class),
+                @XmlElement(name = "backup", type = Backup.class),
+                @XmlElement(name = "attributes", type = Attributes.class),
+                @XmlElement(name = "direction", type = Direction.class),
                 @XmlElement(name = "harmony", type = Harmony.class),
-                @XmlElement(name = "link", type = Link.class)
+                @XmlElement(name = "link", type = Link.class),
+                @XmlElement(name = "sound", type = Sound.class)
             })
             protected List<Object> noteOrBackupOrForward;
             @XmlAttribute(required = true)
@@ -557,19 +557,19 @@ public class ScoreTimewise {
              * 
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link Attributes }
+             * {@link Forward }
              * {@link Print }
-             * {@link Direction }
+             * {@link Grouping }
              * {@link FiguredBass }
              * {@link Barline }
-             * {@link Backup }
-             * {@link Note }
-             * {@link Forward }
              * {@link Bookmark }
-             * {@link Sound }
-             * {@link Grouping }
+             * {@link Note }
+             * {@link Backup }
+             * {@link Attributes }
+             * {@link Direction }
              * {@link Harmony }
              * {@link Link }
+             * {@link Sound }
              * 
              * 
              */

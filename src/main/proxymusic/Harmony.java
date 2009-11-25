@@ -38,9 +38,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;group ref="{}editorial"/>
  *         &lt;group ref="{}staff" minOccurs="0"/>
  *       &lt;/sequence>
+ *       &lt;attGroup ref="{}print-object"/>
  *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}placement"/>
- *       &lt;attGroup ref="{}print-object"/>
  *       &lt;attribute name="type" type="{}harmony-type" />
  *       &lt;attribute name="print-frame" type="{}yes-no" />
  *     &lt;/restriction>
@@ -62,12 +62,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Harmony {
 
     @XmlElements({
-        @XmlElement(name = "root", required = true, type = Root.class),
+        @XmlElement(name = "function", required = true, type = StyleText.class),
+        @XmlElement(name = "degree", required = true, type = Degree.class),
         @XmlElement(name = "bass", required = true, type = Bass.class),
         @XmlElement(name = "inversion", required = true, type = Inversion.class),
-        @XmlElement(name = "degree", required = true, type = Degree.class),
-        @XmlElement(name = "kind", required = true, type = Kind.class),
-        @XmlElement(name = "function", required = true, type = StyleText.class)
+        @XmlElement(name = "root", required = true, type = Root.class),
+        @XmlElement(name = "kind", required = true, type = Kind.class)
     })
     protected List<Object> harmonyChord;
     protected Frame frame;
@@ -80,14 +80,8 @@ public class Harmony {
     protected HarmonyType type;
     @XmlAttribute(name = "print-frame")
     protected YesNo printFrame;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -97,13 +91,19 @@ public class Harmony {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
     @XmlAttribute
     protected AboveBelow placement;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
 
     /**
      * Gets the value of the harmonyChord property.
@@ -123,12 +123,12 @@ public class Harmony {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Root }
+     * {@link StyleText }
+     * {@link Degree }
      * {@link Bass }
      * {@link Inversion }
-     * {@link Degree }
+     * {@link Root }
      * {@link Kind }
-     * {@link StyleText }
      * 
      * 
      */
@@ -308,99 +308,27 @@ public class Harmony {
     }
 
     /**
-     * Gets the value of the defaultX property.
+     * Gets the value of the printObject property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link YesNo }
      *     
      */
-    public BigDecimal getDefaultX() {
-        return defaultX;
+    public YesNo getPrintObject() {
+        return printObject;
     }
 
     /**
-     * Sets the value of the defaultX property.
+     * Sets the value of the printObject property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link YesNo }
      *     
      */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
-    }
-
-    /**
-     * Gets the value of the defaultY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultY() {
-        return defaultY;
-    }
-
-    /**
-     * Sets the value of the defaultY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
-    }
-
-    /**
-     * Gets the value of the relativeX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeX() {
-        return relativeX;
-    }
-
-    /**
-     * Sets the value of the relativeX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
     }
 
     /**
@@ -500,6 +428,102 @@ public class Harmony {
     }
 
     /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
+    }
+
+    /**
      * Gets the value of the color property.
      * 
      * @return
@@ -545,30 +569,6 @@ public class Harmony {
      */
     public void setPlacement(AboveBelow value) {
         this.placement = value;
-    }
-
-    /**
-     * Gets the value of the printObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintObject() {
-        return printObject;
-    }
-
-    /**
-     * Sets the value of the printObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
     }
 
 }

@@ -23,11 +23,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
  *       &lt;attGroup ref="{}text-rotation"/>
+ *       &lt;attGroup ref="{}text-decoration"/>
+ *       &lt;attGroup ref="{}letter-spacing"/>
+ *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}font"/>
  *       &lt;attGroup ref="{}text-direction"/>
- *       &lt;attGroup ref="{}color"/>
- *       &lt;attGroup ref="{}letter-spacing"/>
- *       &lt;attGroup ref="{}text-decoration"/>
  *       &lt;attribute ref="{http://www.w3.org/XML/1998/namespace}lang"/>
  *     &lt;/extension>
  *   &lt;/simpleContent>
@@ -48,6 +48,17 @@ public class TextElementData {
     protected java.lang.String lang;
     @XmlAttribute
     protected BigDecimal rotation;
+    @XmlAttribute
+    protected Integer underline;
+    @XmlAttribute
+    protected Integer overline;
+    @XmlAttribute(name = "line-through")
+    protected Integer lineThrough;
+    @XmlAttribute(name = "letter-spacing")
+    protected java.lang.String letterSpacing;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -59,17 +70,6 @@ public class TextElementData {
     protected FontWeight fontWeight;
     @XmlAttribute
     protected TextDirection dir;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "letter-spacing")
-    protected java.lang.String letterSpacing;
-    @XmlAttribute
-    protected Integer underline;
-    @XmlAttribute
-    protected Integer overline;
-    @XmlAttribute(name = "line-through")
-    protected Integer lineThrough;
 
     /**
      * Gets the value of the value property.
@@ -141,6 +141,126 @@ public class TextElementData {
      */
     public void setRotation(BigDecimal value) {
         this.rotation = value;
+    }
+
+    /**
+     * Gets the value of the underline property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getUnderline() {
+        return underline;
+    }
+
+    /**
+     * Sets the value of the underline property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setUnderline(Integer value) {
+        this.underline = value;
+    }
+
+    /**
+     * Gets the value of the overline property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getOverline() {
+        return overline;
+    }
+
+    /**
+     * Sets the value of the overline property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setOverline(Integer value) {
+        this.overline = value;
+    }
+
+    /**
+     * Gets the value of the lineThrough property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getLineThrough() {
+        return lineThrough;
+    }
+
+    /**
+     * Sets the value of the lineThrough property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setLineThrough(Integer value) {
+        this.lineThrough = value;
+    }
+
+    /**
+     * Gets the value of the letterSpacing property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getLetterSpacing() {
+        return letterSpacing;
+    }
+
+    /**
+     * Sets the value of the letterSpacing property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setLetterSpacing(java.lang.String value) {
+        this.letterSpacing = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -261,126 +381,6 @@ public class TextElementData {
      */
     public void setDir(TextDirection value) {
         this.dir = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the letterSpacing property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getLetterSpacing() {
-        return letterSpacing;
-    }
-
-    /**
-     * Sets the value of the letterSpacing property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setLetterSpacing(java.lang.String value) {
-        this.letterSpacing = value;
-    }
-
-    /**
-     * Gets the value of the underline property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getUnderline() {
-        return underline;
-    }
-
-    /**
-     * Sets the value of the underline property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setUnderline(Integer value) {
-        this.underline = value;
-    }
-
-    /**
-     * Gets the value of the overline property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getOverline() {
-        return overline;
-    }
-
-    /**
-     * Sets the value of the overline property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setOverline(Integer value) {
-        this.overline = value;
-    }
-
-    /**
-     * Gets the value of the lineThrough property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getLineThrough() {
-        return lineThrough;
-    }
-
-    /**
-     * Sets the value of the lineThrough property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setLineThrough(Integer value) {
-        this.lineThrough = value;
     }
 
 }

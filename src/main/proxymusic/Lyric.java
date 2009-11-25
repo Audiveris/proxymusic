@@ -43,10 +43,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="end-paragraph" type="{}empty" minOccurs="0"/>
  *         &lt;group ref="{}editorial"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}justify"/>
  *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}position"/>
+ *       &lt;attGroup ref="{}justify"/>
  *       &lt;attribute name="number" type="{http://www.w3.org/2001/XMLSchema}NMTOKEN" />
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}token" />
  *     &lt;/restriction>
@@ -70,9 +70,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Lyric {
 
     @XmlElements({
+        @XmlElement(name = "syllabic", type = Syllabic.class),
         @XmlElement(name = "elision", type = Elision.class),
-        @XmlElement(name = "text", type = TextElementData.class),
-        @XmlElement(name = "syllabic", type = Syllabic.class)
+        @XmlElement(name = "text", type = TextElementData.class)
     })
     protected List<Object> elisionAndSyllabicAndText;
     protected Extend extend;
@@ -93,8 +93,6 @@ public class Lyric {
     @XmlSchemaType(name = "token")
     protected java.lang.String name;
     @XmlAttribute
-    protected LeftCenterRight justify;
-    @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
     @XmlAttribute
@@ -107,6 +105,8 @@ public class Lyric {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
+    @XmlAttribute
+    protected LeftCenterRight justify;
 
     /**
      * Gets the value of the elisionAndSyllabicAndText property.
@@ -126,9 +126,9 @@ public class Lyric {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
+     * {@link Syllabic }
      * {@link Elision }
      * {@link TextElementData }
-     * {@link Syllabic }
      * 
      * 
      */
@@ -356,30 +356,6 @@ public class Lyric {
     }
 
     /**
-     * Gets the value of the justify property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getJustify() {
-        return justify;
-    }
-
-    /**
-     * Sets the value of the justify property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setJustify(LeftCenterRight value) {
-        this.justify = value;
-    }
-
-    /**
      * Gets the value of the color property.
      * 
      * @return
@@ -521,6 +497,30 @@ public class Lyric {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the justify property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getJustify() {
+        return justify;
+    }
+
+    /**
+     * Sets the value of the justify property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setJustify(LeftCenterRight value) {
+        this.justify = value;
     }
 
 }

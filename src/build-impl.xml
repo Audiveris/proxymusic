@@ -16,25 +16,6 @@
 	Targets whose name begins with '-' are only internal targets.
     </description>
     
-    <!-- Build Test classpath -->
-    <path id="build.test.classpath">
-        <pathelement path="${dist.jar}"/>
-        <pathelement path="${build.test.classes.dir}"/>
-<!--         <pathelement path="${build.classes.dir}"/> -->
-    </path>
-    
-    <!-- Run Test classpath -->
-    <path id="run.test.classpath">
-        <pathelement path="${dist.jar}"/>
-        <pathelement path="${build.test.classes.dir}"/>
-<!--         <pathelement path="${build.classes.dir}"/> -->
-    </path>
-    
-    <!-- ================================================================ -->
-
-    <target name="build" depends="compile, -do-jar-with-manifest"
-	    description="Generate the binary and source archives."/>
-
     <!-- ================================================================ -->
     
     <!-- =========== -->
@@ -44,14 +25,33 @@
 	    depends="-do-clean, -post-clean"
 	    description="Clean build products."/>
 
-    <!-- ================================================================ -->
-    
     <!-- ========= -->
     <!--  I N I T  -->
     <!-- ========= -->
     <target name="init">
         <!-- Create the time stamp -->
         <tstamp/>
+    </target>
+    
+    <!-- =============== -->
+    <!--  C O M P I L E  -->
+    <!-- =============== -->
+    <target name="compile"
+ 	    depends="init, -pre-compile">
+	
+        <mkdir dir="${build.classes.dir}"/>
+        
+        <javac
+            target       = "${javac.target}"
+            debug        = "${build.compile.debug}"
+            deprecation  = "${build.compile.deprecation}"
+            destdir      = "${build.classes.dir}"
+            listfiles    = "${build.compile.listfiles}"
+            source       = "${build.compile.source}"
+            srcdir       = "${src.dir}"
+            >
+        </javac>
+	
     </target>
 
     <!-- =================== -->

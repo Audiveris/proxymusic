@@ -42,14 +42,8 @@ public class FormattedText {
     protected java.lang.String lang;
     @XmlAttribute
     protected Enclosure enclosure;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
+    @XmlAttribute(name = "letter-spacing")
+    protected java.lang.String letterSpacing;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -59,29 +53,35 @@ public class FormattedText {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
-    @XmlAttribute(name = "line-height")
-    protected java.lang.String lineHeight;
     @XmlAttribute
-    protected TextDirection dir;
-    @XmlAttribute
-    protected LeftCenterRight justify;
+    protected BigDecimal rotation;
     @XmlAttribute
     protected Valign valign;
+    @XmlAttribute
+    protected LeftCenterRight halign;
+    @XmlAttribute
+    protected LeftCenterRight justify;
+    @XmlAttribute(name = "line-height")
+    protected java.lang.String lineHeight;
     @XmlAttribute
     protected Integer underline;
     @XmlAttribute
     protected Integer overline;
     @XmlAttribute(name = "line-through")
     protected Integer lineThrough;
-    @XmlAttribute(name = "letter-spacing")
-    protected java.lang.String letterSpacing;
     @XmlAttribute
-    protected LeftCenterRight halign;
-    @XmlAttribute
-    protected BigDecimal rotation;
+    protected TextDirection dir;
 
     /**
      * Gets the value of the value property.
@@ -156,99 +156,27 @@ public class FormattedText {
     }
 
     /**
-     * Gets the value of the defaultX property.
+     * Gets the value of the letterSpacing property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link java.lang.String }
      *     
      */
-    public BigDecimal getDefaultX() {
-        return defaultX;
+    public java.lang.String getLetterSpacing() {
+        return letterSpacing;
     }
 
     /**
-     * Sets the value of the defaultX property.
+     * Sets the value of the letterSpacing property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link java.lang.String }
      *     
      */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
-    }
-
-    /**
-     * Gets the value of the defaultY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultY() {
-        return defaultY;
-    }
-
-    /**
-     * Sets the value of the defaultY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
-    }
-
-    /**
-     * Gets the value of the relativeX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeX() {
-        return relativeX;
-    }
-
-    /**
-     * Sets the value of the relativeX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
+    public void setLetterSpacing(java.lang.String value) {
+        this.letterSpacing = value;
     }
 
     /**
@@ -348,6 +276,102 @@ public class FormattedText {
     }
 
     /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
+    }
+
+    /**
      * Gets the value of the color property.
      * 
      * @return
@@ -372,51 +396,75 @@ public class FormattedText {
     }
 
     /**
-     * Gets the value of the lineHeight property.
+     * Gets the value of the rotation property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link BigDecimal }
      *     
      */
-    public java.lang.String getLineHeight() {
-        return lineHeight;
+    public BigDecimal getRotation() {
+        return rotation;
     }
 
     /**
-     * Sets the value of the lineHeight property.
+     * Sets the value of the rotation property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link BigDecimal }
      *     
      */
-    public void setLineHeight(java.lang.String value) {
-        this.lineHeight = value;
+    public void setRotation(BigDecimal value) {
+        this.rotation = value;
     }
 
     /**
-     * Gets the value of the dir property.
+     * Gets the value of the valign property.
      * 
      * @return
      *     possible object is
-     *     {@link TextDirection }
+     *     {@link Valign }
      *     
      */
-    public TextDirection getDir() {
-        return dir;
+    public Valign getValign() {
+        return valign;
     }
 
     /**
-     * Sets the value of the dir property.
+     * Sets the value of the valign property.
      * 
      * @param value
      *     allowed object is
-     *     {@link TextDirection }
+     *     {@link Valign }
      *     
      */
-    public void setDir(TextDirection value) {
-        this.dir = value;
+    public void setValign(Valign value) {
+        this.valign = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
     }
 
     /**
@@ -444,27 +492,27 @@ public class FormattedText {
     }
 
     /**
-     * Gets the value of the valign property.
+     * Gets the value of the lineHeight property.
      * 
      * @return
      *     possible object is
-     *     {@link Valign }
+     *     {@link java.lang.String }
      *     
      */
-    public Valign getValign() {
-        return valign;
+    public java.lang.String getLineHeight() {
+        return lineHeight;
     }
 
     /**
-     * Sets the value of the valign property.
+     * Sets the value of the lineHeight property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Valign }
+     *     {@link java.lang.String }
      *     
      */
-    public void setValign(Valign value) {
-        this.valign = value;
+    public void setLineHeight(java.lang.String value) {
+        this.lineHeight = value;
     }
 
     /**
@@ -540,75 +588,27 @@ public class FormattedText {
     }
 
     /**
-     * Gets the value of the letterSpacing property.
+     * Gets the value of the dir property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link TextDirection }
      *     
      */
-    public java.lang.String getLetterSpacing() {
-        return letterSpacing;
+    public TextDirection getDir() {
+        return dir;
     }
 
     /**
-     * Sets the value of the letterSpacing property.
+     * Sets the value of the dir property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link TextDirection }
      *     
      */
-    public void setLetterSpacing(java.lang.String value) {
-        this.letterSpacing = value;
-    }
-
-    /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
-    }
-
-    /**
-     * Gets the value of the rotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRotation() {
-        return rotation;
-    }
-
-    /**
-     * Sets the value of the rotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRotation(BigDecimal value) {
-        this.rotation = value;
+    public void setDir(TextDirection value) {
+        this.dir = value;
     }
 
 }
