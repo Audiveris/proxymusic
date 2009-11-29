@@ -22,12 +22,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="text-element-data">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attGroup ref="{}text-rotation"/>
+ *       &lt;attGroup ref="{}text-direction"/>
  *       &lt;attGroup ref="{}text-decoration"/>
  *       &lt;attGroup ref="{}letter-spacing"/>
+ *       &lt;attGroup ref="{}text-rotation"/>
  *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}font"/>
- *       &lt;attGroup ref="{}text-direction"/>
  *       &lt;attribute ref="{http://www.w3.org/XML/1998/namespace}lang"/>
  *     &lt;/extension>
  *   &lt;/simpleContent>
@@ -47,7 +47,7 @@ public class TextElementData {
     @XmlAttribute(namespace = "http://www.w3.org/XML/1998/namespace")
     protected java.lang.String lang;
     @XmlAttribute
-    protected BigDecimal rotation;
+    protected TextDirection dir;
     @XmlAttribute
     protected Integer underline;
     @XmlAttribute
@@ -56,6 +56,8 @@ public class TextElementData {
     protected Integer lineThrough;
     @XmlAttribute(name = "letter-spacing")
     protected java.lang.String letterSpacing;
+    @XmlAttribute
+    protected BigDecimal rotation;
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
@@ -68,8 +70,6 @@ public class TextElementData {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    protected TextDirection dir;
 
     /**
      * Gets the value of the value property.
@@ -120,27 +120,27 @@ public class TextElementData {
     }
 
     /**
-     * Gets the value of the rotation property.
+     * Gets the value of the dir property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link TextDirection }
      *     
      */
-    public BigDecimal getRotation() {
-        return rotation;
+    public TextDirection getDir() {
+        return dir;
     }
 
     /**
-     * Sets the value of the rotation property.
+     * Sets the value of the dir property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link TextDirection }
      *     
      */
-    public void setRotation(BigDecimal value) {
-        this.rotation = value;
+    public void setDir(TextDirection value) {
+        this.dir = value;
     }
 
     /**
@@ -237,6 +237,30 @@ public class TextElementData {
      */
     public void setLetterSpacing(java.lang.String value) {
         this.letterSpacing = value;
+    }
+
+    /**
+     * Gets the value of the rotation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRotation() {
+        return rotation;
+    }
+
+    /**
+     * Sets the value of the rotation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRotation(BigDecimal value) {
+        this.rotation = value;
     }
 
     /**
@@ -357,30 +381,6 @@ public class TextElementData {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
-    }
-
-    /**
-     * Gets the value of the dir property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TextDirection }
-     *     
-     */
-    public TextDirection getDir() {
-        return dir;
-    }
-
-    /**
-     * Sets the value of the dir property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TextDirection }
-     *     
-     */
-    public void setDir(TextDirection value) {
-        this.dir = value;
     }
 
 }

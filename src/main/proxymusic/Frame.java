@@ -33,8 +33,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="frame-note" type="{}frame-note" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *       &lt;attGroup ref="{}color"/>
- *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}halign"/>
+ *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}valign"/>
  *       &lt;attribute name="height" type="{}tenths" />
  *       &lt;attribute name="width" type="{}tenths" />
@@ -71,6 +71,8 @@ public class Frame {
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
+    @XmlAttribute
+    protected LeftCenterRight halign;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -79,8 +81,6 @@ public class Frame {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    protected LeftCenterRight halign;
     @XmlAttribute
     protected Valign valign;
 
@@ -258,6 +258,30 @@ public class Frame {
     }
 
     /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -351,30 +375,6 @@ public class Frame {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
     }
 
     /**

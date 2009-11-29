@@ -58,19 +58,19 @@ public class Notations {
     protected FormattedText footnote;
     protected Level level;
     @XmlElements({
-        @XmlElement(name = "other-notation", type = OtherNotation.class),
-        @XmlElement(name = "arpeggiate", type = Arpeggiate.class),
-        @XmlElement(name = "technical", type = Technical.class),
-        @XmlElement(name = "slide", type = Slide.class),
-        @XmlElement(name = "tied", type = Tied.class),
-        @XmlElement(name = "slur", type = Slur.class),
         @XmlElement(name = "fermata", type = Fermata.class),
-        @XmlElement(name = "tuplet", type = Tuplet.class),
-        @XmlElement(name = "accidental-mark", type = AccidentalMark.class),
+        @XmlElement(name = "non-arpeggiate", type = NonArpeggiate.class),
+        @XmlElement(name = "other-notation", type = OtherNotation.class),
         @XmlElement(name = "ornaments", type = Ornaments.class),
         @XmlElement(name = "dynamics", type = Dynamics.class),
         @XmlElement(name = "glissando", type = Glissando.class),
-        @XmlElement(name = "non-arpeggiate", type = NonArpeggiate.class),
+        @XmlElement(name = "accidental-mark", type = AccidentalMark.class),
+        @XmlElement(name = "slur", type = Slur.class),
+        @XmlElement(name = "arpeggiate", type = Arpeggiate.class),
+        @XmlElement(name = "tied", type = Tied.class),
+        @XmlElement(name = "technical", type = Technical.class),
+        @XmlElement(name = "tuplet", type = Tuplet.class),
+        @XmlElement(name = "slide", type = Slide.class),
         @XmlElement(name = "articulations", type = Articulations.class)
     })
     protected List<Object> tiedOrSlurOrTuplet;
@@ -141,19 +141,19 @@ public class Notations {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link OtherNotation }
-     * {@link Arpeggiate }
-     * {@link Technical }
-     * {@link Slide }
-     * {@link Tied }
-     * {@link Slur }
      * {@link Fermata }
-     * {@link Tuplet }
-     * {@link AccidentalMark }
+     * {@link NonArpeggiate }
+     * {@link OtherNotation }
      * {@link Ornaments }
      * {@link Dynamics }
      * {@link Glissando }
-     * {@link NonArpeggiate }
+     * {@link AccidentalMark }
+     * {@link Slur }
+     * {@link Arpeggiate }
+     * {@link Tied }
+     * {@link Technical }
+     * {@link Tuplet }
+     * {@link Slide }
      * {@link Articulations }
      * 
      * 

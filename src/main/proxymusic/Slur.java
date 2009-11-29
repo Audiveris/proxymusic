@@ -21,11 +21,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="slur">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attGroup ref="{}orientation"/>
- *       &lt;attGroup ref="{}line-type"/>
+ *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}placement"/>
- *       &lt;attGroup ref="{}position"/>
+ *       &lt;attGroup ref="{}orientation"/>
+ *       &lt;attGroup ref="{}line-type"/>
  *       &lt;attGroup ref="{}bezier"/>
  *       &lt;attribute name="type" use="required" type="{}start-stop-continue" />
  *       &lt;attribute name="number" type="{}number-level" default="1" />
@@ -44,15 +44,6 @@ public class Slur {
     protected StartStopContinue type;
     @XmlAttribute
     protected Integer number;
-    @XmlAttribute
-    protected OverUnder orientation;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute
-    protected AboveBelow placement;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -61,6 +52,15 @@ public class Slur {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute
+    protected AboveBelow placement;
+    @XmlAttribute
+    protected OverUnder orientation;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
     @XmlAttribute(name = "bezier-offset")
     protected BigDecimal bezierOffset;
     @XmlAttribute(name = "bezier-offset2")
@@ -124,102 +124,6 @@ public class Slur {
      */
     public void setNumber(Integer value) {
         this.number = value;
-    }
-
-    /**
-     * Gets the value of the orientation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link OverUnder }
-     *     
-     */
-    public OverUnder getOrientation() {
-        return orientation;
-    }
-
-    /**
-     * Sets the value of the orientation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link OverUnder }
-     *     
-     */
-    public void setOrientation(OverUnder value) {
-        this.orientation = value;
-    }
-
-    /**
-     * Gets the value of the lineType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineType }
-     *     
-     */
-    public LineType getLineType() {
-        return lineType;
-    }
-
-    /**
-     * Sets the value of the lineType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineType }
-     *     
-     */
-    public void setLineType(LineType value) {
-        this.lineType = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
     }
 
     /**
@@ -316,6 +220,102 @@ public class Slur {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
+    }
+
+    /**
+     * Gets the value of the orientation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link OverUnder }
+     *     
+     */
+    public OverUnder getOrientation() {
+        return orientation;
+    }
+
+    /**
+     * Sets the value of the orientation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link OverUnder }
+     *     
+     */
+    public void setOrientation(OverUnder value) {
+        this.orientation = value;
+    }
+
+    /**
+     * Gets the value of the lineType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LineType }
+     *     
+     */
+    public LineType getLineType() {
+        return lineType;
+    }
+
+    /**
+     * Sets the value of the lineType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LineType }
+     *     
+     */
+    public void setLineType(LineType value) {
+        this.lineType = value;
     }
 
     /**

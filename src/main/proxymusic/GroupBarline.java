@@ -54,7 +54,7 @@ public class GroupBarline {
     }
 
     /**
-     * Sets the value of the value property.
+     * The group-barline-value type indicates if the group should have common barlines. Values can be yes, no, or Mensurstrich.
      * 
      * @param value
      *     allowed object is

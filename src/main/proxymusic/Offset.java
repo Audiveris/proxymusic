@@ -54,7 +54,9 @@ public class Offset {
     }
 
     /**
-     * Sets the value of the value property.
+     * The divisions type is used to express values in terms of the musical dvisions defined by the divisions element.
+     * 	
+     * !!! TODO - Determine if divisions should be restricted to integers.
      * 
      * @param value
      *     allowed object is

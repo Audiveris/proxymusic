@@ -57,7 +57,9 @@ public class LineWidth {
     }
 
     /**
-     * Sets the value of the value property.
+     * The tenths type is a number representing tenths of interline space (positive or negative) for use in attributes. The layout-tenths entity is the same for use in elements. Both integer and decimal values are allowed, such as 5 for a half space and 2.5 for a quarter space. Interline space is measured from the middle of a staff line.
+     * 
+     * Everything in a MusicXML file, with the exeption of font size, is measured in tenths of staff space. Tenths are then scaled to millimeters within the scaling element, used in the defaults element at the start of a score. Individual staves can apply a scaling factor to adjust staff size. When a MusicXML element or attribute refers to tenths, it means the global tenths defined by the scaling element, not the local tenths as adjusted by the staff-size element.
      * 
      * @param value
      *     allowed object is

@@ -54,22 +54,22 @@ import javax.xml.bind.annotation.XmlType;
 public class Articulations {
 
     @XmlElementRefs({
+        @XmlElementRef(name = "strong-accent", type = JAXBElement.class),
+        @XmlElementRef(name = "detached-legato", type = JAXBElement.class),
+        @XmlElementRef(name = "other-articulation", type = JAXBElement.class),
+        @XmlElementRef(name = "spiccato", type = JAXBElement.class),
         @XmlElementRef(name = "tenuto", type = JAXBElement.class),
         @XmlElementRef(name = "falloff", type = JAXBElement.class),
-        @XmlElementRef(name = "spiccato", type = JAXBElement.class),
         @XmlElementRef(name = "breath-mark", type = JAXBElement.class),
         @XmlElementRef(name = "accent", type = JAXBElement.class),
-        @XmlElementRef(name = "scoop", type = JAXBElement.class),
-        @XmlElementRef(name = "strong-accent", type = JAXBElement.class),
-        @XmlElementRef(name = "staccato", type = JAXBElement.class),
-        @XmlElementRef(name = "other-articulation", type = JAXBElement.class),
-        @XmlElementRef(name = "plop", type = JAXBElement.class),
-        @XmlElementRef(name = "unstress", type = JAXBElement.class),
-        @XmlElementRef(name = "doit", type = JAXBElement.class),
         @XmlElementRef(name = "staccatissimo", type = JAXBElement.class),
-        @XmlElementRef(name = "stress", type = JAXBElement.class),
+        @XmlElementRef(name = "doit", type = JAXBElement.class),
+        @XmlElementRef(name = "staccato", type = JAXBElement.class),
+        @XmlElementRef(name = "plop", type = JAXBElement.class),
+        @XmlElementRef(name = "scoop", type = JAXBElement.class),
+        @XmlElementRef(name = "unstress", type = JAXBElement.class),
         @XmlElementRef(name = "caesura", type = JAXBElement.class),
-        @XmlElementRef(name = "detached-legato", type = JAXBElement.class)
+        @XmlElementRef(name = "stress", type = JAXBElement.class)
     })
     protected List<JAXBElement<?>> accentOrStrongAccentOrStaccato;
 
@@ -91,19 +91,19 @@ public class Articulations {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
      * {@link JAXBElement }{@code <}{@link StrongAccent }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link PlacementText }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}

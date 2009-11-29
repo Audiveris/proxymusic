@@ -51,7 +51,7 @@ public class MultipleRest {
     }
 
     /**
-     * Sets the value of the value property.
+     * The number-or-normal values can be either a positive integer or an empty string. This is used for the content of the ensemble element.
      * 
      * @param value
      *     allowed object is

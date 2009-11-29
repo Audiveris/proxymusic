@@ -64,7 +64,7 @@ public class GroupSymbol {
     }
 
     /**
-     * Sets the value of the value property.
+     * The group-symbol-value type indicates how the symbol for a group is indicated in the score. Values can be none, brace, line, and bracket; the default is none. 
      * 
      * @param value
      *     allowed object is

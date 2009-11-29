@@ -53,7 +53,7 @@ public class KeyOctave {
     }
 
     /**
-     * Sets the value of the value property.
+     * Octaves are represented by the numbers 0 to 9, where 4 indicates the octave started by middle C.
      * 
      */
     public void setValue(int value) {

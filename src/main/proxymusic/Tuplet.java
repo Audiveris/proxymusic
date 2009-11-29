@@ -28,8 +28,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="tuplet-actual" type="{}tuplet-portion" minOccurs="0"/>
  *         &lt;element name="tuplet-normal" type="{}tuplet-portion" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}placement"/>
+ *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}line-shape"/>
  *       &lt;attribute name="type" use="required" type="{}start-stop" />
  *       &lt;attribute name="number" type="{}number-level" />
@@ -64,6 +64,8 @@ public class Tuplet {
     protected ShowTuplet showNumber;
     @XmlAttribute(name = "show-type")
     protected ShowTuplet showType;
+    @XmlAttribute
+    protected AboveBelow placement;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -72,8 +74,6 @@ public class Tuplet {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    protected AboveBelow placement;
     @XmlAttribute(name = "line-shape")
     protected LineShape lineShape;
 
@@ -246,6 +246,30 @@ public class Tuplet {
     }
 
     /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
+    }
+
+    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -339,30 +363,6 @@ public class Tuplet {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
     }
 
     /**

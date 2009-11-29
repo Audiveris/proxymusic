@@ -43,10 +43,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="end-paragraph" type="{}empty" minOccurs="0"/>
  *         &lt;group ref="{}editorial"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}color"/>
- *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}justify"/>
+ *       &lt;attGroup ref="{}placement"/>
+ *       &lt;attGroup ref="{}color"/>
  *       &lt;attribute name="number" type="{http://www.w3.org/2001/XMLSchema}NMTOKEN" />
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}token" />
  *     &lt;/restriction>
@@ -71,8 +71,8 @@ public class Lyric {
 
     @XmlElements({
         @XmlElement(name = "syllabic", type = Syllabic.class),
-        @XmlElement(name = "elision", type = Elision.class),
-        @XmlElement(name = "text", type = TextElementData.class)
+        @XmlElement(name = "text", type = TextElementData.class),
+        @XmlElement(name = "elision", type = Elision.class)
     })
     protected List<Object> elisionAndSyllabicAndText;
     protected Extend extend;
@@ -92,11 +92,6 @@ public class Lyric {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String name;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute
-    protected AboveBelow placement;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -107,6 +102,11 @@ public class Lyric {
     protected BigDecimal relativeY;
     @XmlAttribute
     protected LeftCenterRight justify;
+    @XmlAttribute
+    protected AboveBelow placement;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * Gets the value of the elisionAndSyllabicAndText property.
@@ -127,8 +127,8 @@ public class Lyric {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Syllabic }
-     * {@link Elision }
      * {@link TextElementData }
+     * {@link Elision }
      * 
      * 
      */
@@ -356,54 +356,6 @@ public class Lyric {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -521,6 +473,54 @@ public class Lyric {
      */
     public void setJustify(LeftCenterRight value) {
         this.justify = value;
+    }
+
+    /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

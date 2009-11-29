@@ -52,7 +52,7 @@ public class NoteSize {
     }
 
     /**
-     * Sets the value of the value property.
+     * The non-negative-decimal type specifies a non-negative decimal value.
      * 
      * @param value
      *     allowed object is

@@ -54,7 +54,7 @@ public class BarStyleColor {
     }
 
     /**
-     * Sets the value of the value property.
+     * The bar-style type represents barline style information. Choices are regular, dotted, dashed, heavy, light-light, light-heavy, heavy-light, heavy-heavy, tick (a short stroke through the top line), short (a partial barline between the 2nd and 4th lines), and none.
      * 
      * @param value
      *     allowed object is

@@ -25,8 +25,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="notehead">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;>notehead-value">
- *       &lt;attGroup ref="{}font"/>
  *       &lt;attGroup ref="{}color"/>
+ *       &lt;attGroup ref="{}font"/>
  *       &lt;attribute name="filled" type="{}yes-no" />
  *       &lt;attribute name="parentheses" type="{}yes-no" />
  *     &lt;/extension>
@@ -48,6 +48,9 @@ public class Notehead {
     protected YesNo filled;
     @XmlAttribute
     protected YesNo parentheses;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -57,9 +60,6 @@ public class Notehead {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
 
     /**
      * 
@@ -77,7 +77,10 @@ public class Notehead {
     }
 
     /**
-     * Sets the value of the value property.
+     * 
+     * The notehead type indicates shapes other than the open and closed ovals associated with note durations. The values do, re, mi, fa, so, la, and ti correspond to Aikin's 7-shape system.
+     * 
+     * The arrow shapes differ from triangle and inverted triangle by being centered on the stem. Slashed and back slashed  notes include both the normal notehead and a slash. The  triangle shape has the tip of the triangle pointing up; the inverted triangle shape has the tip of the triangle  pointing down.
      * 
      * @param value
      *     allowed object is
@@ -134,6 +137,30 @@ public class Notehead {
      */
     public void setParentheses(YesNo value) {
         this.parentheses = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -230,30 +257,6 @@ public class Notehead {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
 }

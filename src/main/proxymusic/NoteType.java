@@ -51,7 +51,7 @@ public class NoteType {
     }
 
     /**
-     * Sets the value of the value property.
+     * The note-type type is used for the MusicXML type element and represents the graphic note type, from 256th (shortest) to long (longest).
      * 
      * @param value
      *     allowed object is

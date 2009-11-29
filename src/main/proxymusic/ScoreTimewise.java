@@ -520,18 +520,18 @@ public class ScoreTimewise {
 
             @XmlElements({
                 @XmlElement(name = "forward", type = Forward.class),
+                @XmlElement(name = "direction", type = Direction.class),
                 @XmlElement(name = "print", type = Print.class),
                 @XmlElement(name = "grouping", type = Grouping.class),
+                @XmlElement(name = "sound", type = Sound.class),
                 @XmlElement(name = "figured-bass", type = FiguredBass.class),
-                @XmlElement(name = "barline", type = Barline.class),
-                @XmlElement(name = "bookmark", type = Bookmark.class),
-                @XmlElement(name = "note", type = Note.class),
-                @XmlElement(name = "backup", type = Backup.class),
-                @XmlElement(name = "attributes", type = Attributes.class),
-                @XmlElement(name = "direction", type = Direction.class),
-                @XmlElement(name = "harmony", type = Harmony.class),
                 @XmlElement(name = "link", type = Link.class),
-                @XmlElement(name = "sound", type = Sound.class)
+                @XmlElement(name = "bookmark", type = Bookmark.class),
+                @XmlElement(name = "barline", type = Barline.class),
+                @XmlElement(name = "harmony", type = Harmony.class),
+                @XmlElement(name = "attributes", type = Attributes.class),
+                @XmlElement(name = "note", type = Note.class),
+                @XmlElement(name = "backup", type = Backup.class)
             })
             protected List<Object> noteOrBackupOrForward;
             @XmlAttribute(required = true)
@@ -558,18 +558,18 @@ public class ScoreTimewise {
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link Forward }
+             * {@link Direction }
              * {@link Print }
              * {@link Grouping }
+             * {@link Sound }
              * {@link FiguredBass }
-             * {@link Barline }
+             * {@link Link }
              * {@link Bookmark }
+             * {@link Barline }
+             * {@link Harmony }
+             * {@link Attributes }
              * {@link Note }
              * {@link Backup }
-             * {@link Attributes }
-             * {@link Direction }
-             * {@link Harmony }
-             * {@link Link }
-             * {@link Sound }
              * 
              * 
              */
