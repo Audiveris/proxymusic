@@ -1,8 +1,10 @@
+.hgignore
+\.chg\..*$
+\.conflict\~$
+\.orig$
+\.orig\..*$
+\.rej$
 build
 dist
+manifest.mf
 nbproject
-\.orig\..*$
-\.orig$
-\.chg\..*$
-\.rej$
-\.conflict\~$
