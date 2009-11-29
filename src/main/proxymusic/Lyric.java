@@ -70,8 +70,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Lyric {
 
     @XmlElements({
-        @XmlElement(name = "syllabic", type = Syllabic.class),
         @XmlElement(name = "text", type = TextElementData.class),
+        @XmlElement(name = "syllabic", type = Syllabic.class),
         @XmlElement(name = "elision", type = Elision.class)
     })
     protected List<Object> elisionAndSyllabicAndText;
@@ -126,8 +126,8 @@ public class Lyric {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Syllabic }
      * {@link TextElementData }
+     * {@link Syllabic }
      * {@link Elision }
      * 
      * 

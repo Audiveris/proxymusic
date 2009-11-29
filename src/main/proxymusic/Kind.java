@@ -34,8 +34,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="kind">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;>kind-value">
- *       &lt;attGroup ref="{}halign"/>
  *       &lt;attGroup ref="{}print-style"/>
+ *       &lt;attGroup ref="{}halign"/>
  *       &lt;attGroup ref="{}valign"/>
  *       &lt;attribute name="use-symbols" type="{}yes-no" />
  *       &lt;attribute name="text" type="{http://www.w3.org/2001/XMLSchema}string" />
@@ -68,8 +68,6 @@ public class Kind {
     @XmlAttribute(name = "bracket-degrees")
     protected YesNo bracketDegrees;
     @XmlAttribute
-    protected LeftCenterRight halign;
-    @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
     @XmlAttribute(name = "default-x")
@@ -89,6 +87,8 @@ public class Kind {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute
+    protected LeftCenterRight halign;
     @XmlAttribute
     protected Valign valign;
 
@@ -323,30 +323,6 @@ public class Kind {
     }
 
     /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
-    }
-
-    /**
      * Gets the value of the color property.
      * 
      * @return
@@ -560,6 +536,30 @@ public class Kind {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
     }
 
     /**

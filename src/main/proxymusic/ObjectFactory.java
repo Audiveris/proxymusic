@@ -91,18 +91,18 @@ public class ObjectFactory {
     private final static QName _TechnicalDownBow_QNAME = new QName("", "down-bow");
     private final static QName _ArticulationsUnstress_QNAME = new QName("", "unstress");
     private final static QName _ArticulationsTenuto_QNAME = new QName("", "tenuto");
-    private final static QName _ArticulationsStrongAccent_QNAME = new QName("", "strong-accent");
     private final static QName _ArticulationsDoit_QNAME = new QName("", "doit");
-    private final static QName _ArticulationsCaesura_QNAME = new QName("", "caesura");
+    private final static QName _ArticulationsStrongAccent_QNAME = new QName("", "strong-accent");
     private final static QName _ArticulationsFalloff_QNAME = new QName("", "falloff");
+    private final static QName _ArticulationsCaesura_QNAME = new QName("", "caesura");
     private final static QName _ArticulationsStress_QNAME = new QName("", "stress");
     private final static QName _ArticulationsDetachedLegato_QNAME = new QName("", "detached-legato");
     private final static QName _ArticulationsPlop_QNAME = new QName("", "plop");
     private final static QName _ArticulationsScoop_QNAME = new QName("", "scoop");
     private final static QName _ArticulationsStaccatissimo_QNAME = new QName("", "staccatissimo");
     private final static QName _ArticulationsOtherArticulation_QNAME = new QName("", "other-articulation");
-    private final static QName _ArticulationsAccent_QNAME = new QName("", "accent");
     private final static QName _ArticulationsBreathMark_QNAME = new QName("", "breath-mark");
+    private final static QName _ArticulationsAccent_QNAME = new QName("", "accent");
     private final static QName _ArticulationsStaccato_QNAME = new QName("", "staccato");
     private final static QName _ArticulationsSpiccato_QNAME = new QName("", "spiccato");
 
@@ -2028,6 +2028,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "doit", scope = Articulations.class)
+    public JAXBElement<EmptyLine> createArticulationsDoit(EmptyLine value) {
+        return new JAXBElement<EmptyLine>(_ArticulationsDoit_QNAME, EmptyLine.class, Articulations.class, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link StrongAccent }{@code >}}
      * 
      */
@@ -2040,9 +2049,9 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "doit", scope = Articulations.class)
-    public JAXBElement<EmptyLine> createArticulationsDoit(EmptyLine value) {
-        return new JAXBElement<EmptyLine>(_ArticulationsDoit_QNAME, EmptyLine.class, Articulations.class, value);
+    @XmlElementDecl(namespace = "", name = "falloff", scope = Articulations.class)
+    public JAXBElement<EmptyLine> createArticulationsFalloff(EmptyLine value) {
+        return new JAXBElement<EmptyLine>(_ArticulationsFalloff_QNAME, EmptyLine.class, Articulations.class, value);
     }
 
     /**
@@ -2052,15 +2061,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "caesura", scope = Articulations.class)
     public JAXBElement<EmptyPlacement> createArticulationsCaesura(EmptyPlacement value) {
         return new JAXBElement<EmptyPlacement>(_ArticulationsCaesura_QNAME, EmptyPlacement.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "falloff", scope = Articulations.class)
-    public JAXBElement<EmptyLine> createArticulationsFalloff(EmptyLine value) {
-        return new JAXBElement<EmptyLine>(_ArticulationsFalloff_QNAME, EmptyLine.class, Articulations.class, value);
     }
 
     /**
@@ -2121,18 +2121,18 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "accent", scope = Articulations.class)
-    public JAXBElement<EmptyPlacement> createArticulationsAccent(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_ArticulationsAccent_QNAME, EmptyPlacement.class, Articulations.class, value);
+    @XmlElementDecl(namespace = "", name = "breath-mark", scope = Articulations.class)
+    public JAXBElement<EmptyPlacement> createArticulationsBreathMark(EmptyPlacement value) {
+        return new JAXBElement<EmptyPlacement>(_ArticulationsBreathMark_QNAME, EmptyPlacement.class, Articulations.class, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "breath-mark", scope = Articulations.class)
-    public JAXBElement<EmptyPlacement> createArticulationsBreathMark(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_ArticulationsBreathMark_QNAME, EmptyPlacement.class, Articulations.class, value);
+    @XmlElementDecl(namespace = "", name = "accent", scope = Articulations.class)
+    public JAXBElement<EmptyPlacement> createArticulationsAccent(EmptyPlacement value) {
+        return new JAXBElement<EmptyPlacement>(_ArticulationsAccent_QNAME, EmptyPlacement.class, Articulations.class, value);
     }
 
     /**

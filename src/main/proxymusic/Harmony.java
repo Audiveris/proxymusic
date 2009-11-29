@@ -38,9 +38,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;group ref="{}editorial"/>
  *         &lt;group ref="{}staff" minOccurs="0"/>
  *       &lt;/sequence>
+ *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}print-object"/>
- *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attribute name="type" type="{}harmony-type" />
  *       &lt;attribute name="print-frame" type="{}yes-no" />
  *     &lt;/restriction>
@@ -81,10 +81,6 @@ public class Harmony {
     @XmlAttribute(name = "print-frame")
     protected YesNo printFrame;
     @XmlAttribute
-    protected AboveBelow placement;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
-    @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
     @XmlAttribute(name = "default-x")
@@ -104,6 +100,10 @@ public class Harmony {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute
+    protected AboveBelow placement;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
 
     /**
      * Gets the value of the harmonyChord property.
@@ -305,54 +305,6 @@ public class Harmony {
      */
     public void setPrintFrame(YesNo value) {
         this.printFrame = value;
-    }
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
-    }
-
-    /**
-     * Gets the value of the printObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintObject() {
-        return printObject;
-    }
-
-    /**
-     * Sets the value of the printObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
     }
 
     /**
@@ -569,6 +521,54 @@ public class Harmony {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
+    }
+
+    /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
+    }
+
+    /**
+     * Gets the value of the printObject property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintObject() {
+        return printObject;
+    }
+
+    /**
+     * Sets the value of the printObject property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
     }
 
 }

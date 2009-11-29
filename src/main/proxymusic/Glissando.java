@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="glissando">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attGroup ref="{}line-type"/>
  *       &lt;attGroup ref="{}print-style"/>
+ *       &lt;attGroup ref="{}line-type"/>
  *       &lt;attribute name="type" use="required" type="{}start-stop" />
  *       &lt;attribute name="number" type="{}number-level" default="1" />
  *     &lt;/extension>
@@ -45,8 +45,6 @@ public class Glissando {
     protected StartStop type;
     @XmlAttribute
     protected Integer number;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
@@ -67,6 +65,8 @@ public class Glissando {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
 
     /**
      * Gets the value of the value property.
@@ -142,30 +142,6 @@ public class Glissando {
      */
     public void setNumber(Integer value) {
         this.number = value;
-    }
-
-    /**
-     * Gets the value of the lineType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineType }
-     *     
-     */
-    public LineType getLineType() {
-        return lineType;
-    }
-
-    /**
-     * Sets the value of the lineType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineType }
-     *     
-     */
-    public void setLineType(LineType value) {
-        this.lineType = value;
     }
 
     /**
@@ -382,6 +358,30 @@ public class Glissando {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
+    }
+
+    /**
+     * Gets the value of the lineType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LineType }
+     *     
+     */
+    public LineType getLineType() {
+        return lineType;
+    }
+
+    /**
+     * Sets the value of the lineType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LineType }
+     *     
+     */
+    public void setLineType(LineType value) {
+        this.lineType = value;
     }
 
 }
