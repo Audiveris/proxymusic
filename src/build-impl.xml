@@ -42,6 +42,7 @@
         <mkdir dir="${build.classes.dir}"/>
         
         <javac
+    	    includeantruntime = "false"
             target       = "${javac.target}"
             debug        = "${build.compile.debug}"
             deprecation  = "${build.compile.deprecation}"

@@ -43,8 +43,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="end-paragraph" type="{}empty" minOccurs="0"/>
  *         &lt;group ref="{}editorial"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}justify"/>
+ *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}color"/>
  *       &lt;attribute name="number" type="{http://www.w3.org/2001/XMLSchema}NMTOKEN" />
@@ -70,8 +70,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Lyric {
 
     @XmlElements({
-        @XmlElement(name = "text", type = TextElementData.class),
         @XmlElement(name = "syllabic", type = Syllabic.class),
+        @XmlElement(name = "text", type = TextElementData.class),
         @XmlElement(name = "elision", type = Elision.class)
     })
     protected List<Object> elisionAndSyllabicAndText;
@@ -92,6 +92,8 @@ public class Lyric {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String name;
+    @XmlAttribute
+    protected LeftCenterRight justify;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -100,8 +102,6 @@ public class Lyric {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    protected LeftCenterRight justify;
     @XmlAttribute
     protected AboveBelow placement;
     @XmlAttribute
@@ -126,8 +126,8 @@ public class Lyric {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link TextElementData }
      * {@link Syllabic }
+     * {@link TextElementData }
      * {@link Elision }
      * 
      * 
@@ -356,6 +356,30 @@ public class Lyric {
     }
 
     /**
+     * Gets the value of the justify property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getJustify() {
+        return justify;
+    }
+
+    /**
+     * Sets the value of the justify property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setJustify(LeftCenterRight value) {
+        this.justify = value;
+    }
+
+    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -449,30 +473,6 @@ public class Lyric {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the justify property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getJustify() {
-        return justify;
-    }
-
-    /**
-     * Sets the value of the justify property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setJustify(LeftCenterRight value) {
-        this.justify = value;
     }
 
     /**

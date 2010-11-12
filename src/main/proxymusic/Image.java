@@ -50,9 +50,9 @@ public class Image {
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
     @XmlAttribute
-    protected LeftCenterRight halign;
-    @XmlAttribute
     protected ValignImage valign;
+    @XmlAttribute
+    protected LeftCenterRight halign;
 
     /**
      * Gets the value of the source property.
@@ -199,30 +199,6 @@ public class Image {
     }
 
     /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
-    }
-
-    /**
      * Gets the value of the valign property.
      * 
      * @return
@@ -244,6 +220,30 @@ public class Image {
      */
     public void setValign(ValignImage value) {
         this.valign = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
     }
 
 }

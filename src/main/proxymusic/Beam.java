@@ -65,7 +65,7 @@ public class Beam {
     }
 
     /**
-     * The beam-value type represents the type of beam associated with each of 6 beam levels (up to 256th notes) available for each note.
+     * Sets the value of the value property.
      * 
      * @param value
      *     allowed object is

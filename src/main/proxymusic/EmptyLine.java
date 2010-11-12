@@ -21,10 +21,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="empty-line">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attGroup ref="{}line-type"/>
  *       &lt;attGroup ref="{}line-shape"/>
  *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}print-style"/>
+ *       &lt;attGroup ref="{}line-type"/>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -36,12 +36,19 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "empty-line")
 public class EmptyLine {
 
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
     @XmlAttribute(name = "line-shape")
     protected LineShape lineShape;
     @XmlAttribute
     protected AboveBelow placement;
+    @XmlAttribute(name = "font-family")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String fontFamily;
+    @XmlAttribute(name = "font-style")
+    protected FontStyle fontStyle;
+    @XmlAttribute(name = "font-size")
+    protected java.lang.String fontSize;
+    @XmlAttribute(name = "font-weight")
+    protected FontWeight fontWeight;
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
@@ -53,39 +60,8 @@ public class EmptyLine {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "font-family")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String fontFamily;
-    @XmlAttribute(name = "font-style")
-    protected FontStyle fontStyle;
-    @XmlAttribute(name = "font-size")
-    protected java.lang.String fontSize;
-    @XmlAttribute(name = "font-weight")
-    protected FontWeight fontWeight;
-
-    /**
-     * Gets the value of the lineType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineType }
-     *     
-     */
-    public LineType getLineType() {
-        return lineType;
-    }
-
-    /**
-     * Sets the value of the lineType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineType }
-     *     
-     */
-    public void setLineType(LineType value) {
-        this.lineType = value;
-    }
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
 
     /**
      * Gets the value of the lineShape property.
@@ -133,6 +109,102 @@ public class EmptyLine {
      */
     public void setPlacement(AboveBelow value) {
         this.placement = value;
+    }
+
+    /**
+     * Gets the value of the fontFamily property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getFontFamily() {
+        return fontFamily;
+    }
+
+    /**
+     * Sets the value of the fontFamily property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setFontFamily(java.lang.String value) {
+        this.fontFamily = value;
+    }
+
+    /**
+     * Gets the value of the fontStyle property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontStyle }
+     *     
+     */
+    public FontStyle getFontStyle() {
+        return fontStyle;
+    }
+
+    /**
+     * Sets the value of the fontStyle property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontStyle }
+     *     
+     */
+    public void setFontStyle(FontStyle value) {
+        this.fontStyle = value;
+    }
+
+    /**
+     * Gets the value of the fontSize property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getFontSize() {
+        return fontSize;
+    }
+
+    /**
+     * Sets the value of the fontSize property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setFontSize(java.lang.String value) {
+        this.fontSize = value;
+    }
+
+    /**
+     * Gets the value of the fontWeight property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontWeight }
+     *     
+     */
+    public FontWeight getFontWeight() {
+        return fontWeight;
+    }
+
+    /**
+     * Sets the value of the fontWeight property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontWeight }
+     *     
+     */
+    public void setFontWeight(FontWeight value) {
+        this.fontWeight = value;
     }
 
     /**
@@ -256,99 +328,27 @@ public class EmptyLine {
     }
 
     /**
-     * Gets the value of the fontFamily property.
+     * Gets the value of the lineType property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link LineType }
      *     
      */
-    public java.lang.String getFontFamily() {
-        return fontFamily;
+    public LineType getLineType() {
+        return lineType;
     }
 
     /**
-     * Sets the value of the fontFamily property.
+     * Sets the value of the lineType property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link LineType }
      *     
      */
-    public void setFontFamily(java.lang.String value) {
-        this.fontFamily = value;
-    }
-
-    /**
-     * Gets the value of the fontStyle property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FontStyle }
-     *     
-     */
-    public FontStyle getFontStyle() {
-        return fontStyle;
-    }
-
-    /**
-     * Sets the value of the fontStyle property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FontStyle }
-     *     
-     */
-    public void setFontStyle(FontStyle value) {
-        this.fontStyle = value;
-    }
-
-    /**
-     * Gets the value of the fontSize property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getFontSize() {
-        return fontSize;
-    }
-
-    /**
-     * Sets the value of the fontSize property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setFontSize(java.lang.String value) {
-        this.fontSize = value;
-    }
-
-    /**
-     * Gets the value of the fontWeight property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FontWeight }
-     *     
-     */
-    public FontWeight getFontWeight() {
-        return fontWeight;
-    }
-
-    /**
-     * Sets the value of the fontWeight property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FontWeight }
-     *     
-     */
-    public void setFontWeight(FontWeight value) {
-        this.fontWeight = value;
+    public void setLineType(LineType value) {
+        this.lineType = value;
     }
 
 }

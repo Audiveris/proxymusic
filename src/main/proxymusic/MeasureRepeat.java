@@ -59,7 +59,7 @@ public class MeasureRepeat {
     }
 
     /**
-     * The number-or-normal values can be either a positive integer or an empty string. This is used for the content of the ensemble element.
+     * Sets the value of the value property.
      * 
      * @param value
      *     allowed object is

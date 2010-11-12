@@ -77,10 +77,7 @@ public class Notehead {
     }
 
     /**
-     * 
-     * The notehead type indicates shapes other than the open and closed ovals associated with note durations. The values do, re, mi, fa, so, la, and ti correspond to Aikin's 7-shape system.
-     * 
-     * The arrow shapes differ from triangle and inverted triangle by being centered on the stem. Slashed and back slashed  notes include both the normal notehead and a slash. The  triangle shape has the tip of the triangle pointing up; the inverted triangle shape has the tip of the triangle  pointing down.
+     * Sets the value of the value property.
      * 
      * @param value
      *     allowed object is

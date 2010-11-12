@@ -64,7 +64,7 @@ public class Stem {
     }
 
     /**
-     * The stem type represents the notated stem direction.
+     * Sets the value of the value property.
      * 
      * @param value
      *     allowed object is

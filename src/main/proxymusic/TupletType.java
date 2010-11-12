@@ -64,7 +64,7 @@ public class TupletType {
     }
 
     /**
-     * The note-type type is used for the MusicXML type element and represents the graphic note type, from 256th (shortest) to long (longest).
+     * Sets the value of the value property.
      * 
      * @param value
      *     allowed object is

@@ -22,10 +22,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="text-element-data">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attGroup ref="{}text-direction"/>
- *       &lt;attGroup ref="{}text-decoration"/>
- *       &lt;attGroup ref="{}letter-spacing"/>
  *       &lt;attGroup ref="{}text-rotation"/>
+ *       &lt;attGroup ref="{}text-direction"/>
+ *       &lt;attGroup ref="{}letter-spacing"/>
+ *       &lt;attGroup ref="{}text-decoration"/>
  *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}font"/>
  *       &lt;attribute ref="{http://www.w3.org/XML/1998/namespace}lang"/>
@@ -47,17 +47,17 @@ public class TextElementData {
     @XmlAttribute(namespace = "http://www.w3.org/XML/1998/namespace")
     protected java.lang.String lang;
     @XmlAttribute
+    protected BigDecimal rotation;
+    @XmlAttribute
     protected TextDirection dir;
+    @XmlAttribute(name = "letter-spacing")
+    protected java.lang.String letterSpacing;
     @XmlAttribute
     protected Integer underline;
     @XmlAttribute
     protected Integer overline;
     @XmlAttribute(name = "line-through")
     protected Integer lineThrough;
-    @XmlAttribute(name = "letter-spacing")
-    protected java.lang.String letterSpacing;
-    @XmlAttribute
-    protected BigDecimal rotation;
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
@@ -120,6 +120,30 @@ public class TextElementData {
     }
 
     /**
+     * Gets the value of the rotation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRotation() {
+        return rotation;
+    }
+
+    /**
+     * Sets the value of the rotation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRotation(BigDecimal value) {
+        this.rotation = value;
+    }
+
+    /**
      * Gets the value of the dir property.
      * 
      * @return
@@ -141,6 +165,30 @@ public class TextElementData {
      */
     public void setDir(TextDirection value) {
         this.dir = value;
+    }
+
+    /**
+     * Gets the value of the letterSpacing property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getLetterSpacing() {
+        return letterSpacing;
+    }
+
+    /**
+     * Sets the value of the letterSpacing property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setLetterSpacing(java.lang.String value) {
+        this.letterSpacing = value;
     }
 
     /**
@@ -213,54 +261,6 @@ public class TextElementData {
      */
     public void setLineThrough(Integer value) {
         this.lineThrough = value;
-    }
-
-    /**
-     * Gets the value of the letterSpacing property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getLetterSpacing() {
-        return letterSpacing;
-    }
-
-    /**
-     * Sets the value of the letterSpacing property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setLetterSpacing(java.lang.String value) {
-        this.letterSpacing = value;
-    }
-
-    /**
-     * Gets the value of the rotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRotation() {
-        return rotation;
-    }
-
-    /**
-     * Sets the value of the rotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRotation(BigDecimal value) {
-        this.rotation = value;
     }
 
     /**

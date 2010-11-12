@@ -13,8 +13,6 @@
     <description>
 	Common prolog to set up user properties for all ant builds.
 	Targets that override normal NetBeans targets must be defined here
-	
-        $Id$
     </description>
 
     <!-- =================================================================== -->
@@ -113,6 +111,7 @@
 	<echo message="Compiling ${test.name} ..."/>
 	<mkdir dir="${build.dir}/test/classes" />
         <javac
+	    includeantruntime = "false"
             target    = "${javac.target}"
 	    classpath = "${junit.jar};${dist.jar}"
             destdir   = "${build.dir}/test/classes"

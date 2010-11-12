@@ -52,9 +52,9 @@ public class Credit {
 
     @XmlElements({
         @XmlElement(name = "credit-words", type = FormattedText.class),
-        @XmlElement(name = "credit-image", type = Image.class),
         @XmlElement(name = "bookmark", type = Bookmark.class),
-        @XmlElement(name = "link", type = Link.class)
+        @XmlElement(name = "link", type = Link.class),
+        @XmlElement(name = "credit-image", type = Image.class)
     })
     protected List<Object> linkOrBookmarkOrCreditImage;
     @XmlAttribute
@@ -80,9 +80,9 @@ public class Credit {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link FormattedText }
-     * {@link Image }
      * {@link Bookmark }
      * {@link Link }
+     * {@link Image }
      * 
      * 
      */

@@ -21,12 +21,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="tied">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}bezier"/>
  *       &lt;attGroup ref="{}position"/>
- *       &lt;attGroup ref="{}orientation"/>
- *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}line-type"/>
+ *       &lt;attGroup ref="{}placement"/>
+ *       &lt;attGroup ref="{}color"/>
+ *       &lt;attGroup ref="{}orientation"/>
  *       &lt;attribute name="type" use="required" type="{}start-stop" />
  *       &lt;attribute name="number" type="{}number-level" />
  *     &lt;/restriction>
@@ -44,9 +44,6 @@ public class Tied {
     protected StartStop type;
     @XmlAttribute
     protected Integer number;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "bezier-offset")
     protected BigDecimal bezierOffset;
     @XmlAttribute(name = "bezier-offset2")
@@ -67,12 +64,15 @@ public class Tied {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    protected OverUnder orientation;
-    @XmlAttribute
-    protected AboveBelow placement;
     @XmlAttribute(name = "line-type")
     protected LineType lineType;
+    @XmlAttribute
+    protected AboveBelow placement;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute
+    protected OverUnder orientation;
 
     /**
      * Gets the value of the type property.
@@ -120,30 +120,6 @@ public class Tied {
      */
     public void setNumber(Integer value) {
         this.number = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
     /**
@@ -387,27 +363,27 @@ public class Tied {
     }
 
     /**
-     * Gets the value of the orientation property.
+     * Gets the value of the lineType property.
      * 
      * @return
      *     possible object is
-     *     {@link OverUnder }
+     *     {@link LineType }
      *     
      */
-    public OverUnder getOrientation() {
-        return orientation;
+    public LineType getLineType() {
+        return lineType;
     }
 
     /**
-     * Sets the value of the orientation property.
+     * Sets the value of the lineType property.
      * 
      * @param value
      *     allowed object is
-     *     {@link OverUnder }
+     *     {@link LineType }
      *     
      */
-    public void setOrientation(OverUnder value) {
-        this.orientation = value;
+    public void setLineType(LineType value) {
+        this.lineType = value;
     }
 
     /**
@@ -435,27 +411,51 @@ public class Tied {
     }
 
     /**
-     * Gets the value of the lineType property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link LineType }
+     *     {@link java.lang.String }
      *     
      */
-    public LineType getLineType() {
-        return lineType;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the lineType property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LineType }
+     *     {@link java.lang.String }
      *     
      */
-    public void setLineType(LineType value) {
-        this.lineType = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the orientation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link OverUnder }
+     *     
+     */
+    public OverUnder getOrientation() {
+        return orientation;
+    }
+
+    /**
+     * Sets the value of the orientation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link OverUnder }
+     *     
+     */
+    public void setOrientation(OverUnder value) {
+        this.orientation = value;
     }
 
 }

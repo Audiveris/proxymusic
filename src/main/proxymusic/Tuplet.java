@@ -28,9 +28,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="tuplet-actual" type="{}tuplet-portion" minOccurs="0"/>
  *         &lt;element name="tuplet-normal" type="{}tuplet-portion" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}placement"/>
- *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}line-shape"/>
+ *       &lt;attGroup ref="{}position"/>
+ *       &lt;attGroup ref="{}placement"/>
  *       &lt;attribute name="type" use="required" type="{}start-stop" />
  *       &lt;attribute name="number" type="{}number-level" />
  *       &lt;attribute name="bracket" type="{}yes-no" />
@@ -64,8 +64,8 @@ public class Tuplet {
     protected ShowTuplet showNumber;
     @XmlAttribute(name = "show-type")
     protected ShowTuplet showType;
-    @XmlAttribute
-    protected AboveBelow placement;
+    @XmlAttribute(name = "line-shape")
+    protected LineShape lineShape;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -74,8 +74,8 @@ public class Tuplet {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "line-shape")
-    protected LineShape lineShape;
+    @XmlAttribute
+    protected AboveBelow placement;
 
     /**
      * Gets the value of the tupletActual property.
@@ -246,27 +246,27 @@ public class Tuplet {
     }
 
     /**
-     * Gets the value of the placement property.
+     * Gets the value of the lineShape property.
      * 
      * @return
      *     possible object is
-     *     {@link AboveBelow }
+     *     {@link LineShape }
      *     
      */
-    public AboveBelow getPlacement() {
-        return placement;
+    public LineShape getLineShape() {
+        return lineShape;
     }
 
     /**
-     * Sets the value of the placement property.
+     * Sets the value of the lineShape property.
      * 
      * @param value
      *     allowed object is
-     *     {@link AboveBelow }
+     *     {@link LineShape }
      *     
      */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
+    public void setLineShape(LineShape value) {
+        this.lineShape = value;
     }
 
     /**
@@ -366,27 +366,27 @@ public class Tuplet {
     }
 
     /**
-     * Gets the value of the lineShape property.
+     * Gets the value of the placement property.
      * 
      * @return
      *     possible object is
-     *     {@link LineShape }
+     *     {@link AboveBelow }
      *     
      */
-    public LineShape getLineShape() {
-        return lineShape;
+    public AboveBelow getPlacement() {
+        return placement;
     }
 
     /**
-     * Sets the value of the lineShape property.
+     * Sets the value of the placement property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LineShape }
+     *     {@link AboveBelow }
      *     
      */
-    public void setLineShape(LineShape value) {
-        this.lineShape = value;
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
 }

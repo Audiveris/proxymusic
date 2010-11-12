@@ -2,7 +2,7 @@
 //                                                                            //
 //                            H e l l o W o r l d                             //
 //                                                                            //
-//  Copyright (C) Herve Bitteur 2000-2009. All rights reserved.               //
+//  Copyright (C) Herve Bitteur 2000-2010. All rights reserved.               //
 //  This software is released under the GNU Lesser General Public License.    //
 //  Please contact users@proxymusic.dev.java.net to report bugs & suggestions //
 //----------------------------------------------------------------------------//
@@ -87,7 +87,14 @@ public class HelloWorld
     {
         HelloWorld instance = new HelloWorld();
         instance.setUp();
-        System.out.println("Calling testMarshal...");
+
+        System.out.println("Building jaxbContext...");
+
+        long start = System.currentTimeMillis();
+        Marshalling.getContext();
+        System.out.println(
+            "jaxbContext built in " + (System.currentTimeMillis() - start) +
+            " ms");
 
         try {
             instance.testMarshal();
@@ -95,7 +102,7 @@ public class HelloWorld
             ex.printStackTrace();
         }
 
-        System.out.println("Calling testUnmarshal...");
+        start = System.currentTimeMillis();
 
         try {
             instance.testUnmarshal();
@@ -113,14 +120,21 @@ public class HelloWorld
     public void testMarshal ()
         throws Exception
     {
+        System.out.println("Calling testMarshal...");
+
         // Get a populated score partwise
         ScorePartwise scorePartwise = getScorePartwise();
 
         //  Finally, marshal the proxy
         File         xmlFile = new File(FILE_NAME);
         OutputStream os = new FileOutputStream(xmlFile);
+        long         start = System.currentTimeMillis();
 
         Marshalling.marshal(scorePartwise, os);
+
+        System.out.println(
+            "Marshalling done in " + (System.currentTimeMillis() - start) +
+            " ms");
         System.out.println("Score exported to " + xmlFile);
         os.close();
     }
@@ -135,11 +149,18 @@ public class HelloWorld
     public void testUnmarshal ()
         throws Exception
     {
+        System.out.println("Calling testUnmarshal...");
+
         //  Unmarshal the proxy
         File          xmlFile = new File(FILE_NAME);
         InputStream   is = new FileInputStream(xmlFile);
+        long          start = System.currentTimeMillis();
 
         ScorePartwise scorePartwise = Marshalling.unmarshal(is);
+
+        System.out.println(
+            "Unmarshalling done in " + (System.currentTimeMillis() - start) +
+            " ms");
         System.out.println("Score imported from " + xmlFile);
         is.close();
 
@@ -408,11 +429,10 @@ public class HelloWorld
     private void checkScorePartwise (ScorePartwise scr)
     {
         Dumper.dump(scr);
-        assertEquals(versionData, scr.getVersion());
 
-        Identification identification = scr.getIdentification();
-        assertNotNull(identification);
-        Dumper.dump(identification);
+        if (Marshalling.specificationVersion != null) {
+            assertEquals(versionData, scr.getVersion());
+        }
 
         checkPartList(scr.getPartList());
 

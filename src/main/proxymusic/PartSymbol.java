@@ -23,8 +23,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="part-symbol">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;>group-symbol-value">
- *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}position"/>
+ *       &lt;attGroup ref="{}color"/>
  *       &lt;attribute name="top-staff" type="{}staff-number" />
  *       &lt;attribute name="bottom-staff" type="{}staff-number" />
  *     &lt;/extension>
@@ -46,9 +46,6 @@ public class PartSymbol {
     protected BigInteger topStaff;
     @XmlAttribute(name = "bottom-staff")
     protected BigInteger bottomStaff;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -57,6 +54,9 @@ public class PartSymbol {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * The group-symbol-value type indicates how the symbol for a group is indicated in the score. Values can be none, brace, line, and bracket; the default is none. 
@@ -71,7 +71,7 @@ public class PartSymbol {
     }
 
     /**
-     * The group-symbol-value type indicates how the symbol for a group is indicated in the score. Values can be none, brace, line, and bracket; the default is none. 
+     * Sets the value of the value property.
      * 
      * @param value
      *     allowed object is
@@ -128,30 +128,6 @@ public class PartSymbol {
      */
     public void setBottomStaff(BigInteger value) {
         this.bottomStaff = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
     /**
@@ -248,6 +224,30 @@ public class PartSymbol {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

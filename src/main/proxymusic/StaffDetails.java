@@ -31,8 +31,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="capo" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" minOccurs="0"/>
  *         &lt;element name="staff-size" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}print-spacing"/>
  *       &lt;attGroup ref="{}print-object"/>
+ *       &lt;attGroup ref="{}print-spacing"/>
  *       &lt;attribute name="number" type="{}staff-number" />
  *       &lt;attribute name="show-frets" type="{}show-frets" />
  *     &lt;/restriction>
@@ -67,10 +67,10 @@ public class StaffDetails {
     protected BigInteger number;
     @XmlAttribute(name = "show-frets")
     protected ShowFrets showFrets;
-    @XmlAttribute(name = "print-spacing")
-    protected YesNo printSpacing;
     @XmlAttribute(name = "print-object")
     protected YesNo printObject;
+    @XmlAttribute(name = "print-spacing")
+    protected YesNo printSpacing;
 
     /**
      * Gets the value of the staffType property.
@@ -246,30 +246,6 @@ public class StaffDetails {
     }
 
     /**
-     * Gets the value of the printSpacing property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintSpacing() {
-        return printSpacing;
-    }
-
-    /**
-     * Sets the value of the printSpacing property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintSpacing(YesNo value) {
-        this.printSpacing = value;
-    }
-
-    /**
      * Gets the value of the printObject property.
      * 
      * @return
@@ -291,6 +267,30 @@ public class StaffDetails {
      */
     public void setPrintObject(YesNo value) {
         this.printObject = value;
+    }
+
+    /**
+     * Gets the value of the printSpacing property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintSpacing() {
+        return printSpacing;
+    }
+
+    /**
+     * Sets the value of the printSpacing property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintSpacing(YesNo value) {
+        this.printSpacing = value;
     }
 
 }
