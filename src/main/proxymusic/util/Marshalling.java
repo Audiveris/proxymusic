@@ -32,7 +32,7 @@ import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.sax.SAXSource;
 
 /**
- * Class {@ode Marshalling} gathers static methods to marshal and to unmarshal
+ * Class {@code Marshalling} gathers static methods to marshal and to unmarshal
  * {@code ScorePartwise} java objects to/from an output/input stream in UTF8
  * encoding and using MusicXML format.
  *
