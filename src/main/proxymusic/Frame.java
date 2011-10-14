@@ -32,10 +32,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="first-fret" type="{}first-fret" minOccurs="0"/>
  *         &lt;element name="frame-note" type="{}frame-note" maxOccurs="unbounded"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}halign"/>
- *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}valign"/>
+ *       &lt;attGroup ref="{}color"/>
+ *       &lt;attGroup ref="{}halign"/>
  *       &lt;attribute name="height" type="{}tenths" />
  *       &lt;attribute name="width" type="{}tenths" />
  *     &lt;/restriction>
@@ -68,11 +68,6 @@ public class Frame {
     protected BigDecimal height;
     @XmlAttribute
     protected BigDecimal width;
-    @XmlAttribute
-    protected LeftCenterRight halign;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -83,6 +78,11 @@ public class Frame {
     protected BigDecimal relativeY;
     @XmlAttribute
     protected Valign valign;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute
+    protected LeftCenterRight halign;
 
     /**
      * Gets the value of the frameStrings property.
@@ -234,54 +234,6 @@ public class Frame {
     }
 
     /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -399,6 +351,54 @@ public class Frame {
      */
     public void setValign(Valign value) {
         this.valign = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
     }
 
 }

@@ -23,8 +23,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
  *       &lt;attGroup ref="{}print-style"/>
- *       &lt;attGroup ref="{}bend-sound"/>
  *       &lt;attGroup ref="{}line-type"/>
+ *       &lt;attGroup ref="{}bend-sound"/>
  *       &lt;attribute name="type" use="required" type="{}start-stop" />
  *       &lt;attribute name="number" type="{}number-level" default="1" />
  *     &lt;/extension>
@@ -55,9 +55,6 @@ public class Slide {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -67,6 +64,11 @@ public class Slide {
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
     @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
+    @XmlAttribute
     protected YesNo accelerate;
     @XmlAttribute
     protected BigDecimal beats;
@@ -74,8 +76,6 @@ public class Slide {
     protected BigDecimal firstBeat;
     @XmlAttribute(name = "last-beat")
     protected BigDecimal lastBeat;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
 
     /**
      * Gets the value of the value property.
@@ -250,30 +250,6 @@ public class Slide {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -370,6 +346,54 @@ public class Slide {
     }
 
     /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the lineType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LineType }
+     *     
+     */
+    public LineType getLineType() {
+        return lineType;
+    }
+
+    /**
+     * Sets the value of the lineType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LineType }
+     *     
+     */
+    public void setLineType(LineType value) {
+        this.lineType = value;
+    }
+
+    /**
      * Gets the value of the accelerate property.
      * 
      * @return
@@ -463,30 +487,6 @@ public class Slide {
      */
     public void setLastBeat(BigDecimal value) {
         this.lastBeat = value;
-    }
-
-    /**
-     * Gets the value of the lineType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineType }
-     *     
-     */
-    public LineType getLineType() {
-        return lineType;
-    }
-
-    /**
-     * Sets the value of the lineType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineType }
-     *     
-     */
-    public void setLineType(LineType value) {
-        this.lineType = value;
     }
 
 }

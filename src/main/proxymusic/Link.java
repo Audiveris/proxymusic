@@ -22,9 +22,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="link">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;attGroup ref="{}element-position"/>
  *       &lt;attGroup ref="{}link-attributes"/>
  *       &lt;attGroup ref="{}position"/>
- *       &lt;attGroup ref="{}element-position"/>
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,6 +39,14 @@ public class Link {
 
     @XmlAttribute
     protected java.lang.String name;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "NMTOKEN")
+    protected java.lang.String element;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "NMTOKEN")
+    protected java.lang.String position;
     @XmlAttribute(namespace = "http://www.w3.org/1999/xlink", required = true)
     @XmlSchemaType(name = "anyURI")
     protected java.lang.String href;
@@ -67,14 +75,6 @@ public class Link {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "NMTOKEN")
-    protected java.lang.String element;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "NMTOKEN")
-    protected java.lang.String position;
 
     /**
      * Gets the value of the name property.
@@ -98,6 +98,54 @@ public class Link {
      */
     public void setName(java.lang.String value) {
         this.name = value;
+    }
+
+    /**
+     * Gets the value of the element property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getElement() {
+        return element;
+    }
+
+    /**
+     * Sets the value of the element property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setElement(java.lang.String value) {
+        this.element = value;
+    }
+
+    /**
+     * Gets the value of the position property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getPosition() {
+        return position;
+    }
+
+    /**
+     * Sets the value of the position property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setPosition(java.lang.String value) {
+        this.position = value;
     }
 
     /**
@@ -350,54 +398,6 @@ public class Link {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the element property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getElement() {
-        return element;
-    }
-
-    /**
-     * Sets the value of the element property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setElement(java.lang.String value) {
-        this.element = value;
-    }
-
-    /**
-     * Gets the value of the position property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getPosition() {
-        return position;
-    }
-
-    /**
-     * Sets the value of the position property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setPosition(java.lang.String value) {
-        this.position = value;
     }
 
 }

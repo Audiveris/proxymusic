@@ -43,8 +43,8 @@ import javax.xml.bind.annotation.XmlType;
 public class NameDisplay {
 
     @XmlElements({
-        @XmlElement(name = "display-text", type = FormattedText.class),
-        @XmlElement(name = "accidental-text", type = AccidentalText.class)
+        @XmlElement(name = "accidental-text", type = AccidentalText.class),
+        @XmlElement(name = "display-text", type = FormattedText.class)
     })
     protected List<Object> displayTextOrAccidentalText;
     @XmlAttribute(name = "print-object")
@@ -68,8 +68,8 @@ public class NameDisplay {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link FormattedText }
      * {@link AccidentalText }
+     * {@link FormattedText }
      * 
      * 
      */

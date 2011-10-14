@@ -58,8 +58,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Metronome {
 
     @XmlElements({
-        @XmlElement(name = "beat-unit-dot", type = Empty.class),
-        @XmlElement(name = "beat-unit", type = java.lang.String.class)
+        @XmlElement(name = "beat-unit", type = java.lang.String.class),
+        @XmlElement(name = "beat-unit-dot", type = Empty.class)
     })
     protected List<Object> beatUnit;
     @XmlElement(name = "per-minute")
@@ -81,9 +81,6 @@ public class Metronome {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -92,6 +89,9 @@ public class Metronome {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * Gets the value of the beatUnit property.
@@ -111,8 +111,8 @@ public class Metronome {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Empty }
      * {@link java.lang.String }
+     * {@link Empty }
      * 
      * 
      */
@@ -350,30 +350,6 @@ public class Metronome {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -467,6 +443,30 @@ public class Metronome {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

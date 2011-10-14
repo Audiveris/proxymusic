@@ -519,19 +519,19 @@ public class ScoreTimewise {
         public static class Part {
 
             @XmlElements({
-                @XmlElement(name = "sound", type = Sound.class),
-                @XmlElement(name = "grouping", type = Grouping.class),
                 @XmlElement(name = "bookmark", type = Bookmark.class),
-                @XmlElement(name = "figured-bass", type = FiguredBass.class),
-                @XmlElement(name = "print", type = Print.class),
+                @XmlElement(name = "note", type = Note.class),
+                @XmlElement(name = "backup", type = Backup.class),
+                @XmlElement(name = "grouping", type = Grouping.class),
                 @XmlElement(name = "forward", type = Forward.class),
-                @XmlElement(name = "attributes", type = Attributes.class),
                 @XmlElement(name = "direction", type = Direction.class),
                 @XmlElement(name = "link", type = Link.class),
-                @XmlElement(name = "backup", type = Backup.class),
-                @XmlElement(name = "barline", type = Barline.class),
-                @XmlElement(name = "note", type = Note.class),
-                @XmlElement(name = "harmony", type = Harmony.class)
+                @XmlElement(name = "figured-bass", type = FiguredBass.class),
+                @XmlElement(name = "sound", type = Sound.class),
+                @XmlElement(name = "print", type = Print.class),
+                @XmlElement(name = "harmony", type = Harmony.class),
+                @XmlElement(name = "attributes", type = Attributes.class),
+                @XmlElement(name = "barline", type = Barline.class)
             })
             protected List<Object> noteOrBackupOrForward;
             @XmlAttribute(required = true)
@@ -557,19 +557,19 @@ public class ScoreTimewise {
              * 
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link Sound }
-             * {@link Grouping }
              * {@link Bookmark }
-             * {@link FiguredBass }
-             * {@link Print }
+             * {@link Note }
+             * {@link Backup }
+             * {@link Grouping }
              * {@link Forward }
-             * {@link Attributes }
              * {@link Direction }
              * {@link Link }
-             * {@link Backup }
-             * {@link Barline }
-             * {@link Note }
+             * {@link FiguredBass }
+             * {@link Sound }
+             * {@link Print }
              * {@link Harmony }
+             * {@link Attributes }
+             * {@link Barline }
              * 
              * 
              */

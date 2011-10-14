@@ -32,12 +32,12 @@ import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.sax.SAXSource;
 
 /**
- * Class <code>Marshalling</code> gathers static methods to marshal and to
- * unmarshal ScorePartwise java objects to/from an output/input stream using
- * MusicXML format.
+ * Class {@ode Marshalling} gathers static methods to marshal and to unmarshal
+ * {@code ScorePartwise} java objects to/from an output/input stream in UTF8
+ * encoding and using MusicXML format.
  *
  * <p>No access to a DTD (local or remote) is made during the unmarshalling
- * thanks to a specific EntityResolver which ignores MusicXML DTD URL.
+ * thanks to a specific {@code EntityResolver} which ignores MusicXML DTD URL.
  *
  * <p>The method {@link #getContext} is publicly visible so as to allow an
  * asynchronous elaboration of the JAXB context, which is an expensive operation
@@ -90,13 +90,9 @@ public class Marshalling
             throws SAXException, IOException
         {
             if (systemId.equals(DTD_URL)) {
-                ///System.out.println("Got " + DTD_URL + " (DTD_URL)");
-
                 // Return an empty input source
                 return new InputSource(new StringReader(""));
             } else {
-                ///System.out.println("Got \"" + systemId + "\"");
-
                 // Use the default behavior
                 return null;
             }
@@ -117,7 +113,7 @@ public class Marshalling
     // getJaxbContext //
     //----------------//
     /**
-     * Get access to (and elaborate if not yet done) the needed JAXB context
+     * Get access to (and elaborate if not yet done) the needed JAXB context.
      *
      * @return the ready to use JAXB context
      * @exception JAXBException if anything goes wrong
@@ -145,10 +141,11 @@ public class Marshalling
      * @param os the output stream
      * @exception JAXBException if marshalling goes wrong
      * @exception IOException for output error
+     * @exception UnsupportedEncodingException if UTF8 is not supported
      */
     public static void marshal (ScorePartwise scorePartwise,
                                 OutputStream  os)
-        throws JAXBException, IOException
+        throws JAXBException, IOException, UnsupportedEncodingException
     {
         marshal(scorePartwise, os, true);
     }
@@ -165,11 +162,12 @@ public class Marshalling
      * @param injectSignature false if ProxyMusic encoder must not be referenced
      * @exception JAXBException if marshalling goes wrong
      * @exception IOException for output error
+     * @exception UnsupportedEncodingException if UTF8 is not supported
      */
     public static void marshal (ScorePartwise scorePartwise,
                                 OutputStream  os,
                                 boolean       injectSignature)
-        throws JAXBException, IOException
+        throws JAXBException, IOException, UnsupportedEncodingException
     {
         annotate(scorePartwise, injectSignature);
 
@@ -194,17 +192,15 @@ public class Marshalling
                 "");
         }
 
-        /** Finally, write out data to the stream */
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(os);
-        outputStreamWriter.write(XML_LINE);
-        outputStreamWriter.write(DOCTYPE_LINE);
-        outputStreamWriter.write(data);
-
-        outputStreamWriter.flush();
-        outputStreamWriter.close();
         stringWriter.close();
 
-        // We don't close os
+        /** Finally, write out data to the UTF8 stream */
+        Writer out = new BufferedWriter(new OutputStreamWriter(os, "UTF8"));
+        out.write(XML_LINE);
+        out.write(DOCTYPE_LINE);
+        out.write(data);
+        out.flush();
+        out.close();
     }
 
     //---------//
@@ -268,7 +264,7 @@ public class Marshalling
     //----------//
     /**
      * Annotate the scorePartwise tree with information about MusicXML version
-     * and, if so desired, with information about ProxyMusic and generation date
+     * and, if so desired, with information about ProxyMusic and generation date.
      * @param scorePartwise the tree to annotate
      * @param injectSignature if true, ProxyMusic information is added
      */

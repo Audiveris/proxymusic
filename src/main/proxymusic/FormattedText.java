@@ -42,22 +42,8 @@ public class FormattedText {
     protected java.lang.String lang;
     @XmlAttribute
     protected Enclosure enclosure;
-    @XmlAttribute
-    protected TextDirection dir;
-    @XmlAttribute
-    protected LeftCenterRight justify;
-    @XmlAttribute
-    protected LeftCenterRight halign;
-    @XmlAttribute
-    protected BigDecimal rotation;
-    @XmlAttribute(name = "line-height")
-    protected java.lang.String lineHeight;
-    @XmlAttribute
-    protected Integer underline;
-    @XmlAttribute
-    protected Integer overline;
-    @XmlAttribute(name = "line-through")
-    protected Integer lineThrough;
+    @XmlAttribute(name = "letter-spacing")
+    protected java.lang.String letterSpacing;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -67,9 +53,6 @@ public class FormattedText {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -79,9 +62,26 @@ public class FormattedText {
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
     @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute
+    protected BigDecimal rotation;
+    @XmlAttribute
     protected Valign valign;
-    @XmlAttribute(name = "letter-spacing")
-    protected java.lang.String letterSpacing;
+    @XmlAttribute
+    protected LeftCenterRight halign;
+    @XmlAttribute
+    protected LeftCenterRight justify;
+    @XmlAttribute(name = "line-height")
+    protected java.lang.String lineHeight;
+    @XmlAttribute
+    protected Integer underline;
+    @XmlAttribute
+    protected Integer overline;
+    @XmlAttribute(name = "line-through")
+    protected Integer lineThrough;
+    @XmlAttribute
+    protected TextDirection dir;
 
     /**
      * Gets the value of the value property.
@@ -156,195 +156,27 @@ public class FormattedText {
     }
 
     /**
-     * Gets the value of the dir property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TextDirection }
-     *     
-     */
-    public TextDirection getDir() {
-        return dir;
-    }
-
-    /**
-     * Sets the value of the dir property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TextDirection }
-     *     
-     */
-    public void setDir(TextDirection value) {
-        this.dir = value;
-    }
-
-    /**
-     * Gets the value of the justify property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getJustify() {
-        return justify;
-    }
-
-    /**
-     * Sets the value of the justify property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setJustify(LeftCenterRight value) {
-        this.justify = value;
-    }
-
-    /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
-    }
-
-    /**
-     * Gets the value of the rotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRotation() {
-        return rotation;
-    }
-
-    /**
-     * Sets the value of the rotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRotation(BigDecimal value) {
-        this.rotation = value;
-    }
-
-    /**
-     * Gets the value of the lineHeight property.
+     * Gets the value of the letterSpacing property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getLineHeight() {
-        return lineHeight;
+    public java.lang.String getLetterSpacing() {
+        return letterSpacing;
     }
 
     /**
-     * Sets the value of the lineHeight property.
+     * Sets the value of the letterSpacing property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setLineHeight(java.lang.String value) {
-        this.lineHeight = value;
-    }
-
-    /**
-     * Gets the value of the underline property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getUnderline() {
-        return underline;
-    }
-
-    /**
-     * Sets the value of the underline property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setUnderline(Integer value) {
-        this.underline = value;
-    }
-
-    /**
-     * Gets the value of the overline property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getOverline() {
-        return overline;
-    }
-
-    /**
-     * Sets the value of the overline property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setOverline(Integer value) {
-        this.overline = value;
-    }
-
-    /**
-     * Gets the value of the lineThrough property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getLineThrough() {
-        return lineThrough;
-    }
-
-    /**
-     * Sets the value of the lineThrough property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setLineThrough(Integer value) {
-        this.lineThrough = value;
+    public void setLetterSpacing(java.lang.String value) {
+        this.letterSpacing = value;
     }
 
     /**
@@ -444,30 +276,6 @@ public class FormattedText {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -564,6 +372,54 @@ public class FormattedText {
     }
 
     /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the rotation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRotation() {
+        return rotation;
+    }
+
+    /**
+     * Sets the value of the rotation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRotation(BigDecimal value) {
+        this.rotation = value;
+    }
+
+    /**
      * Gets the value of the valign property.
      * 
      * @return
@@ -588,27 +444,171 @@ public class FormattedText {
     }
 
     /**
-     * Gets the value of the letterSpacing property.
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
+     * Gets the value of the justify property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getJustify() {
+        return justify;
+    }
+
+    /**
+     * Sets the value of the justify property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setJustify(LeftCenterRight value) {
+        this.justify = value;
+    }
+
+    /**
+     * Gets the value of the lineHeight property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getLetterSpacing() {
-        return letterSpacing;
+    public java.lang.String getLineHeight() {
+        return lineHeight;
     }
 
     /**
-     * Sets the value of the letterSpacing property.
+     * Sets the value of the lineHeight property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setLetterSpacing(java.lang.String value) {
-        this.letterSpacing = value;
+    public void setLineHeight(java.lang.String value) {
+        this.lineHeight = value;
+    }
+
+    /**
+     * Gets the value of the underline property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getUnderline() {
+        return underline;
+    }
+
+    /**
+     * Sets the value of the underline property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setUnderline(Integer value) {
+        this.underline = value;
+    }
+
+    /**
+     * Gets the value of the overline property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getOverline() {
+        return overline;
+    }
+
+    /**
+     * Sets the value of the overline property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setOverline(Integer value) {
+        this.overline = value;
+    }
+
+    /**
+     * Gets the value of the lineThrough property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getLineThrough() {
+        return lineThrough;
+    }
+
+    /**
+     * Sets the value of the lineThrough property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setLineThrough(Integer value) {
+        this.lineThrough = value;
+    }
+
+    /**
+     * Gets the value of the dir property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TextDirection }
+     *     
+     */
+    public TextDirection getDir() {
+        return dir;
+    }
+
+    /**
+     * Sets the value of the dir property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TextDirection }
+     *     
+     */
+    public void setDir(TextDirection value) {
+        this.dir = value;
     }
 
 }

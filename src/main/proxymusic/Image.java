@@ -41,6 +41,10 @@ public class Image {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String type;
+    @XmlAttribute
+    protected LeftCenterRight halign;
+    @XmlAttribute
+    protected ValignImage valign;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -49,10 +53,6 @@ public class Image {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    protected ValignImage valign;
-    @XmlAttribute
-    protected LeftCenterRight halign;
 
     /**
      * Gets the value of the source property.
@@ -100,6 +100,54 @@ public class Image {
      */
     public void setType(java.lang.String value) {
         this.type = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
+     * Gets the value of the valign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ValignImage }
+     *     
+     */
+    public ValignImage getValign() {
+        return valign;
+    }
+
+    /**
+     * Sets the value of the valign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ValignImage }
+     *     
+     */
+    public void setValign(ValignImage value) {
+        this.valign = value;
     }
 
     /**
@@ -196,54 +244,6 @@ public class Image {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the valign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ValignImage }
-     *     
-     */
-    public ValignImage getValign() {
-        return valign;
-    }
-
-    /**
-     * Sets the value of the valign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ValignImage }
-     *     
-     */
-    public void setValign(ValignImage value) {
-        this.valign = value;
-    }
-
-    /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
     }
 
 }

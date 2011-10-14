@@ -34,9 +34,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="kind">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;>kind-value">
- *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}valign"/>
  *       &lt;attGroup ref="{}halign"/>
+ *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attribute name="use-symbols" type="{}yes-no" />
  *       &lt;attribute name="text" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="stack-degrees" type="{}yes-no" />
@@ -67,6 +67,10 @@ public class Kind {
     protected YesNo parenthesesDegrees;
     @XmlAttribute(name = "bracket-degrees")
     protected YesNo bracketDegrees;
+    @XmlAttribute
+    protected Valign valign;
+    @XmlAttribute
+    protected LeftCenterRight halign;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -76,9 +80,6 @@ public class Kind {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -88,9 +89,8 @@ public class Kind {
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
     @XmlAttribute
-    protected Valign valign;
-    @XmlAttribute
-    protected LeftCenterRight halign;
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * A kind-value indicates the type of chord. Degree elements can then add, subtract, or alter from these starting points. Values include:
@@ -280,6 +280,54 @@ public class Kind {
     }
 
     /**
+     * Gets the value of the valign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Valign }
+     *     
+     */
+    public Valign getValign() {
+        return valign;
+    }
+
+    /**
+     * Sets the value of the valign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Valign }
+     *     
+     */
+    public void setValign(Valign value) {
+        this.valign = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
      * Gets the value of the fontFamily property.
      * 
      * @return
@@ -373,30 +421,6 @@ public class Kind {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
     /**
@@ -496,51 +520,27 @@ public class Kind {
     }
 
     /**
-     * Gets the value of the valign property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link Valign }
+     *     {@link java.lang.String }
      *     
      */
-    public Valign getValign() {
-        return valign;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the valign property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Valign }
+     *     {@link java.lang.String }
      *     
      */
-    public void setValign(Valign value) {
-        this.valign = value;
-    }
-
-    /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

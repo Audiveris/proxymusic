@@ -57,8 +57,8 @@ public class Key {
     protected BigInteger fifths;
     protected java.lang.String mode;
     @XmlElements({
-        @XmlElement(name = "key-alter", type = BigDecimal.class),
-        @XmlElement(name = "key-step", type = Step.class)
+        @XmlElement(name = "key-step", type = Step.class),
+        @XmlElement(name = "key-alter", type = BigDecimal.class)
     })
     protected List<Object> nonTraditionalKey;
     @XmlElement(name = "key-octave")
@@ -74,9 +74,6 @@ public class Key {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -85,6 +82,9 @@ public class Key {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "print-object")
     protected YesNo printObject;
 
@@ -178,8 +178,8 @@ public class Key {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link BigDecimal }
      * {@link Step }
+     * {@link BigDecimal }
      * 
      * 
      */
@@ -340,30 +340,6 @@ public class Key {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -457,6 +433,30 @@ public class Key {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**

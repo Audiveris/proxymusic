@@ -33,9 +33,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *           &lt;element name="sounding-pitch" type="{}empty"/>
  *         &lt;/choice>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}print-object"/>
+ *       &lt;attGroup ref="{}print-style"/>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -61,6 +61,10 @@ public class Harmonic {
     protected Empty touchingPitch;
     @XmlElement(name = "sounding-pitch")
     protected Empty soundingPitch;
+    @XmlAttribute
+    protected AboveBelow placement;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -70,9 +74,6 @@ public class Harmonic {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -82,9 +83,8 @@ public class Harmonic {
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
     @XmlAttribute
-    protected AboveBelow placement;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * Gets the value of the natural property.
@@ -207,6 +207,54 @@ public class Harmonic {
     }
 
     /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
+    }
+
+    /**
+     * Gets the value of the printObject property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintObject() {
+        return printObject;
+    }
+
+    /**
+     * Sets the value of the printObject property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
+    }
+
+    /**
      * Gets the value of the fontFamily property.
      * 
      * @return
@@ -300,30 +348,6 @@ public class Harmonic {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
     /**
@@ -423,51 +447,27 @@ public class Harmonic {
     }
 
     /**
-     * Gets the value of the placement property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link AboveBelow }
+     *     {@link java.lang.String }
      *     
      */
-    public AboveBelow getPlacement() {
-        return placement;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the placement property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link AboveBelow }
+     *     {@link java.lang.String }
      *     
      */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
-    }
-
-    /**
-     * Gets the value of the printObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintObject() {
-        return printObject;
-    }
-
-    /**
-     * Sets the value of the printObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

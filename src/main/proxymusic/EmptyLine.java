@@ -21,10 +21,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="empty-line">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attGroup ref="{}line-shape"/>
  *       &lt;attGroup ref="{}placement"/>
- *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}line-type"/>
+ *       &lt;attGroup ref="{}line-shape"/>
+ *       &lt;attGroup ref="{}print-style"/>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -36,10 +36,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "empty-line")
 public class EmptyLine {
 
-    @XmlAttribute(name = "line-shape")
-    protected LineShape lineShape;
     @XmlAttribute
     protected AboveBelow placement;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
+    @XmlAttribute(name = "line-shape")
+    protected LineShape lineShape;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -49,9 +51,6 @@ public class EmptyLine {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -60,32 +59,9 @@ public class EmptyLine {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
-
-    /**
-     * Gets the value of the lineShape property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineShape }
-     *     
-     */
-    public LineShape getLineShape() {
-        return lineShape;
-    }
-
-    /**
-     * Sets the value of the lineShape property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineShape }
-     *     
-     */
-    public void setLineShape(LineShape value) {
-        this.lineShape = value;
-    }
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * Gets the value of the placement property.
@@ -109,6 +85,54 @@ public class EmptyLine {
      */
     public void setPlacement(AboveBelow value) {
         this.placement = value;
+    }
+
+    /**
+     * Gets the value of the lineType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LineType }
+     *     
+     */
+    public LineType getLineType() {
+        return lineType;
+    }
+
+    /**
+     * Sets the value of the lineType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LineType }
+     *     
+     */
+    public void setLineType(LineType value) {
+        this.lineType = value;
+    }
+
+    /**
+     * Gets the value of the lineShape property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LineShape }
+     *     
+     */
+    public LineShape getLineShape() {
+        return lineShape;
+    }
+
+    /**
+     * Sets the value of the lineShape property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LineShape }
+     *     
+     */
+    public void setLineShape(LineShape value) {
+        this.lineShape = value;
     }
 
     /**
@@ -208,30 +232,6 @@ public class EmptyLine {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -328,27 +328,27 @@ public class EmptyLine {
     }
 
     /**
-     * Gets the value of the lineType property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link LineType }
+     *     {@link java.lang.String }
      *     
      */
-    public LineType getLineType() {
-        return lineType;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the lineType property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LineType }
+     *     {@link java.lang.String }
      *     
      */
-    public void setLineType(LineType value) {
-        this.lineType = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

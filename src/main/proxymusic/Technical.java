@@ -59,26 +59,26 @@ import javax.xml.bind.annotation.XmlType;
 public class Technical {
 
     @XmlElementRefs({
-        @XmlElementRef(name = "other-technical", type = JAXBElement.class),
-        @XmlElementRef(name = "up-bow", type = JAXBElement.class),
-        @XmlElementRef(name = "pluck", type = JAXBElement.class),
-        @XmlElementRef(name = "pull-off", type = JAXBElement.class),
-        @XmlElementRef(name = "toe", type = JAXBElement.class),
-        @XmlElementRef(name = "thumb-position", type = JAXBElement.class),
-        @XmlElementRef(name = "harmonic", type = JAXBElement.class),
-        @XmlElementRef(name = "bend", type = JAXBElement.class),
-        @XmlElementRef(name = "down-bow", type = JAXBElement.class),
-        @XmlElementRef(name = "fingering", type = JAXBElement.class),
-        @XmlElementRef(name = "heel", type = JAXBElement.class),
-        @XmlElementRef(name = "stopped", type = JAXBElement.class),
-        @XmlElementRef(name = "string", type = JAXBElement.class),
-        @XmlElementRef(name = "fingernails", type = JAXBElement.class),
-        @XmlElementRef(name = "hammer-on", type = JAXBElement.class),
-        @XmlElementRef(name = "tap", type = JAXBElement.class),
-        @XmlElementRef(name = "double-tongue", type = JAXBElement.class),
         @XmlElementRef(name = "open-string", type = JAXBElement.class),
-        @XmlElementRef(name = "triple-tongue", type = JAXBElement.class),
+        @XmlElementRef(name = "pull-off", type = JAXBElement.class),
+        @XmlElementRef(name = "stopped", type = JAXBElement.class),
+        @XmlElementRef(name = "pluck", type = JAXBElement.class),
+        @XmlElementRef(name = "heel", type = JAXBElement.class),
+        @XmlElementRef(name = "fingering", type = JAXBElement.class),
         @XmlElementRef(name = "fret", type = JAXBElement.class),
+        @XmlElementRef(name = "toe", type = JAXBElement.class),
+        @XmlElementRef(name = "other-technical", type = JAXBElement.class),
+        @XmlElementRef(name = "double-tongue", type = JAXBElement.class),
+        @XmlElementRef(name = "harmonic", type = JAXBElement.class),
+        @XmlElementRef(name = "string", type = JAXBElement.class),
+        @XmlElementRef(name = "bend", type = JAXBElement.class),
+        @XmlElementRef(name = "up-bow", type = JAXBElement.class),
+        @XmlElementRef(name = "thumb-position", type = JAXBElement.class),
+        @XmlElementRef(name = "fingernails", type = JAXBElement.class),
+        @XmlElementRef(name = "tap", type = JAXBElement.class),
+        @XmlElementRef(name = "triple-tongue", type = JAXBElement.class),
+        @XmlElementRef(name = "down-bow", type = JAXBElement.class),
+        @XmlElementRef(name = "hammer-on", type = JAXBElement.class),
         @XmlElementRef(name = "snap-pizzicato", type = JAXBElement.class)
     })
     protected List<JAXBElement<?>> upBowOrDownBowOrHarmonic;
@@ -101,26 +101,26 @@ public class Technical {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link PlacementText }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link PlacementText }{@code >}
-     * {@link JAXBElement }{@code <}{@link HeelToe }{@code >}
      * {@link JAXBElement }{@code <}{@link HammerOnPullOff }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
+     * {@link JAXBElement }{@code <}{@link HeelToe }{@code >}
+     * {@link JAXBElement }{@code <}{@link PlacementText }{@code >}
+     * {@link JAXBElement }{@code <}{@link Fingering }{@code >}
+     * {@link JAXBElement }{@code <}{@link Fret }{@code >}
+     * {@link JAXBElement }{@code <}{@link HeelToe }{@code >}
+     * {@link JAXBElement }{@code <}{@link PlacementText }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
+     * {@link JAXBElement }{@code <}{@link String }{@code >}
      * {@link JAXBElement }{@code <}{@link Harmonic }{@code >}
      * {@link JAXBElement }{@code <}{@link Bend }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link Fingering }{@code >}
-     * {@link JAXBElement }{@code <}{@link HeelToe }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link HammerOnPullOff }{@code >}
      * {@link JAXBElement }{@code <}{@link PlacementText }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link Fret }{@code >}
+     * {@link JAXBElement }{@code <}{@link HammerOnPullOff }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * 
      * 

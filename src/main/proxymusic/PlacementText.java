@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="placement-text">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}placement"/>
+ *       &lt;attGroup ref="{}print-style"/>
  *     &lt;/extension>
  *   &lt;/simpleContent>
  * &lt;/complexType>
@@ -39,6 +39,8 @@ public class PlacementText {
 
     @XmlValue
     protected java.lang.String value;
+    @XmlAttribute
+    protected AboveBelow placement;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -48,9 +50,6 @@ public class PlacementText {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -60,7 +59,8 @@ public class PlacementText {
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
     @XmlAttribute
-    protected AboveBelow placement;
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * Gets the value of the value property.
@@ -84,6 +84,30 @@ public class PlacementText {
      */
     public void setValue(java.lang.String value) {
         this.value = value;
+    }
+
+    /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
     /**
@@ -183,30 +207,6 @@ public class PlacementText {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -303,27 +303,27 @@ public class PlacementText {
     }
 
     /**
-     * Gets the value of the placement property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link AboveBelow }
+     *     {@link java.lang.String }
      *     
      */
-    public AboveBelow getPlacement() {
-        return placement;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the placement property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link AboveBelow }
+     *     {@link java.lang.String }
      *     
      */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

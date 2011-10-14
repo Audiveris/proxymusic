@@ -54,8 +54,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="fz" type="{}empty"/>
  *         &lt;element name="other-dynamics" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/choice>
- *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}placement"/>
+ *       &lt;attGroup ref="{}print-style"/>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -70,32 +70,34 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Dynamics {
 
     @XmlElementRefs({
-        @XmlElementRef(name = "mp", type = JAXBElement.class),
-        @XmlElementRef(name = "sfz", type = JAXBElement.class),
-        @XmlElementRef(name = "p", type = JAXBElement.class),
-        @XmlElementRef(name = "pppppp", type = JAXBElement.class),
-        @XmlElementRef(name = "sfp", type = JAXBElement.class),
-        @XmlElementRef(name = "other-dynamics", type = JAXBElement.class),
-        @XmlElementRef(name = "fz", type = JAXBElement.class),
-        @XmlElementRef(name = "sf", type = JAXBElement.class),
         @XmlElementRef(name = "fff", type = JAXBElement.class),
-        @XmlElementRef(name = "f", type = JAXBElement.class),
-        @XmlElementRef(name = "pppp", type = JAXBElement.class),
-        @XmlElementRef(name = "sffz", type = JAXBElement.class),
-        @XmlElementRef(name = "ppp", type = JAXBElement.class),
-        @XmlElementRef(name = "pp", type = JAXBElement.class),
+        @XmlElementRef(name = "other-dynamics", type = JAXBElement.class),
         @XmlElementRef(name = "ppppp", type = JAXBElement.class),
-        @XmlElementRef(name = "ff", type = JAXBElement.class),
-        @XmlElementRef(name = "mf", type = JAXBElement.class),
-        @XmlElementRef(name = "sfpp", type = JAXBElement.class),
-        @XmlElementRef(name = "fp", type = JAXBElement.class),
-        @XmlElementRef(name = "rfz", type = JAXBElement.class),
-        @XmlElementRef(name = "ffff", type = JAXBElement.class),
+        @XmlElementRef(name = "pppppp", type = JAXBElement.class),
+        @XmlElementRef(name = "pp", type = JAXBElement.class),
+        @XmlElementRef(name = "sf", type = JAXBElement.class),
         @XmlElementRef(name = "fffff", type = JAXBElement.class),
+        @XmlElementRef(name = "rfz", type = JAXBElement.class),
+        @XmlElementRef(name = "sffz", type = JAXBElement.class),
+        @XmlElementRef(name = "sfp", type = JAXBElement.class),
+        @XmlElementRef(name = "mf", type = JAXBElement.class),
+        @XmlElementRef(name = "pppp", type = JAXBElement.class),
         @XmlElementRef(name = "rf", type = JAXBElement.class),
-        @XmlElementRef(name = "ffffff", type = JAXBElement.class)
+        @XmlElementRef(name = "sfz", type = JAXBElement.class),
+        @XmlElementRef(name = "sfpp", type = JAXBElement.class),
+        @XmlElementRef(name = "ffffff", type = JAXBElement.class),
+        @XmlElementRef(name = "ffff", type = JAXBElement.class),
+        @XmlElementRef(name = "ff", type = JAXBElement.class),
+        @XmlElementRef(name = "fz", type = JAXBElement.class),
+        @XmlElementRef(name = "fp", type = JAXBElement.class),
+        @XmlElementRef(name = "ppp", type = JAXBElement.class),
+        @XmlElementRef(name = "p", type = JAXBElement.class),
+        @XmlElementRef(name = "f", type = JAXBElement.class),
+        @XmlElementRef(name = "mp", type = JAXBElement.class)
     })
     protected List<JAXBElement<?>> pOrPpOrPpp;
+    @XmlAttribute
+    protected AboveBelow placement;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -105,9 +107,6 @@ public class Dynamics {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -117,7 +116,8 @@ public class Dynamics {
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
     @XmlAttribute
-    protected AboveBelow placement;
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * Gets the value of the pOrPpOrPpp property.
@@ -139,10 +139,10 @@ public class Dynamics {
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}
+     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
+     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
+     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
@@ -169,6 +169,30 @@ public class Dynamics {
             pOrPpOrPpp = new ArrayList<JAXBElement<?>>();
         }
         return this.pOrPpOrPpp;
+    }
+
+    /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
     /**
@@ -268,30 +292,6 @@ public class Dynamics {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -388,27 +388,27 @@ public class Dynamics {
     }
 
     /**
-     * Gets the value of the placement property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link AboveBelow }
+     *     {@link java.lang.String }
      *     
      */
-    public AboveBelow getPlacement() {
-        return placement;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the placement property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link AboveBelow }
+     *     {@link java.lang.String }
      *     
      */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

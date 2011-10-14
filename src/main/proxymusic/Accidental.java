@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="accidental">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;>accidental-text">
- *       &lt;attGroup ref="{}level-display"/>
  *       &lt;attGroup ref="{}print-style"/>
+ *       &lt;attGroup ref="{}level-display"/>
  *       &lt;attribute name="cautionary" type="{}yes-no" />
  *       &lt;attribute name="editorial" type="{}yes-no" />
  *     &lt;/extension>
@@ -45,12 +45,6 @@ public class Accidental {
     protected YesNo cautionary;
     @XmlAttribute
     protected YesNo editorial;
-    @XmlAttribute
-    protected YesNo parentheses;
-    @XmlAttribute
-    protected YesNo bracket;
-    @XmlAttribute
-    protected SymbolSize size;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -60,9 +54,6 @@ public class Accidental {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -71,6 +62,15 @@ public class Accidental {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute
+    protected YesNo parentheses;
+    @XmlAttribute
+    protected YesNo bracket;
+    @XmlAttribute
+    protected SymbolSize size;
 
     /**
      * Notated accidentals supported by MusicXML. In the MusicXML 2.0 DTD this was a string with values that could be included. Here we strengthen the data typing to an enumerated list.
@@ -142,78 +142,6 @@ public class Accidental {
      */
     public void setEditorial(YesNo value) {
         this.editorial = value;
-    }
-
-    /**
-     * Gets the value of the parentheses property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getParentheses() {
-        return parentheses;
-    }
-
-    /**
-     * Sets the value of the parentheses property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setParentheses(YesNo value) {
-        this.parentheses = value;
-    }
-
-    /**
-     * Gets the value of the bracket property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getBracket() {
-        return bracket;
-    }
-
-    /**
-     * Sets the value of the bracket property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setBracket(YesNo value) {
-        this.bracket = value;
-    }
-
-    /**
-     * Gets the value of the size property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SymbolSize }
-     *     
-     */
-    public SymbolSize getSize() {
-        return size;
-    }
-
-    /**
-     * Sets the value of the size property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SymbolSize }
-     *     
-     */
-    public void setSize(SymbolSize value) {
-        this.size = value;
     }
 
     /**
@@ -313,30 +241,6 @@ public class Accidental {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -430,6 +334,102 @@ public class Accidental {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the parentheses property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getParentheses() {
+        return parentheses;
+    }
+
+    /**
+     * Sets the value of the parentheses property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setParentheses(YesNo value) {
+        this.parentheses = value;
+    }
+
+    /**
+     * Gets the value of the bracket property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getBracket() {
+        return bracket;
+    }
+
+    /**
+     * Sets the value of the bracket property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setBracket(YesNo value) {
+        this.bracket = value;
+    }
+
+    /**
+     * Gets the value of the size property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link SymbolSize }
+     *     
+     */
+    public SymbolSize getSize() {
+        return size;
+    }
+
+    /**
+     * Sets the value of the size property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link SymbolSize }
+     *     
+     */
+    public void setSize(SymbolSize value) {
+        this.size = value;
     }
 
 }

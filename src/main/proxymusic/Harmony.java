@@ -38,9 +38,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;group ref="{}editorial"/>
  *         &lt;group ref="{}staff" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}placement"/>
- *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}print-object"/>
+ *       &lt;attGroup ref="{}print-style"/>
+ *       &lt;attGroup ref="{}placement"/>
  *       &lt;attribute name="type" type="{}harmony-type" />
  *       &lt;attribute name="print-frame" type="{}yes-no" />
  *     &lt;/restriction>
@@ -62,12 +62,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Harmony {
 
     @XmlElements({
-        @XmlElement(name = "bass", required = true, type = Bass.class),
-        @XmlElement(name = "function", required = true, type = StyleText.class),
-        @XmlElement(name = "inversion", required = true, type = Inversion.class),
-        @XmlElement(name = "kind", required = true, type = Kind.class),
         @XmlElement(name = "degree", required = true, type = Degree.class),
-        @XmlElement(name = "root", required = true, type = Root.class)
+        @XmlElement(name = "kind", required = true, type = Kind.class),
+        @XmlElement(name = "root", required = true, type = Root.class),
+        @XmlElement(name = "bass", required = true, type = Bass.class),
+        @XmlElement(name = "inversion", required = true, type = Inversion.class),
+        @XmlElement(name = "function", required = true, type = StyleText.class)
     })
     protected List<Object> harmonyChord;
     protected Frame frame;
@@ -80,8 +80,8 @@ public class Harmony {
     protected HarmonyType type;
     @XmlAttribute(name = "print-frame")
     protected YesNo printFrame;
-    @XmlAttribute
-    protected AboveBelow placement;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -91,9 +91,6 @@ public class Harmony {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -102,8 +99,11 @@ public class Harmony {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute
+    protected AboveBelow placement;
 
     /**
      * Gets the value of the harmonyChord property.
@@ -123,12 +123,12 @@ public class Harmony {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Bass }
-     * {@link StyleText }
-     * {@link Inversion }
-     * {@link Kind }
      * {@link Degree }
+     * {@link Kind }
      * {@link Root }
+     * {@link Bass }
+     * {@link Inversion }
+     * {@link StyleText }
      * 
      * 
      */
@@ -308,27 +308,27 @@ public class Harmony {
     }
 
     /**
-     * Gets the value of the placement property.
+     * Gets the value of the printObject property.
      * 
      * @return
      *     possible object is
-     *     {@link AboveBelow }
+     *     {@link YesNo }
      *     
      */
-    public AboveBelow getPlacement() {
-        return placement;
+    public YesNo getPrintObject() {
+        return printObject;
     }
 
     /**
-     * Sets the value of the placement property.
+     * Sets the value of the printObject property.
      * 
      * @param value
      *     allowed object is
-     *     {@link AboveBelow }
+     *     {@link YesNo }
      *     
      */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
     }
 
     /**
@@ -428,30 +428,6 @@ public class Harmony {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -548,27 +524,51 @@ public class Harmony {
     }
 
     /**
-     * Gets the value of the printObject property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link YesNo }
+     *     {@link java.lang.String }
      *     
      */
-    public YesNo getPrintObject() {
-        return printObject;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the printObject property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link YesNo }
+     *     {@link java.lang.String }
      *     
      */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
 }

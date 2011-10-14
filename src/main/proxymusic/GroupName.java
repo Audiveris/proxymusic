@@ -38,6 +38,8 @@ public class GroupName {
 
     @XmlValue
     protected java.lang.String value;
+    @XmlAttribute
+    protected LeftCenterRight justify;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -47,9 +49,6 @@ public class GroupName {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -59,7 +58,8 @@ public class GroupName {
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
     @XmlAttribute
-    protected LeftCenterRight justify;
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * Gets the value of the value property.
@@ -83,6 +83,30 @@ public class GroupName {
      */
     public void setValue(java.lang.String value) {
         this.value = value;
+    }
+
+    /**
+     * Gets the value of the justify property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getJustify() {
+        return justify;
+    }
+
+    /**
+     * Sets the value of the justify property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setJustify(LeftCenterRight value) {
+        this.justify = value;
     }
 
     /**
@@ -182,30 +206,6 @@ public class GroupName {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -302,27 +302,27 @@ public class GroupName {
     }
 
     /**
-     * Gets the value of the justify property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link LeftCenterRight }
+     *     {@link java.lang.String }
      *     
      */
-    public LeftCenterRight getJustify() {
-        return justify;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the justify property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LeftCenterRight }
+     *     {@link java.lang.String }
      *     
      */
-    public void setJustify(LeftCenterRight value) {
-        this.justify = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

@@ -58,20 +58,20 @@ public class Notations {
     protected FormattedText footnote;
     protected Level level;
     @XmlElements({
+        @XmlElement(name = "tied", type = Tied.class),
         @XmlElement(name = "arpeggiate", type = Arpeggiate.class),
-        @XmlElement(name = "accidental-mark", type = AccidentalMark.class),
-        @XmlElement(name = "technical", type = Technical.class),
+        @XmlElement(name = "dynamics", type = Dynamics.class),
+        @XmlElement(name = "slide", type = Slide.class),
         @XmlElement(name = "ornaments", type = Ornaments.class),
         @XmlElement(name = "other-notation", type = OtherNotation.class),
-        @XmlElement(name = "slide", type = Slide.class),
+        @XmlElement(name = "technical", type = Technical.class),
+        @XmlElement(name = "slur", type = Slur.class),
         @XmlElement(name = "fermata", type = Fermata.class),
+        @XmlElement(name = "accidental-mark", type = AccidentalMark.class),
         @XmlElement(name = "articulations", type = Articulations.class),
         @XmlElement(name = "non-arpeggiate", type = NonArpeggiate.class),
-        @XmlElement(name = "tied", type = Tied.class),
-        @XmlElement(name = "tuplet", type = Tuplet.class),
-        @XmlElement(name = "dynamics", type = Dynamics.class),
-        @XmlElement(name = "slur", type = Slur.class),
-        @XmlElement(name = "glissando", type = Glissando.class)
+        @XmlElement(name = "glissando", type = Glissando.class),
+        @XmlElement(name = "tuplet", type = Tuplet.class)
     })
     protected List<Object> tiedOrSlurOrTuplet;
 
@@ -141,20 +141,20 @@ public class Notations {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
+     * {@link Tied }
      * {@link Arpeggiate }
-     * {@link AccidentalMark }
-     * {@link Technical }
+     * {@link Dynamics }
+     * {@link Slide }
      * {@link Ornaments }
      * {@link OtherNotation }
-     * {@link Slide }
+     * {@link Technical }
+     * {@link Slur }
      * {@link Fermata }
+     * {@link AccidentalMark }
      * {@link Articulations }
      * {@link NonArpeggiate }
-     * {@link Tied }
-     * {@link Tuplet }
-     * {@link Dynamics }
-     * {@link Slur }
      * {@link Glissando }
+     * {@link Tuplet }
      * 
      * 
      */
