@@ -43,9 +43,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="end-paragraph" type="{}empty" minOccurs="0"/>
  *         &lt;group ref="{}editorial"/>
  *       &lt;/sequence>
+ *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}color"/>
- *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}justify"/>
  *       &lt;attribute name="number" type="{http://www.w3.org/2001/XMLSchema}NMTOKEN" />
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}token" />
@@ -71,8 +71,8 @@ public class Lyric {
 
     @XmlElements({
         @XmlElement(name = "elision", type = Elision.class),
-        @XmlElement(name = "text", type = TextElementData.class),
-        @XmlElement(name = "syllabic", type = Syllabic.class)
+        @XmlElement(name = "syllabic", type = Syllabic.class),
+        @XmlElement(name = "text", type = TextElementData.class)
     })
     protected List<Object> elisionAndSyllabicAndText;
     protected Extend extend;
@@ -84,19 +84,14 @@ public class Lyric {
     protected Empty endParagraph;
     protected FormattedText footnote;
     protected Level level;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NMTOKEN")
     protected java.lang.String number;
-    @XmlAttribute
+    @XmlAttribute(name = "name")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String name;
-    @XmlAttribute
-    protected AboveBelow placement;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -105,7 +100,12 @@ public class Lyric {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "justify")
     protected LeftCenterRight justify;
 
     /**
@@ -127,8 +127,8 @@ public class Lyric {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Elision }
-     * {@link TextElementData }
      * {@link Syllabic }
+     * {@link TextElementData }
      * 
      * 
      */
@@ -356,54 +356,6 @@ public class Lyric {
     }
 
     /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -497,6 +449,54 @@ public class Lyric {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**

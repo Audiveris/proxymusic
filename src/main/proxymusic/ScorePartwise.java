@@ -84,7 +84,7 @@ public class ScorePartwise {
     protected PartList partList;
     @XmlElement(required = true)
     protected List<ScorePartwise.Part> part;
-    @XmlAttribute
+    @XmlAttribute(name = "version")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String version;
@@ -357,7 +357,7 @@ public class ScorePartwise {
 
         @XmlElement(required = true)
         protected List<ScorePartwise.Part.Measure> measure;
-        @XmlAttribute(required = true)
+        @XmlAttribute(name = "id", required = true)
         @XmlIDREF
         @XmlSchemaType(name = "IDREF")
         protected Object id;
@@ -441,30 +441,30 @@ public class ScorePartwise {
         public static class Measure {
 
             @XmlElements({
-                @XmlElement(name = "attributes", type = Attributes.class),
-                @XmlElement(name = "direction", type = Direction.class),
-                @XmlElement(name = "bookmark", type = Bookmark.class),
-                @XmlElement(name = "grouping", type = Grouping.class),
-                @XmlElement(name = "harmony", type = Harmony.class),
-                @XmlElement(name = "sound", type = Sound.class),
-                @XmlElement(name = "link", type = Link.class),
                 @XmlElement(name = "note", type = Note.class),
                 @XmlElement(name = "backup", type = Backup.class),
-                @XmlElement(name = "figured-bass", type = FiguredBass.class),
                 @XmlElement(name = "forward", type = Forward.class),
+                @XmlElement(name = "direction", type = Direction.class),
+                @XmlElement(name = "attributes", type = Attributes.class),
+                @XmlElement(name = "harmony", type = Harmony.class),
+                @XmlElement(name = "figured-bass", type = FiguredBass.class),
+                @XmlElement(name = "print", type = Print.class),
+                @XmlElement(name = "sound", type = Sound.class),
                 @XmlElement(name = "barline", type = Barline.class),
-                @XmlElement(name = "print", type = Print.class)
+                @XmlElement(name = "grouping", type = Grouping.class),
+                @XmlElement(name = "link", type = Link.class),
+                @XmlElement(name = "bookmark", type = Bookmark.class)
             })
             protected List<Object> noteOrBackupOrForward;
-            @XmlAttribute(required = true)
+            @XmlAttribute(name = "number", required = true)
             @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
             @XmlSchemaType(name = "token")
             protected java.lang.String number;
-            @XmlAttribute
+            @XmlAttribute(name = "implicit")
             protected YesNo implicit;
             @XmlAttribute(name = "non-controlling")
             protected YesNo nonControlling;
-            @XmlAttribute
+            @XmlAttribute(name = "width")
             protected BigDecimal width;
 
             /**
@@ -485,19 +485,19 @@ public class ScorePartwise {
              * 
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link Attributes }
-             * {@link Direction }
-             * {@link Bookmark }
-             * {@link Grouping }
-             * {@link Harmony }
-             * {@link Sound }
-             * {@link Link }
              * {@link Note }
              * {@link Backup }
-             * {@link FiguredBass }
              * {@link Forward }
-             * {@link Barline }
+             * {@link Direction }
+             * {@link Attributes }
+             * {@link Harmony }
+             * {@link FiguredBass }
              * {@link Print }
+             * {@link Sound }
+             * {@link Barline }
+             * {@link Grouping }
+             * {@link Link }
+             * {@link Bookmark }
              * 
              * 
              */

@@ -38,7 +38,7 @@ public class MiscellaneousField {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "name", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String name;

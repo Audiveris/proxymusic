@@ -35,13 +35,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "lyric-language")
 public class LyricLanguage {
 
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NMTOKEN")
     protected java.lang.String number;
-    @XmlAttribute
+    @XmlAttribute(name = "name")
     protected java.lang.String name;
-    @XmlAttribute(namespace = "http://www.w3.org/XML/1998/namespace", required = true)
+    @XmlAttribute(name = "lang", namespace = "http://www.w3.org/XML/1998/namespace", required = true)
     protected java.lang.String lang;
 
     /**

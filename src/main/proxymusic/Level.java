@@ -36,13 +36,13 @@ public class Level {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute
+    @XmlAttribute(name = "reference")
     protected YesNo reference;
-    @XmlAttribute
+    @XmlAttribute(name = "parentheses")
     protected YesNo parentheses;
-    @XmlAttribute
+    @XmlAttribute(name = "bracket")
     protected YesNo bracket;
-    @XmlAttribute
+    @XmlAttribute(name = "size")
     protected SymbolSize size;
 
     /**

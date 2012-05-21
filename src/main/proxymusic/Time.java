@@ -37,8 +37,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;/sequence>
  *         &lt;element name="senza-misura" type="{}empty"/>
  *       &lt;/choice>
- *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}print-object"/>
+ *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attribute name="number" type="{}staff-number" />
  *       &lt;attribute name="symbol" type="{}time-symbol" />
  *     &lt;/restriction>
@@ -56,16 +56,21 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Time {
 
     @XmlElementRefs({
-        @XmlElementRef(name = "beat-type", type = JAXBElement.class),
-        @XmlElementRef(name = "beats", type = JAXBElement.class)
+        @XmlElementRef(name = "beat-type", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "beats", type = JAXBElement.class, required = false)
     })
     protected List<JAXBElement<java.lang.String>> beatsAndBeatType;
     @XmlElement(name = "senza-misura")
     protected Empty senzaMisura;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     protected BigInteger number;
-    @XmlAttribute
+    @XmlAttribute(name = "symbol")
     protected TimeSymbol symbol;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -83,11 +88,6 @@ public class Time {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
 
     /**
      * Gets the value of the beatsAndBeatType property.
@@ -189,6 +189,54 @@ public class Time {
      */
     public void setSymbol(TimeSymbol value) {
         this.symbol = value;
+    }
+
+    /**
+     * Gets the value of the printObject property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintObject() {
+        return printObject;
+    }
+
+    /**
+     * Sets the value of the printObject property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -381,54 +429,6 @@ public class Time {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the printObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintObject() {
-        return printObject;
-    }
-
-    /**
-     * Sets the value of the printObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
     }
 
 }

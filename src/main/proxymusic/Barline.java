@@ -73,7 +73,7 @@ public class Barline {
     protected List<Fermata> fermata;
     protected Ending ending;
     protected Repeat repeat;
-    @XmlAttribute
+    @XmlAttribute(name = "location")
     protected RightLeftMiddle location;
     @XmlAttribute(name = "segno")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
@@ -83,7 +83,7 @@ public class Barline {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String codaAttribute;
-    @XmlAttribute
+    @XmlAttribute(name = "divisions")
     protected BigDecimal divisions;
 
     /**

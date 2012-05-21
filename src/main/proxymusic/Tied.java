@@ -21,12 +21,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="tied">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attGroup ref="{}color"/>
+ *       &lt;attGroup ref="{}line-type"/>
  *       &lt;attGroup ref="{}bezier"/>
+ *       &lt;attGroup ref="{}placement"/>
+ *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}orientation"/>
- *       &lt;attGroup ref="{}placement"/>
- *       &lt;attGroup ref="{}line-type"/>
  *       &lt;attribute name="type" use="required" type="{}start-stop" />
  *       &lt;attribute name="number" type="{}number-level" />
  *     &lt;/restriction>
@@ -40,13 +40,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "tied")
 public class Tied {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected StartStop type;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     protected Integer number;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
     @XmlAttribute(name = "bezier-offset")
     protected BigDecimal bezierOffset;
     @XmlAttribute(name = "bezier-offset2")
@@ -59,6 +58,11 @@ public class Tied {
     protected BigDecimal bezierX2;
     @XmlAttribute(name = "bezier-y2")
     protected BigDecimal bezierY2;
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -67,12 +71,8 @@ public class Tied {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
+    @XmlAttribute(name = "orientation")
     protected OverUnder orientation;
-    @XmlAttribute
-    protected AboveBelow placement;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
 
     /**
      * Gets the value of the type property.
@@ -123,27 +123,27 @@ public class Tied {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the lineType property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link LineType }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public LineType getLineType() {
+        return lineType;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the lineType property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link LineType }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setLineType(LineType value) {
+        this.lineType = value;
     }
 
     /**
@@ -291,6 +291,54 @@ public class Tied {
     }
 
     /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -408,54 +456,6 @@ public class Tied {
      */
     public void setOrientation(OverUnder value) {
         this.orientation = value;
-    }
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
-    }
-
-    /**
-     * Gets the value of the lineType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineType }
-     *     
-     */
-    public LineType getLineType() {
-        return lineType;
-    }
-
-    /**
-     * Sets the value of the lineType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineType }
-     *     
-     */
-    public void setLineType(LineType value) {
-        this.lineType = value;
     }
 
 }

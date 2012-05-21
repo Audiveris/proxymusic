@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="hammer-on-pull-off">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}print-style"/>
+ *       &lt;attGroup ref="{}placement"/>
  *       &lt;attribute name="type" use="required" type="{}start-stop" />
  *       &lt;attribute name="number" type="{}number-level" default="1" />
  *     &lt;/extension>
@@ -41,12 +41,13 @@ public class HammerOnPullOff {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected StartStop type;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     protected Integer number;
-    @XmlAttribute
-    protected AboveBelow placement;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -64,9 +65,8 @@ public class HammerOnPullOff {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
 
     /**
      * Gets the value of the value property.
@@ -145,27 +145,27 @@ public class HammerOnPullOff {
     }
 
     /**
-     * Gets the value of the placement property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link AboveBelow }
+     *     {@link java.lang.String }
      *     
      */
-    public AboveBelow getPlacement() {
-        return placement;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the placement property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link AboveBelow }
+     *     {@link java.lang.String }
      *     
      */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -361,27 +361,27 @@ public class HammerOnPullOff {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the placement property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link AboveBelow }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public AboveBelow getPlacement() {
+        return placement;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the placement property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link AboveBelow }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
 }

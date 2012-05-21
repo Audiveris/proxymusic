@@ -41,8 +41,8 @@ import javax.xml.bind.annotation.XmlType;
 public class PartList {
 
     @XmlElements({
-        @XmlElement(name = "score-part", type = ScorePart.class),
-        @XmlElement(name = "part-group", type = PartGroup.class)
+        @XmlElement(name = "part-group", type = PartGroup.class),
+        @XmlElement(name = "score-part", type = ScorePart.class)
     })
     protected List<Object> partGroupOrScorePart;
 
@@ -64,8 +64,8 @@ public class PartList {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ScorePart }
      * {@link PartGroup }
+     * {@link ScorePart }
      * 
      * 
      */

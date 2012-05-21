@@ -46,7 +46,7 @@ public class PageMargins {
     protected BigDecimal topMargin;
     @XmlElement(name = "bottom-margin", required = true)
     protected BigDecimal bottomMargin;
-    @XmlAttribute
+    @XmlAttribute(name = "type")
     protected MarginType type;
 
     /**

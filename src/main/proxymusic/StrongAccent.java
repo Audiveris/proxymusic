@@ -32,7 +32,7 @@ public class StrongAccent
     extends EmptyPlacement
 {
 
-    @XmlAttribute
+    @XmlAttribute(name = "type")
     protected UpDown type;
 
     /**

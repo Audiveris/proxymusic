@@ -33,9 +33,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "repeat")
 public class Repeat {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "direction", required = true)
     protected BackwardForward direction;
-    @XmlAttribute
+    @XmlAttribute(name = "times")
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger times;
 

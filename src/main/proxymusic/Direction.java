@@ -32,8 +32,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;group ref="{}staff" minOccurs="0"/>
  *         &lt;element name="sound" type="{}sound" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}directive"/>
  *       &lt;attGroup ref="{}placement"/>
+ *       &lt;attGroup ref="{}directive"/>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -62,10 +62,10 @@ public class Direction {
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger staff;
     protected Sound sound;
-    @XmlAttribute
-    protected YesNo directive;
-    @XmlAttribute
+    @XmlAttribute(name = "placement")
     protected AboveBelow placement;
+    @XmlAttribute(name = "directive")
+    protected YesNo directive;
 
     /**
      * Gets the value of the directionType property.
@@ -241,30 +241,6 @@ public class Direction {
     }
 
     /**
-     * Gets the value of the directive property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getDirective() {
-        return directive;
-    }
-
-    /**
-     * Sets the value of the directive property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setDirective(YesNo value) {
-        this.directive = value;
-    }
-
-    /**
      * Gets the value of the placement property.
      * 
      * @return
@@ -286,6 +262,30 @@ public class Direction {
      */
     public void setPlacement(AboveBelow value) {
         this.placement = value;
+    }
+
+    /**
+     * Gets the value of the directive property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getDirective() {
+        return directive;
+    }
+
+    /**
+     * Sets the value of the directive property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setDirective(YesNo value) {
+        this.directive = value;
     }
 
 }

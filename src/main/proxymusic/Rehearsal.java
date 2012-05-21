@@ -22,9 +22,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="rehearsal">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
+ *       &lt;attGroup ref="{}text-direction"/>
  *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}text-rotation"/>
- *       &lt;attGroup ref="{}text-direction"/>
  *       &lt;attGroup ref="{}text-decoration"/>
  *       &lt;attribute ref="{http://www.w3.org/XML/1998/namespace}lang"/>
  *       &lt;attribute name="enclosure" type="{}rehearsal-enclosure" />
@@ -43,10 +43,15 @@ public class Rehearsal {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute(namespace = "http://www.w3.org/XML/1998/namespace")
+    @XmlAttribute(name = "lang", namespace = "http://www.w3.org/XML/1998/namespace")
     protected java.lang.String lang;
-    @XmlAttribute
+    @XmlAttribute(name = "enclosure")
     protected RehearsalEnclosure enclosure;
+    @XmlAttribute(name = "dir")
+    protected TextDirection dir;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -64,16 +69,11 @@ public class Rehearsal {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute
+    @XmlAttribute(name = "rotation")
     protected BigDecimal rotation;
-    @XmlAttribute
-    protected TextDirection dir;
-    @XmlAttribute
+    @XmlAttribute(name = "underline")
     protected Integer underline;
-    @XmlAttribute
+    @XmlAttribute(name = "overline")
     protected Integer overline;
     @XmlAttribute(name = "line-through")
     protected Integer lineThrough;
@@ -148,6 +148,54 @@ public class Rehearsal {
      */
     public void setEnclosure(RehearsalEnclosure value) {
         this.enclosure = value;
+    }
+
+    /**
+     * Gets the value of the dir property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TextDirection }
+     *     
+     */
+    public TextDirection getDir() {
+        return dir;
+    }
+
+    /**
+     * Sets the value of the dir property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TextDirection }
+     *     
+     */
+    public void setDir(TextDirection value) {
+        this.dir = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -343,30 +391,6 @@ public class Rehearsal {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the rotation property.
      * 
      * @return
@@ -388,30 +412,6 @@ public class Rehearsal {
      */
     public void setRotation(BigDecimal value) {
         this.rotation = value;
-    }
-
-    /**
-     * Gets the value of the dir property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TextDirection }
-     *     
-     */
-    public TextDirection getDir() {
-        return dir;
-    }
-
-    /**
-     * Sets the value of the dir property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TextDirection }
-     *     
-     */
-    public void setDir(TextDirection value) {
-        this.dir = value;
     }
 
     /**

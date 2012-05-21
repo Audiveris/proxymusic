@@ -35,7 +35,7 @@ public class NoteType {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute
+    @XmlAttribute(name = "size")
     protected SymbolSize size;
 
     /**

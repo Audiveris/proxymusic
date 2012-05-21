@@ -36,7 +36,7 @@ public class NoteSize {
 
     @XmlValue
     protected BigDecimal value;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected NoteSizeType type;
 
     /**

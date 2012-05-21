@@ -37,7 +37,7 @@ public class BarStyleColor {
 
     @XmlValue
     protected BarStyle value;
-    @XmlAttribute
+    @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
 

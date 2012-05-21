@@ -44,7 +44,7 @@ public class StaffTuning {
     protected BigDecimal tuningAlter;
     @XmlElement(name = "tuning-octave")
     protected int tuningOctave;
-    @XmlAttribute
+    @XmlAttribute(name = "line")
     protected BigInteger line;
 
     /**

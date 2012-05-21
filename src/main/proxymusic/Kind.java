@@ -35,8 +35,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;>kind-value">
  *       &lt;attGroup ref="{}valign"/>
- *       &lt;attGroup ref="{}halign"/>
  *       &lt;attGroup ref="{}print-style"/>
+ *       &lt;attGroup ref="{}halign"/>
  *       &lt;attribute name="use-symbols" type="{}yes-no" />
  *       &lt;attribute name="text" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="stack-degrees" type="{}yes-no" />
@@ -59,7 +59,7 @@ public class Kind {
     protected KindValue value;
     @XmlAttribute(name = "use-symbols")
     protected YesNo useSymbols;
-    @XmlAttribute
+    @XmlAttribute(name = "text")
     protected java.lang.String text;
     @XmlAttribute(name = "stack-degrees")
     protected YesNo stackDegrees;
@@ -67,10 +67,11 @@ public class Kind {
     protected YesNo parenthesesDegrees;
     @XmlAttribute(name = "bracket-degrees")
     protected YesNo bracketDegrees;
-    @XmlAttribute
+    @XmlAttribute(name = "valign")
     protected Valign valign;
-    @XmlAttribute
-    protected LeftCenterRight halign;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -88,9 +89,8 @@ public class Kind {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
+    @XmlAttribute(name = "halign")
+    protected LeftCenterRight halign;
 
     /**
      * A kind-value indicates the type of chord. Degree elements can then add, subtract, or alter from these starting points. Values include:
@@ -304,27 +304,27 @@ public class Kind {
     }
 
     /**
-     * Gets the value of the halign property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link LeftCenterRight }
+     *     {@link java.lang.String }
      *     
      */
-    public LeftCenterRight getHalign() {
-        return halign;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the halign property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LeftCenterRight }
+     *     {@link java.lang.String }
      *     
      */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -520,27 +520,27 @@ public class Kind {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the halign property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link LeftCenterRight }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public LeftCenterRight getHalign() {
+        return halign;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the halign property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link LeftCenterRight }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
     }
 
 }

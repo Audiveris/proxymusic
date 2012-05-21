@@ -33,9 +33,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "barre")
 public class Barre {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected StartStop type;
-    @XmlAttribute
+    @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
 

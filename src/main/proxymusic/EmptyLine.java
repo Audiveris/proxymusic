@@ -21,10 +21,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="empty-line">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attGroup ref="{}placement"/>
- *       &lt;attGroup ref="{}line-type"/>
  *       &lt;attGroup ref="{}line-shape"/>
  *       &lt;attGroup ref="{}print-style"/>
+ *       &lt;attGroup ref="{}placement"/>
+ *       &lt;attGroup ref="{}line-type"/>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -36,12 +36,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "empty-line")
 public class EmptyLine {
 
-    @XmlAttribute
-    protected AboveBelow placement;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
     @XmlAttribute(name = "line-shape")
     protected LineShape lineShape;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -59,57 +58,10 @@ public class EmptyLine {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
-    }
-
-    /**
-     * Gets the value of the lineType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineType }
-     *     
-     */
-    public LineType getLineType() {
-        return lineType;
-    }
-
-    /**
-     * Sets the value of the lineType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineType }
-     *     
-     */
-    public void setLineType(LineType value) {
-        this.lineType = value;
-    }
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
 
     /**
      * Gets the value of the lineShape property.
@@ -133,6 +85,30 @@ public class EmptyLine {
      */
     public void setLineShape(LineShape value) {
         this.lineShape = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -328,27 +304,51 @@ public class EmptyLine {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the placement property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link AboveBelow }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public AboveBelow getPlacement() {
+        return placement;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the placement property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link AboveBelow }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
+    }
+
+    /**
+     * Gets the value of the lineType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LineType }
+     *     
+     */
+    public LineType getLineType() {
+        return lineType;
+    }
+
+    /**
+     * Sets the value of the lineType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LineType }
+     *     
+     */
+    public void setLineType(LineType value) {
+        this.lineType = value;
     }
 
 }

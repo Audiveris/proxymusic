@@ -35,7 +35,7 @@ public class MetronomeBeam {
 
     @XmlValue
     protected BeamValue value;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     protected Integer number;
 
     /**

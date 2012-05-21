@@ -22,11 +22,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="text-element-data">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attGroup ref="{}font"/>
- *       &lt;attGroup ref="{}text-decoration"/>
  *       &lt;attGroup ref="{}color"/>
- *       &lt;attGroup ref="{}text-direction"/>
  *       &lt;attGroup ref="{}letter-spacing"/>
+ *       &lt;attGroup ref="{}text-direction"/>
+ *       &lt;attGroup ref="{}text-decoration"/>
+ *       &lt;attGroup ref="{}font"/>
  *       &lt;attGroup ref="{}text-rotation"/>
  *       &lt;attribute ref="{http://www.w3.org/XML/1998/namespace}lang"/>
  *     &lt;/extension>
@@ -44,8 +44,21 @@ public class TextElementData {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute(namespace = "http://www.w3.org/XML/1998/namespace")
+    @XmlAttribute(name = "lang", namespace = "http://www.w3.org/XML/1998/namespace")
     protected java.lang.String lang;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "letter-spacing")
+    protected java.lang.String letterSpacing;
+    @XmlAttribute(name = "dir")
+    protected TextDirection dir;
+    @XmlAttribute(name = "underline")
+    protected Integer underline;
+    @XmlAttribute(name = "overline")
+    protected Integer overline;
+    @XmlAttribute(name = "line-through")
+    protected Integer lineThrough;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -55,20 +68,7 @@ public class TextElementData {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
-    protected Integer underline;
-    @XmlAttribute
-    protected Integer overline;
-    @XmlAttribute(name = "line-through")
-    protected Integer lineThrough;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute
-    protected TextDirection dir;
-    @XmlAttribute(name = "letter-spacing")
-    protected java.lang.String letterSpacing;
-    @XmlAttribute
+    @XmlAttribute(name = "rotation")
     protected BigDecimal rotation;
 
     /**
@@ -117,6 +117,150 @@ public class TextElementData {
      */
     public void setLang(java.lang.String value) {
         this.lang = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the letterSpacing property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getLetterSpacing() {
+        return letterSpacing;
+    }
+
+    /**
+     * Sets the value of the letterSpacing property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setLetterSpacing(java.lang.String value) {
+        this.letterSpacing = value;
+    }
+
+    /**
+     * Gets the value of the dir property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TextDirection }
+     *     
+     */
+    public TextDirection getDir() {
+        return dir;
+    }
+
+    /**
+     * Sets the value of the dir property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TextDirection }
+     *     
+     */
+    public void setDir(TextDirection value) {
+        this.dir = value;
+    }
+
+    /**
+     * Gets the value of the underline property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getUnderline() {
+        return underline;
+    }
+
+    /**
+     * Sets the value of the underline property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setUnderline(Integer value) {
+        this.underline = value;
+    }
+
+    /**
+     * Gets the value of the overline property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getOverline() {
+        return overline;
+    }
+
+    /**
+     * Sets the value of the overline property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setOverline(Integer value) {
+        this.overline = value;
+    }
+
+    /**
+     * Gets the value of the lineThrough property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getLineThrough() {
+        return lineThrough;
+    }
+
+    /**
+     * Sets the value of the lineThrough property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setLineThrough(Integer value) {
+        this.lineThrough = value;
     }
 
     /**
@@ -213,150 +357,6 @@ public class TextElementData {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
-    }
-
-    /**
-     * Gets the value of the underline property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getUnderline() {
-        return underline;
-    }
-
-    /**
-     * Sets the value of the underline property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setUnderline(Integer value) {
-        this.underline = value;
-    }
-
-    /**
-     * Gets the value of the overline property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getOverline() {
-        return overline;
-    }
-
-    /**
-     * Sets the value of the overline property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setOverline(Integer value) {
-        this.overline = value;
-    }
-
-    /**
-     * Gets the value of the lineThrough property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getLineThrough() {
-        return lineThrough;
-    }
-
-    /**
-     * Sets the value of the lineThrough property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setLineThrough(Integer value) {
-        this.lineThrough = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the dir property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TextDirection }
-     *     
-     */
-    public TextDirection getDir() {
-        return dir;
-    }
-
-    /**
-     * Sets the value of the dir property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TextDirection }
-     *     
-     */
-    public void setDir(TextDirection value) {
-        this.dir = value;
-    }
-
-    /**
-     * Gets the value of the letterSpacing property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getLetterSpacing() {
-        return letterSpacing;
-    }
-
-    /**
-     * Sets the value of the letterSpacing property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setLetterSpacing(java.lang.String value) {
-        this.letterSpacing = value;
     }
 
     /**

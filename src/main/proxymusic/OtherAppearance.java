@@ -38,7 +38,7 @@ public class OtherAppearance {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String type;

@@ -56,7 +56,7 @@ public class ScoreInstrument {
     protected java.lang.String instrumentAbbreviation;
     protected Empty solo;
     protected java.lang.String ensemble;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "id", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")

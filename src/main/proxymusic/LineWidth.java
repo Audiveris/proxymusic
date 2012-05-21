@@ -38,7 +38,7 @@ public class LineWidth {
 
     @XmlValue
     protected BigDecimal value;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String type;
 

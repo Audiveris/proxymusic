@@ -36,18 +36,18 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "bookmark")
 public class Bookmark {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "id", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")
     protected java.lang.String id;
-    @XmlAttribute
+    @XmlAttribute(name = "name")
     protected java.lang.String name;
-    @XmlAttribute
+    @XmlAttribute(name = "element")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NMTOKEN")
     protected java.lang.String element;
-    @XmlAttribute
+    @XmlAttribute(name = "position")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NMTOKEN")
     protected java.lang.String position;

@@ -39,9 +39,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "bracket")
 public class Bracket {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected StartStop type;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     protected Integer number;
     @XmlAttribute(name = "line-end", required = true)
     protected LineEnd lineEnd;
@@ -49,7 +49,7 @@ public class Bracket {
     protected BigDecimal endLength;
     @XmlAttribute(name = "line-type")
     protected LineType lineType;
-    @XmlAttribute
+    @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
     @XmlAttribute(name = "default-x")

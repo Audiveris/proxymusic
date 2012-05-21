@@ -2,9 +2,9 @@
 //                                                                            //
 //                           M a r s h a l l i n g                            //
 //                                                                            //
-//  Copyright (C) Herve Bitteur 2000-2010. All rights reserved.               //
+//  Copyright © Herve Bitteur 2000-2012. All rights reserved.                 //
 //  This software is released under the GNU Lesser General Public License.    //
-//  Please contact users@proxymusic.dev.java.net to report bugs & suggestions.//
+//  Please see http://kenai.com/projects/proxymusic/ for bugs & suggestions.  //
 //----------------------------------------------------------------------------//
 //
 package proxymusic.util;
@@ -25,16 +25,18 @@ import java.util.logging.Logger;
 
 import javax.xml.bind.*;
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.sax.SAXSource;
 
 /**
- * Class {@code Marshalling} gathers static methods to marshal and to unmarshal
- * {@code ScorePartwise} java objects to/from an output/input stream in UTF8
- * encoding and using MusicXML format.
+ * Class {@code Marshalling} gathers static methods to marshal and to
+ * unmarshal {@code ScorePartwise} java objects to/from an output/input
+ * stream in UTF8 encoding and using MusicXML format.
  *
  * <p>No access to a DTD (local or remote) is made during the unmarshalling
  * thanks to a specific {@code EntityResolver} which ignores MusicXML DTD URL.
@@ -57,7 +59,7 @@ public class Marshalling
                                                     ? pmPackage.getSpecificationTitle()
                                                     : "ProxyMusic";
 
-    /** Supported MusicXML version, example: "1.1", "2.0"*/
+    /** Supported MusicXML version, example: "1.1", "2.0" */
     public static final String specificationVersion = (pmPackage.getSpecificationVersion() != null)
                                                       ? pmPackage.getSpecificationVersion()
                                                       : "2.0";
@@ -83,8 +85,11 @@ public class Marshalling
                                                " Partwise//EN\"" + " \"" +
                                                DTD_URL + "\">\n";
 
-    /** Specific entity resolver to filter out the DTD_URL */
+    /**
+     * Specific entity resolver to filter out the DTD_URL.
+     */
     private static final EntityResolver filteringEntityResolver = new EntityResolver() {
+        @Override
         public InputSource resolveEntity (String publicId,
                                           String systemId)
             throws SAXException, IOException
@@ -113,7 +118,8 @@ public class Marshalling
     // getJaxbContext //
     //----------------//
     /**
-     * Get access to (and elaborate if not yet done) the needed JAXB context.
+     * Get access to (and elaborate if not yet done) the needed JAXB
+     * context.
      *
      * @return the ready to use JAXB context
      * @exception JAXBException if anything goes wrong
@@ -133,14 +139,14 @@ public class Marshalling
     // marshal //
     //---------//
     /**
-     * Marshal the hierarchy rooted at provided ScorePartwise instance to an
-     * OutputStream, ProxyMusic being referenced as an encoder.
+     * Marshal the hierarchy rooted at provided ScorePartwise instance
+     * to an OutputStream, ProxyMusic being referenced as an encoder.
      * (The output stream is not closed by this method)
      *
      * @param scorePartwise the root element
-     * @param os the output stream
-     * @exception JAXBException if marshalling goes wrong
-     * @exception IOException for output error
+     * @param os            the output stream
+     * @exception JAXBException                if marshalling goes wrong
+     * @exception IOException                  for output error
      * @exception UnsupportedEncodingException if UTF8 is not supported
      */
     public static void marshal (ScorePartwise scorePartwise,
@@ -154,14 +160,14 @@ public class Marshalling
     // marshal //
     //---------//
     /**
-     * Marshal the hierarchy rooted at provided ScorePartwise instance to an
-     * OutputStream (which is not closed by this method).
+     * Marshal the hierarchy rooted at provided ScorePartwise instance
+     * to an OutputStream (which is not closed by this method).
      *
-     * @param scorePartwise the root element
-     * @param os the output stream
+     * @param scorePartwise   the root element
+     * @param os              the output stream
      * @param injectSignature false if ProxyMusic encoder must not be referenced
-     * @exception JAXBException if marshalling goes wrong
-     * @exception IOException for output error
+     * @exception JAXBException                if marshalling goes wrong
+     * @exception IOException                  for output error
      * @exception UnsupportedEncodingException if UTF8 is not supported
      */
     public static void marshal (ScorePartwise scorePartwise,
@@ -207,11 +213,11 @@ public class Marshalling
     // marshal //
     //---------//
     /**
-     * Marshal the hierarchy rooted at provided ScorePartwise instance directly
-     * to a DOM node.
+     * Marshal the hierarchy rooted at provided ScorePartwise instance
+     * directly to a DOM node.
      *
-     * @param scorePartwise the root element
-     * @param node the DOM node where elements must be added
+     * @param scorePartwise   the root element
+     * @param node            the DOM node where elements must be added
      * @param injectSignature false if ProxyMusic encoder must not be referenced
      * @exception JAXBException if marshalling goes wrong
      */
@@ -263,9 +269,10 @@ public class Marshalling
     // annotate //
     //----------//
     /**
-     * Annotate the scorePartwise tree with information about MusicXML version
-     * and, if so desired, with information about ProxyMusic and generation date.
-     * @param scorePartwise the tree to annotate
+     * Annotate the scorePartwise tree with information about MusicXML
+     * version and, if so desired, with information about ProxyMusic
+     * and generation date.
+     * @param scorePartwise   the tree to annotate
      * @param injectSignature if true, ProxyMusic information is added
      */
     private static void annotate (ScorePartwise scorePartwise,
@@ -306,14 +313,25 @@ public class Marshalling
 
             // [Encoding]/EncodingDate
             try {
+                // Use date without time information (patch by lasconic)
+                // Output:     2012-05-03
+                // instead of: 2012-05-03T16:17:51.250+02:00
+                XMLGregorianCalendar gc = DatatypeFactory.newInstance()
+                                                         .newXMLGregorianCalendar(
+                    new GregorianCalendar());
+                gc.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+                gc.setTime(
+                    DatatypeConstants.FIELD_UNDEFINED,
+                    DatatypeConstants.FIELD_UNDEFINED,
+                    DatatypeConstants.FIELD_UNDEFINED);
                 encoding.getEncodingDateOrEncoderOrSoftware()
-                        .add(
-                    factory.createEncodingEncodingDate(
-                        DatatypeFactory.newInstance().newXMLGregorianCalendar(
-                            new GregorianCalendar())));
+                        .add(factory.createEncodingEncodingDate(gc));
             } catch (DatatypeConfigurationException ex) {
                 Logger.getLogger(Marshalling.class.getName())
-                      .log(java.util.logging.Level.SEVERE, null, ex);
+                      .log(
+                    java.util.logging.Level.SEVERE,
+                    "Cannot encode date",
+                    ex);
             }
         }
     }

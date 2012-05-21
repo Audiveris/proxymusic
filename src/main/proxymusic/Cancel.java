@@ -36,7 +36,7 @@ public class Cancel {
 
     @XmlValue
     protected BigInteger value;
-    @XmlAttribute
+    @XmlAttribute(name = "location")
     protected LeftRight location;
 
     /**

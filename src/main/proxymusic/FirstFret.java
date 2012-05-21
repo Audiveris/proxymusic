@@ -41,11 +41,11 @@ public class FirstFret {
     @XmlValue
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger value;
-    @XmlAttribute
+    @XmlAttribute(name = "text")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String text;
-    @XmlAttribute
+    @XmlAttribute(name = "location")
     protected LeftRight location;
 
     /**

@@ -35,7 +35,7 @@ public class TypedText {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute
+    @XmlAttribute(name = "type")
     protected java.lang.String type;
 
     /**

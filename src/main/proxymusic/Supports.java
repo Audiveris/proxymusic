@@ -36,17 +36,17 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "supports")
 public class Supports {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected YesNo type;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "element", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NMTOKEN")
     protected java.lang.String element;
-    @XmlAttribute
+    @XmlAttribute(name = "attribute")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NMTOKEN")
     protected java.lang.String attribute;
-    @XmlAttribute
+    @XmlAttribute(name = "value")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String value;

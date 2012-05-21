@@ -25,8 +25,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="notehead">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;>notehead-value">
- *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}font"/>
+ *       &lt;attGroup ref="{}color"/>
  *       &lt;attribute name="filled" type="{}yes-no" />
  *       &lt;attribute name="parentheses" type="{}yes-no" />
  *     &lt;/extension>
@@ -44,13 +44,10 @@ public class Notehead {
 
     @XmlValue
     protected NoteheadValue value;
-    @XmlAttribute
+    @XmlAttribute(name = "filled")
     protected YesNo filled;
-    @XmlAttribute
+    @XmlAttribute(name = "parentheses")
     protected YesNo parentheses;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -60,6 +57,9 @@ public class Notehead {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * 
@@ -134,30 +134,6 @@ public class Notehead {
      */
     public void setParentheses(YesNo value) {
         this.parentheses = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
     /**
@@ -254,6 +230,30 @@ public class Notehead {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

@@ -37,11 +37,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "arpeggiate")
 public class Arpeggiate {
 
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     protected Integer number;
-    @XmlAttribute
+    @XmlAttribute(name = "direction")
     protected UpDown direction;
-    @XmlAttribute
+    @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
     @XmlAttribute(name = "default-x")
@@ -52,7 +52,7 @@ public class Arpeggiate {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
+    @XmlAttribute(name = "placement")
     protected AboveBelow placement;
 
     /**

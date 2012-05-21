@@ -38,10 +38,10 @@ public class KeyOctave {
 
     @XmlValue
     protected int value;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "number", required = true)
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger number;
-    @XmlAttribute
+    @XmlAttribute(name = "cancel")
     protected YesNo cancel;
 
     /**

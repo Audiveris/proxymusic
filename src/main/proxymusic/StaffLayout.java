@@ -41,7 +41,7 @@ public class StaffLayout {
 
     @XmlElement(name = "staff-distance")
     protected BigDecimal staffDistance;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger number;
 

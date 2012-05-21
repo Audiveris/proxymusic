@@ -38,12 +38,15 @@ public class FormattedText {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute(namespace = "http://www.w3.org/XML/1998/namespace")
+    @XmlAttribute(name = "lang", namespace = "http://www.w3.org/XML/1998/namespace")
     protected java.lang.String lang;
-    @XmlAttribute
+    @XmlAttribute(name = "enclosure")
     protected Enclosure enclosure;
-    @XmlAttribute(name = "letter-spacing")
-    protected java.lang.String letterSpacing;
+    @XmlAttribute(name = "valign")
+    protected Valign valign;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -61,27 +64,24 @@ public class FormattedText {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute
-    protected BigDecimal rotation;
-    @XmlAttribute
-    protected Valign valign;
-    @XmlAttribute
-    protected LeftCenterRight halign;
-    @XmlAttribute
-    protected LeftCenterRight justify;
     @XmlAttribute(name = "line-height")
     protected java.lang.String lineHeight;
-    @XmlAttribute
+    @XmlAttribute(name = "justify")
+    protected LeftCenterRight justify;
+    @XmlAttribute(name = "halign")
+    protected LeftCenterRight halign;
+    @XmlAttribute(name = "letter-spacing")
+    protected java.lang.String letterSpacing;
+    @XmlAttribute(name = "underline")
     protected Integer underline;
-    @XmlAttribute
+    @XmlAttribute(name = "overline")
     protected Integer overline;
     @XmlAttribute(name = "line-through")
     protected Integer lineThrough;
-    @XmlAttribute
+    @XmlAttribute(name = "dir")
     protected TextDirection dir;
+    @XmlAttribute(name = "rotation")
+    protected BigDecimal rotation;
 
     /**
      * Gets the value of the value property.
@@ -156,27 +156,51 @@ public class FormattedText {
     }
 
     /**
-     * Gets the value of the letterSpacing property.
+     * Gets the value of the valign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Valign }
+     *     
+     */
+    public Valign getValign() {
+        return valign;
+    }
+
+    /**
+     * Sets the value of the valign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Valign }
+     *     
+     */
+    public void setValign(Valign value) {
+        this.valign = value;
+    }
+
+    /**
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getLetterSpacing() {
-        return letterSpacing;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the letterSpacing property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setLetterSpacing(java.lang.String value) {
-        this.letterSpacing = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -372,99 +396,27 @@ public class FormattedText {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the lineHeight property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public java.lang.String getLineHeight() {
+        return lineHeight;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the lineHeight property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the rotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRotation() {
-        return rotation;
-    }
-
-    /**
-     * Sets the value of the rotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRotation(BigDecimal value) {
-        this.rotation = value;
-    }
-
-    /**
-     * Gets the value of the valign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Valign }
-     *     
-     */
-    public Valign getValign() {
-        return valign;
-    }
-
-    /**
-     * Sets the value of the valign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Valign }
-     *     
-     */
-    public void setValign(Valign value) {
-        this.valign = value;
-    }
-
-    /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
+    public void setLineHeight(java.lang.String value) {
+        this.lineHeight = value;
     }
 
     /**
@@ -492,27 +444,51 @@ public class FormattedText {
     }
 
     /**
-     * Gets the value of the lineHeight property.
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
+     * Gets the value of the letterSpacing property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getLineHeight() {
-        return lineHeight;
+    public java.lang.String getLetterSpacing() {
+        return letterSpacing;
     }
 
     /**
-     * Sets the value of the lineHeight property.
+     * Sets the value of the letterSpacing property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setLineHeight(java.lang.String value) {
-        this.lineHeight = value;
+    public void setLetterSpacing(java.lang.String value) {
+        this.letterSpacing = value;
     }
 
     /**
@@ -609,6 +585,30 @@ public class FormattedText {
      */
     public void setDir(TextDirection value) {
         this.dir = value;
+    }
+
+    /**
+     * Gets the value of the rotation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRotation() {
+        return rotation;
+    }
+
+    /**
+     * Sets the value of the rotation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRotation(BigDecimal value) {
+        this.rotation = value;
     }
 
 }

@@ -45,9 +45,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Grouping {
 
     protected List<Feature> feature;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected StartStopSingle type;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String number;

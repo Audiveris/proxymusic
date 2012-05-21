@@ -40,9 +40,9 @@ public class MeasureRepeat {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected StartStop type;
-    @XmlAttribute
+    @XmlAttribute(name = "slashes")
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger slashes;
 

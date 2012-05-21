@@ -35,7 +35,7 @@ public class MidiDevice {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute
+    @XmlAttribute(name = "port")
     protected Integer port;
 
     /**

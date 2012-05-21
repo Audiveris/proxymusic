@@ -51,13 +51,13 @@ import javax.xml.bind.annotation.XmlType;
 public class Credit {
 
     @XmlElements({
-        @XmlElement(name = "credit-words", type = FormattedText.class),
+        @XmlElement(name = "link", type = Link.class),
         @XmlElement(name = "bookmark", type = Bookmark.class),
         @XmlElement(name = "credit-image", type = Image.class),
-        @XmlElement(name = "link", type = Link.class)
+        @XmlElement(name = "credit-words", type = FormattedText.class)
     })
     protected List<Object> linkOrBookmarkOrCreditImage;
-    @XmlAttribute
+    @XmlAttribute(name = "page")
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger page;
 
@@ -79,10 +79,10 @@ public class Credit {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link FormattedText }
+     * {@link Link }
      * {@link Bookmark }
      * {@link Image }
-     * {@link Link }
+     * {@link FormattedText }
      * 
      * 
      */

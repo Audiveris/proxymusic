@@ -34,9 +34,9 @@ public class MetronomeTuplet
     extends TimeModification
 {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected StartStop type;
-    @XmlAttribute
+    @XmlAttribute(name = "bracket")
     protected YesNo bracket;
     @XmlAttribute(name = "show-number")
     protected ShowTuplet showNumber;

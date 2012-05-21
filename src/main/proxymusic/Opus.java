@@ -33,24 +33,24 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "opus")
 public class Opus {
 
-    @XmlAttribute(namespace = "http://www.w3.org/1999/xlink", required = true)
+    @XmlAttribute(name = "href", namespace = "http://www.w3.org/1999/xlink", required = true)
     @XmlSchemaType(name = "anyURI")
     protected java.lang.String href;
-    @XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
+    @XmlAttribute(name = "type", namespace = "http://www.w3.org/1999/xlink")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String type;
-    @XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
+    @XmlAttribute(name = "role", namespace = "http://www.w3.org/1999/xlink")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String role;
-    @XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
+    @XmlAttribute(name = "title", namespace = "http://www.w3.org/1999/xlink")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String title;
-    @XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
+    @XmlAttribute(name = "show", namespace = "http://www.w3.org/1999/xlink")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String show;
-    @XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
+    @XmlAttribute(name = "actuate", namespace = "http://www.w3.org/1999/xlink")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String actuate;
 

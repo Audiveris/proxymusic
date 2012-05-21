@@ -75,9 +75,9 @@ public class PartGroup {
     protected Empty groupTime;
     protected FormattedText footnote;
     protected Level level;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected StartStop type;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String number;

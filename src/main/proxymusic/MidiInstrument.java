@@ -66,7 +66,7 @@ public class MidiInstrument {
     protected BigDecimal volume;
     protected BigDecimal pan;
     protected BigDecimal elevation;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "id", required = true)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected Object id;

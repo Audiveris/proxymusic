@@ -42,13 +42,13 @@ public class Beam {
 
     @XmlValue
     protected BeamValue value;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     protected Integer number;
-    @XmlAttribute
+    @XmlAttribute(name = "repeater")
     protected YesNo repeater;
-    @XmlAttribute
+    @XmlAttribute(name = "fan")
     protected Fan fan;
-    @XmlAttribute
+    @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
 

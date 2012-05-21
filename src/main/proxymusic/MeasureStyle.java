@@ -56,7 +56,7 @@ public class MeasureStyle {
     @XmlElement(name = "beat-repeat")
     protected BeatRepeat beatRepeat;
     protected Slash slash;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     protected BigInteger number;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
@@ -67,7 +67,7 @@ public class MeasureStyle {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute
+    @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
 

@@ -38,9 +38,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;group ref="{}editorial"/>
  *         &lt;group ref="{}staff" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}print-object"/>
- *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}placement"/>
+ *       &lt;attGroup ref="{}print-style"/>
+ *       &lt;attGroup ref="{}print-object"/>
  *       &lt;attribute name="type" type="{}harmony-type" />
  *       &lt;attribute name="print-frame" type="{}yes-no" />
  *     &lt;/restriction>
@@ -62,12 +62,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Harmony {
 
     @XmlElements({
-        @XmlElement(name = "degree", required = true, type = Degree.class),
-        @XmlElement(name = "kind", required = true, type = Kind.class),
         @XmlElement(name = "root", required = true, type = Root.class),
-        @XmlElement(name = "bass", required = true, type = Bass.class),
+        @XmlElement(name = "function", required = true, type = StyleText.class),
+        @XmlElement(name = "kind", required = true, type = Kind.class),
         @XmlElement(name = "inversion", required = true, type = Inversion.class),
-        @XmlElement(name = "function", required = true, type = StyleText.class)
+        @XmlElement(name = "bass", required = true, type = Bass.class),
+        @XmlElement(name = "degree", required = true, type = Degree.class)
     })
     protected List<Object> harmonyChord;
     protected Frame frame;
@@ -76,12 +76,15 @@ public class Harmony {
     protected Level level;
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger staff;
-    @XmlAttribute
+    @XmlAttribute(name = "type")
     protected HarmonyType type;
     @XmlAttribute(name = "print-frame")
     protected YesNo printFrame;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -99,11 +102,8 @@ public class Harmony {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute
-    protected AboveBelow placement;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
 
     /**
      * Gets the value of the harmonyChord property.
@@ -123,12 +123,12 @@ public class Harmony {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Degree }
-     * {@link Kind }
      * {@link Root }
-     * {@link Bass }
-     * {@link Inversion }
      * {@link StyleText }
+     * {@link Kind }
+     * {@link Inversion }
+     * {@link Bass }
+     * {@link Degree }
      * 
      * 
      */
@@ -308,27 +308,51 @@ public class Harmony {
     }
 
     /**
-     * Gets the value of the printObject property.
+     * Gets the value of the placement property.
      * 
      * @return
      *     possible object is
-     *     {@link YesNo }
+     *     {@link AboveBelow }
      *     
      */
-    public YesNo getPrintObject() {
-        return printObject;
+    public AboveBelow getPlacement() {
+        return placement;
     }
 
     /**
-     * Sets the value of the printObject property.
+     * Sets the value of the placement property.
      * 
      * @param value
      *     allowed object is
-     *     {@link YesNo }
+     *     {@link AboveBelow }
      *     
      */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -524,51 +548,27 @@ public class Harmony {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the printObject property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link YesNo }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public YesNo getPrintObject() {
+        return printObject;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the printObject property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link YesNo }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
     }
 
 }

@@ -47,9 +47,9 @@ public class BeatRepeat {
     protected java.lang.String slashType;
     @XmlElement(name = "slash-dot")
     protected List<Empty> slashDot;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected StartStop type;
-    @XmlAttribute
+    @XmlAttribute(name = "slashes")
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger slashes;
     @XmlAttribute(name = "use-dots")

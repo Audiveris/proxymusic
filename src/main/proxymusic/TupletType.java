@@ -38,7 +38,7 @@ public class TupletType {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute
+    @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
     @XmlAttribute(name = "font-family")

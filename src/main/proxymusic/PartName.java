@@ -40,8 +40,9 @@ public class PartName {
     protected java.lang.String value;
     @XmlAttribute(name = "print-object")
     protected YesNo printObject;
-    @XmlAttribute
-    protected LeftCenterRight justify;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -59,9 +60,8 @@ public class PartName {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
+    @XmlAttribute(name = "justify")
+    protected LeftCenterRight justify;
 
     /**
      * Gets the value of the value property.
@@ -112,27 +112,27 @@ public class PartName {
     }
 
     /**
-     * Gets the value of the justify property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link LeftCenterRight }
+     *     {@link java.lang.String }
      *     
      */
-    public LeftCenterRight getJustify() {
-        return justify;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the justify property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LeftCenterRight }
+     *     {@link java.lang.String }
      *     
      */
-    public void setJustify(LeftCenterRight value) {
-        this.justify = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -328,27 +328,27 @@ public class PartName {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the justify property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link LeftCenterRight }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public LeftCenterRight getJustify() {
+        return justify;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the justify property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link LeftCenterRight }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setJustify(LeftCenterRight value) {
+        this.justify = value;
     }
 
 }

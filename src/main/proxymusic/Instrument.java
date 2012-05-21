@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "instrument")
 public class Instrument {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "id", required = true)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected Object id;

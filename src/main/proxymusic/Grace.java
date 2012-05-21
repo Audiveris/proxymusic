@@ -40,7 +40,7 @@ public class Grace {
     protected BigDecimal stealTimeFollowing;
     @XmlAttribute(name = "make-time")
     protected BigDecimal makeTime;
-    @XmlAttribute
+    @XmlAttribute(name = "slash")
     protected YesNo slash;
 
     /**

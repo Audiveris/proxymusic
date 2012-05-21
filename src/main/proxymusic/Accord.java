@@ -44,7 +44,7 @@ public class Accord {
     protected BigDecimal tuningAlter;
     @XmlElement(name = "tuning-octave")
     protected int tuningOctave;
-    @XmlAttribute
+    @XmlAttribute(name = "string")
     protected BigInteger string;
 
     /**

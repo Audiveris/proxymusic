@@ -37,7 +37,7 @@ public class GroupBarline {
 
     @XmlValue
     protected GroupBarlineValue value;
-    @XmlAttribute
+    @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
 

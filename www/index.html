@@ -31,6 +31,12 @@
 	    <h1 style="text-align: center;">ProxyMusic Binder</h1>
 	    
 	    <div class="donemessage">
+                <p>On 21-may-2012, the marshalled encoding date field now 
+                    strictly matches the "YYYY-MM-DD" format, with no additional
+                    time information. Thanks to lasconic@gmail.com for the patch.
+                <br/>
+                ProxyMusic switched to Java 7.</p>
+                    
 		<p>On 14-oct-2011, UTF8 encoding was enforced for the MusicXML
                     stream output. Before that, the encoding was by default the
                 one selected for the current platform.</p>
@@ -76,9 +82,12 @@
 	    </p>
 	    
 	    <ul>
-		<li>If you are using the latest Java version (<b>Java 6</b> as
-		    recently released), JAXB2 is already included in the Java
+		<li>The released ProxyMusic binary is produced by <b>Java 7</b>
+                    and JAXB2 is already included in the Java
 		    distribution.</li>
+		
+		<li>You can also use <b>Java 6</b> and recompile the sources.
+                    (JAXB2 is also included in the Java 6 distribution)</li>
 		
 		<li>If you are using Java 5, you will need to download a
 		    separate JAXB2 implementation, from the <a
@@ -214,7 +223,7 @@
 	    <p>
 		ProxyMusic is available today in version 2.0 to support the
 		corresponding version of MusicXML. The binding uses JAXB version
-		2.0 as available in Java 6.<br/>  If a user wants to handle a
+		2.0 as available in Java 7.<br/>  If a user wants to handle a
 		file in an older MusicXML version, he will simply need to use
 		XSLT with the proper xls conversion file available on Recordare
 		web site.</p>

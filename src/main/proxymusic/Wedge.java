@@ -37,13 +37,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "wedge")
 public class Wedge {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected WedgeType type;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     protected Integer number;
-    @XmlAttribute
+    @XmlAttribute(name = "spread")
     protected BigDecimal spread;
-    @XmlAttribute
+    @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
     @XmlAttribute(name = "default-x")

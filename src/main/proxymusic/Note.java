@@ -49,9 +49,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="notations" type="{}notations" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="lyric" type="{}lyric" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}printout"/>
  *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}font"/>
+ *       &lt;attGroup ref="{}printout"/>
  *       &lt;attGroup ref="{}x-position"/>
  *       &lt;attribute name="dynamics" type="{}non-negative-decimal" />
  *       &lt;attribute name="end-dynamics" type="{}non-negative-decimal" />
@@ -117,27 +117,19 @@ public class Note {
     protected List<Beam> beam;
     protected List<Notations> notations;
     protected List<Lyric> lyric;
-    @XmlAttribute
+    @XmlAttribute(name = "dynamics")
     protected BigDecimal dynamics;
     @XmlAttribute(name = "end-dynamics")
     protected BigDecimal endDynamics;
-    @XmlAttribute
+    @XmlAttribute(name = "attack")
     protected BigDecimal attack;
-    @XmlAttribute
+    @XmlAttribute(name = "release")
     protected BigDecimal release;
     @XmlAttribute(name = "time-only")
     protected java.lang.String timeOnly;
-    @XmlAttribute
+    @XmlAttribute(name = "pizzicato")
     protected YesNo pizzicato;
-    @XmlAttribute(name = "print-dot")
-    protected YesNo printDot;
-    @XmlAttribute(name = "print-lyric")
-    protected YesNo printLyric;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
-    @XmlAttribute(name = "print-spacing")
-    protected YesNo printSpacing;
-    @XmlAttribute
+    @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
     @XmlAttribute(name = "font-family")
@@ -149,6 +141,14 @@ public class Note {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "print-dot")
+    protected YesNo printDot;
+    @XmlAttribute(name = "print-lyric")
+    protected YesNo printLyric;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
+    @XmlAttribute(name = "print-spacing")
+    protected YesNo printSpacing;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -856,102 +856,6 @@ public class Note {
     }
 
     /**
-     * Gets the value of the printDot property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintDot() {
-        return printDot;
-    }
-
-    /**
-     * Sets the value of the printDot property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintDot(YesNo value) {
-        this.printDot = value;
-    }
-
-    /**
-     * Gets the value of the printLyric property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintLyric() {
-        return printLyric;
-    }
-
-    /**
-     * Sets the value of the printLyric property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintLyric(YesNo value) {
-        this.printLyric = value;
-    }
-
-    /**
-     * Gets the value of the printObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintObject() {
-        return printObject;
-    }
-
-    /**
-     * Sets the value of the printObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
-    }
-
-    /**
-     * Gets the value of the printSpacing property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintSpacing() {
-        return printSpacing;
-    }
-
-    /**
-     * Sets the value of the printSpacing property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintSpacing(YesNo value) {
-        this.printSpacing = value;
-    }
-
-    /**
      * Gets the value of the color property.
      * 
      * @return
@@ -1069,6 +973,102 @@ public class Note {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
+    }
+
+    /**
+     * Gets the value of the printDot property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintDot() {
+        return printDot;
+    }
+
+    /**
+     * Sets the value of the printDot property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintDot(YesNo value) {
+        this.printDot = value;
+    }
+
+    /**
+     * Gets the value of the printLyric property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintLyric() {
+        return printLyric;
+    }
+
+    /**
+     * Sets the value of the printLyric property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintLyric(YesNo value) {
+        this.printLyric = value;
+    }
+
+    /**
+     * Gets the value of the printObject property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintObject() {
+        return printObject;
+    }
+
+    /**
+     * Sets the value of the printObject property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
+    }
+
+    /**
+     * Gets the value of the printSpacing property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintSpacing() {
+        return printSpacing;
+    }
+
+    /**
+     * Sets the value of the printSpacing property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintSpacing(YesNo value) {
+        this.printSpacing = value;
     }
 
     /**

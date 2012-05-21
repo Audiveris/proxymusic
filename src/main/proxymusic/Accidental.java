@@ -41,10 +41,13 @@ public class Accidental {
 
     @XmlValue
     protected AccidentalText value;
-    @XmlAttribute
+    @XmlAttribute(name = "cautionary")
     protected YesNo cautionary;
-    @XmlAttribute
+    @XmlAttribute(name = "editorial")
     protected YesNo editorial;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -62,14 +65,11 @@ public class Accidental {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute
+    @XmlAttribute(name = "parentheses")
     protected YesNo parentheses;
-    @XmlAttribute
+    @XmlAttribute(name = "bracket")
     protected YesNo bracket;
-    @XmlAttribute
+    @XmlAttribute(name = "size")
     protected SymbolSize size;
 
     /**
@@ -142,6 +142,30 @@ public class Accidental {
      */
     public void setEditorial(YesNo value) {
         this.editorial = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -334,30 +358,6 @@ public class Accidental {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
     /**

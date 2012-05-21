@@ -36,7 +36,7 @@ public class Offset {
 
     @XmlValue
     protected BigDecimal value;
-    @XmlAttribute
+    @XmlAttribute(name = "sound")
     protected YesNo sound;
 
     /**

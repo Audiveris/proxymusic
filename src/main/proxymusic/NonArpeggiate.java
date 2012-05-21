@@ -21,9 +21,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="non-arpeggiate">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}placement"/>
- *       &lt;attGroup ref="{}color"/>
  *       &lt;attribute name="type" use="required" type="{}top-bottom" />
  *       &lt;attribute name="number" type="{}number-level" />
  *     &lt;/restriction>
@@ -37,10 +37,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "non-arpeggiate")
 public class NonArpeggiate {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "type", required = true)
     protected TopBottom type;
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     protected Integer number;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -49,11 +52,8 @@ public class NonArpeggiate {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute
+    @XmlAttribute(name = "placement")
     protected AboveBelow placement;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
 
     /**
      * Gets the value of the type property.
@@ -101,6 +101,30 @@ public class NonArpeggiate {
      */
     public void setNumber(Integer value) {
         this.number = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -221,30 +245,6 @@ public class NonArpeggiate {
      */
     public void setPlacement(AboveBelow value) {
         this.placement = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
 }

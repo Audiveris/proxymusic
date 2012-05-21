@@ -74,7 +74,7 @@ public class ScorePart {
     protected MidiDevice midiDevice;
     @XmlElement(name = "midi-instrument")
     protected List<MidiInstrument> midiInstrument;
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "id", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")

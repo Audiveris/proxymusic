@@ -89,33 +89,33 @@ public class Sound {
     @XmlElement(name = "midi-instrument")
     protected List<MidiInstrument> midiInstrument;
     protected Offset offset;
-    @XmlAttribute
+    @XmlAttribute(name = "tempo")
     protected BigDecimal tempo;
-    @XmlAttribute
+    @XmlAttribute(name = "dynamics")
     protected BigDecimal dynamics;
-    @XmlAttribute
+    @XmlAttribute(name = "dacapo")
     protected YesNo dacapo;
-    @XmlAttribute
+    @XmlAttribute(name = "segno")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String segno;
-    @XmlAttribute
+    @XmlAttribute(name = "dalsegno")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String dalsegno;
-    @XmlAttribute
+    @XmlAttribute(name = "coda")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String coda;
-    @XmlAttribute
+    @XmlAttribute(name = "tocoda")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String tocoda;
-    @XmlAttribute
+    @XmlAttribute(name = "divisions")
     protected BigDecimal divisions;
     @XmlAttribute(name = "forward-repeat")
     protected YesNo forwardRepeat;
-    @XmlAttribute
+    @XmlAttribute(name = "fine")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String fine;
@@ -123,11 +123,11 @@ public class Sound {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String timeOnly;
-    @XmlAttribute
+    @XmlAttribute(name = "pizzicato")
     protected YesNo pizzicato;
-    @XmlAttribute
+    @XmlAttribute(name = "pan")
     protected BigDecimal pan;
-    @XmlAttribute
+    @XmlAttribute(name = "elevation")
     protected BigDecimal elevation;
     @XmlAttribute(name = "damper-pedal")
     protected java.lang.String damperPedal;

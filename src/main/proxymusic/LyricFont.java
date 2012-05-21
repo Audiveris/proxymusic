@@ -35,11 +35,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "lyric-font")
 public class LyricFont {
 
-    @XmlAttribute
+    @XmlAttribute(name = "number")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NMTOKEN")
     protected java.lang.String number;
-    @XmlAttribute
+    @XmlAttribute(name = "name")
     protected java.lang.String name;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)

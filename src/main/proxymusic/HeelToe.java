@@ -32,7 +32,7 @@ public class HeelToe
     extends EmptyPlacement
 {
 
-    @XmlAttribute
+    @XmlAttribute(name = "substitution")
     protected YesNo substitution;
 
     /**

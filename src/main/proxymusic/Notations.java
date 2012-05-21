@@ -59,19 +59,19 @@ public class Notations {
     protected Level level;
     @XmlElements({
         @XmlElement(name = "tied", type = Tied.class),
-        @XmlElement(name = "arpeggiate", type = Arpeggiate.class),
-        @XmlElement(name = "dynamics", type = Dynamics.class),
+        @XmlElement(name = "slur", type = Slur.class),
+        @XmlElement(name = "tuplet", type = Tuplet.class),
+        @XmlElement(name = "glissando", type = Glissando.class),
         @XmlElement(name = "slide", type = Slide.class),
         @XmlElement(name = "ornaments", type = Ornaments.class),
-        @XmlElement(name = "other-notation", type = OtherNotation.class),
         @XmlElement(name = "technical", type = Technical.class),
-        @XmlElement(name = "slur", type = Slur.class),
-        @XmlElement(name = "fermata", type = Fermata.class),
-        @XmlElement(name = "accidental-mark", type = AccidentalMark.class),
         @XmlElement(name = "articulations", type = Articulations.class),
+        @XmlElement(name = "dynamics", type = Dynamics.class),
+        @XmlElement(name = "fermata", type = Fermata.class),
+        @XmlElement(name = "arpeggiate", type = Arpeggiate.class),
         @XmlElement(name = "non-arpeggiate", type = NonArpeggiate.class),
-        @XmlElement(name = "glissando", type = Glissando.class),
-        @XmlElement(name = "tuplet", type = Tuplet.class)
+        @XmlElement(name = "accidental-mark", type = AccidentalMark.class),
+        @XmlElement(name = "other-notation", type = OtherNotation.class)
     })
     protected List<Object> tiedOrSlurOrTuplet;
 
@@ -142,19 +142,19 @@ public class Notations {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Tied }
-     * {@link Arpeggiate }
-     * {@link Dynamics }
+     * {@link Slur }
+     * {@link Tuplet }
+     * {@link Glissando }
      * {@link Slide }
      * {@link Ornaments }
-     * {@link OtherNotation }
      * {@link Technical }
-     * {@link Slur }
-     * {@link Fermata }
-     * {@link AccidentalMark }
      * {@link Articulations }
+     * {@link Dynamics }
+     * {@link Fermata }
+     * {@link Arpeggiate }
      * {@link NonArpeggiate }
-     * {@link Glissando }
-     * {@link Tuplet }
+     * {@link AccidentalMark }
+     * {@link OtherNotation }
      * 
      * 
      */
