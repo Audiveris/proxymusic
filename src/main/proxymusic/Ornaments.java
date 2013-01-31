@@ -25,9 +25,11 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence maxOccurs="unbounded" minOccurs="0">
  *         &lt;choice>
  *           &lt;element name="trill-mark" type="{}empty-trill-sound"/>
- *           &lt;element name="turn" type="{}empty-trill-sound"/>
- *           &lt;element name="delayed-turn" type="{}empty-trill-sound"/>
- *           &lt;element name="inverted-turn" type="{}empty-trill-sound"/>
+ *           &lt;element name="turn" type="{}horizontal-turn"/>
+ *           &lt;element name="delayed-turn" type="{}horizontal-turn"/>
+ *           &lt;element name="inverted-turn" type="{}horizontal-turn"/>
+ *           &lt;element name="delayed-inverted-turn" type="{}horizontal-turn"/>
+ *           &lt;element name="vertical-turn" type="{}empty-trill-sound"/>
  *           &lt;element name="shake" type="{}empty-trill-sound"/>
  *           &lt;element name="wavy-line" type="{}wavy-line"/>
  *           &lt;element name="mordent" type="{}mordent"/>
@@ -52,18 +54,20 @@ import javax.xml.bind.annotation.XmlType;
 public class Ornaments {
 
     @XmlElementRefs({
-        @XmlElementRef(name = "mordent", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "tremolo", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "wavy-line", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "shake", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "trill-mark", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "turn", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "schleifer", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "other-ornament", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "inverted-mordent", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "delayed-turn", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "shake", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "vertical-turn", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "tremolo", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "mordent", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "inverted-mordent", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "delayed-inverted-turn", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "schleifer", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "accidental-mark", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "inverted-turn", type = JAXBElement.class, required = false)
+        @XmlElementRef(name = "other-ornament", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "inverted-turn", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "turn", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "wavy-line", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "trill-mark", type = JAXBElement.class, required = false)
     })
     protected List<JAXBElement<?>> trillMarkOrTurnOrDelayedTurn;
 
@@ -85,18 +89,20 @@ public class Ornaments {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Mordent }{@code >}
-     * {@link JAXBElement }{@code <}{@link WavyLine }{@code >}
+     * {@link JAXBElement }{@code <}{@link HorizontalTurn }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}
      * {@link JAXBElement }{@code <}{@link Tremolo }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}
      * {@link JAXBElement }{@code <}{@link Mordent }{@code >}
-     * {@link JAXBElement }{@code <}{@link PlacementText }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}
+     * {@link JAXBElement }{@code <}{@link Mordent }{@code >}
+     * {@link JAXBElement }{@code <}{@link HorizontalTurn }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link AccidentalMark }{@code >}
+     * {@link JAXBElement }{@code <}{@link PlacementText }{@code >}
+     * {@link JAXBElement }{@code <}{@link HorizontalTurn }{@code >}
+     * {@link JAXBElement }{@code <}{@link HorizontalTurn }{@code >}
+     * {@link JAXBElement }{@code <}{@link WavyLine }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}
      * 
      * 
      */

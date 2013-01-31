@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * The image type is used to include graphical images in a score. The required source attribute is the URL for the image file. The required type attribute is the MIME type for the image file format. Typical choices include application/postscript, image/gif, image/jpeg, image/png, and image/tiff.
+ * The image type is used to include graphical images in a score.
  * 
  * <p>Java class for image complex type.
  * 
@@ -41,6 +41,10 @@ public class Image {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String type;
+    @XmlAttribute(name = "valign")
+    protected ValignImage valign;
+    @XmlAttribute(name = "halign")
+    protected LeftCenterRight halign;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -49,10 +53,6 @@ public class Image {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "valign")
-    protected ValignImage valign;
-    @XmlAttribute(name = "halign")
-    protected LeftCenterRight halign;
 
     /**
      * Gets the value of the source property.
@@ -100,6 +100,54 @@ public class Image {
      */
     public void setType(java.lang.String value) {
         this.type = value;
+    }
+
+    /**
+     * Gets the value of the valign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ValignImage }
+     *     
+     */
+    public ValignImage getValign() {
+        return valign;
+    }
+
+    /**
+     * Sets the value of the valign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ValignImage }
+     *     
+     */
+    public void setValign(ValignImage value) {
+        this.valign = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
     }
 
     /**
@@ -196,54 +244,6 @@ public class Image {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the valign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ValignImage }
-     *     
-     */
-    public ValignImage getValign() {
-        return valign;
-    }
-
-    /**
-     * Sets the value of the valign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ValignImage }
-     *     
-     */
-    public void setValign(ValignImage value) {
-        this.valign = value;
-    }
-
-    /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
     }
 
 }

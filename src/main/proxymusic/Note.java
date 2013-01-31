@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * <B>[JAXB: simplified definition]</B><BR/>Notes are the most common type of MusicXML data. The MusicXML format keeps the MuseData distinction between elements used for sound information and elements used for notation information (e.g., tie is used for sound, tied for notation). Thus grace notes do not have a duration element. Cue notes have a duration element, as do forward elements, but no tie elements. Having these two types of information available can make interchange considerably easier, as some programs handle one type of information much more readily than the other. 
  * 	
- * The dynamics and end-dynamics attributes correspond to MIDI 1.0's Note On and Note Off velocities, respectively. They are expressed in terms of percentages of the default forte value (90 for MIDI 1.0). The attack and release attributes are used to alter the staring and stopping time of the note from when it would otherwise occur based on the flow of durations - information that is specific to a performance. They are expressed in terms of divisions, either positive or negative. A note that starts a tie should not have a release attribute, and a note that stops a tie should not have an attack attribute. If a note is played only one time through a repeat, the time-only attribute shows which time to play the note. The pizzicato attribute is used when just this note is sounded pizzicato, vs. the pizzicato element which changes overall playback between pizzicato and arco.
+ * The dynamics and end-dynamics attributes correspond to MIDI 1.0's Note On and Note Off velocities, respectively. They are expressed in terms of percentages of the default forte value (90 for MIDI 1.0). The attack and release attributes are used to alter the starting and stopping time of the note from when it would otherwise occur based on the flow of durations - information that is specific to a performance. They are expressed in terms of divisions, either positive or negative. A note that starts a tie should not have a release attribute, and a note that stops a tie should not have an attack attribute. If a note is played only particular times through a repeat, the time-only attribute shows which times to play the note. The pizzicato attribute is used when just this note is sounded pizzicato, vs. the pizzicato element which changes overall playback between pizzicato and arco.
  * 
  * <p>Java class for note complex type.
  * 
@@ -44,20 +44,22 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="time-modification" type="{}time-modification" minOccurs="0"/>
  *         &lt;element name="stem" type="{}stem" minOccurs="0"/>
  *         &lt;element name="notehead" type="{}notehead" minOccurs="0"/>
+ *         &lt;element name="notehead-text" type="{}notehead-text" minOccurs="0"/>
  *         &lt;group ref="{}staff" minOccurs="0"/>
- *         &lt;element name="beam" type="{}beam" maxOccurs="6" minOccurs="0"/>
+ *         &lt;element name="beam" type="{}beam" maxOccurs="8" minOccurs="0"/>
  *         &lt;element name="notations" type="{}notations" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="lyric" type="{}lyric" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="play" type="{}play" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}color"/>
- *       &lt;attGroup ref="{}font"/>
  *       &lt;attGroup ref="{}printout"/>
+ *       &lt;attGroup ref="{}font"/>
+ *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}x-position"/>
  *       &lt;attribute name="dynamics" type="{}non-negative-decimal" />
  *       &lt;attribute name="end-dynamics" type="{}non-negative-decimal" />
  *       &lt;attribute name="attack" type="{}divisions" />
  *       &lt;attribute name="release" type="{}divisions" />
- *       &lt;attribute name="time-only" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="time-only" type="{}time-only" />
  *       &lt;attribute name="pizzicato" type="{}yes-no" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -86,10 +88,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "timeModification",
     "stem",
     "notehead",
+    "noteheadText",
     "staff",
     "beam",
     "notations",
-    "lyric"
+    "lyric",
+    "play"
 })
 public class Note {
 
@@ -97,8 +101,8 @@ public class Note {
     protected Empty cue;
     protected Empty chord;
     protected Pitch pitch;
-    protected DisplayStepOctave unpitched;
-    protected DisplayStepOctave rest;
+    protected Unpitched unpitched;
+    protected Rest rest;
     protected BigDecimal duration;
     protected List<Tie> tie;
     protected Instrument instrument;
@@ -112,11 +116,14 @@ public class Note {
     protected TimeModification timeModification;
     protected Stem stem;
     protected Notehead notehead;
+    @XmlElement(name = "notehead-text")
+    protected NoteheadText noteheadText;
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger staff;
     protected List<Beam> beam;
     protected List<Notations> notations;
     protected List<Lyric> lyric;
+    protected Play play;
     @XmlAttribute(name = "dynamics")
     protected BigDecimal dynamics;
     @XmlAttribute(name = "end-dynamics")
@@ -126,12 +133,18 @@ public class Note {
     @XmlAttribute(name = "release")
     protected BigDecimal release;
     @XmlAttribute(name = "time-only")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String timeOnly;
     @XmlAttribute(name = "pizzicato")
     protected YesNo pizzicato;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
+    @XmlAttribute(name = "print-dot")
+    protected YesNo printDot;
+    @XmlAttribute(name = "print-lyric")
+    protected YesNo printLyric;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
+    @XmlAttribute(name = "print-spacing")
+    protected YesNo printSpacing;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -141,14 +154,9 @@ public class Note {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute(name = "print-dot")
-    protected YesNo printDot;
-    @XmlAttribute(name = "print-lyric")
-    protected YesNo printLyric;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
-    @XmlAttribute(name = "print-spacing")
-    protected YesNo printSpacing;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -259,10 +267,10 @@ public class Note {
      * 
      * @return
      *     possible object is
-     *     {@link DisplayStepOctave }
+     *     {@link Unpitched }
      *     
      */
-    public DisplayStepOctave getUnpitched() {
+    public Unpitched getUnpitched() {
         return unpitched;
     }
 
@@ -271,10 +279,10 @@ public class Note {
      * 
      * @param value
      *     allowed object is
-     *     {@link DisplayStepOctave }
+     *     {@link Unpitched }
      *     
      */
-    public void setUnpitched(DisplayStepOctave value) {
+    public void setUnpitched(Unpitched value) {
         this.unpitched = value;
     }
 
@@ -283,10 +291,10 @@ public class Note {
      * 
      * @return
      *     possible object is
-     *     {@link DisplayStepOctave }
+     *     {@link Rest }
      *     
      */
-    public DisplayStepOctave getRest() {
+    public Rest getRest() {
         return rest;
     }
 
@@ -295,10 +303,10 @@ public class Note {
      * 
      * @param value
      *     allowed object is
-     *     {@link DisplayStepOctave }
+     *     {@link Rest }
      *     
      */
-    public void setRest(DisplayStepOctave value) {
+    public void setRest(Rest value) {
         this.rest = value;
     }
 
@@ -601,6 +609,30 @@ public class Note {
     }
 
     /**
+     * Gets the value of the noteheadText property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link NoteheadText }
+     *     
+     */
+    public NoteheadText getNoteheadText() {
+        return noteheadText;
+    }
+
+    /**
+     * Sets the value of the noteheadText property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link NoteheadText }
+     *     
+     */
+    public void setNoteheadText(NoteheadText value) {
+        this.noteheadText = value;
+    }
+
+    /**
      * Gets the value of the staff property.
      * 
      * @return
@@ -709,6 +741,30 @@ public class Note {
             lyric = new ArrayList<Lyric>();
         }
         return this.lyric;
+    }
+
+    /**
+     * Gets the value of the play property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Play }
+     *     
+     */
+    public Play getPlay() {
+        return play;
+    }
+
+    /**
+     * Sets the value of the play property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Play }
+     *     
+     */
+    public void setPlay(Play value) {
+        this.play = value;
     }
 
     /**
@@ -856,27 +912,99 @@ public class Note {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the printDot property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link YesNo }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public YesNo getPrintDot() {
+        return printDot;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the printDot property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link YesNo }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setPrintDot(YesNo value) {
+        this.printDot = value;
+    }
+
+    /**
+     * Gets the value of the printLyric property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintLyric() {
+        return printLyric;
+    }
+
+    /**
+     * Sets the value of the printLyric property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintLyric(YesNo value) {
+        this.printLyric = value;
+    }
+
+    /**
+     * Gets the value of the printObject property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintObject() {
+        return printObject;
+    }
+
+    /**
+     * Sets the value of the printObject property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
+    }
+
+    /**
+     * Gets the value of the printSpacing property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintSpacing() {
+        return printSpacing;
+    }
+
+    /**
+     * Sets the value of the printSpacing property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintSpacing(YesNo value) {
+        this.printSpacing = value;
     }
 
     /**
@@ -976,99 +1104,27 @@ public class Note {
     }
 
     /**
-     * Gets the value of the printDot property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link YesNo }
+     *     {@link java.lang.String }
      *     
      */
-    public YesNo getPrintDot() {
-        return printDot;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the printDot property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link YesNo }
+     *     {@link java.lang.String }
      *     
      */
-    public void setPrintDot(YesNo value) {
-        this.printDot = value;
-    }
-
-    /**
-     * Gets the value of the printLyric property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintLyric() {
-        return printLyric;
-    }
-
-    /**
-     * Sets the value of the printLyric property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintLyric(YesNo value) {
-        this.printLyric = value;
-    }
-
-    /**
-     * Gets the value of the printObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintObject() {
-        return printObject;
-    }
-
-    /**
-     * Sets the value of the printObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
-    }
-
-    /**
-     * Gets the value of the printSpacing property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintSpacing() {
-        return printSpacing;
-    }
-
-    /**
-     * Sets the value of the printSpacing property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintSpacing(YesNo value) {
-        this.printSpacing = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**

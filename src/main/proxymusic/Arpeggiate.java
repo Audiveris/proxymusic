@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * The arpeggiate element indicates that this note is part of an arpeggiated chord. The number attribute can be used to distinguish between two simultaneous chords arpeggiated separately (different numbers) or together (same number). The up-down attribute is used if there is an arrow on the arpeggio sign. By default, arpeggios go from the lowest to highest note.
+ * The arpeggiate type indicates that this note is part of an arpeggiated chord. The number attribute can be used to distinguish between two simultaneous chords arpeggiated separately (different numbers) or together (same number). The up-down attribute is used if there is an arrow on the arpeggio sign. By default, arpeggios go from the lowest to highest note.
  * 
  * <p>Java class for arpeggiate complex type.
  * 
@@ -21,9 +21,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="arpeggiate">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attGroup ref="{}color"/>
- *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}placement"/>
+ *       &lt;attGroup ref="{}position"/>
+ *       &lt;attGroup ref="{}color"/>
  *       &lt;attribute name="number" type="{}number-level" />
  *       &lt;attribute name="direction" type="{}up-down" />
  *     &lt;/restriction>
@@ -41,9 +41,8 @@ public class Arpeggiate {
     protected Integer number;
     @XmlAttribute(name = "direction")
     protected UpDown direction;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -52,8 +51,9 @@ public class Arpeggiate {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "placement")
-    protected AboveBelow placement;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * Gets the value of the number property.
@@ -104,27 +104,27 @@ public class Arpeggiate {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the placement property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link AboveBelow }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public AboveBelow getPlacement() {
+        return placement;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the placement property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link AboveBelow }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
     /**
@@ -224,27 +224,27 @@ public class Arpeggiate {
     }
 
     /**
-     * Gets the value of the placement property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
-     *     {@link AboveBelow }
+     *     {@link java.lang.String }
      *     
      */
-    public AboveBelow getPlacement() {
-        return placement;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the placement property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
-     *     {@link AboveBelow }
+     *     {@link java.lang.String }
      *     
      */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

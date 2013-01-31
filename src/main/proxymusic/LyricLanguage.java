@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;attribute name="number" type="{http://www.w3.org/2001/XMLSchema}NMTOKEN" />
- *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}token" />
  *       &lt;attribute ref="{http://www.w3.org/XML/1998/namespace}lang use="required""/>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -40,6 +40,8 @@ public class LyricLanguage {
     @XmlSchemaType(name = "NMTOKEN")
     protected java.lang.String number;
     @XmlAttribute(name = "name")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "token")
     protected java.lang.String name;
     @XmlAttribute(name = "lang", namespace = "http://www.w3.org/XML/1998/namespace", required = true)
     protected java.lang.String lang;

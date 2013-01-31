@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -25,21 +26,21 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 	
  * Segno and dalsegno are used for backwards jumps to a segno sign; coda and tocoda are used for forward jumps to a coda sign. If there are multiple jumps, the value of these parameters can be used to name and distinguish them. If segno or coda is used, the divisions attribute can also be used to indicate the number of divisions per quarter note. Otherwise sound and MIDI generating programs may have to recompute this.
  * 	
- * By default, a dalsegno or dacapo attribute indicates that the jump should occur the first time through, while a  tocoda attribute indicates the jump should occur the second time through. The time that jumps occur can be changed by using the time-only attribute.
+ * By default, a dalsegno or dacapo attribute indicates that the jump should occur the first time through, while a tocoda attribute indicates the jump should occur the second time through. The time that jumps occur can be changed by using the time-only attribute.
  * 	
  * Forward-repeat is used when a forward repeat sign is implied, and usually follows a bar line. When used it always has the value of "yes".
  * 	
  * The fine attribute follows the final note or rest in a movement with a da capo or dal segno direction. If numeric, the value represents the actual duration of the final note or rest, which can be ambiguous in written notation and different among parts and voices. The value may also be "yes" to indicate no change to the final duration.
  * 	
- * If the sound element applies only one time through a repeat, the time-only attribute indicates which time to apply the sound element.
+ * If the sound element applies only particular times through a repeat, the time-only attribute indicates which times to apply the sound element.
  * 	
  * Pizzicato in a sound element effects all following notes. Yes indicates pizzicato, no indicates arco.
  * 
  * The pan and elevation attributes are deprecated in Version 2.0. The pan and elevation elements in the midi-instrument element should be used instead. The meaning of the pan and elevation attributes is the same as for the pan and elevation elements. If both are present, the mid-instrument elements take priority.
  * 	
- * The damper-pedal, soft-pedal, and sostenuto-pedal attributes effect playback of the three common piano pedals and their MIDI controller equivalents. The yes value indicates the pedal is depressed; no indicates  the pedal is released. A numeric value from 0 to 100 may also be used for half pedaling. This value is the percentage that the pedal is depressed. A value of 0 is equivalent to no, and a value of 100 is equivalent to yes.
+ * The damper-pedal, soft-pedal, and sostenuto-pedal attributes effect playback of the three common piano pedals and their MIDI controller equivalents. The yes value indicates the pedal is depressed; no indicates the pedal is released. A numeric value from 0 to 100 may also be used for half pedaling. This value is the percentage that the pedal is depressed. A value of 0 is equivalent to no, and a value of 100 is equivalent to yes.
  * 	
- * MIDI instruments are changed using the midi-instrument element defined in the common.mod file.
+ * MIDI devices, MIDI instruments, and playback techniques are changed using the midi-device, midi-instrument, and play elements. When there are multiple instances of these elements, they should be grouped together by instrument using the id attribute values.
  * 
  * The offset element is used to indicate that the sound takes place offset from the current score position. If the sound element is a child of a direction element, the sound offset element overrides the direction offset element if both elements are present. Note that the offset reflects the intended musical position for the change in sound. It should not be used to compensate for latency issues in particular hardware configurations.
  * 
@@ -52,11 +53,15 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="midi-instrument" type="{}midi-instrument" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;sequence maxOccurs="unbounded" minOccurs="0">
+ *           &lt;element name="midi-device" type="{}midi-device" minOccurs="0"/>
+ *           &lt;element name="midi-instrument" type="{}midi-instrument" minOccurs="0"/>
+ *           &lt;element name="play" type="{}play" minOccurs="0"/>
+ *         &lt;/sequence>
  *         &lt;element name="offset" type="{}offset" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="tempo" type="{}non-negative-decimal" />
- *       &lt;attribute name="dynamics" type="{http://www.w3.org/2001/XMLSchema}decimal" />
+ *       &lt;attribute name="dynamics" type="{}non-negative-decimal" />
  *       &lt;attribute name="dacapo" type="{}yes-no" />
  *       &lt;attribute name="segno" type="{http://www.w3.org/2001/XMLSchema}token" />
  *       &lt;attribute name="dalsegno" type="{http://www.w3.org/2001/XMLSchema}token" />
@@ -65,7 +70,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *       &lt;attribute name="divisions" type="{}divisions" />
  *       &lt;attribute name="forward-repeat" type="{}yes-no" />
  *       &lt;attribute name="fine" type="{http://www.w3.org/2001/XMLSchema}token" />
- *       &lt;attribute name="time-only" type="{http://www.w3.org/2001/XMLSchema}token" />
+ *       &lt;attribute name="time-only" type="{}time-only" />
  *       &lt;attribute name="pizzicato" type="{}yes-no" />
  *       &lt;attribute name="pan" type="{}rotation-degrees" />
  *       &lt;attribute name="elevation" type="{}rotation-degrees" />
@@ -81,13 +86,17 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "sound", propOrder = {
-    "midiInstrument",
+    "midiDeviceAndMidiInstrumentAndPlay",
     "offset"
 })
 public class Sound {
 
-    @XmlElement(name = "midi-instrument")
-    protected List<MidiInstrument> midiInstrument;
+    @XmlElements({
+        @XmlElement(name = "midi-device", type = MidiDevice.class),
+        @XmlElement(name = "midi-instrument", type = MidiInstrument.class),
+        @XmlElement(name = "play", type = Play.class)
+    })
+    protected List<Object> midiDeviceAndMidiInstrumentAndPlay;
     protected Offset offset;
     @XmlAttribute(name = "tempo")
     protected BigDecimal tempo;
@@ -121,7 +130,6 @@ public class Sound {
     protected java.lang.String fine;
     @XmlAttribute(name = "time-only")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
     protected java.lang.String timeOnly;
     @XmlAttribute(name = "pizzicato")
     protected YesNo pizzicato;
@@ -137,32 +145,34 @@ public class Sound {
     protected java.lang.String sostenutoPedal;
 
     /**
-     * Gets the value of the midiInstrument property.
+     * Gets the value of the midiDeviceAndMidiInstrumentAndPlay property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the midiInstrument property.
+     * This is why there is not a <CODE>set</CODE> method for the midiDeviceAndMidiInstrumentAndPlay property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getMidiInstrument().add(newItem);
+     *    getMidiDeviceAndMidiInstrumentAndPlay().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
+     * {@link MidiDevice }
      * {@link MidiInstrument }
+     * {@link Play }
      * 
      * 
      */
-    public List<MidiInstrument> getMidiInstrument() {
-        if (midiInstrument == null) {
-            midiInstrument = new ArrayList<MidiInstrument>();
+    public List<Object> getMidiDeviceAndMidiInstrumentAndPlay() {
+        if (midiDeviceAndMidiInstrumentAndPlay == null) {
+            midiDeviceAndMidiInstrumentAndPlay = new ArrayList<Object>();
         }
-        return this.midiInstrument;
+        return this.midiDeviceAndMidiInstrumentAndPlay;
     }
 
     /**

@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * The attributes element contains musical information that typically changes on measure boundaries. This includes key and time signatures, clefs, transpositions, and staving.
+ * The attributes element contains musical information that typically changes on measure boundaries. This includes key and time signatures, clefs, transpositions, and staving. When attributes are changed mid-measure, it affects the music in score order, not in MusicXML document order.
  * 
  * <p>Java class for attributes complex type.
  * 
@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="instruments" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" minOccurs="0"/>
  *         &lt;element name="clef" type="{}clef" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="staff-details" type="{}staff-details" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="transpose" type="{}transpose" minOccurs="0"/>
+ *         &lt;element name="transpose" type="{}transpose" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="directive" maxOccurs="unbounded" minOccurs="0">
  *           &lt;complexType>
  *             &lt;simpleContent>
@@ -89,7 +89,7 @@ public class Attributes {
     protected List<Clef> clef;
     @XmlElement(name = "staff-details")
     protected List<StaffDetails> staffDetails;
-    protected Transpose transpose;
+    protected List<Transpose> transpose;
     protected List<Attributes.Directive> directive;
     @XmlElement(name = "measure-style")
     protected List<MeasureStyle> measureStyle;
@@ -357,25 +357,30 @@ public class Attributes {
     /**
      * Gets the value of the transpose property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Transpose }
-     *     
-     */
-    public Transpose getTranspose() {
-        return transpose;
-    }
-
-    /**
-     * Sets the value of the transpose property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the transpose property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Transpose }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getTranspose().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Transpose }
+     * 
+     * 
      */
-    public void setTranspose(Transpose value) {
-        this.transpose = value;
+    public List<Transpose> getTranspose() {
+        if (transpose == null) {
+            transpose = new ArrayList<Transpose>();
+        }
+        return this.transpose;
     }
 
     /**
@@ -468,6 +473,14 @@ public class Attributes {
         @XmlAttribute(name = "color")
         @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
         protected java.lang.String color;
+        @XmlAttribute(name = "default-x")
+        protected BigDecimal defaultX;
+        @XmlAttribute(name = "default-y")
+        protected BigDecimal defaultY;
+        @XmlAttribute(name = "relative-x")
+        protected BigDecimal relativeX;
+        @XmlAttribute(name = "relative-y")
+        protected BigDecimal relativeY;
         @XmlAttribute(name = "font-family")
         @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
         protected java.lang.String fontFamily;
@@ -477,14 +490,6 @@ public class Attributes {
         protected java.lang.String fontSize;
         @XmlAttribute(name = "font-weight")
         protected FontWeight fontWeight;
-        @XmlAttribute(name = "default-x")
-        protected BigDecimal defaultX;
-        @XmlAttribute(name = "default-y")
-        protected BigDecimal defaultY;
-        @XmlAttribute(name = "relative-x")
-        protected BigDecimal relativeX;
-        @XmlAttribute(name = "relative-y")
-        protected BigDecimal relativeY;
 
         /**
          * Gets the value of the value property.
@@ -556,102 +561,6 @@ public class Attributes {
          */
         public void setColor(java.lang.String value) {
             this.color = value;
-        }
-
-        /**
-         * Gets the value of the fontFamily property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link java.lang.String }
-         *     
-         */
-        public java.lang.String getFontFamily() {
-            return fontFamily;
-        }
-
-        /**
-         * Sets the value of the fontFamily property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link java.lang.String }
-         *     
-         */
-        public void setFontFamily(java.lang.String value) {
-            this.fontFamily = value;
-        }
-
-        /**
-         * Gets the value of the fontStyle property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link FontStyle }
-         *     
-         */
-        public FontStyle getFontStyle() {
-            return fontStyle;
-        }
-
-        /**
-         * Sets the value of the fontStyle property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link FontStyle }
-         *     
-         */
-        public void setFontStyle(FontStyle value) {
-            this.fontStyle = value;
-        }
-
-        /**
-         * Gets the value of the fontSize property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link java.lang.String }
-         *     
-         */
-        public java.lang.String getFontSize() {
-            return fontSize;
-        }
-
-        /**
-         * Sets the value of the fontSize property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link java.lang.String }
-         *     
-         */
-        public void setFontSize(java.lang.String value) {
-            this.fontSize = value;
-        }
-
-        /**
-         * Gets the value of the fontWeight property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link FontWeight }
-         *     
-         */
-        public FontWeight getFontWeight() {
-            return fontWeight;
-        }
-
-        /**
-         * Sets the value of the fontWeight property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link FontWeight }
-         *     
-         */
-        public void setFontWeight(FontWeight value) {
-            this.fontWeight = value;
         }
 
         /**
@@ -748,6 +657,102 @@ public class Attributes {
          */
         public void setRelativeY(BigDecimal value) {
             this.relativeY = value;
+        }
+
+        /**
+         * Gets the value of the fontFamily property.
+         * 
+         * @return
+         *     possible object is
+         *     {@link java.lang.String }
+         *     
+         */
+        public java.lang.String getFontFamily() {
+            return fontFamily;
+        }
+
+        /**
+         * Sets the value of the fontFamily property.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link java.lang.String }
+         *     
+         */
+        public void setFontFamily(java.lang.String value) {
+            this.fontFamily = value;
+        }
+
+        /**
+         * Gets the value of the fontStyle property.
+         * 
+         * @return
+         *     possible object is
+         *     {@link FontStyle }
+         *     
+         */
+        public FontStyle getFontStyle() {
+            return fontStyle;
+        }
+
+        /**
+         * Sets the value of the fontStyle property.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link FontStyle }
+         *     
+         */
+        public void setFontStyle(FontStyle value) {
+            this.fontStyle = value;
+        }
+
+        /**
+         * Gets the value of the fontSize property.
+         * 
+         * @return
+         *     possible object is
+         *     {@link java.lang.String }
+         *     
+         */
+        public java.lang.String getFontSize() {
+            return fontSize;
+        }
+
+        /**
+         * Sets the value of the fontSize property.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link java.lang.String }
+         *     
+         */
+        public void setFontSize(java.lang.String value) {
+            this.fontSize = value;
+        }
+
+        /**
+         * Gets the value of the fontWeight property.
+         * 
+         * @return
+         *     possible object is
+         *     {@link FontWeight }
+         *     
+         */
+        public FontWeight getFontWeight() {
+            return fontWeight;
+        }
+
+        /**
+         * Sets the value of the fontWeight property.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link FontWeight }
+         *     
+         */
+        public void setFontWeight(FontWeight value) {
+            this.fontWeight = value;
         }
 
     }

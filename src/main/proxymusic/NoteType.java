@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * The note-type type indicates the graphic note type, Valid values (from shortest to longest) are 256th, 128th, 64th, 32nd, 16th, eighth, quarter, half, whole, breve, and long. The size attribute indicates full, cue, or large size, with full the default for regular notes and cue the default for cue and grace notes.
+ * The note-type type indicates the graphic note type. Values range from 256th to long. The size attribute indicates full, cue, or large size, with full the default for regular notes and cue the default for cue and grace notes.
  * 
  * <p>Java class for note-type complex type.
  * 
@@ -39,7 +39,7 @@ public class NoteType {
     protected SymbolSize size;
 
     /**
-     * The note-type type is used for the MusicXML type element and represents the graphic note type, from 256th (shortest) to long (longest).
+     * The note-type type is used for the MusicXML type element and represents the graphic note type, from 1024th (shortest) to maxima (longest).
      * 
      * @return
      *     possible object is

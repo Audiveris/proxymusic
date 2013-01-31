@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="common"/>
  *     &lt;enumeration value="cut"/>
  *     &lt;enumeration value="single-number"/>
+ *     &lt;enumeration value="note"/>
+ *     &lt;enumeration value="dotted-note"/>
  *     &lt;enumeration value="normal"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
@@ -33,6 +35,10 @@ public enum TimeSymbol {
     CUT("cut"),
     @XmlEnumValue("single-number")
     SINGLE_NUMBER("single-number"),
+    @XmlEnumValue("note")
+    NOTE("note"),
+    @XmlEnumValue("dotted-note")
+    DOTTED_NOTE("dotted-note"),
     @XmlEnumValue("normal")
     NORMAL("normal");
     private final java.lang.String value;

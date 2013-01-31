@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -23,9 +24,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;attGroup ref="{}print-style"/>
- *       &lt;attribute name="type" use="required" type="{}up-down-stop" />
+ *       &lt;attGroup ref="{}dashed-formatting"/>
+ *       &lt;attribute name="type" use="required" type="{}up-down-stop-continue" />
  *       &lt;attribute name="number" type="{}number-level" />
- *       &lt;attribute name="size" type="{http://www.w3.org/2001/XMLSchema}integer" default="8" />
+ *       &lt;attribute name="size" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" default="8" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -38,14 +40,23 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class OctaveShift {
 
     @XmlAttribute(name = "type", required = true)
-    protected UpDownStop type;
+    protected UpDownStopContinue type;
     @XmlAttribute(name = "number")
     protected Integer number;
     @XmlAttribute(name = "size")
+    @XmlSchemaType(name = "positiveInteger")
     protected BigInteger size;
     @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -55,24 +66,20 @@ public class OctaveShift {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
+    @XmlAttribute(name = "dash-length")
+    protected BigDecimal dashLength;
+    @XmlAttribute(name = "space-length")
+    protected BigDecimal spaceLength;
 
     /**
      * Gets the value of the type property.
      * 
      * @return
      *     possible object is
-     *     {@link UpDownStop }
+     *     {@link UpDownStopContinue }
      *     
      */
-    public UpDownStop getType() {
+    public UpDownStopContinue getType() {
         return type;
     }
 
@@ -81,10 +88,10 @@ public class OctaveShift {
      * 
      * @param value
      *     allowed object is
-     *     {@link UpDownStop }
+     *     {@link UpDownStopContinue }
      *     
      */
-    public void setType(UpDownStop value) {
+    public void setType(UpDownStopContinue value) {
         this.type = value;
     }
 
@@ -162,6 +169,102 @@ public class OctaveShift {
      */
     public void setColor(java.lang.String value) {
         this.color = value;
+    }
+
+    /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
     }
 
     /**
@@ -261,99 +364,51 @@ public class OctaveShift {
     }
 
     /**
-     * Gets the value of the defaultX property.
+     * Gets the value of the dashLength property.
      * 
      * @return
      *     possible object is
      *     {@link BigDecimal }
      *     
      */
-    public BigDecimal getDefaultX() {
-        return defaultX;
+    public BigDecimal getDashLength() {
+        return dashLength;
     }
 
     /**
-     * Sets the value of the defaultX property.
+     * Sets the value of the dashLength property.
      * 
      * @param value
      *     allowed object is
      *     {@link BigDecimal }
      *     
      */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
+    public void setDashLength(BigDecimal value) {
+        this.dashLength = value;
     }
 
     /**
-     * Gets the value of the defaultY property.
+     * Gets the value of the spaceLength property.
      * 
      * @return
      *     possible object is
      *     {@link BigDecimal }
      *     
      */
-    public BigDecimal getDefaultY() {
-        return defaultY;
+    public BigDecimal getSpaceLength() {
+        return spaceLength;
     }
 
     /**
-     * Sets the value of the defaultY property.
+     * Sets the value of the spaceLength property.
      * 
      * @param value
      *     allowed object is
      *     {@link BigDecimal }
      *     
      */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
-    }
-
-    /**
-     * Gets the value of the relativeX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeX() {
-        return relativeX;
-    }
-
-    /**
-     * Sets the value of the relativeX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
+    public void setSpaceLength(BigDecimal value) {
+        this.spaceLength = value;
     }
 
 }

@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * The non-arpeggiate element indicates that this note is at the top or bottom of a bracket indicating to not arpeggiate these notes. Since this does not involve playback, it is only used on the top or bottom notes, not on each note as for the arpeggiate element.
+ * The non-arpeggiate type indicates that this note is at the top or bottom of a bracket indicating to not arpeggiate these notes. Since this does not involve playback, it is only used on the top or bottom notes, not on each note as for the arpeggiate type.
  * 
  * <p>Java class for non-arpeggiate complex type.
  * 
@@ -21,9 +21,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="non-arpeggiate">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}color"/>
  *       &lt;attGroup ref="{}position"/>
- *       &lt;attGroup ref="{}placement"/>
  *       &lt;attribute name="type" use="required" type="{}top-bottom" />
  *       &lt;attribute name="number" type="{}number-level" />
  *     &lt;/restriction>
@@ -41,6 +41,8 @@ public class NonArpeggiate {
     protected TopBottom type;
     @XmlAttribute(name = "number")
     protected Integer number;
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
     @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
@@ -52,8 +54,6 @@ public class NonArpeggiate {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "placement")
-    protected AboveBelow placement;
 
     /**
      * Gets the value of the type property.
@@ -101,6 +101,30 @@ public class NonArpeggiate {
      */
     public void setNumber(Integer value) {
         this.number = value;
+    }
+
+    /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
     /**
@@ -221,30 +245,6 @@ public class NonArpeggiate {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
     }
 
 }

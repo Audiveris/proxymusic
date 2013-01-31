@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * The tied type represents the notated tie. The tie element represents the tie sound.
  * 
+ * The number attribute is rarely needed to disambiguate ties, since note pitches will usually suffice. The attribute is implied rather than defaulting to 1 as with most elements. It is available for use in more complex tied notation situations.
+ * 
  * <p>Java class for tied complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
@@ -21,13 +23,14 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="tied">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;attGroup ref="{}color"/>
+ *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}line-type"/>
  *       &lt;attGroup ref="{}bezier"/>
- *       &lt;attGroup ref="{}placement"/>
- *       &lt;attGroup ref="{}color"/>
- *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}orientation"/>
- *       &lt;attribute name="type" use="required" type="{}start-stop" />
+ *       &lt;attGroup ref="{}dashed-formatting"/>
+ *       &lt;attGroup ref="{}position"/>
+ *       &lt;attribute name="type" use="required" type="{}start-stop-continue" />
  *       &lt;attribute name="number" type="{}number-level" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -41,9 +44,14 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Tied {
 
     @XmlAttribute(name = "type", required = true)
-    protected StartStop type;
+    protected StartStopContinue type;
     @XmlAttribute(name = "number")
     protected Integer number;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
     @XmlAttribute(name = "line-type")
     protected LineType lineType;
     @XmlAttribute(name = "bezier-offset")
@@ -58,11 +66,12 @@ public class Tied {
     protected BigDecimal bezierX2;
     @XmlAttribute(name = "bezier-y2")
     protected BigDecimal bezierY2;
-    @XmlAttribute(name = "placement")
-    protected AboveBelow placement;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
+    @XmlAttribute(name = "orientation")
+    protected OverUnder orientation;
+    @XmlAttribute(name = "dash-length")
+    protected BigDecimal dashLength;
+    @XmlAttribute(name = "space-length")
+    protected BigDecimal spaceLength;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -71,18 +80,16 @@ public class Tied {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "orientation")
-    protected OverUnder orientation;
 
     /**
      * Gets the value of the type property.
      * 
      * @return
      *     possible object is
-     *     {@link StartStop }
+     *     {@link StartStopContinue }
      *     
      */
-    public StartStop getType() {
+    public StartStopContinue getType() {
         return type;
     }
 
@@ -91,10 +98,10 @@ public class Tied {
      * 
      * @param value
      *     allowed object is
-     *     {@link StartStop }
+     *     {@link StartStopContinue }
      *     
      */
-    public void setType(StartStop value) {
+    public void setType(StartStopContinue value) {
         this.type = value;
     }
 
@@ -120,6 +127,54 @@ public class Tied {
      */
     public void setNumber(Integer value) {
         this.number = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
     /**
@@ -291,51 +346,75 @@ public class Tied {
     }
 
     /**
-     * Gets the value of the placement property.
+     * Gets the value of the orientation property.
      * 
      * @return
      *     possible object is
-     *     {@link AboveBelow }
+     *     {@link OverUnder }
      *     
      */
-    public AboveBelow getPlacement() {
-        return placement;
+    public OverUnder getOrientation() {
+        return orientation;
     }
 
     /**
-     * Sets the value of the placement property.
+     * Sets the value of the orientation property.
      * 
      * @param value
      *     allowed object is
-     *     {@link AboveBelow }
+     *     {@link OverUnder }
      *     
      */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
+    public void setOrientation(OverUnder value) {
+        this.orientation = value;
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the dashLength property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link BigDecimal }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public BigDecimal getDashLength() {
+        return dashLength;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the dashLength property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link BigDecimal }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setDashLength(BigDecimal value) {
+        this.dashLength = value;
+    }
+
+    /**
+     * Gets the value of the spaceLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getSpaceLength() {
+        return spaceLength;
+    }
+
+    /**
+     * Sets the value of the spaceLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setSpaceLength(BigDecimal value) {
+        this.spaceLength = value;
     }
 
     /**
@@ -432,30 +511,6 @@ public class Tied {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the orientation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link OverUnder }
-     *     
-     */
-    public OverUnder getOrientation() {
-        return orientation;
-    }
-
-    /**
-     * Sets the value of the orientation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link OverUnder }
-     *     
-     */
-    public void setOrientation(OverUnder value) {
-        this.orientation = value;
     }
 
 }

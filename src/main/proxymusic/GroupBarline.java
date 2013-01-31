@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * The group-barline type indicates if the group should have common barlines. 
+ * The group-barline type indicates if the group should have common barlines.
  * 
  * <p>Java class for group-barline complex type.
  * 
@@ -42,7 +42,7 @@ public class GroupBarline {
     protected java.lang.String color;
 
     /**
-     * The group-barline-value type indicates if the group should have common barlines. Values can be yes, no, or Mensurstrich.
+     * The group-barline-value type indicates if the group should have common barlines.
      * 
      * @return
      *     possible object is

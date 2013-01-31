@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * The text-element-data type represents a syllable or portion of a syllable for lyric text underlay. A hyphen in the string content should only be used for an actual hyphenated word. Language names for text elements come from ISO 639, with optional country subcodes from ISO 3166. 
+ * The text-element-data type represents a syllable or portion of a syllable for lyric text underlay. A hyphen in the string content should only be used for an actual hyphenated word. Language names for text elements come from ISO 639, with optional country subcodes from ISO 3166.
  * 
  * <p>Java class for text-element-data complex type.
  * 
@@ -23,11 +23,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
  *       &lt;attGroup ref="{}color"/>
+ *       &lt;attGroup ref="{}text-rotation"/>
+ *       &lt;attGroup ref="{}font"/>
  *       &lt;attGroup ref="{}letter-spacing"/>
  *       &lt;attGroup ref="{}text-direction"/>
  *       &lt;attGroup ref="{}text-decoration"/>
- *       &lt;attGroup ref="{}font"/>
- *       &lt;attGroup ref="{}text-rotation"/>
  *       &lt;attribute ref="{http://www.w3.org/XML/1998/namespace}lang"/>
  *     &lt;/extension>
  *   &lt;/simpleContent>
@@ -49,6 +49,17 @@ public class TextElementData {
     @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
+    @XmlAttribute(name = "rotation")
+    protected BigDecimal rotation;
+    @XmlAttribute(name = "font-family")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String fontFamily;
+    @XmlAttribute(name = "font-style")
+    protected FontStyle fontStyle;
+    @XmlAttribute(name = "font-size")
+    protected java.lang.String fontSize;
+    @XmlAttribute(name = "font-weight")
+    protected FontWeight fontWeight;
     @XmlAttribute(name = "letter-spacing")
     protected java.lang.String letterSpacing;
     @XmlAttribute(name = "dir")
@@ -59,17 +70,6 @@ public class TextElementData {
     protected Integer overline;
     @XmlAttribute(name = "line-through")
     protected Integer lineThrough;
-    @XmlAttribute(name = "font-family")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String fontFamily;
-    @XmlAttribute(name = "font-style")
-    protected FontStyle fontStyle;
-    @XmlAttribute(name = "font-size")
-    protected java.lang.String fontSize;
-    @XmlAttribute(name = "font-weight")
-    protected FontWeight fontWeight;
-    @XmlAttribute(name = "rotation")
-    protected BigDecimal rotation;
 
     /**
      * Gets the value of the value property.
@@ -141,6 +141,126 @@ public class TextElementData {
      */
     public void setColor(java.lang.String value) {
         this.color = value;
+    }
+
+    /**
+     * Gets the value of the rotation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRotation() {
+        return rotation;
+    }
+
+    /**
+     * Sets the value of the rotation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRotation(BigDecimal value) {
+        this.rotation = value;
+    }
+
+    /**
+     * Gets the value of the fontFamily property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getFontFamily() {
+        return fontFamily;
+    }
+
+    /**
+     * Sets the value of the fontFamily property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setFontFamily(java.lang.String value) {
+        this.fontFamily = value;
+    }
+
+    /**
+     * Gets the value of the fontStyle property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontStyle }
+     *     
+     */
+    public FontStyle getFontStyle() {
+        return fontStyle;
+    }
+
+    /**
+     * Sets the value of the fontStyle property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontStyle }
+     *     
+     */
+    public void setFontStyle(FontStyle value) {
+        this.fontStyle = value;
+    }
+
+    /**
+     * Gets the value of the fontSize property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getFontSize() {
+        return fontSize;
+    }
+
+    /**
+     * Sets the value of the fontSize property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setFontSize(java.lang.String value) {
+        this.fontSize = value;
+    }
+
+    /**
+     * Gets the value of the fontWeight property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontWeight }
+     *     
+     */
+    public FontWeight getFontWeight() {
+        return fontWeight;
+    }
+
+    /**
+     * Sets the value of the fontWeight property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontWeight }
+     *     
+     */
+    public void setFontWeight(FontWeight value) {
+        this.fontWeight = value;
     }
 
     /**
@@ -261,126 +381,6 @@ public class TextElementData {
      */
     public void setLineThrough(Integer value) {
         this.lineThrough = value;
-    }
-
-    /**
-     * Gets the value of the fontFamily property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getFontFamily() {
-        return fontFamily;
-    }
-
-    /**
-     * Sets the value of the fontFamily property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setFontFamily(java.lang.String value) {
-        this.fontFamily = value;
-    }
-
-    /**
-     * Gets the value of the fontStyle property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FontStyle }
-     *     
-     */
-    public FontStyle getFontStyle() {
-        return fontStyle;
-    }
-
-    /**
-     * Sets the value of the fontStyle property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FontStyle }
-     *     
-     */
-    public void setFontStyle(FontStyle value) {
-        this.fontStyle = value;
-    }
-
-    /**
-     * Gets the value of the fontSize property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getFontSize() {
-        return fontSize;
-    }
-
-    /**
-     * Sets the value of the fontSize property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setFontSize(java.lang.String value) {
-        this.fontSize = value;
-    }
-
-    /**
-     * Gets the value of the fontWeight property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FontWeight }
-     *     
-     */
-    public FontWeight getFontWeight() {
-        return fontWeight;
-    }
-
-    /**
-     * Sets the value of the fontWeight property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FontWeight }
-     *     
-     */
-    public void setFontWeight(FontWeight value) {
-        this.fontWeight = value;
-    }
-
-    /**
-     * Gets the value of the rotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRotation() {
-        return rotation;
-    }
-
-    /**
-     * Sets the value of the rotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRotation(BigDecimal value) {
-        this.rotation = value;
     }
 
 }

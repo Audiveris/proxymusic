@@ -31,8 +31,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="bar-style" type="{}bar-style-color" minOccurs="0"/>
  *         &lt;group ref="{}editorial"/>
  *         &lt;element name="wavy-line" type="{}wavy-line" minOccurs="0"/>
- *         &lt;element name="segno" type="{}empty-print-style" minOccurs="0"/>
- *         &lt;element name="coda" type="{}empty-print-style" minOccurs="0"/>
+ *         &lt;element name="segno" type="{}empty-print-style-align" minOccurs="0"/>
+ *         &lt;element name="coda" type="{}empty-print-style-align" minOccurs="0"/>
  *         &lt;element name="fermata" type="{}fermata" maxOccurs="2" minOccurs="0"/>
  *         &lt;element name="ending" type="{}ending" minOccurs="0"/>
  *         &lt;element name="repeat" type="{}repeat" minOccurs="0"/>
@@ -68,8 +68,8 @@ public class Barline {
     protected Level level;
     @XmlElement(name = "wavy-line")
     protected WavyLine wavyLine;
-    protected EmptyPrintStyle segno;
-    protected EmptyPrintStyle coda;
+    protected EmptyPrintStyleAlign segno;
+    protected EmptyPrintStyleAlign coda;
     protected List<Fermata> fermata;
     protected Ending ending;
     protected Repeat repeat;
@@ -187,10 +187,10 @@ public class Barline {
      * 
      * @return
      *     possible object is
-     *     {@link EmptyPrintStyle }
+     *     {@link EmptyPrintStyleAlign }
      *     
      */
-    public EmptyPrintStyle getSegno() {
+    public EmptyPrintStyleAlign getSegno() {
         return segno;
     }
 
@@ -199,10 +199,10 @@ public class Barline {
      * 
      * @param value
      *     allowed object is
-     *     {@link EmptyPrintStyle }
+     *     {@link EmptyPrintStyleAlign }
      *     
      */
-    public void setSegno(EmptyPrintStyle value) {
+    public void setSegno(EmptyPrintStyleAlign value) {
         this.segno = value;
     }
 
@@ -211,10 +211,10 @@ public class Barline {
      * 
      * @return
      *     possible object is
-     *     {@link EmptyPrintStyle }
+     *     {@link EmptyPrintStyleAlign }
      *     
      */
-    public EmptyPrintStyle getCoda() {
+    public EmptyPrintStyleAlign getCoda() {
         return coda;
     }
 
@@ -223,10 +223,10 @@ public class Barline {
      * 
      * @param value
      *     allowed object is
-     *     {@link EmptyPrintStyle }
+     *     {@link EmptyPrintStyleAlign }
      *     
      */
-    public void setCoda(EmptyPrintStyle value) {
+    public void setCoda(EmptyPrintStyleAlign value) {
         this.coda = value;
     }
 

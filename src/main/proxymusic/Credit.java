@@ -20,6 +20,9 @@ import javax.xml.bind.annotation.XmlType;
  * 	
  * The page attribute for the credit element, new in Version 2.0, specifies the page number where the credit should appear. This is an integer value that starts with 1 for the first page. Its value is 1 by default. Since credits occur before the music, these page numbers do not refer to the page numbering specified by the print element's page-number attribute.
  * 
+ * The credit-type element, new in Version 3.0, indicates the purpose behind a credit. Multiple types of data may be combined in a single credit, so multiple elements may be used. Standard values include page number, title, subtitle, composer, arranger, lyricist, and rights.
+ * 
+ * 
  * <p>Java class for credit complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
@@ -30,6 +33,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence maxOccurs="unbounded" minOccurs="0">
  *         &lt;choice>
+ *           &lt;element name="credit-type" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           &lt;element name="link" type="{}link"/>
  *           &lt;element name="bookmark" type="{}bookmark"/>
  *           &lt;element name="credit-image" type="{}image"/>
@@ -46,39 +50,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "credit", propOrder = {
-    "linkOrBookmarkOrCreditImage"
+    "creditTypeOrLinkOrBookmark"
 })
 public class Credit {
 
     @XmlElements({
+        @XmlElement(name = "credit-type", type = java.lang.String.class),
         @XmlElement(name = "link", type = Link.class),
         @XmlElement(name = "bookmark", type = Bookmark.class),
         @XmlElement(name = "credit-image", type = Image.class),
         @XmlElement(name = "credit-words", type = FormattedText.class)
     })
-    protected List<Object> linkOrBookmarkOrCreditImage;
+    protected List<Object> creditTypeOrLinkOrBookmark;
     @XmlAttribute(name = "page")
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger page;
 
     /**
-     * Gets the value of the linkOrBookmarkOrCreditImage property.
+     * Gets the value of the creditTypeOrLinkOrBookmark property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the linkOrBookmarkOrCreditImage property.
+     * This is why there is not a <CODE>set</CODE> method for the creditTypeOrLinkOrBookmark property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getLinkOrBookmarkOrCreditImage().add(newItem);
+     *    getCreditTypeOrLinkOrBookmark().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
+     * {@link java.lang.String }
      * {@link Link }
      * {@link Bookmark }
      * {@link Image }
@@ -86,11 +92,11 @@ public class Credit {
      * 
      * 
      */
-    public List<Object> getLinkOrBookmarkOrCreditImage() {
-        if (linkOrBookmarkOrCreditImage == null) {
-            linkOrBookmarkOrCreditImage = new ArrayList<Object>();
+    public List<Object> getCreditTypeOrLinkOrBookmark() {
+        if (creditTypeOrLinkOrBookmark == null) {
+            creditTypeOrLinkOrBookmark = new ArrayList<Object>();
         }
-        return this.linkOrBookmarkOrCreditImage;
+        return this.creditTypeOrLinkOrBookmark;
     }
 
     /**

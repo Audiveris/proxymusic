@@ -55,7 +55,7 @@ public class ScorePartTest
      *    </score-part>
      *  </part-list>
      */
-    private static final String versionData = "2.0";
+    private static final String versionData = "3.0";
     private static final int        dataNb = 2;
     private static final PartData[] partData = new PartData[dataNb];
     private static final InstData[] instData = new InstData[dataNb];
@@ -95,20 +95,6 @@ public class ScorePartTest
         instance.testMarshal();
         System.out.println("Calling testUnmarshal...");
         instance.testUnmarshal();
-    }
-
-    //-------//
-    // setUp //
-    //-------//
-    @Override
-    protected void setUp ()
-        throws Exception
-    {
-        System.out.println(
-            "ScorePartTest. " + " specificationTitle:" +
-            Marshalling.specificationTitle + " specificationVersion:" +
-            Marshalling.specificationVersion + " implementationVersion:" +
-            Marshalling.implementationVersion);
     }
 
     //-------------//
@@ -162,6 +148,20 @@ public class ScorePartTest
         }
     }
 
+    //-------//
+    // setUp //
+    //-------//
+    @Override
+    protected void setUp ()
+        throws Exception
+    {
+        System.out.println(
+            "ScorePartTest. " + " specificationTitle:" +
+            Marshalling.specificationTitle + " specificationVersion:" +
+            Marshalling.specificationVersion + " implementationVersion:" +
+            Marshalling.implementationVersion);
+    }
+
     //-----------//
     // checkPart //
     //-----------//
@@ -192,6 +192,42 @@ public class ScorePartTest
         }
     }
 
+    //----------------//
+    // checkScorePart //
+    //----------------//
+    private void checkScorePart (ScorePart scorePart,
+                                 PartData  pData,
+                                 InstData  iData)
+    {
+        assertNotNull(scorePart);
+        Dumper.dump(scorePart, "from checkScorePart");
+
+        assertEquals(pData.id, scorePart.getId());
+        assertEquals(pData.name, scorePart.getPartName().getValue());
+
+        List<ScoreInstrument> instruments = scorePart.getScoreInstrument();
+        assertTrue(1 == instruments.size());
+
+        for (ScoreInstrument scoreInstrument : instruments) {
+            assertEquals(iData.id, scoreInstrument.getId());
+            assertEquals(iData.name, scoreInstrument.getInstrumentName());
+        }
+
+        List<Object> midis = scorePart.getMidiDeviceAndMidiInstrument();
+        assertTrue(1 == midis.size());
+
+        for (Object object : midis) {
+            assertTrue(object instanceof MidiInstrument);
+
+            MidiInstrument midiInstrument = (MidiInstrument) object;
+            assertEquals(
+                iData.id,
+                ((ScoreInstrument) midiInstrument.getId()).getId());
+            assertTrue(iData.channel == midiInstrument.getMidiChannel());
+            assertTrue(iData.program == midiInstrument.getMidiProgram());
+        }
+    }
+
     //--------------------//
     // checkScorePartwise //
     //--------------------//
@@ -215,39 +251,6 @@ public class ScorePartTest
     }
 
     //----------------//
-    // checkScorePart //
-    //----------------//
-    private void checkScorePart (ScorePart scorePart,
-                                 PartData  pData,
-                                 InstData  iData)
-    {
-        assertNotNull(scorePart);
-        Dumper.dump(scorePart, "from checkScorePart");
-
-        assertEquals(pData.id, scorePart.getId());
-        assertEquals(pData.name, scorePart.getPartName().getValue());
-
-        List<ScoreInstrument> instruments = scorePart.getScoreInstrument();
-        assertTrue(1 == instruments.size());
-
-        for (ScoreInstrument scoreInstrument : instruments) {
-            assertEquals(iData.id, scoreInstrument.getId());
-            assertEquals(iData.name, scoreInstrument.getInstrumentName());
-        }
-
-        List<MidiInstrument> midis = scorePart.getMidiInstrument();
-        assertTrue(1 == midis.size());
-
-        for (MidiInstrument midiInstrument : midis) {
-            assertEquals(
-                iData.id,
-                ((ScoreInstrument) midiInstrument.getId()).getId());
-            assertTrue(iData.channel == midiInstrument.getMidiChannel());
-            assertTrue(iData.program == midiInstrument.getMidiProgram());
-        }
-    }
-
-    //----------------//
     // feedInstrument //
     //----------------//
     private void feedInstrument (ScorePart scorePart,
@@ -260,7 +263,7 @@ public class ScorePartTest
         scoreInstrument.setInstrumentName(data.name);
 
         MidiInstrument midiInstrument = factory.createMidiInstrument();
-        scorePart.getMidiInstrument()
+        scorePart.getMidiDeviceAndMidiInstrument()
                  .add(midiInstrument);
         midiInstrument.setId(scoreInstrument);
         midiInstrument.setMidiChannel(data.channel);

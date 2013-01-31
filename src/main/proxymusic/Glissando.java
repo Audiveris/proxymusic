@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="glissando">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
+ *       &lt;attGroup ref="{}dashed-formatting"/>
  *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}line-type"/>
  *       &lt;attribute name="type" use="required" type="{}start-stop" />
@@ -45,9 +46,21 @@ public class Glissando {
     protected StartStop type;
     @XmlAttribute(name = "number")
     protected Integer number;
+    @XmlAttribute(name = "dash-length")
+    protected BigDecimal dashLength;
+    @XmlAttribute(name = "space-length")
+    protected BigDecimal spaceLength;
     @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -57,14 +70,6 @@ public class Glissando {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
     @XmlAttribute(name = "line-type")
     protected LineType lineType;
 
@@ -145,6 +150,54 @@ public class Glissando {
     }
 
     /**
+     * Gets the value of the dashLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDashLength() {
+        return dashLength;
+    }
+
+    /**
+     * Sets the value of the dashLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDashLength(BigDecimal value) {
+        this.dashLength = value;
+    }
+
+    /**
+     * Gets the value of the spaceLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getSpaceLength() {
+        return spaceLength;
+    }
+
+    /**
+     * Sets the value of the spaceLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setSpaceLength(BigDecimal value) {
+        this.spaceLength = value;
+    }
+
+    /**
      * Gets the value of the color property.
      * 
      * @return
@@ -166,102 +219,6 @@ public class Glissando {
      */
     public void setColor(java.lang.String value) {
         this.color = value;
-    }
-
-    /**
-     * Gets the value of the fontFamily property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getFontFamily() {
-        return fontFamily;
-    }
-
-    /**
-     * Sets the value of the fontFamily property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setFontFamily(java.lang.String value) {
-        this.fontFamily = value;
-    }
-
-    /**
-     * Gets the value of the fontStyle property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FontStyle }
-     *     
-     */
-    public FontStyle getFontStyle() {
-        return fontStyle;
-    }
-
-    /**
-     * Sets the value of the fontStyle property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FontStyle }
-     *     
-     */
-    public void setFontStyle(FontStyle value) {
-        this.fontStyle = value;
-    }
-
-    /**
-     * Gets the value of the fontSize property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getFontSize() {
-        return fontSize;
-    }
-
-    /**
-     * Sets the value of the fontSize property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setFontSize(java.lang.String value) {
-        this.fontSize = value;
-    }
-
-    /**
-     * Gets the value of the fontWeight property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FontWeight }
-     *     
-     */
-    public FontWeight getFontWeight() {
-        return fontWeight;
-    }
-
-    /**
-     * Sets the value of the fontWeight property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FontWeight }
-     *     
-     */
-    public void setFontWeight(FontWeight value) {
-        this.fontWeight = value;
     }
 
     /**
@@ -358,6 +315,102 @@ public class Glissando {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the fontFamily property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getFontFamily() {
+        return fontFamily;
+    }
+
+    /**
+     * Sets the value of the fontFamily property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setFontFamily(java.lang.String value) {
+        this.fontFamily = value;
+    }
+
+    /**
+     * Gets the value of the fontStyle property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontStyle }
+     *     
+     */
+    public FontStyle getFontStyle() {
+        return fontStyle;
+    }
+
+    /**
+     * Sets the value of the fontStyle property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontStyle }
+     *     
+     */
+    public void setFontStyle(FontStyle value) {
+        this.fontStyle = value;
+    }
+
+    /**
+     * Gets the value of the fontSize property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getFontSize() {
+        return fontSize;
+    }
+
+    /**
+     * Sets the value of the fontSize property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setFontSize(java.lang.String value) {
+        this.fontSize = value;
+    }
+
+    /**
+     * Gets the value of the fontWeight property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontWeight }
+     *     
+     */
+    public FontWeight getFontWeight() {
+        return fontWeight;
+    }
+
+    /**
+     * Sets the value of the fontWeight property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontWeight }
+     *     
+     */
+    public void setFontWeight(FontWeight value) {
+        this.fontWeight = value;
     }
 
     /**

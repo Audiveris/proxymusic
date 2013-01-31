@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="C"/>
  *     &lt;enumeration value="percussion"/>
  *     &lt;enumeration value="TAB"/>
+ *     &lt;enumeration value="jianpu"/>
  *     &lt;enumeration value="none"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
@@ -35,6 +36,8 @@ public enum ClefSign {
     @XmlEnumValue("percussion")
     PERCUSSION("percussion"),
     TAB("TAB"),
+    @XmlEnumValue("jianpu")
+    JIANPU("jianpu"),
     @XmlEnumValue("none")
     NONE("none");
     private final java.lang.String value;

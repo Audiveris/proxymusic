@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * The figure type represents a single figure within a figured-bass element. 
+ * The figure type represents a single figure within a figured-bass element.
  * 
  * <p>Java class for figure complex type.
  * 
@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="prefix" type="{}style-text" minOccurs="0"/>
  *         &lt;element name="figure-number" type="{}style-text" minOccurs="0"/>
  *         &lt;element name="suffix" type="{}style-text" minOccurs="0"/>
- *         &lt;element name="extend" type="{}extend"/>
+ *         &lt;element name="extend" type="{}extend" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -44,7 +44,6 @@ public class Figure {
     @XmlElement(name = "figure-number")
     protected StyleText figureNumber;
     protected StyleText suffix;
-    @XmlElement(required = true)
     protected Extend extend;
 
     /**

@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * The part-symbol element indicates how a symbol for a multi-staff part is indicated in the score. Values include none, brace, line, and bracket; brace is the default. The top-staff and bottom-staff elements are used when the brace does not extend across the entire part. For example, in a 3-staff organ part, the top-staff will typically be 1 for the right hand, while the bottom-staff will typically be 2 for the left hand. Staff 3 for the pedals is usually outside the brace.
+ * The part-symbol type indicates how a symbol for a multi-staff part is indicated in the score; brace is the default value. The top-staff and bottom-staff elements are used when the brace does not extend across the entire part. For example, in a 3-staff organ part, the top-staff will typically be 1 for the right hand, while the bottom-staff will typically be 2 for the left hand. Staff 3 for the pedals is usually outside the brace.
  * 
  * <p>Java class for part-symbol complex type.
  * 
@@ -23,8 +23,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="part-symbol">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;>group-symbol-value">
- *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}color"/>
+ *       &lt;attGroup ref="{}position"/>
  *       &lt;attribute name="top-staff" type="{}staff-number" />
  *       &lt;attribute name="bottom-staff" type="{}staff-number" />
  *     &lt;/extension>
@@ -46,6 +46,9 @@ public class PartSymbol {
     protected BigInteger topStaff;
     @XmlAttribute(name = "bottom-staff")
     protected BigInteger bottomStaff;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -54,12 +57,9 @@ public class PartSymbol {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
 
     /**
-     * The group-symbol-value type indicates how the symbol for a group is indicated in the score. Values can be none, brace, line, and bracket; the default is none. 
+     * The group-symbol-value type indicates how the symbol for a group is indicated in the score. The default value is none.
      * 
      * @return
      *     possible object is
@@ -128,6 +128,30 @@ public class PartSymbol {
      */
     public void setBottomStaff(BigInteger value) {
         this.bottomStaff = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -224,30 +248,6 @@ public class PartSymbol {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
 }

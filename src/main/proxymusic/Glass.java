@@ -7,34 +7,28 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for up-down-stop.
+ * <p>Java class for glass.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="up-down-stop">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
- *     &lt;enumeration value="up"/>
- *     &lt;enumeration value="down"/>
- *     &lt;enumeration value="stop"/>
+ * &lt;simpleType name="glass">
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ *     &lt;enumeration value="wind chimes"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "up-down-stop")
+@XmlType(name = "glass")
 @XmlEnum
-public enum UpDownStop {
+public enum Glass {
 
-    @XmlEnumValue("up")
-    UP("up"),
-    @XmlEnumValue("down")
-    DOWN("down"),
-    @XmlEnumValue("stop")
-    STOP("stop");
+    @XmlEnumValue("wind chimes")
+    WIND_CHIMES("wind chimes");
     private final java.lang.String value;
 
-    UpDownStop(java.lang.String v) {
+    Glass(java.lang.String v) {
         value = v;
     }
 
@@ -42,8 +36,8 @@ public enum UpDownStop {
         return value;
     }
 
-    public static UpDownStop fromValue(java.lang.String v) {
-        for (UpDownStop c: UpDownStop.values()) {
+    public static Glass fromValue(java.lang.String v) {
+        for (Glass c: Glass.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

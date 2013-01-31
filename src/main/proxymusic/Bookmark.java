@@ -1,6 +1,7 @@
 
 package proxymusic;
 
+import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -24,7 +25,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;attGroup ref="{}element-position"/>
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" />
- *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}token" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -42,15 +43,16 @@ public class Bookmark {
     @XmlSchemaType(name = "ID")
     protected java.lang.String id;
     @XmlAttribute(name = "name")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "token")
     protected java.lang.String name;
     @XmlAttribute(name = "element")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NMTOKEN")
     protected java.lang.String element;
     @XmlAttribute(name = "position")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "NMTOKEN")
-    protected java.lang.String position;
+    @XmlSchemaType(name = "positiveInteger")
+    protected BigInteger position;
 
     /**
      * Gets the value of the id property.
@@ -129,10 +131,10 @@ public class Bookmark {
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link BigInteger }
      *     
      */
-    public java.lang.String getPosition() {
+    public BigInteger getPosition() {
         return position;
     }
 
@@ -141,10 +143,10 @@ public class Bookmark {
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link BigInteger }
      *     
      */
-    public void setPosition(java.lang.String value) {
+    public void setPosition(BigInteger value) {
         this.position = value;
     }
 

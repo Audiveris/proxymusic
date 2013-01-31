@@ -21,9 +21,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="dashes">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}color"/>
- *       &lt;attribute name="type" use="required" type="{}start-stop" />
+ *       &lt;attGroup ref="{}position"/>
+ *       &lt;attGroup ref="{}dashed-formatting"/>
+ *       &lt;attribute name="type" use="required" type="{}start-stop-continue" />
  *       &lt;attribute name="number" type="{}number-level" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,9 +38,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Dashes {
 
     @XmlAttribute(name = "type", required = true)
-    protected StartStop type;
+    protected StartStopContinue type;
     @XmlAttribute(name = "number")
     protected Integer number;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -48,19 +52,20 @@ public class Dashes {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
+    @XmlAttribute(name = "dash-length")
+    protected BigDecimal dashLength;
+    @XmlAttribute(name = "space-length")
+    protected BigDecimal spaceLength;
 
     /**
      * Gets the value of the type property.
      * 
      * @return
      *     possible object is
-     *     {@link StartStop }
+     *     {@link StartStopContinue }
      *     
      */
-    public StartStop getType() {
+    public StartStopContinue getType() {
         return type;
     }
 
@@ -69,10 +74,10 @@ public class Dashes {
      * 
      * @param value
      *     allowed object is
-     *     {@link StartStop }
+     *     {@link StartStopContinue }
      *     
      */
-    public void setType(StartStop value) {
+    public void setType(StartStopContinue value) {
         this.type = value;
     }
 
@@ -98,6 +103,30 @@ public class Dashes {
      */
     public void setNumber(Integer value) {
         this.number = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -197,27 +226,51 @@ public class Dashes {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the dashLength property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link BigDecimal }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public BigDecimal getDashLength() {
+        return dashLength;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the dashLength property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link BigDecimal }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setDashLength(BigDecimal value) {
+        this.dashLength = value;
+    }
+
+    /**
+     * Gets the value of the spaceLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getSpaceLength() {
+        return spaceLength;
+    }
+
+    /**
+     * Sets the value of the spaceLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setSpaceLength(BigDecimal value) {
+        this.spaceLength = value;
     }
 
 }

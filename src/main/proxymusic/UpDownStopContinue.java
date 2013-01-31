@@ -7,34 +7,37 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for start-stop-change.
+ * <p>Java class for up-down-stop-continue.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="start-stop-change">
+ * &lt;simpleType name="up-down-stop-continue">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
- *     &lt;enumeration value="start"/>
+ *     &lt;enumeration value="up"/>
+ *     &lt;enumeration value="down"/>
  *     &lt;enumeration value="stop"/>
- *     &lt;enumeration value="change"/>
+ *     &lt;enumeration value="continue"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "start-stop-change")
+@XmlType(name = "up-down-stop-continue")
 @XmlEnum
-public enum StartStopChange {
+public enum UpDownStopContinue {
 
-    @XmlEnumValue("start")
-    START("start"),
+    @XmlEnumValue("up")
+    UP("up"),
+    @XmlEnumValue("down")
+    DOWN("down"),
     @XmlEnumValue("stop")
     STOP("stop"),
-    @XmlEnumValue("change")
-    CHANGE("change");
+    @XmlEnumValue("continue")
+    CONTINUE("continue");
     private final java.lang.String value;
 
-    StartStopChange(java.lang.String v) {
+    UpDownStopContinue(java.lang.String v) {
         value = v;
     }
 
@@ -42,8 +45,8 @@ public enum StartStopChange {
         return value;
     }
 
-    public static StartStopChange fromValue(java.lang.String v) {
-        for (StartStopChange c: StartStopChange.values()) {
+    public static UpDownStopContinue fromValue(java.lang.String v) {
+        for (UpDownStopContinue c: UpDownStopContinue.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

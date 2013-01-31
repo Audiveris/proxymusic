@@ -40,9 +40,7 @@ public class Offset {
     protected YesNo sound;
 
     /**
-     * The divisions type is used to express values in terms of the musical dvisions defined by the divisions element.
-     * 	
-     * !!! TODO - Determine if divisions should be restricted to integers.
+     * The divisions type is used to express values in terms of the musical divisions defined by the divisions element. It is preferred that these be integer values both for MIDI interoperability and to avoid roundoff errors.
      * 
      * @return
      *     possible object is

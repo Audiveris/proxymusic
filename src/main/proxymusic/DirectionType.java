@@ -21,24 +21,27 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;choice>
- *         &lt;element name="rehearsal" type="{}rehearsal" maxOccurs="unbounded"/>
- *         &lt;element name="segno" type="{}empty-print-style" maxOccurs="unbounded"/>
+ *         &lt;element name="rehearsal" type="{}formatted-text" maxOccurs="unbounded"/>
+ *         &lt;element name="segno" type="{}empty-print-style-align" maxOccurs="unbounded"/>
  *         &lt;element name="words" type="{}formatted-text" maxOccurs="unbounded"/>
- *         &lt;element name="coda" type="{}empty-print-style" maxOccurs="unbounded"/>
+ *         &lt;element name="coda" type="{}empty-print-style-align" maxOccurs="unbounded"/>
  *         &lt;element name="wedge" type="{}wedge"/>
- *         &lt;element name="dynamics" type="{}dynamics"/>
+ *         &lt;element name="dynamics" type="{}dynamics" maxOccurs="unbounded"/>
  *         &lt;element name="dashes" type="{}dashes"/>
  *         &lt;element name="bracket" type="{}bracket"/>
  *         &lt;element name="pedal" type="{}pedal"/>
  *         &lt;element name="metronome" type="{}metronome"/>
  *         &lt;element name="octave-shift" type="{}octave-shift"/>
  *         &lt;element name="harp-pedals" type="{}harp-pedals"/>
- *         &lt;element name="damp" type="{}empty-print-style"/>
- *         &lt;element name="damp-all" type="{}empty-print-style"/>
- *         &lt;element name="eyeglasses" type="{}empty-print-style"/>
+ *         &lt;element name="damp" type="{}empty-print-style-align"/>
+ *         &lt;element name="damp-all" type="{}empty-print-style-align"/>
+ *         &lt;element name="eyeglasses" type="{}empty-print-style-align"/>
+ *         &lt;element name="string-mute" type="{}string-mute"/>
  *         &lt;element name="scordatura" type="{}scordatura"/>
  *         &lt;element name="image" type="{}image"/>
+ *         &lt;element name="principal-voice" type="{}principal-voice"/>
  *         &lt;element name="accordion-registration" type="{}accordion-registration"/>
+ *         &lt;element name="percussion" type="{}percussion" maxOccurs="unbounded"/>
  *         &lt;element name="other-direction" type="{}other-direction"/>
  *       &lt;/choice>
  *     &lt;/restriction>
@@ -65,19 +68,22 @@ import javax.xml.bind.annotation.XmlType;
     "damp",
     "dampAll",
     "eyeglasses",
+    "stringMute",
     "scordatura",
     "image",
+    "principalVoice",
     "accordionRegistration",
+    "percussion",
     "otherDirection"
 })
 public class DirectionType {
 
-    protected List<Rehearsal> rehearsal;
-    protected List<EmptyPrintStyle> segno;
+    protected List<FormattedText> rehearsal;
+    protected List<EmptyPrintStyleAlign> segno;
     protected List<FormattedText> words;
-    protected List<EmptyPrintStyle> coda;
+    protected List<EmptyPrintStyleAlign> coda;
     protected Wedge wedge;
-    protected Dynamics dynamics;
+    protected List<Dynamics> dynamics;
     protected Dashes dashes;
     protected Bracket bracket;
     protected Pedal pedal;
@@ -86,14 +92,19 @@ public class DirectionType {
     protected OctaveShift octaveShift;
     @XmlElement(name = "harp-pedals")
     protected HarpPedals harpPedals;
-    protected EmptyPrintStyle damp;
+    protected EmptyPrintStyleAlign damp;
     @XmlElement(name = "damp-all")
-    protected EmptyPrintStyle dampAll;
-    protected EmptyPrintStyle eyeglasses;
+    protected EmptyPrintStyleAlign dampAll;
+    protected EmptyPrintStyleAlign eyeglasses;
+    @XmlElement(name = "string-mute")
+    protected StringMute stringMute;
     protected Scordatura scordatura;
     protected Image image;
+    @XmlElement(name = "principal-voice")
+    protected PrincipalVoice principalVoice;
     @XmlElement(name = "accordion-registration")
     protected AccordionRegistration accordionRegistration;
+    protected List<Percussion> percussion;
     @XmlElement(name = "other-direction")
     protected OtherDirection otherDirection;
 
@@ -115,13 +126,13 @@ public class DirectionType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Rehearsal }
+     * {@link FormattedText }
      * 
      * 
      */
-    public List<Rehearsal> getRehearsal() {
+    public List<FormattedText> getRehearsal() {
         if (rehearsal == null) {
-            rehearsal = new ArrayList<Rehearsal>();
+            rehearsal = new ArrayList<FormattedText>();
         }
         return this.rehearsal;
     }
@@ -144,13 +155,13 @@ public class DirectionType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link EmptyPrintStyle }
+     * {@link EmptyPrintStyleAlign }
      * 
      * 
      */
-    public List<EmptyPrintStyle> getSegno() {
+    public List<EmptyPrintStyleAlign> getSegno() {
         if (segno == null) {
-            segno = new ArrayList<EmptyPrintStyle>();
+            segno = new ArrayList<EmptyPrintStyleAlign>();
         }
         return this.segno;
     }
@@ -202,13 +213,13 @@ public class DirectionType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link EmptyPrintStyle }
+     * {@link EmptyPrintStyleAlign }
      * 
      * 
      */
-    public List<EmptyPrintStyle> getCoda() {
+    public List<EmptyPrintStyleAlign> getCoda() {
         if (coda == null) {
-            coda = new ArrayList<EmptyPrintStyle>();
+            coda = new ArrayList<EmptyPrintStyleAlign>();
         }
         return this.coda;
     }
@@ -240,25 +251,30 @@ public class DirectionType {
     /**
      * Gets the value of the dynamics property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Dynamics }
-     *     
-     */
-    public Dynamics getDynamics() {
-        return dynamics;
-    }
-
-    /**
-     * Sets the value of the dynamics property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the dynamics property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Dynamics }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getDynamics().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Dynamics }
+     * 
+     * 
      */
-    public void setDynamics(Dynamics value) {
-        this.dynamics = value;
+    public List<Dynamics> getDynamics() {
+        if (dynamics == null) {
+            dynamics = new ArrayList<Dynamics>();
+        }
+        return this.dynamics;
     }
 
     /**
@@ -410,10 +426,10 @@ public class DirectionType {
      * 
      * @return
      *     possible object is
-     *     {@link EmptyPrintStyle }
+     *     {@link EmptyPrintStyleAlign }
      *     
      */
-    public EmptyPrintStyle getDamp() {
+    public EmptyPrintStyleAlign getDamp() {
         return damp;
     }
 
@@ -422,10 +438,10 @@ public class DirectionType {
      * 
      * @param value
      *     allowed object is
-     *     {@link EmptyPrintStyle }
+     *     {@link EmptyPrintStyleAlign }
      *     
      */
-    public void setDamp(EmptyPrintStyle value) {
+    public void setDamp(EmptyPrintStyleAlign value) {
         this.damp = value;
     }
 
@@ -434,10 +450,10 @@ public class DirectionType {
      * 
      * @return
      *     possible object is
-     *     {@link EmptyPrintStyle }
+     *     {@link EmptyPrintStyleAlign }
      *     
      */
-    public EmptyPrintStyle getDampAll() {
+    public EmptyPrintStyleAlign getDampAll() {
         return dampAll;
     }
 
@@ -446,10 +462,10 @@ public class DirectionType {
      * 
      * @param value
      *     allowed object is
-     *     {@link EmptyPrintStyle }
+     *     {@link EmptyPrintStyleAlign }
      *     
      */
-    public void setDampAll(EmptyPrintStyle value) {
+    public void setDampAll(EmptyPrintStyleAlign value) {
         this.dampAll = value;
     }
 
@@ -458,10 +474,10 @@ public class DirectionType {
      * 
      * @return
      *     possible object is
-     *     {@link EmptyPrintStyle }
+     *     {@link EmptyPrintStyleAlign }
      *     
      */
-    public EmptyPrintStyle getEyeglasses() {
+    public EmptyPrintStyleAlign getEyeglasses() {
         return eyeglasses;
     }
 
@@ -470,11 +486,35 @@ public class DirectionType {
      * 
      * @param value
      *     allowed object is
-     *     {@link EmptyPrintStyle }
+     *     {@link EmptyPrintStyleAlign }
      *     
      */
-    public void setEyeglasses(EmptyPrintStyle value) {
+    public void setEyeglasses(EmptyPrintStyleAlign value) {
         this.eyeglasses = value;
+    }
+
+    /**
+     * Gets the value of the stringMute property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link StringMute }
+     *     
+     */
+    public StringMute getStringMute() {
+        return stringMute;
+    }
+
+    /**
+     * Sets the value of the stringMute property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link StringMute }
+     *     
+     */
+    public void setStringMute(StringMute value) {
+        this.stringMute = value;
     }
 
     /**
@@ -526,6 +566,30 @@ public class DirectionType {
     }
 
     /**
+     * Gets the value of the principalVoice property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link PrincipalVoice }
+     *     
+     */
+    public PrincipalVoice getPrincipalVoice() {
+        return principalVoice;
+    }
+
+    /**
+     * Sets the value of the principalVoice property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link PrincipalVoice }
+     *     
+     */
+    public void setPrincipalVoice(PrincipalVoice value) {
+        this.principalVoice = value;
+    }
+
+    /**
      * Gets the value of the accordionRegistration property.
      * 
      * @return
@@ -547,6 +611,35 @@ public class DirectionType {
      */
     public void setAccordionRegistration(AccordionRegistration value) {
         this.accordionRegistration = value;
+    }
+
+    /**
+     * Gets the value of the percussion property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the percussion property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getPercussion().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Percussion }
+     * 
+     * 
+     */
+    public List<Percussion> getPercussion() {
+        if (percussion == null) {
+            percussion = new ArrayList<Percussion>();
+        }
+        return this.percussion;
     }
 
     /**

@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;attribute name="direction" use="required" type="{}backward-forward" />
  *       &lt;attribute name="times" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" />
+ *       &lt;attribute name="winged" type="{}winged" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -38,6 +39,8 @@ public class Repeat {
     @XmlAttribute(name = "times")
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger times;
+    @XmlAttribute(name = "winged")
+    protected Winged winged;
 
     /**
      * Gets the value of the direction property.
@@ -85,6 +88,30 @@ public class Repeat {
      */
     public void setTimes(BigInteger value) {
         this.times = value;
+    }
+
+    /**
+     * Gets the value of the winged property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Winged }
+     *     
+     */
+    public Winged getWinged() {
+        return winged;
+    }
+
+    /**
+     * Sets the value of the winged property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Winged }
+     *     
+     */
+    public void setWinged(Winged value) {
+        this.winged = value;
     }
 
 }

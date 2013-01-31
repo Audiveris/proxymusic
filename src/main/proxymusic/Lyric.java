@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * <B>[JAXB: simplified definition]</B><BR/>The lyric type represents text underlays for lyrics, based on Humdrum with support for other formats.  Two text elements that are not separated by an elision element are part of the same syllable, but may have different text formatting. The MusicXML 2.0 schema is more strict than the 2.0 DTD in enforcing this by disallowing a second syllabic element unless preceded by an elision element. The lyric number indicates multiple lines, though a name can be used as well (as in Finale's verse / chorus / section specification). Justification is center by default; placement is below by default.
+ * <B>[JAXB: simplified definition]</B><BR/>The lyric type represents text underlays for lyrics, based on Humdrum with support for other formats. Two text elements that are not separated by an elision element are part of the same syllable, but may have different text formatting. The MusicXML 2.0 XSD is more strict than the 2.0 DTD in enforcing this by disallowing a second syllabic element unless preceded by an elision element. The lyric number indicates multiple lines, though a name can be used as well (as in Finale's verse / chorus / section specification). Justification is center by default; placement is below by default. The content of the elision type is used to specify the symbol used to display the elision. Common values are a no-break space (Unicode 00A0), an underscore (Unicode 005F), or an undertie (Unicode 203F).
  * 
  * <p>Java class for lyric complex type.
  * 
@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;choice>
  *           &lt;sequence>
  *             &lt;sequence maxOccurs="unbounded" minOccurs="0">
- *               &lt;element name="elision" type="{}elision" minOccurs="0"/>
+ *               &lt;element name="elision" type="{}text-font-color" minOccurs="0"/>
  *               &lt;element name="syllabic" type="{}syllabic" minOccurs="0"/>
  *               &lt;element name="text" type="{}text-element-data" minOccurs="0"/>
  *             &lt;/sequence>
@@ -44,9 +44,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;group ref="{}editorial"/>
  *       &lt;/sequence>
  *       &lt;attGroup ref="{}position"/>
+ *       &lt;attGroup ref="{}justify"/>
  *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}color"/>
- *       &lt;attGroup ref="{}justify"/>
+ *       &lt;attGroup ref="{}print-object"/>
  *       &lt;attribute name="number" type="{http://www.w3.org/2001/XMLSchema}NMTOKEN" />
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}token" />
  *     &lt;/restriction>
@@ -70,7 +71,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Lyric {
 
     @XmlElements({
-        @XmlElement(name = "elision", type = Elision.class),
+        @XmlElement(name = "elision", type = TextFontColor.class),
         @XmlElement(name = "syllabic", type = Syllabic.class),
         @XmlElement(name = "text", type = TextElementData.class)
     })
@@ -100,13 +101,15 @@ public class Lyric {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
+    @XmlAttribute(name = "justify")
+    protected LeftCenterRight justify;
     @XmlAttribute(name = "placement")
     protected AboveBelow placement;
     @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
-    @XmlAttribute(name = "justify")
-    protected LeftCenterRight justify;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
 
     /**
      * Gets the value of the elisionAndSyllabicAndText property.
@@ -126,7 +129,7 @@ public class Lyric {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Elision }
+     * {@link TextFontColor }
      * {@link Syllabic }
      * {@link TextElementData }
      * 
@@ -452,6 +455,30 @@ public class Lyric {
     }
 
     /**
+     * Gets the value of the justify property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getJustify() {
+        return justify;
+    }
+
+    /**
+     * Sets the value of the justify property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setJustify(LeftCenterRight value) {
+        this.justify = value;
+    }
+
+    /**
      * Gets the value of the placement property.
      * 
      * @return
@@ -500,27 +527,27 @@ public class Lyric {
     }
 
     /**
-     * Gets the value of the justify property.
+     * Gets the value of the printObject property.
      * 
      * @return
      *     possible object is
-     *     {@link LeftCenterRight }
+     *     {@link YesNo }
      *     
      */
-    public LeftCenterRight getJustify() {
-        return justify;
+    public YesNo getPrintObject() {
+        return printObject;
     }
 
     /**
-     * Sets the value of the justify property.
+     * Sets the value of the printObject property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LeftCenterRight }
+     *     {@link YesNo }
      *     
      */
-    public void setJustify(LeftCenterRight value) {
-        this.justify = value;
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
     }
 
 }

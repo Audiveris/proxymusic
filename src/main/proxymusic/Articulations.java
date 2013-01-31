@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="plop" type="{}empty-line"/>
  *         &lt;element name="doit" type="{}empty-line"/>
  *         &lt;element name="falloff" type="{}empty-line"/>
- *         &lt;element name="breath-mark" type="{}empty-placement"/>
+ *         &lt;element name="breath-mark" type="{}breath-mark"/>
  *         &lt;element name="caesura" type="{}empty-placement"/>
  *         &lt;element name="stress" type="{}empty-placement"/>
  *         &lt;element name="unstress" type="{}empty-placement"/>
@@ -54,22 +54,22 @@ import javax.xml.bind.annotation.XmlType;
 public class Articulations {
 
     @XmlElementRefs({
-        @XmlElementRef(name = "other-articulation", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "doit", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "scoop", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "accent", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "strong-accent", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "plop", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "accent", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "staccato", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "unstress", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "scoop", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "caesura", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "breath-mark", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "stress", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "detached-legato", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "other-articulation", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "spiccato", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "tenuto", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "staccato", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "caesura", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "staccatissimo", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "breath-mark", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "unstress", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "stress", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "falloff", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "detached-legato", type = JAXBElement.class, required = false)
+        @XmlElementRef(name = "plop", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "doit", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "staccatissimo", type = JAXBElement.class, required = false)
     })
     protected List<JAXBElement<?>> accentOrStrongAccentOrStaccato;
 
@@ -91,21 +91,21 @@ public class Articulations {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link PlacementText }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link StrongAccent }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
+     * {@link JAXBElement }{@code <}{@link BreathMark }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
+     * {@link JAXBElement }{@code <}{@link PlacementText }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
+     * {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}
      * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
      * 
      * 

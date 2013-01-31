@@ -44,11 +44,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class Encoding {
 
     @XmlElementRefs({
-        @XmlElementRef(name = "software", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "encoding-description", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "encoding-date", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "supports", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "encoding-description", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "encoder", type = JAXBElement.class, required = false)
+        @XmlElementRef(name = "encoder", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "software", type = JAXBElement.class, required = false)
     })
     protected List<JAXBElement<?>> encodingDateOrEncoderOrSoftware;
 
@@ -70,10 +70,10 @@ public class Encoding {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}
-     * {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}
-     * {@link JAXBElement }{@code <}{@link TypedText }{@code >}
      * {@link JAXBElement }{@code <}{@link Supports }{@code >}
+     * {@link JAXBElement }{@code <}{@link TypedText }{@code >}
+     * {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}
+     * {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}
      * {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}
      * 
      * 

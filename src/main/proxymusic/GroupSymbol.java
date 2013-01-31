@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * The group-symbol type indicates how the symbol for a group is indicated in the score. 
+ * The group-symbol type indicates how the symbol for a group is indicated in the score.
  * 
  * <p>Java class for group-symbol complex type.
  * 
@@ -52,7 +52,7 @@ public class GroupSymbol {
     protected BigDecimal relativeY;
 
     /**
-     * The group-symbol-value type indicates how the symbol for a group is indicated in the score. Values can be none, brace, line, and bracket; the default is none. 
+     * The group-symbol-value type indicates how the symbol for a group is indicated in the score. The default value is none.
      * 
      * @return
      *     possible object is

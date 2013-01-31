@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * The frame-note type represents each note included in the frame.  An open string will have a fret value of 0, while a muted string will not be associated with a frame-note element.
+ * The frame-note type represents each note included in the frame. An open string will have a fret value of 0, while a muted string will not be associated with a frame-note element.
  * 
  * <p>Java class for frame-note complex type.
  * 

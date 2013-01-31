@@ -7,34 +7,40 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for enclosure.
+ * <p>Java class for time-separator.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="enclosure">
+ * &lt;simpleType name="time-separator">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
- *     &lt;enumeration value="rectangle"/>
- *     &lt;enumeration value="oval"/>
  *     &lt;enumeration value="none"/>
+ *     &lt;enumeration value="horizontal"/>
+ *     &lt;enumeration value="diagonal"/>
+ *     &lt;enumeration value="vertical"/>
+ *     &lt;enumeration value="adjacent"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "enclosure")
+@XmlType(name = "time-separator")
 @XmlEnum
-public enum Enclosure {
+public enum TimeSeparator {
 
-    @XmlEnumValue("rectangle")
-    RECTANGLE("rectangle"),
-    @XmlEnumValue("oval")
-    OVAL("oval"),
     @XmlEnumValue("none")
-    NONE("none");
+    NONE("none"),
+    @XmlEnumValue("horizontal")
+    HORIZONTAL("horizontal"),
+    @XmlEnumValue("diagonal")
+    DIAGONAL("diagonal"),
+    @XmlEnumValue("vertical")
+    VERTICAL("vertical"),
+    @XmlEnumValue("adjacent")
+    ADJACENT("adjacent");
     private final java.lang.String value;
 
-    Enclosure(java.lang.String v) {
+    TimeSeparator(java.lang.String v) {
         value = v;
     }
 
@@ -42,8 +48,8 @@ public enum Enclosure {
         return value;
     }
 
-    public static Enclosure fromValue(java.lang.String v) {
-        for (Enclosure c: Enclosure.values()) {
+    public static TimeSeparator fromValue(java.lang.String v) {
+        for (TimeSeparator c: TimeSeparator.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

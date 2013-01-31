@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="brace"/>
  *     &lt;enumeration value="line"/>
  *     &lt;enumeration value="bracket"/>
+ *     &lt;enumeration value="square"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -34,7 +35,9 @@ public enum GroupSymbolValue {
     @XmlEnumValue("line")
     LINE("line"),
     @XmlEnumValue("bracket")
-    BRACKET("bracket");
+    BRACKET("bracket"),
+    @XmlEnumValue("square")
+    SQUARE("square");
     private final java.lang.String value;
 
     GroupSymbolValue(java.lang.String v) {

@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * A cancel element indicates that the old key signature should be cancelled before the new one appears. This will always happen when changing to C major or A minor and need not be specified then. The cancel value matches the fifths value of the cancelled key signature (e.g., a cancel of -2 will provide an explicit cancellation for changing from B flat major to F major). The optional location attribute indicates whether the cancellation appears to the left or the right of the new key signature. It is left by default.
+ * A cancel element indicates that the old key signature should be cancelled before the new one appears. This will always happen when changing to C major or A minor and need not be specified then. The cancel value matches the fifths value of the cancelled key signature (e.g., a cancel of -2 will provide an explicit cancellation for changing from B flat major to F major). The optional location attribute indicates whether the cancellation appears relative to the new key signature.
  * 
  * <p>Java class for cancel complex type.
  * 
@@ -19,8 +19,8 @@ import javax.xml.bind.annotation.XmlValue;
  * <pre>
  * &lt;complexType name="cancel">
  *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>integer">
- *       &lt;attribute name="location" type="{}left-right" />
+ *     &lt;extension base="&lt;>fifths">
+ *       &lt;attribute name="location" type="{}cancel-location" />
  *     &lt;/extension>
  *   &lt;/simpleContent>
  * &lt;/complexType>
@@ -37,10 +37,10 @@ public class Cancel {
     @XmlValue
     protected BigInteger value;
     @XmlAttribute(name = "location")
-    protected LeftRight location;
+    protected CancelLocation location;
 
     /**
-     * Gets the value of the value property.
+     * The fifths type represents the number of flats or sharps in a traditional key signature. Negative numbers are used for flats and positive numbers for sharps, reflecting the key's placement within the circle of fifths (hence the type name).
      * 
      * @return
      *     possible object is
@@ -68,10 +68,10 @@ public class Cancel {
      * 
      * @return
      *     possible object is
-     *     {@link LeftRight }
+     *     {@link CancelLocation }
      *     
      */
-    public LeftRight getLocation() {
+    public CancelLocation getLocation() {
         return location;
     }
 
@@ -80,10 +80,10 @@ public class Cancel {
      * 
      * @param value
      *     allowed object is
-     *     {@link LeftRight }
+     *     {@link CancelLocation }
      *     
      */
-    public void setLocation(LeftRight value) {
+    public void setLocation(CancelLocation value) {
         this.location = value;
     }
 

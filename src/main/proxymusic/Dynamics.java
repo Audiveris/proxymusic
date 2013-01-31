@@ -55,7 +55,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="other-dynamics" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/choice>
  *       &lt;attGroup ref="{}placement"/>
- *       &lt;attGroup ref="{}print-style"/>
+ *       &lt;attGroup ref="{}enclosure"/>
+ *       &lt;attGroup ref="{}print-style-align"/>
+ *       &lt;attGroup ref="{}text-decoration"/>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -70,37 +72,51 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Dynamics {
 
     @XmlElementRefs({
-        @XmlElementRef(name = "fff", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "fffff", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "fz", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "pp", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "rfz", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "sfpp", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "sf", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "pppppp", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "sffz", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "mf", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "pppp", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "ffffff", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "ff", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "ffff", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "sfz", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "f", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "sfp", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "ppppp", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "rfz", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "sf", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "pp", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "fffff", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "mf", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "pppp", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "ppp", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "mp", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "rf", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "pppppp", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "sffz", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "fp", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "p", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "other-dynamics", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "fp", type = JAXBElement.class, required = false)
+        @XmlElementRef(name = "fz", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "ppppp", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "mp", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "fff", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "sfz", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "ffffff", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "f", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "sfp", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "rf", type = JAXBElement.class, required = false)
     })
     protected List<JAXBElement<?>> pOrPpOrPpp;
     @XmlAttribute(name = "placement")
     protected AboveBelow placement;
+    @XmlAttribute(name = "enclosure")
+    protected EnclosureShape enclosure;
+    @XmlAttribute(name = "halign")
+    protected LeftCenterRight halign;
+    @XmlAttribute(name = "valign")
+    protected Valign valign;
     @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -110,14 +126,12 @@ public class Dynamics {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
+    @XmlAttribute(name = "underline")
+    protected Integer underline;
+    @XmlAttribute(name = "overline")
+    protected Integer overline;
+    @XmlAttribute(name = "line-through")
+    protected Integer lineThrough;
 
     /**
      * Gets the value of the pOrPpOrPpp property.
@@ -154,12 +168,12 @@ public class Dynamics {
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}
+     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
+     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
+     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
+     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
+     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * {@link JAXBElement }{@code <}{@link Empty }{@code >}
      * 
      * 
@@ -196,6 +210,78 @@ public class Dynamics {
     }
 
     /**
+     * Gets the value of the enclosure property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link EnclosureShape }
+     *     
+     */
+    public EnclosureShape getEnclosure() {
+        return enclosure;
+    }
+
+    /**
+     * Sets the value of the enclosure property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link EnclosureShape }
+     *     
+     */
+    public void setEnclosure(EnclosureShape value) {
+        this.enclosure = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
+     * Gets the value of the valign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Valign }
+     *     
+     */
+    public Valign getValign() {
+        return valign;
+    }
+
+    /**
+     * Sets the value of the valign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Valign }
+     *     
+     */
+    public void setValign(Valign value) {
+        this.valign = value;
+    }
+
+    /**
      * Gets the value of the color property.
      * 
      * @return
@@ -217,6 +303,102 @@ public class Dynamics {
      */
     public void setColor(java.lang.String value) {
         this.color = value;
+    }
+
+    /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
     }
 
     /**
@@ -316,99 +498,75 @@ public class Dynamics {
     }
 
     /**
-     * Gets the value of the defaultX property.
+     * Gets the value of the underline property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link Integer }
      *     
      */
-    public BigDecimal getDefaultX() {
-        return defaultX;
+    public Integer getUnderline() {
+        return underline;
     }
 
     /**
-     * Sets the value of the defaultX property.
+     * Sets the value of the underline property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link Integer }
      *     
      */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
+    public void setUnderline(Integer value) {
+        this.underline = value;
     }
 
     /**
-     * Gets the value of the defaultY property.
+     * Gets the value of the overline property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link Integer }
      *     
      */
-    public BigDecimal getDefaultY() {
-        return defaultY;
+    public Integer getOverline() {
+        return overline;
     }
 
     /**
-     * Sets the value of the defaultY property.
+     * Sets the value of the overline property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link Integer }
      *     
      */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
+    public void setOverline(Integer value) {
+        this.overline = value;
     }
 
     /**
-     * Gets the value of the relativeX property.
+     * Gets the value of the lineThrough property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link Integer }
      *     
      */
-    public BigDecimal getRelativeX() {
-        return relativeX;
+    public Integer getLineThrough() {
+        return lineThrough;
     }
 
     /**
-     * Sets the value of the relativeX property.
+     * Sets the value of the lineThrough property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link Integer }
      *     
      */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
+    public void setLineThrough(Integer value) {
+        this.lineThrough = value;
     }
 
 }

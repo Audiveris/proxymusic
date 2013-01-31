@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * The staff-details element is used to indicate different types of staves. The optional number attribute specifies the staff number from top to bottom on the system, as with clef. The optional show-frets attribute indicates whether to show tablature frets as numbers (0, 1, 2) or letters (a, b, c). The default choice is numbers. The print-object attribute is used to indicate when a staff is not printed in a part, usually in large scores where empty parts are omitted. It is yes by default. If print-spacing is yes while print-object is no, the score is printed in cutaway format where vertical space is left for the empty part.
+ * The staff-details element is used to indicate different types of staves. The optional number attribute specifies the staff number from top to bottom on the system, as with clef. The print-object attribute is used to indicate when a staff is not printed in a part, usually in large scores where empty parts are omitted. It is yes by default. If print-spacing is yes while print-object is no, the score is printed in cutaway format where vertical space is left for the empty part.
  * 
  * <p>Java class for staff-details complex type.
  * 
@@ -29,10 +29,10 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="staff-lines" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" minOccurs="0"/>
  *         &lt;element name="staff-tuning" type="{}staff-tuning" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="capo" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" minOccurs="0"/>
- *         &lt;element name="staff-size" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
+ *         &lt;element name="staff-size" type="{}non-negative-decimal" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}print-spacing"/>
  *       &lt;attGroup ref="{}print-object"/>
+ *       &lt;attGroup ref="{}print-spacing"/>
  *       &lt;attribute name="number" type="{}staff-number" />
  *       &lt;attribute name="show-frets" type="{}show-frets" />
  *     &lt;/restriction>
@@ -67,10 +67,10 @@ public class StaffDetails {
     protected BigInteger number;
     @XmlAttribute(name = "show-frets")
     protected ShowFrets showFrets;
-    @XmlAttribute(name = "print-spacing")
-    protected YesNo printSpacing;
     @XmlAttribute(name = "print-object")
     protected YesNo printObject;
+    @XmlAttribute(name = "print-spacing")
+    protected YesNo printSpacing;
 
     /**
      * Gets the value of the staffType property.
@@ -246,30 +246,6 @@ public class StaffDetails {
     }
 
     /**
-     * Gets the value of the printSpacing property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintSpacing() {
-        return printSpacing;
-    }
-
-    /**
-     * Sets the value of the printSpacing property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintSpacing(YesNo value) {
-        this.printSpacing = value;
-    }
-
-    /**
      * Gets the value of the printObject property.
      * 
      * @return
@@ -291,6 +267,30 @@ public class StaffDetails {
      */
     public void setPrintObject(YesNo value) {
         this.printObject = value;
+    }
+
+    /**
+     * Gets the value of the printSpacing property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintSpacing() {
+        return printSpacing;
+    }
+
+    /**
+     * Sets the value of the printSpacing property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintSpacing(YesNo value) {
+        this.printSpacing = value;
     }
 
 }

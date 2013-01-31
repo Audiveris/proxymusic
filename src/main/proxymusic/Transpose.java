@@ -5,12 +5,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * The transpose type represents what must be added to a written pitch to get a correct sounding pitch.
+ * The transpose type represents what must be added to a written pitch to get a correct sounding pitch. The optional number attribute refers to staff numbers, from top to bottom on the system. If absent, the transposition applies to all staves in the part. Per-staff transposition is most often used in parts that represent multiple instruments.
  * 
  * <p>Java class for transpose complex type.
  * 
@@ -26,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="octave-change" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
  *         &lt;element name="double" type="{}empty" minOccurs="0"/>
  *       &lt;/sequence>
+ *       &lt;attribute name="number" type="{}staff-number" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -49,6 +51,8 @@ public class Transpose {
     protected BigInteger octaveChange;
     @XmlElement(name = "double")
     protected Empty _double;
+    @XmlAttribute(name = "number")
+    protected BigInteger number;
 
     /**
      * Gets the value of the diatonic property.
@@ -144,6 +148,30 @@ public class Transpose {
      */
     public void setDouble(Empty value) {
         this._double = value;
+    }
+
+    /**
+     * Gets the value of the number property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getNumber() {
+        return number;
+    }
+
+    /**
+     * Sets the value of the number property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setNumber(BigInteger value) {
+        this.number = value;
     }
 
 }

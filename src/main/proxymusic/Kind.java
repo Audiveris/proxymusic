@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -14,7 +15,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * Kind indicates the type of chord. Degree elements can then add, subtract, or alter from these starting points
  * 	
- * The attributes are used to indicate the formatting of the symbol. Since the kind element is the constant in all the harmony-chord entities that can make up a polychord, many formatting attributes are here.
+ * The attributes are used to indicate the formatting of the symbol. Since the kind element is the constant in all the harmony-chord groups that can make up a polychord, many formatting attributes are here.
  * 	
  * The use-symbols attribute is yes if the kind should be represented when possible with harmony symbols rather than letters and numbers. These symbols include:
  * 	
@@ -24,7 +25,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 	diminished: °, like Unicode 00B0
  * 	half-diminished: ø, like Unicode 00F8
  * 	
- * The text attribute describes how the kind should be spelled if not using symbols; it is ignored if use-symbols is yes. The stack-degrees attribute is yes if the degree elements should be stacked above each other. The parentheses-degrees attribute is yes if all the degrees should be in parentheses. The bracket-degrees attribute is yes if all the degrees should be in a bracket. If not  specified, these values are implementation-specific. The alignment attributes are for the entire harmony-chord entity of which this kind element is a part.
+ * For the major-minor kind, only the minor symbol is used when use-symbols is yes. The major symbol is set using the symbol attribute in the degree-value element. The corresponding degree-alter value will usually be 0 in this case.
+ * 
+ * The text attribute describes how the kind should be spelled in a score. If use-symbols is yes, the value of the text attribute follows the symbol. The stack-degrees attribute is yes if the degree elements should be stacked above each other. The parentheses-degrees attribute is yes if all the degrees should be in parentheses. The bracket-degrees attribute is yes if all the degrees should be in a bracket. If not specified, these values are implementation-specific. The alignment attributes are for the entire harmony-chord group of which this kind element is a part.
  * 
  * <p>Java class for kind complex type.
  * 
@@ -34,11 +37,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * &lt;complexType name="kind">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;>kind-value">
- *       &lt;attGroup ref="{}valign"/>
  *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attGroup ref="{}halign"/>
+ *       &lt;attGroup ref="{}valign"/>
  *       &lt;attribute name="use-symbols" type="{}yes-no" />
- *       &lt;attribute name="text" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="text" type="{http://www.w3.org/2001/XMLSchema}token" />
  *       &lt;attribute name="stack-degrees" type="{}yes-no" />
  *       &lt;attribute name="parentheses-degrees" type="{}yes-no" />
  *       &lt;attribute name="bracket-degrees" type="{}yes-no" />
@@ -60,6 +63,8 @@ public class Kind {
     @XmlAttribute(name = "use-symbols")
     protected YesNo useSymbols;
     @XmlAttribute(name = "text")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "token")
     protected java.lang.String text;
     @XmlAttribute(name = "stack-degrees")
     protected YesNo stackDegrees;
@@ -67,11 +72,17 @@ public class Kind {
     protected YesNo parenthesesDegrees;
     @XmlAttribute(name = "bracket-degrees")
     protected YesNo bracketDegrees;
-    @XmlAttribute(name = "valign")
-    protected Valign valign;
     @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -81,16 +92,10 @@ public class Kind {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
     @XmlAttribute(name = "halign")
     protected LeftCenterRight halign;
+    @XmlAttribute(name = "valign")
+    protected Valign valign;
 
     /**
      * A kind-value indicates the type of chord. Degree elements can then add, subtract, or alter from these starting points. Values include:
@@ -280,30 +285,6 @@ public class Kind {
     }
 
     /**
-     * Gets the value of the valign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Valign }
-     *     
-     */
-    public Valign getValign() {
-        return valign;
-    }
-
-    /**
-     * Sets the value of the valign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Valign }
-     *     
-     */
-    public void setValign(Valign value) {
-        this.valign = value;
-    }
-
-    /**
      * Gets the value of the color property.
      * 
      * @return
@@ -325,102 +306,6 @@ public class Kind {
      */
     public void setColor(java.lang.String value) {
         this.color = value;
-    }
-
-    /**
-     * Gets the value of the fontFamily property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getFontFamily() {
-        return fontFamily;
-    }
-
-    /**
-     * Sets the value of the fontFamily property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setFontFamily(java.lang.String value) {
-        this.fontFamily = value;
-    }
-
-    /**
-     * Gets the value of the fontStyle property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FontStyle }
-     *     
-     */
-    public FontStyle getFontStyle() {
-        return fontStyle;
-    }
-
-    /**
-     * Sets the value of the fontStyle property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FontStyle }
-     *     
-     */
-    public void setFontStyle(FontStyle value) {
-        this.fontStyle = value;
-    }
-
-    /**
-     * Gets the value of the fontSize property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getFontSize() {
-        return fontSize;
-    }
-
-    /**
-     * Sets the value of the fontSize property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setFontSize(java.lang.String value) {
-        this.fontSize = value;
-    }
-
-    /**
-     * Gets the value of the fontWeight property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FontWeight }
-     *     
-     */
-    public FontWeight getFontWeight() {
-        return fontWeight;
-    }
-
-    /**
-     * Sets the value of the fontWeight property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FontWeight }
-     *     
-     */
-    public void setFontWeight(FontWeight value) {
-        this.fontWeight = value;
     }
 
     /**
@@ -520,6 +405,102 @@ public class Kind {
     }
 
     /**
+     * Gets the value of the fontFamily property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getFontFamily() {
+        return fontFamily;
+    }
+
+    /**
+     * Sets the value of the fontFamily property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setFontFamily(java.lang.String value) {
+        this.fontFamily = value;
+    }
+
+    /**
+     * Gets the value of the fontStyle property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontStyle }
+     *     
+     */
+    public FontStyle getFontStyle() {
+        return fontStyle;
+    }
+
+    /**
+     * Sets the value of the fontStyle property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontStyle }
+     *     
+     */
+    public void setFontStyle(FontStyle value) {
+        this.fontStyle = value;
+    }
+
+    /**
+     * Gets the value of the fontSize property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getFontSize() {
+        return fontSize;
+    }
+
+    /**
+     * Sets the value of the fontSize property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setFontSize(java.lang.String value) {
+        this.fontSize = value;
+    }
+
+    /**
+     * Gets the value of the fontWeight property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontWeight }
+     *     
+     */
+    public FontWeight getFontWeight() {
+        return fontWeight;
+    }
+
+    /**
+     * Sets the value of the fontWeight property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontWeight }
+     *     
+     */
+    public void setFontWeight(FontWeight value) {
+        this.fontWeight = value;
+    }
+
+    /**
      * Gets the value of the halign property.
      * 
      * @return
@@ -541,6 +522,30 @@ public class Kind {
      */
     public void setHalign(LeftCenterRight value) {
         this.halign = value;
+    }
+
+    /**
+     * Gets the value of the valign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Valign }
+     *     
+     */
+    public Valign getValign() {
+        return valign;
+    }
+
+    /**
+     * Sets the value of the valign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Valign }
+     *     
+     */
+    public void setValign(Valign value) {
+        this.valign = value;
     }
 
 }

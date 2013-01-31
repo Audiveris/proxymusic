@@ -62,9 +62,9 @@ public class Marshalling
     /** Supported MusicXML version, example: "1.1", "2.0" */
     public static final String specificationVersion = (pmPackage.getSpecificationVersion() != null)
                                                       ? pmPackage.getSpecificationVersion()
-                                                      : "2.0";
+                                                      : "3.0";
 
-    /** Full binding version, example: "MusicXML-2.0 JAXB-2.0 d" */
+    /** Full binding version, example: "MusicXML-3.0 a" */
     public static final String implementationVersion = pmPackage.getImplementationVersion();
 
     /** [Un]marshalling context for use with JAXB */

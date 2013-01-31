@@ -47,7 +47,7 @@ public class MeasureRepeat {
     protected BigInteger slashes;
 
     /**
-     * The number-or-normal values can be either a positive integer or an empty string. This is used for the content of the ensemble element.
+     * The positive-integer-or-empty values can be either a positive integer or an empty string.
      * 
      * @return
      *     possible object is

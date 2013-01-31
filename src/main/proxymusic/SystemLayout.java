@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * System layout includes left and right margins and the vertical distance from the previous system. The system distance is measured from the bottom line of the previous system to the top line of the current system. It is ignored for the first system on a page. The top system distance is measured from the page's top margin to the top line of the first system. It is ignored for all but the first system on a page.
+ * A system is a group of staves that are read and played simultaneously. System layout includes left and right margins and the vertical distance from the previous system. The system distance is measured from the bottom line of the previous system to the top line of the current system. It is ignored for the first system on a page. The top system distance is measured from the page's top margin to the top line of the first system. It is ignored for all but the first system on a page.
  * 	
  * Sometimes the sum of measure widths in a system may not equal the system width specified by the layout elements due to roundoff or other errors. The behavior when reading MusicXML files in these cases is application-dependent. For instance, applications may find that the system layout data is more reliable than the sum of the measure widths, and adjust the measure widths accordingly.
  * 
@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="system-margins" type="{}system-margins" minOccurs="0"/>
  *         &lt;element name="system-distance" type="{}tenths" minOccurs="0"/>
  *         &lt;element name="top-system-distance" type="{}tenths" minOccurs="0"/>
+ *         &lt;element name="system-dividers" type="{}system-dividers" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,7 +38,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "system-layout", propOrder = {
     "systemMargins",
     "systemDistance",
-    "topSystemDistance"
+    "topSystemDistance",
+    "systemDividers"
 })
 public class SystemLayout {
 
@@ -47,6 +49,8 @@ public class SystemLayout {
     protected BigDecimal systemDistance;
     @XmlElement(name = "top-system-distance")
     protected BigDecimal topSystemDistance;
+    @XmlElement(name = "system-dividers")
+    protected SystemDividers systemDividers;
 
     /**
      * Gets the value of the systemMargins property.
@@ -118,6 +122,30 @@ public class SystemLayout {
      */
     public void setTopSystemDistance(BigDecimal value) {
         this.topSystemDistance = value;
+    }
+
+    /**
+     * Gets the value of the systemDividers property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link SystemDividers }
+     *     
+     */
+    public SystemDividers getSystemDividers() {
+        return systemDividers;
+    }
+
+    /**
+     * Sets the value of the systemDividers property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link SystemDividers }
+     *     
+     */
+    public void setSystemDividers(SystemDividers value) {
+        this.systemDividers = value;
     }
 
 }

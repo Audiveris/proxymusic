@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * Notations refer to musical notations, not XML notations. Multiple notations are allowed in order to represent multiple editorial levels. The set of notations may be refined and expanded over time, especially to handle more instrument-specific technical notations.
+ * Notations refer to musical notations, not XML notations. Multiple notations are allowed in order to represent multiple editorial levels. The print-object attribute, added in Version 3.0, allows notations to represent details of performance technique, such as fingerings, without having them appear in the score.
  * 
  * <p>Java class for notations complex type.
  * 
@@ -40,6 +41,7 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;element name="other-notation" type="{}other-notation"/>
  *         &lt;/choice>
  *       &lt;/sequence>
+ *       &lt;attGroup ref="{}print-object"/>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -74,6 +76,8 @@ public class Notations {
         @XmlElement(name = "other-notation", type = OtherNotation.class)
     })
     protected List<Object> tiedOrSlurOrTuplet;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
 
     /**
      * Gets the value of the footnote property.
@@ -163,6 +167,30 @@ public class Notations {
             tiedOrSlurOrTuplet = new ArrayList<Object>();
         }
         return this.tiedOrSlurOrTuplet;
+    }
+
+    /**
+     * Gets the value of the printObject property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintObject() {
+        return printObject;
+    }
+
+    /**
+     * Sets the value of the printObject property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
     }
 
 }

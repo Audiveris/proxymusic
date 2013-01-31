@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="crescendo"/>
  *     &lt;enumeration value="diminuendo"/>
  *     &lt;enumeration value="stop"/>
+ *     &lt;enumeration value="continue"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -31,7 +32,9 @@ public enum WedgeType {
     @XmlEnumValue("diminuendo")
     DIMINUENDO("diminuendo"),
     @XmlEnumValue("stop")
-    STOP("stop");
+    STOP("stop"),
+    @XmlEnumValue("continue")
+    CONTINUE("continue");
     private final java.lang.String value;
 
     WedgeType(java.lang.String v) {

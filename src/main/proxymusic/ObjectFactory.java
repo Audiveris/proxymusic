@@ -25,13 +25,36 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _TimeBeats_QNAME = new QName("", "beats");
+    private final static QName _TimeBeatType_QNAME = new QName("", "beat-type");
+    private final static QName _OrnamentsTurn_QNAME = new QName("", "turn");
+    private final static QName _OrnamentsTremolo_QNAME = new QName("", "tremolo");
+    private final static QName _OrnamentsWavyLine_QNAME = new QName("", "wavy-line");
+    private final static QName _OrnamentsShake_QNAME = new QName("", "shake");
+    private final static QName _OrnamentsAccidentalMark_QNAME = new QName("", "accidental-mark");
+    private final static QName _OrnamentsTrillMark_QNAME = new QName("", "trill-mark");
+    private final static QName _OrnamentsDelayedInvertedTurn_QNAME = new QName("", "delayed-inverted-turn");
+    private final static QName _OrnamentsInvertedTurn_QNAME = new QName("", "inverted-turn");
+    private final static QName _OrnamentsOtherOrnament_QNAME = new QName("", "other-ornament");
+    private final static QName _OrnamentsMordent_QNAME = new QName("", "mordent");
+    private final static QName _OrnamentsVerticalTurn_QNAME = new QName("", "vertical-turn");
+    private final static QName _OrnamentsInvertedMordent_QNAME = new QName("", "inverted-mordent");
+    private final static QName _OrnamentsSchleifer_QNAME = new QName("", "schleifer");
+    private final static QName _OrnamentsDelayedTurn_QNAME = new QName("", "delayed-turn");
+    private final static QName _EncodingSoftware_QNAME = new QName("", "software");
+    private final static QName _EncodingSupports_QNAME = new QName("", "supports");
+    private final static QName _EncodingEncodingDate_QNAME = new QName("", "encoding-date");
+    private final static QName _EncodingEncodingDescription_QNAME = new QName("", "encoding-description");
+    private final static QName _EncodingEncoder_QNAME = new QName("", "encoder");
     private final static QName _TechnicalDoubleTongue_QNAME = new QName("", "double-tongue");
     private final static QName _TechnicalToe_QNAME = new QName("", "toe");
     private final static QName _TechnicalFret_QNAME = new QName("", "fret");
+    private final static QName _TechnicalArrow_QNAME = new QName("", "arrow");
     private final static QName _TechnicalHeel_QNAME = new QName("", "heel");
     private final static QName _TechnicalBend_QNAME = new QName("", "bend");
     private final static QName _TechnicalPluck_QNAME = new QName("", "pluck");
     private final static QName _TechnicalFingering_QNAME = new QName("", "fingering");
+    private final static QName _TechnicalHandbell_QNAME = new QName("", "handbell");
     private final static QName _TechnicalHammerOn_QNAME = new QName("", "hammer-on");
     private final static QName _TechnicalUpBow_QNAME = new QName("", "up-bow");
     private final static QName _TechnicalThumbPosition_QNAME = new QName("", "thumb-position");
@@ -46,8 +69,23 @@ public class ObjectFactory {
     private final static QName _TechnicalTap_QNAME = new QName("", "tap");
     private final static QName _TechnicalOtherTechnical_QNAME = new QName("", "other-technical");
     private final static QName _TechnicalDownBow_QNAME = new QName("", "down-bow");
-    private final static QName _TimeBeats_QNAME = new QName("", "beats");
-    private final static QName _TimeBeatType_QNAME = new QName("", "beat-type");
+    private final static QName _TechnicalHole_QNAME = new QName("", "hole");
+    private final static QName _ArticulationsUnstress_QNAME = new QName("", "unstress");
+    private final static QName _ArticulationsTenuto_QNAME = new QName("", "tenuto");
+    private final static QName _ArticulationsStrongAccent_QNAME = new QName("", "strong-accent");
+    private final static QName _ArticulationsDoit_QNAME = new QName("", "doit");
+    private final static QName _ArticulationsFalloff_QNAME = new QName("", "falloff");
+    private final static QName _ArticulationsCaesura_QNAME = new QName("", "caesura");
+    private final static QName _ArticulationsStress_QNAME = new QName("", "stress");
+    private final static QName _ArticulationsDetachedLegato_QNAME = new QName("", "detached-legato");
+    private final static QName _ArticulationsPlop_QNAME = new QName("", "plop");
+    private final static QName _ArticulationsScoop_QNAME = new QName("", "scoop");
+    private final static QName _ArticulationsStaccatissimo_QNAME = new QName("", "staccatissimo");
+    private final static QName _ArticulationsOtherArticulation_QNAME = new QName("", "other-articulation");
+    private final static QName _ArticulationsAccent_QNAME = new QName("", "accent");
+    private final static QName _ArticulationsBreathMark_QNAME = new QName("", "breath-mark");
+    private final static QName _ArticulationsStaccato_QNAME = new QName("", "staccato");
+    private final static QName _ArticulationsSpiccato_QNAME = new QName("", "spiccato");
     private final static QName _DynamicsFz_QNAME = new QName("", "fz");
     private final static QName _DynamicsSfpp_QNAME = new QName("", "sfpp");
     private final static QName _DynamicsPppp_QNAME = new QName("", "pppp");
@@ -72,39 +110,6 @@ public class ObjectFactory {
     private final static QName _DynamicsFffff_QNAME = new QName("", "fffff");
     private final static QName _DynamicsFfff_QNAME = new QName("", "ffff");
     private final static QName _DynamicsFp_QNAME = new QName("", "fp");
-    private final static QName _ArticulationsUnstress_QNAME = new QName("", "unstress");
-    private final static QName _ArticulationsTenuto_QNAME = new QName("", "tenuto");
-    private final static QName _ArticulationsStrongAccent_QNAME = new QName("", "strong-accent");
-    private final static QName _ArticulationsDoit_QNAME = new QName("", "doit");
-    private final static QName _ArticulationsFalloff_QNAME = new QName("", "falloff");
-    private final static QName _ArticulationsCaesura_QNAME = new QName("", "caesura");
-    private final static QName _ArticulationsStress_QNAME = new QName("", "stress");
-    private final static QName _ArticulationsDetachedLegato_QNAME = new QName("", "detached-legato");
-    private final static QName _ArticulationsPlop_QNAME = new QName("", "plop");
-    private final static QName _ArticulationsScoop_QNAME = new QName("", "scoop");
-    private final static QName _ArticulationsStaccatissimo_QNAME = new QName("", "staccatissimo");
-    private final static QName _ArticulationsOtherArticulation_QNAME = new QName("", "other-articulation");
-    private final static QName _ArticulationsAccent_QNAME = new QName("", "accent");
-    private final static QName _ArticulationsBreathMark_QNAME = new QName("", "breath-mark");
-    private final static QName _ArticulationsStaccato_QNAME = new QName("", "staccato");
-    private final static QName _ArticulationsSpiccato_QNAME = new QName("", "spiccato");
-    private final static QName _OrnamentsOtherOrnament_QNAME = new QName("", "other-ornament");
-    private final static QName _OrnamentsMordent_QNAME = new QName("", "mordent");
-    private final static QName _OrnamentsTurn_QNAME = new QName("", "turn");
-    private final static QName _OrnamentsTremolo_QNAME = new QName("", "tremolo");
-    private final static QName _OrnamentsWavyLine_QNAME = new QName("", "wavy-line");
-    private final static QName _OrnamentsShake_QNAME = new QName("", "shake");
-    private final static QName _OrnamentsInvertedMordent_QNAME = new QName("", "inverted-mordent");
-    private final static QName _OrnamentsAccidentalMark_QNAME = new QName("", "accidental-mark");
-    private final static QName _OrnamentsTrillMark_QNAME = new QName("", "trill-mark");
-    private final static QName _OrnamentsSchleifer_QNAME = new QName("", "schleifer");
-    private final static QName _OrnamentsDelayedTurn_QNAME = new QName("", "delayed-turn");
-    private final static QName _OrnamentsInvertedTurn_QNAME = new QName("", "inverted-turn");
-    private final static QName _EncodingSoftware_QNAME = new QName("", "software");
-    private final static QName _EncodingSupports_QNAME = new QName("", "supports");
-    private final static QName _EncodingEncodingDate_QNAME = new QName("", "encoding-date");
-    private final static QName _EncodingEncodingDescription_QNAME = new QName("", "encoding-description");
-    private final static QName _EncodingEncoder_QNAME = new QName("", "encoder");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: proxymusic
@@ -218,6 +223,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Arrow }
+     * 
+     */
+    public Arrow createArrow() {
+        return new Arrow();
+    }
+
+    /**
      * Create an instance of {@link MeasureStyle }
      * 
      */
@@ -239,6 +252,14 @@ public class ObjectFactory {
      */
     public PartGroup createPartGroup() {
         return new PartGroup();
+    }
+
+    /**
+     * Create an instance of {@link Handbell }
+     * 
+     */
+    public Handbell createHandbell() {
+        return new Handbell();
     }
 
     /**
@@ -266,19 +287,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Feature }
-     * 
-     */
-    public Feature createFeature() {
-        return new Feature();
-    }
-
-    /**
      * Create an instance of {@link Harmonic }
      * 
      */
     public Harmonic createHarmonic() {
         return new Harmonic();
+    }
+
+    /**
+     * Create an instance of {@link Feature }
+     * 
+     */
+    public Feature createFeature() {
+        return new Feature();
     }
 
     /**
@@ -338,19 +359,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SystemMargins }
-     * 
-     */
-    public SystemMargins createSystemMargins() {
-        return new SystemMargins();
-    }
-
-    /**
      * Create an instance of {@link Glissando }
      * 
      */
     public Glissando createGlissando() {
         return new Glissando();
+    }
+
+    /**
+     * Create an instance of {@link SystemMargins }
+     * 
+     */
+    public SystemMargins createSystemMargins() {
+        return new SystemMargins();
     }
 
     /**
@@ -426,14 +447,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DisplayStepOctave }
-     * 
-     */
-    public DisplayStepOctave createDisplayStepOctave() {
-        return new DisplayStepOctave();
-    }
-
-    /**
      * Create an instance of {@link PageLayout }
      * 
      */
@@ -450,19 +463,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Barline }
-     * 
-     */
-    public Barline createBarline() {
-        return new Barline();
-    }
-
-    /**
      * Create an instance of {@link NoteSize }
      * 
      */
     public NoteSize createNoteSize() {
         return new NoteSize();
+    }
+
+    /**
+     * Create an instance of {@link Barline }
+     * 
+     */
+    public Barline createBarline() {
+        return new Barline();
     }
 
     /**
@@ -490,6 +503,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link EmptyPrintStyleAlign }
+     * 
+     */
+    public EmptyPrintStyleAlign createEmptyPrintStyleAlign() {
+        return new EmptyPrintStyleAlign();
+    }
+
+    /**
      * Create an instance of {@link HeelToe }
      * 
      */
@@ -511,14 +532,6 @@ public class ObjectFactory {
      */
     public BassStep createBassStep() {
         return new BassStep();
-    }
-
-    /**
-     * Create an instance of {@link Rehearsal }
-     * 
-     */
-    public Rehearsal createRehearsal() {
-        return new Rehearsal();
     }
 
     /**
@@ -562,6 +575,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link FiguredBass }
+     * 
+     */
+    public FiguredBass createFiguredBass() {
+        return new FiguredBass();
+    }
+
+    /**
      * Create an instance of {@link MeasureLayout }
      * 
      */
@@ -570,11 +591,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link FiguredBass }
+     * Create an instance of {@link NoteheadText }
      * 
      */
-    public FiguredBass createFiguredBass() {
-        return new FiguredBass();
+    public NoteheadText createNoteheadText() {
+        return new NoteheadText();
     }
 
     /**
@@ -642,6 +663,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Miscellaneous }
+     * 
+     */
+    public Miscellaneous createMiscellaneous() {
+        return new Miscellaneous();
+    }
+
+    /**
      * Create an instance of {@link Frame }
      * 
      */
@@ -658,27 +687,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Miscellaneous }
-     * 
-     */
-    public Miscellaneous createMiscellaneous() {
-        return new Miscellaneous();
-    }
-
-    /**
      * Create an instance of {@link Sound }
      * 
      */
     public Sound createSound() {
         return new Sound();
-    }
-
-    /**
-     * Create an instance of {@link Elision }
-     * 
-     */
-    public Elision createElision() {
-        return new Elision();
     }
 
     /**
@@ -698,19 +711,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Beater }
+     * 
+     */
+    public Beater createBeater() {
+        return new Beater();
+    }
+
+    /**
      * Create an instance of {@link Repeat }
      * 
      */
     public Repeat createRepeat() {
         return new Repeat();
-    }
-
-    /**
-     * Create an instance of {@link OctaveShift }
-     * 
-     */
-    public OctaveShift createOctaveShift() {
-        return new OctaveShift();
     }
 
     /**
@@ -722,11 +735,35 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link OctaveShift }
+     * 
+     */
+    public OctaveShift createOctaveShift() {
+        return new OctaveShift();
+    }
+
+    /**
      * Create an instance of {@link SystemLayout }
      * 
      */
     public SystemLayout createSystemLayout() {
         return new SystemLayout();
+    }
+
+    /**
+     * Create an instance of {@link HoleClosed }
+     * 
+     */
+    public HoleClosed createHoleClosed() {
+        return new HoleClosed();
+    }
+
+    /**
+     * Create an instance of {@link Percussion }
+     * 
+     */
+    public Percussion createPercussion() {
+        return new Percussion();
     }
 
     /**
@@ -751,6 +788,14 @@ public class ObjectFactory {
      */
     public MidiDevice createMidiDevice() {
         return new MidiDevice();
+    }
+
+    /**
+     * Create an instance of {@link SystemDividers }
+     * 
+     */
+    public SystemDividers createSystemDividers() {
+        return new SystemDividers();
     }
 
     /**
@@ -810,11 +855,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Unpitched }
+     * 
+     */
+    public Unpitched createUnpitched() {
+        return new Unpitched();
+    }
+
+    /**
      * Create an instance of {@link Technical }
      * 
      */
     public Technical createTechnical() {
         return new Technical();
+    }
+
+    /**
+     * Create an instance of {@link HorizontalTurn }
+     * 
+     */
+    public HorizontalTurn createHorizontalTurn() {
+        return new HorizontalTurn();
     }
 
     /**
@@ -858,6 +919,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link BreathMark }
+     * 
+     */
+    public BreathMark createBreathMark() {
+        return new BreathMark();
+    }
+
+    /**
      * Create an instance of {@link MiscellaneousField }
      * 
      */
@@ -871,6 +940,14 @@ public class ObjectFactory {
      */
     public EmptyLine createEmptyLine() {
         return new EmptyLine();
+    }
+
+    /**
+     * Create an instance of {@link EmptyPrintObjectStyleAlign }
+     * 
+     */
+    public EmptyPrintObjectStyleAlign createEmptyPrintObjectStyleAlign() {
+        return new EmptyPrintObjectStyleAlign();
     }
 
     /**
@@ -954,19 +1031,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link NameDisplay }
-     * 
-     */
-    public NameDisplay createNameDisplay() {
-        return new NameDisplay();
-    }
-
-    /**
      * Create an instance of {@link AccidentalMark }
      * 
      */
     public AccidentalMark createAccidentalMark() {
         return new AccidentalMark();
+    }
+
+    /**
+     * Create an instance of {@link NameDisplay }
+     * 
+     */
+    public NameDisplay createNameDisplay() {
+        return new NameDisplay();
     }
 
     /**
@@ -994,6 +1071,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Distance }
+     * 
+     */
+    public Distance createDistance() {
+        return new Distance();
+    }
+
+    /**
      * Create an instance of {@link Encoding }
      * 
      */
@@ -1018,6 +1103,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link VirtualInstrument }
+     * 
+     */
+    public VirtualInstrument createVirtualInstrument() {
+        return new VirtualInstrument();
+    }
+
+    /**
      * Create an instance of {@link Note }
      * 
      */
@@ -1026,11 +1119,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link PedalTuning }
+     * Create an instance of {@link Hole }
      * 
      */
-    public PedalTuning createPedalTuning() {
-        return new PedalTuning();
+    public Hole createHole() {
+        return new Hole();
     }
 
     /**
@@ -1039,6 +1132,14 @@ public class ObjectFactory {
      */
     public Backup createBackup() {
         return new Backup();
+    }
+
+    /**
+     * Create an instance of {@link PedalTuning }
+     * 
+     */
+    public PedalTuning createPedalTuning() {
+        return new PedalTuning();
     }
 
     /**
@@ -1090,6 +1191,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link StringMute }
+     * 
+     */
+    public StringMute createStringMute() {
+        return new StringMute();
+    }
+
+    /**
      * Create an instance of {@link Lyric }
      * 
      */
@@ -1103,6 +1212,14 @@ public class ObjectFactory {
      */
     public Degree createDegree() {
         return new Degree();
+    }
+
+    /**
+     * Create an instance of {@link OtherPlay }
+     * 
+     */
+    public OtherPlay createOtherPlay() {
+        return new OtherPlay();
     }
 
     /**
@@ -1135,6 +1252,14 @@ public class ObjectFactory {
      */
     public TimeModification createTimeModification() {
         return new TimeModification();
+    }
+
+    /**
+     * Create an instance of {@link TextFontColor }
+     * 
+     */
+    public TextFontColor createTextFontColor() {
+        return new TextFontColor();
     }
 
     /**
@@ -1218,11 +1343,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link PrincipalVoice }
+     * 
+     */
+    public PrincipalVoice createPrincipalVoice() {
+        return new PrincipalVoice();
+    }
+
+    /**
      * Create an instance of {@link TypedText }
      * 
      */
     public TypedText createTypedText() {
         return new TypedText();
+    }
+
+    /**
+     * Create an instance of {@link Rest }
+     * 
+     */
+    public Rest createRest() {
+        return new Rest();
     }
 
     /**
@@ -1250,6 +1391,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Stick }
+     * 
+     */
+    public Stick createStick() {
+        return new Stick();
+    }
+
+    /**
      * Create an instance of {@link Direction }
      * 
      */
@@ -1274,11 +1423,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link LineWidth }
+     * Create an instance of {@link Interchangeable }
      * 
      */
-    public LineWidth createLineWidth() {
-        return new LineWidth();
+    public Interchangeable createInterchangeable() {
+        return new Interchangeable();
     }
 
     /**
@@ -1290,11 +1439,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link PageMargins }
+     * Create an instance of {@link LineWidth }
      * 
      */
-    public PageMargins createPageMargins() {
-        return new PageMargins();
+    public LineWidth createLineWidth() {
+        return new LineWidth();
+    }
+
+    /**
+     * Create an instance of {@link AccidentalText }
+     * 
+     */
+    public AccidentalText createAccidentalText() {
+        return new AccidentalText();
     }
 
     /**
@@ -1303,6 +1460,14 @@ public class ObjectFactory {
      */
     public GroupSymbol createGroupSymbol() {
         return new GroupSymbol();
+    }
+
+    /**
+     * Create an instance of {@link PageMargins }
+     * 
+     */
+    public PageMargins createPageMargins() {
+        return new PageMargins();
     }
 
     /**
@@ -1319,6 +1484,14 @@ public class ObjectFactory {
      */
     public Extend createExtend() {
         return new Extend();
+    }
+
+    /**
+     * Create an instance of {@link Play }
+     * 
+     */
+    public Play createPlay() {
+        return new Play();
     }
 
     /**
@@ -1434,6 +1607,213 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "beats", scope = Time.class)
+    public JAXBElement<java.lang.String> createTimeBeats(java.lang.String value) {
+        return new JAXBElement<java.lang.String>(_TimeBeats_QNAME, java.lang.String.class, Time.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "beat-type", scope = Time.class)
+    public JAXBElement<java.lang.String> createTimeBeatType(java.lang.String value) {
+        return new JAXBElement<java.lang.String>(_TimeBeatType_QNAME, java.lang.String.class, Time.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link HorizontalTurn }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "turn", scope = Ornaments.class)
+    public JAXBElement<HorizontalTurn> createOrnamentsTurn(HorizontalTurn value) {
+        return new JAXBElement<HorizontalTurn>(_OrnamentsTurn_QNAME, HorizontalTurn.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Tremolo }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "tremolo", scope = Ornaments.class)
+    public JAXBElement<Tremolo> createOrnamentsTremolo(Tremolo value) {
+        return new JAXBElement<Tremolo>(_OrnamentsTremolo_QNAME, Tremolo.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link WavyLine }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "wavy-line", scope = Ornaments.class)
+    public JAXBElement<WavyLine> createOrnamentsWavyLine(WavyLine value) {
+        return new JAXBElement<WavyLine>(_OrnamentsWavyLine_QNAME, WavyLine.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "shake", scope = Ornaments.class)
+    public JAXBElement<EmptyTrillSound> createOrnamentsShake(EmptyTrillSound value) {
+        return new JAXBElement<EmptyTrillSound>(_OrnamentsShake_QNAME, EmptyTrillSound.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AccidentalMark }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "accidental-mark", scope = Ornaments.class)
+    public JAXBElement<AccidentalMark> createOrnamentsAccidentalMark(AccidentalMark value) {
+        return new JAXBElement<AccidentalMark>(_OrnamentsAccidentalMark_QNAME, AccidentalMark.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "trill-mark", scope = Ornaments.class)
+    public JAXBElement<EmptyTrillSound> createOrnamentsTrillMark(EmptyTrillSound value) {
+        return new JAXBElement<EmptyTrillSound>(_OrnamentsTrillMark_QNAME, EmptyTrillSound.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link HorizontalTurn }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "delayed-inverted-turn", scope = Ornaments.class)
+    public JAXBElement<HorizontalTurn> createOrnamentsDelayedInvertedTurn(HorizontalTurn value) {
+        return new JAXBElement<HorizontalTurn>(_OrnamentsDelayedInvertedTurn_QNAME, HorizontalTurn.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link HorizontalTurn }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "inverted-turn", scope = Ornaments.class)
+    public JAXBElement<HorizontalTurn> createOrnamentsInvertedTurn(HorizontalTurn value) {
+        return new JAXBElement<HorizontalTurn>(_OrnamentsInvertedTurn_QNAME, HorizontalTurn.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link PlacementText }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "other-ornament", scope = Ornaments.class)
+    public JAXBElement<PlacementText> createOrnamentsOtherOrnament(PlacementText value) {
+        return new JAXBElement<PlacementText>(_OrnamentsOtherOrnament_QNAME, PlacementText.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Mordent }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "mordent", scope = Ornaments.class)
+    public JAXBElement<Mordent> createOrnamentsMordent(Mordent value) {
+        return new JAXBElement<Mordent>(_OrnamentsMordent_QNAME, Mordent.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "vertical-turn", scope = Ornaments.class)
+    public JAXBElement<EmptyTrillSound> createOrnamentsVerticalTurn(EmptyTrillSound value) {
+        return new JAXBElement<EmptyTrillSound>(_OrnamentsVerticalTurn_QNAME, EmptyTrillSound.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Mordent }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "inverted-mordent", scope = Ornaments.class)
+    public JAXBElement<Mordent> createOrnamentsInvertedMordent(Mordent value) {
+        return new JAXBElement<Mordent>(_OrnamentsInvertedMordent_QNAME, Mordent.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "schleifer", scope = Ornaments.class)
+    public JAXBElement<EmptyPlacement> createOrnamentsSchleifer(EmptyPlacement value) {
+        return new JAXBElement<EmptyPlacement>(_OrnamentsSchleifer_QNAME, EmptyPlacement.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link HorizontalTurn }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "delayed-turn", scope = Ornaments.class)
+    public JAXBElement<HorizontalTurn> createOrnamentsDelayedTurn(HorizontalTurn value) {
+        return new JAXBElement<HorizontalTurn>(_OrnamentsDelayedTurn_QNAME, HorizontalTurn.class, Ornaments.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "software", scope = Encoding.class)
+    public JAXBElement<java.lang.String> createEncodingSoftware(java.lang.String value) {
+        return new JAXBElement<java.lang.String>(_EncodingSoftware_QNAME, java.lang.String.class, Encoding.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Supports }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "supports", scope = Encoding.class)
+    public JAXBElement<Supports> createEncodingSupports(Supports value) {
+        return new JAXBElement<Supports>(_EncodingSupports_QNAME, Supports.class, Encoding.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "encoding-date", scope = Encoding.class)
+    public JAXBElement<XMLGregorianCalendar> createEncodingEncodingDate(XMLGregorianCalendar value) {
+        return new JAXBElement<XMLGregorianCalendar>(_EncodingEncodingDate_QNAME, XMLGregorianCalendar.class, Encoding.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "encoding-description", scope = Encoding.class)
+    public JAXBElement<java.lang.String> createEncodingEncodingDescription(java.lang.String value) {
+        return new JAXBElement<java.lang.String>(_EncodingEncodingDescription_QNAME, java.lang.String.class, Encoding.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TypedText }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "encoder", scope = Encoding.class)
+    public JAXBElement<TypedText> createEncodingEncoder(TypedText value) {
+        return new JAXBElement<TypedText>(_EncodingEncoder_QNAME, TypedText.class, Encoding.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "beats", scope = Interchangeable.class)
+    public JAXBElement<java.lang.String> createInterchangeableBeats(java.lang.String value) {
+        return new JAXBElement<java.lang.String>(_TimeBeats_QNAME, java.lang.String.class, Interchangeable.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "beat-type", scope = Interchangeable.class)
+    public JAXBElement<java.lang.String> createInterchangeableBeatType(java.lang.String value) {
+        return new JAXBElement<java.lang.String>(_TimeBeatType_QNAME, java.lang.String.class, Interchangeable.class, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
      * 
      */
@@ -1458,6 +1838,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "fret", scope = Technical.class)
     public JAXBElement<Fret> createTechnicalFret(Fret value) {
         return new JAXBElement<Fret>(_TechnicalFret_QNAME, Fret.class, Technical.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Arrow }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "arrow", scope = Technical.class)
+    public JAXBElement<Arrow> createTechnicalArrow(Arrow value) {
+        return new JAXBElement<Arrow>(_TechnicalArrow_QNAME, Arrow.class, Technical.class, value);
     }
 
     /**
@@ -1494,6 +1883,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "fingering", scope = Technical.class)
     public JAXBElement<Fingering> createTechnicalFingering(Fingering value) {
         return new JAXBElement<Fingering>(_TechnicalFingering_QNAME, Fingering.class, Technical.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Handbell }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "handbell", scope = Technical.class)
+    public JAXBElement<Handbell> createTechnicalHandbell(Handbell value) {
+        return new JAXBElement<Handbell>(_TechnicalHandbell_QNAME, Handbell.class, Technical.class, value);
     }
 
     /**
@@ -1623,21 +2021,156 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Hole }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "beats", scope = Time.class)
-    public JAXBElement<java.lang.String> createTimeBeats(java.lang.String value) {
-        return new JAXBElement<java.lang.String>(_TimeBeats_QNAME, java.lang.String.class, Time.class, value);
+    @XmlElementDecl(namespace = "", name = "hole", scope = Technical.class)
+    public JAXBElement<Hole> createTechnicalHole(Hole value) {
+        return new JAXBElement<Hole>(_TechnicalHole_QNAME, Hole.class, Technical.class, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "beat-type", scope = Time.class)
-    public JAXBElement<java.lang.String> createTimeBeatType(java.lang.String value) {
-        return new JAXBElement<java.lang.String>(_TimeBeatType_QNAME, java.lang.String.class, Time.class, value);
+    @XmlElementDecl(namespace = "", name = "unstress", scope = Articulations.class)
+    public JAXBElement<EmptyPlacement> createArticulationsUnstress(EmptyPlacement value) {
+        return new JAXBElement<EmptyPlacement>(_ArticulationsUnstress_QNAME, EmptyPlacement.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "tenuto", scope = Articulations.class)
+    public JAXBElement<EmptyPlacement> createArticulationsTenuto(EmptyPlacement value) {
+        return new JAXBElement<EmptyPlacement>(_ArticulationsTenuto_QNAME, EmptyPlacement.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link StrongAccent }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "strong-accent", scope = Articulations.class)
+    public JAXBElement<StrongAccent> createArticulationsStrongAccent(StrongAccent value) {
+        return new JAXBElement<StrongAccent>(_ArticulationsStrongAccent_QNAME, StrongAccent.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "doit", scope = Articulations.class)
+    public JAXBElement<EmptyLine> createArticulationsDoit(EmptyLine value) {
+        return new JAXBElement<EmptyLine>(_ArticulationsDoit_QNAME, EmptyLine.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "falloff", scope = Articulations.class)
+    public JAXBElement<EmptyLine> createArticulationsFalloff(EmptyLine value) {
+        return new JAXBElement<EmptyLine>(_ArticulationsFalloff_QNAME, EmptyLine.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "caesura", scope = Articulations.class)
+    public JAXBElement<EmptyPlacement> createArticulationsCaesura(EmptyPlacement value) {
+        return new JAXBElement<EmptyPlacement>(_ArticulationsCaesura_QNAME, EmptyPlacement.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "stress", scope = Articulations.class)
+    public JAXBElement<EmptyPlacement> createArticulationsStress(EmptyPlacement value) {
+        return new JAXBElement<EmptyPlacement>(_ArticulationsStress_QNAME, EmptyPlacement.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "detached-legato", scope = Articulations.class)
+    public JAXBElement<EmptyPlacement> createArticulationsDetachedLegato(EmptyPlacement value) {
+        return new JAXBElement<EmptyPlacement>(_ArticulationsDetachedLegato_QNAME, EmptyPlacement.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "plop", scope = Articulations.class)
+    public JAXBElement<EmptyLine> createArticulationsPlop(EmptyLine value) {
+        return new JAXBElement<EmptyLine>(_ArticulationsPlop_QNAME, EmptyLine.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "scoop", scope = Articulations.class)
+    public JAXBElement<EmptyLine> createArticulationsScoop(EmptyLine value) {
+        return new JAXBElement<EmptyLine>(_ArticulationsScoop_QNAME, EmptyLine.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "staccatissimo", scope = Articulations.class)
+    public JAXBElement<EmptyPlacement> createArticulationsStaccatissimo(EmptyPlacement value) {
+        return new JAXBElement<EmptyPlacement>(_ArticulationsStaccatissimo_QNAME, EmptyPlacement.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link PlacementText }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "other-articulation", scope = Articulations.class)
+    public JAXBElement<PlacementText> createArticulationsOtherArticulation(PlacementText value) {
+        return new JAXBElement<PlacementText>(_ArticulationsOtherArticulation_QNAME, PlacementText.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "accent", scope = Articulations.class)
+    public JAXBElement<EmptyPlacement> createArticulationsAccent(EmptyPlacement value) {
+        return new JAXBElement<EmptyPlacement>(_ArticulationsAccent_QNAME, EmptyPlacement.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link BreathMark }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "breath-mark", scope = Articulations.class)
+    public JAXBElement<BreathMark> createArticulationsBreathMark(BreathMark value) {
+        return new JAXBElement<BreathMark>(_ArticulationsBreathMark_QNAME, BreathMark.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "staccato", scope = Articulations.class)
+    public JAXBElement<EmptyPlacement> createArticulationsStaccato(EmptyPlacement value) {
+        return new JAXBElement<EmptyPlacement>(_ArticulationsStaccato_QNAME, EmptyPlacement.class, Articulations.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "spiccato", scope = Articulations.class)
+    public JAXBElement<EmptyPlacement> createArticulationsSpiccato(EmptyPlacement value) {
+        return new JAXBElement<EmptyPlacement>(_ArticulationsSpiccato_QNAME, EmptyPlacement.class, Articulations.class, value);
     }
 
     /**
@@ -1854,303 +2387,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "fp", scope = Dynamics.class)
     public JAXBElement<Empty> createDynamicsFp(Empty value) {
         return new JAXBElement<Empty>(_DynamicsFp_QNAME, Empty.class, Dynamics.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "unstress", scope = Articulations.class)
-    public JAXBElement<EmptyPlacement> createArticulationsUnstress(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_ArticulationsUnstress_QNAME, EmptyPlacement.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "tenuto", scope = Articulations.class)
-    public JAXBElement<EmptyPlacement> createArticulationsTenuto(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_ArticulationsTenuto_QNAME, EmptyPlacement.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link StrongAccent }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "strong-accent", scope = Articulations.class)
-    public JAXBElement<StrongAccent> createArticulationsStrongAccent(StrongAccent value) {
-        return new JAXBElement<StrongAccent>(_ArticulationsStrongAccent_QNAME, StrongAccent.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "doit", scope = Articulations.class)
-    public JAXBElement<EmptyLine> createArticulationsDoit(EmptyLine value) {
-        return new JAXBElement<EmptyLine>(_ArticulationsDoit_QNAME, EmptyLine.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "falloff", scope = Articulations.class)
-    public JAXBElement<EmptyLine> createArticulationsFalloff(EmptyLine value) {
-        return new JAXBElement<EmptyLine>(_ArticulationsFalloff_QNAME, EmptyLine.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "caesura", scope = Articulations.class)
-    public JAXBElement<EmptyPlacement> createArticulationsCaesura(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_ArticulationsCaesura_QNAME, EmptyPlacement.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "stress", scope = Articulations.class)
-    public JAXBElement<EmptyPlacement> createArticulationsStress(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_ArticulationsStress_QNAME, EmptyPlacement.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "detached-legato", scope = Articulations.class)
-    public JAXBElement<EmptyPlacement> createArticulationsDetachedLegato(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_ArticulationsDetachedLegato_QNAME, EmptyPlacement.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "plop", scope = Articulations.class)
-    public JAXBElement<EmptyLine> createArticulationsPlop(EmptyLine value) {
-        return new JAXBElement<EmptyLine>(_ArticulationsPlop_QNAME, EmptyLine.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyLine }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "scoop", scope = Articulations.class)
-    public JAXBElement<EmptyLine> createArticulationsScoop(EmptyLine value) {
-        return new JAXBElement<EmptyLine>(_ArticulationsScoop_QNAME, EmptyLine.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "staccatissimo", scope = Articulations.class)
-    public JAXBElement<EmptyPlacement> createArticulationsStaccatissimo(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_ArticulationsStaccatissimo_QNAME, EmptyPlacement.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link PlacementText }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "other-articulation", scope = Articulations.class)
-    public JAXBElement<PlacementText> createArticulationsOtherArticulation(PlacementText value) {
-        return new JAXBElement<PlacementText>(_ArticulationsOtherArticulation_QNAME, PlacementText.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "accent", scope = Articulations.class)
-    public JAXBElement<EmptyPlacement> createArticulationsAccent(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_ArticulationsAccent_QNAME, EmptyPlacement.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "breath-mark", scope = Articulations.class)
-    public JAXBElement<EmptyPlacement> createArticulationsBreathMark(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_ArticulationsBreathMark_QNAME, EmptyPlacement.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "staccato", scope = Articulations.class)
-    public JAXBElement<EmptyPlacement> createArticulationsStaccato(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_ArticulationsStaccato_QNAME, EmptyPlacement.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "spiccato", scope = Articulations.class)
-    public JAXBElement<EmptyPlacement> createArticulationsSpiccato(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_ArticulationsSpiccato_QNAME, EmptyPlacement.class, Articulations.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link PlacementText }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "other-ornament", scope = Ornaments.class)
-    public JAXBElement<PlacementText> createOrnamentsOtherOrnament(PlacementText value) {
-        return new JAXBElement<PlacementText>(_OrnamentsOtherOrnament_QNAME, PlacementText.class, Ornaments.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Mordent }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "mordent", scope = Ornaments.class)
-    public JAXBElement<Mordent> createOrnamentsMordent(Mordent value) {
-        return new JAXBElement<Mordent>(_OrnamentsMordent_QNAME, Mordent.class, Ornaments.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "turn", scope = Ornaments.class)
-    public JAXBElement<EmptyTrillSound> createOrnamentsTurn(EmptyTrillSound value) {
-        return new JAXBElement<EmptyTrillSound>(_OrnamentsTurn_QNAME, EmptyTrillSound.class, Ornaments.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Tremolo }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "tremolo", scope = Ornaments.class)
-    public JAXBElement<Tremolo> createOrnamentsTremolo(Tremolo value) {
-        return new JAXBElement<Tremolo>(_OrnamentsTremolo_QNAME, Tremolo.class, Ornaments.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link WavyLine }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "wavy-line", scope = Ornaments.class)
-    public JAXBElement<WavyLine> createOrnamentsWavyLine(WavyLine value) {
-        return new JAXBElement<WavyLine>(_OrnamentsWavyLine_QNAME, WavyLine.class, Ornaments.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "shake", scope = Ornaments.class)
-    public JAXBElement<EmptyTrillSound> createOrnamentsShake(EmptyTrillSound value) {
-        return new JAXBElement<EmptyTrillSound>(_OrnamentsShake_QNAME, EmptyTrillSound.class, Ornaments.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Mordent }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "inverted-mordent", scope = Ornaments.class)
-    public JAXBElement<Mordent> createOrnamentsInvertedMordent(Mordent value) {
-        return new JAXBElement<Mordent>(_OrnamentsInvertedMordent_QNAME, Mordent.class, Ornaments.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AccidentalMark }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "accidental-mark", scope = Ornaments.class)
-    public JAXBElement<AccidentalMark> createOrnamentsAccidentalMark(AccidentalMark value) {
-        return new JAXBElement<AccidentalMark>(_OrnamentsAccidentalMark_QNAME, AccidentalMark.class, Ornaments.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "trill-mark", scope = Ornaments.class)
-    public JAXBElement<EmptyTrillSound> createOrnamentsTrillMark(EmptyTrillSound value) {
-        return new JAXBElement<EmptyTrillSound>(_OrnamentsTrillMark_QNAME, EmptyTrillSound.class, Ornaments.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "schleifer", scope = Ornaments.class)
-    public JAXBElement<EmptyPlacement> createOrnamentsSchleifer(EmptyPlacement value) {
-        return new JAXBElement<EmptyPlacement>(_OrnamentsSchleifer_QNAME, EmptyPlacement.class, Ornaments.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "delayed-turn", scope = Ornaments.class)
-    public JAXBElement<EmptyTrillSound> createOrnamentsDelayedTurn(EmptyTrillSound value) {
-        return new JAXBElement<EmptyTrillSound>(_OrnamentsDelayedTurn_QNAME, EmptyTrillSound.class, Ornaments.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyTrillSound }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "inverted-turn", scope = Ornaments.class)
-    public JAXBElement<EmptyTrillSound> createOrnamentsInvertedTurn(EmptyTrillSound value) {
-        return new JAXBElement<EmptyTrillSound>(_OrnamentsInvertedTurn_QNAME, EmptyTrillSound.class, Ornaments.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "software", scope = Encoding.class)
-    public JAXBElement<java.lang.String> createEncodingSoftware(java.lang.String value) {
-        return new JAXBElement<java.lang.String>(_EncodingSoftware_QNAME, java.lang.String.class, Encoding.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Supports }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "supports", scope = Encoding.class)
-    public JAXBElement<Supports> createEncodingSupports(Supports value) {
-        return new JAXBElement<Supports>(_EncodingSupports_QNAME, Supports.class, Encoding.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "encoding-date", scope = Encoding.class)
-    public JAXBElement<XMLGregorianCalendar> createEncodingEncodingDate(XMLGregorianCalendar value) {
-        return new JAXBElement<XMLGregorianCalendar>(_EncodingEncodingDate_QNAME, XMLGregorianCalendar.class, Encoding.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "encoding-description", scope = Encoding.class)
-    public JAXBElement<java.lang.String> createEncodingEncodingDescription(java.lang.String value) {
-        return new JAXBElement<java.lang.String>(_EncodingEncodingDescription_QNAME, java.lang.String.class, Encoding.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link TypedText }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "encoder", scope = Encoding.class)
-    public JAXBElement<TypedText> createEncodingEncoder(TypedText value) {
-        return new JAXBElement<TypedText>(_EncodingEncoder_QNAME, TypedText.class, Encoding.class, value);
     }
 
 }

@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 /**
  * A tuplet element is present when a tuplet is to be displayed graphically, in addition to the sound data provided by the time-modification elements. The number attribute is used to distinguish nested tuplets. The bracket attribute is used to indicate the presence of a bracket. If unspecified, the results are implementation-dependent. The line-shape attribute is used to specify whether the bracket is straight or in the older curved or slurred style. It is straight by default.
  * 	
- * Whereas a time-modification element shows how the cumulative, sounding effect of tuplets compare to the written note type, the tuplet element describes how each tuplet is displayed.
+ * Whereas a time-modification element shows how the cumulative, sounding effect of tuplets and double-note tremolos compare to the written note type, the tuplet element describes how this is displayed. The tuplet element also provides more detailed representation information than the time-modification element, and is needed to represent nested tuplets and other complex tuplets accurately. 
  * 	
  * The show-number attribute is used to display either the number of actual notes, the number of both actual and normal notes, or neither. It is actual by default. The show-type attribute is used to display either the actual type, both the actual and normal types, or neither. It is none by default.
  * 
@@ -28,9 +28,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="tuplet-actual" type="{}tuplet-portion" minOccurs="0"/>
  *         &lt;element name="tuplet-normal" type="{}tuplet-portion" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}placement"/>
  *       &lt;attGroup ref="{}position"/>
  *       &lt;attGroup ref="{}line-shape"/>
+ *       &lt;attGroup ref="{}placement"/>
  *       &lt;attribute name="type" use="required" type="{}start-stop" />
  *       &lt;attribute name="number" type="{}number-level" />
  *       &lt;attribute name="bracket" type="{}yes-no" />
@@ -64,8 +64,6 @@ public class Tuplet {
     protected ShowTuplet showNumber;
     @XmlAttribute(name = "show-type")
     protected ShowTuplet showType;
-    @XmlAttribute(name = "placement")
-    protected AboveBelow placement;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -76,6 +74,8 @@ public class Tuplet {
     protected BigDecimal relativeY;
     @XmlAttribute(name = "line-shape")
     protected LineShape lineShape;
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
 
     /**
      * Gets the value of the tupletActual property.
@@ -246,30 +246,6 @@ public class Tuplet {
     }
 
     /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -387,6 +363,30 @@ public class Tuplet {
      */
     public void setLineShape(LineShape value) {
         this.lineShape = value;
+    }
+
+    /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
 }

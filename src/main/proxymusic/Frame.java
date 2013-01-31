@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * The frame element represents a frame or fretboard diagram used together with a chord symbol. The representation is based on the NIFF guitar grid with additional information. The definitions for string, fret, and fingering are found in the common.mod file. An open string will have a fret value of 0, while a muted string will not be associated with a frame-note element.
+ * The frame type represents a frame or fretboard diagram used together with a chord symbol. The representation is based on the NIFF guitar grid with additional information. The frame type's unplayed attribute indicates what to display above a string that has no associated frame-note element. Typical values are x and the empty string. If the attribute is not present, the display of the unplayed string is application-defined.
  * 
  * <p>Java class for frame complex type.
  * 
@@ -32,12 +32,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="first-fret" type="{}first-fret" minOccurs="0"/>
  *         &lt;element name="frame-note" type="{}frame-note" maxOccurs="unbounded"/>
  *       &lt;/sequence>
- *       &lt;attGroup ref="{}position"/>
- *       &lt;attGroup ref="{}halign"/>
- *       &lt;attGroup ref="{}valign"/>
  *       &lt;attGroup ref="{}color"/>
+ *       &lt;attGroup ref="{}halign"/>
+ *       &lt;attGroup ref="{}position"/>
+ *       &lt;attGroup ref="{}valign-image"/>
  *       &lt;attribute name="height" type="{}tenths" />
  *       &lt;attribute name="width" type="{}tenths" />
+ *       &lt;attribute name="unplayed" type="{http://www.w3.org/2001/XMLSchema}token" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -68,6 +69,15 @@ public class Frame {
     protected BigDecimal height;
     @XmlAttribute(name = "width")
     protected BigDecimal width;
+    @XmlAttribute(name = "unplayed")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "token")
+    protected java.lang.String unplayed;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "halign")
+    protected LeftCenterRight halign;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -76,13 +86,8 @@ public class Frame {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "halign")
-    protected LeftCenterRight halign;
     @XmlAttribute(name = "valign")
-    protected Valign valign;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
+    protected ValignImage valign;
 
     /**
      * Gets the value of the frameStrings property.
@@ -234,6 +239,78 @@ public class Frame {
     }
 
     /**
+     * Gets the value of the unplayed property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getUnplayed() {
+        return unplayed;
+    }
+
+    /**
+     * Sets the value of the unplayed property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setUnplayed(java.lang.String value) {
+        this.unplayed = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -330,38 +407,14 @@ public class Frame {
     }
 
     /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
-    }
-
-    /**
      * Gets the value of the valign property.
      * 
      * @return
      *     possible object is
-     *     {@link Valign }
+     *     {@link ValignImage }
      *     
      */
-    public Valign getValign() {
+    public ValignImage getValign() {
         return valign;
     }
 
@@ -370,35 +423,11 @@ public class Frame {
      * 
      * @param value
      *     allowed object is
-     *     {@link Valign }
+     *     {@link ValignImage }
      *     
      */
-    public void setValign(Valign value) {
+    public void setValign(ValignImage value) {
         this.valign = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
 }

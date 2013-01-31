@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * The staff-tuning type specifies the open, non-capo tuning of the lines on a tabluature staff. 
+ * The staff-tuning type specifies the open, non-capo tuning of the lines on a tablature staff.
  * 
  * <p>Java class for staff-tuning complex type.
  * 

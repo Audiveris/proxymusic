@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -25,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="staff-distance" type="{}tenths" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attribute name="number" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" />
+ *       &lt;attribute name="number" type="{}staff-number" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -42,7 +41,6 @@ public class StaffLayout {
     @XmlElement(name = "staff-distance")
     protected BigDecimal staffDistance;
     @XmlAttribute(name = "number")
-    @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger number;
 
     /**

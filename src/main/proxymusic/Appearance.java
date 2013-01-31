@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * The appearance type controls general graphical settings for the music's final form appearance on a printed page of display. Currently this includes support for line widths and definitions for note sizes, plus an extension element for other aspects of appearance.
+ * The appearance type controls general graphical settings for the music's final form appearance on a printed page of display. This includes support for line widths, definitions for note sizes, and standard distances between notation elements, plus an extension element for other aspects of appearance.
  * 
  * <p>Java class for appearance complex type.
  * 
@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="line-width" type="{}line-width" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="note-size" type="{}note-size" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="distance" type="{}distance" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="other-appearance" type="{}other-appearance" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -36,6 +37,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "appearance", propOrder = {
     "lineWidth",
     "noteSize",
+    "distance",
     "otherAppearance"
 })
 public class Appearance {
@@ -44,6 +46,7 @@ public class Appearance {
     protected List<LineWidth> lineWidth;
     @XmlElement(name = "note-size")
     protected List<NoteSize> noteSize;
+    protected List<Distance> distance;
     @XmlElement(name = "other-appearance")
     protected List<OtherAppearance> otherAppearance;
 
@@ -103,6 +106,35 @@ public class Appearance {
             noteSize = new ArrayList<NoteSize>();
         }
         return this.noteSize;
+    }
+
+    /**
+     * Gets the value of the distance property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the distance property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getDistance().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Distance }
+     * 
+     * 
+     */
+    public List<Distance> getDistance() {
+        if (distance == null) {
+            distance = new ArrayList<Distance>();
+        }
+        return this.distance;
     }
 
     /**

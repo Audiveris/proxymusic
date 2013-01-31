@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
@@ -15,7 +16,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * Each MusicXML part corresponds to a track in a Standard MIDI Format 1 file. The score-instrument elements are used when there are multiple instruments per track. The midi-device element is used to make a MIDI device or port assignment for the given track. Initial midi-instrument assignments may be made here as well.
+ * Each MusicXML part corresponds to a track in a Standard MIDI Format 1 file. The score-instrument elements are used when there are multiple instruments per track. The midi-device element is used to make a MIDI device or port assignment for the given track or specific MIDI instruments. Initial midi-instrument assignments may be made here as well.
  * 
  * <p>Java class for score-part complex type.
  * 
@@ -33,8 +34,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="part-abbreviation-display" type="{}name-display" minOccurs="0"/>
  *         &lt;element name="group" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="score-instrument" type="{}score-instrument" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="midi-device" type="{}midi-device" minOccurs="0"/>
- *         &lt;element name="midi-instrument" type="{}midi-instrument" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;sequence maxOccurs="unbounded" minOccurs="0">
+ *           &lt;element name="midi-device" type="{}midi-device" minOccurs="0"/>
+ *           &lt;element name="midi-instrument" type="{}midi-instrument" minOccurs="0"/>
+ *         &lt;/sequence>
  *       &lt;/sequence>
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" />
  *     &lt;/restriction>
@@ -53,8 +56,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "partAbbreviationDisplay",
     "group",
     "scoreInstrument",
-    "midiDevice",
-    "midiInstrument"
+    "midiDeviceAndMidiInstrument"
 })
 public class ScorePart {
 
@@ -70,10 +72,11 @@ public class ScorePart {
     protected List<java.lang.String> group;
     @XmlElement(name = "score-instrument")
     protected List<ScoreInstrument> scoreInstrument;
-    @XmlElement(name = "midi-device")
-    protected MidiDevice midiDevice;
-    @XmlElement(name = "midi-instrument")
-    protected List<MidiInstrument> midiInstrument;
+    @XmlElements({
+        @XmlElement(name = "midi-device", type = MidiDevice.class),
+        @XmlElement(name = "midi-instrument", type = MidiInstrument.class)
+    })
+    protected List<Object> midiDeviceAndMidiInstrument;
     @XmlAttribute(name = "id", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
@@ -259,56 +262,33 @@ public class ScorePart {
     }
 
     /**
-     * Gets the value of the midiDevice property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MidiDevice }
-     *     
-     */
-    public MidiDevice getMidiDevice() {
-        return midiDevice;
-    }
-
-    /**
-     * Sets the value of the midiDevice property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MidiDevice }
-     *     
-     */
-    public void setMidiDevice(MidiDevice value) {
-        this.midiDevice = value;
-    }
-
-    /**
-     * Gets the value of the midiInstrument property.
+     * Gets the value of the midiDeviceAndMidiInstrument property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the midiInstrument property.
+     * This is why there is not a <CODE>set</CODE> method for the midiDeviceAndMidiInstrument property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getMidiInstrument().add(newItem);
+     *    getMidiDeviceAndMidiInstrument().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
+     * {@link MidiDevice }
      * {@link MidiInstrument }
      * 
      * 
      */
-    public List<MidiInstrument> getMidiInstrument() {
-        if (midiInstrument == null) {
-            midiInstrument = new ArrayList<MidiInstrument>();
+    public List<Object> getMidiDeviceAndMidiInstrument() {
+        if (midiDeviceAndMidiInstrument == null) {
+            midiDeviceAndMidiInstrument = new ArrayList<Object>();
         }
-        return this.midiInstrument;
+        return this.midiDeviceAndMidiInstrument;
     }
 
     /**

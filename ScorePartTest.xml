@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 2.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
-<score-partwise version="2.0">
+<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 3.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
+<score-partwise version="3.0">
     <identification>
         <encoding>
-            <software>ProxyMusic MusicXML-2.0 JAXB-2.2.4 j</software>
-            <encoding-date>2012-05-21</encoding-date>
+            <software>ProxyMusic</software>
+            <encoding-date>2013-01-31</encoding-date>
         </encoding>
     </identification>
     <part-list>

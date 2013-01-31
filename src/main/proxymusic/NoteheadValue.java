@@ -28,11 +28,15 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="back slashed"/>
  *     &lt;enumeration value="normal"/>
  *     &lt;enumeration value="cluster"/>
+ *     &lt;enumeration value="circle dot"/>
+ *     &lt;enumeration value="left triangle"/>
+ *     &lt;enumeration value="rectangle"/>
  *     &lt;enumeration value="none"/>
  *     &lt;enumeration value="do"/>
  *     &lt;enumeration value="re"/>
  *     &lt;enumeration value="mi"/>
  *     &lt;enumeration value="fa"/>
+ *     &lt;enumeration value="fa up"/>
  *     &lt;enumeration value="so"/>
  *     &lt;enumeration value="la"/>
  *     &lt;enumeration value="ti"/>
@@ -73,6 +77,12 @@ public enum NoteheadValue {
     NORMAL("normal"),
     @XmlEnumValue("cluster")
     CLUSTER("cluster"),
+    @XmlEnumValue("circle dot")
+    CIRCLE_DOT("circle dot"),
+    @XmlEnumValue("left triangle")
+    LEFT_TRIANGLE("left triangle"),
+    @XmlEnumValue("rectangle")
+    RECTANGLE("rectangle"),
     @XmlEnumValue("none")
     NONE("none"),
     @XmlEnumValue("do")
@@ -83,6 +93,8 @@ public enum NoteheadValue {
     MI("mi"),
     @XmlEnumValue("fa")
     FA("fa"),
+    @XmlEnumValue("fa up")
+    FA_UP("fa up"),
     @XmlEnumValue("so")
     SO("so"),
     @XmlEnumValue("la")

@@ -31,16 +31,17 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;choice>
- *         &lt;sequence maxOccurs="unbounded">
- *           &lt;element name="beats" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *           &lt;element name="beat-type" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;sequence>
+ *           &lt;group ref="{}time-signature" maxOccurs="unbounded"/>
+ *           &lt;element name="interchangeable" type="{}interchangeable" minOccurs="0"/>
  *         &lt;/sequence>
- *         &lt;element name="senza-misura" type="{}empty"/>
+ *         &lt;element name="senza-misura" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/choice>
+ *       &lt;attGroup ref="{}print-style-align"/>
  *       &lt;attGroup ref="{}print-object"/>
- *       &lt;attGroup ref="{}print-style"/>
  *       &lt;attribute name="number" type="{}staff-number" />
  *       &lt;attribute name="symbol" type="{}time-symbol" />
+ *       &lt;attribute name="separator" type="{}time-separator" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -50,7 +51,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "time", propOrder = {
-    "beatsAndBeatType",
+    "timeSignature",
+    "interchangeable",
     "senzaMisura"
 })
 public class Time {
@@ -59,18 +61,31 @@ public class Time {
         @XmlElementRef(name = "beat-type", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "beats", type = JAXBElement.class, required = false)
     })
-    protected List<JAXBElement<java.lang.String>> beatsAndBeatType;
+    protected List<JAXBElement<java.lang.String>> timeSignature;
+    protected Interchangeable interchangeable;
     @XmlElement(name = "senza-misura")
-    protected Empty senzaMisura;
+    protected java.lang.String senzaMisura;
     @XmlAttribute(name = "number")
     protected BigInteger number;
     @XmlAttribute(name = "symbol")
     protected TimeSymbol symbol;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
+    @XmlAttribute(name = "separator")
+    protected TimeSeparator separator;
+    @XmlAttribute(name = "halign")
+    protected LeftCenterRight halign;
+    @XmlAttribute(name = "valign")
+    protected Valign valign;
     @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -80,28 +95,22 @@ public class Time {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
 
     /**
-     * Gets the value of the beatsAndBeatType property.
+     * Gets the value of the timeSignature property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the beatsAndBeatType property.
+     * This is why there is not a <CODE>set</CODE> method for the timeSignature property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getBeatsAndBeatType().add(newItem);
+     *    getTimeSignature().add(newItem);
      * </pre>
      * 
      * 
@@ -112,11 +121,35 @@ public class Time {
      * 
      * 
      */
-    public List<JAXBElement<java.lang.String>> getBeatsAndBeatType() {
-        if (beatsAndBeatType == null) {
-            beatsAndBeatType = new ArrayList<JAXBElement<java.lang.String>>();
+    public List<JAXBElement<java.lang.String>> getTimeSignature() {
+        if (timeSignature == null) {
+            timeSignature = new ArrayList<JAXBElement<java.lang.String>>();
         }
-        return this.beatsAndBeatType;
+        return this.timeSignature;
+    }
+
+    /**
+     * Gets the value of the interchangeable property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Interchangeable }
+     *     
+     */
+    public Interchangeable getInterchangeable() {
+        return interchangeable;
+    }
+
+    /**
+     * Sets the value of the interchangeable property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Interchangeable }
+     *     
+     */
+    public void setInterchangeable(Interchangeable value) {
+        this.interchangeable = value;
     }
 
     /**
@@ -124,10 +157,10 @@ public class Time {
      * 
      * @return
      *     possible object is
-     *     {@link Empty }
+     *     {@link java.lang.String }
      *     
      */
-    public Empty getSenzaMisura() {
+    public java.lang.String getSenzaMisura() {
         return senzaMisura;
     }
 
@@ -136,10 +169,10 @@ public class Time {
      * 
      * @param value
      *     allowed object is
-     *     {@link Empty }
+     *     {@link java.lang.String }
      *     
      */
-    public void setSenzaMisura(Empty value) {
+    public void setSenzaMisura(java.lang.String value) {
         this.senzaMisura = value;
     }
 
@@ -192,27 +225,75 @@ public class Time {
     }
 
     /**
-     * Gets the value of the printObject property.
+     * Gets the value of the separator property.
      * 
      * @return
      *     possible object is
-     *     {@link YesNo }
+     *     {@link TimeSeparator }
      *     
      */
-    public YesNo getPrintObject() {
-        return printObject;
+    public TimeSeparator getSeparator() {
+        return separator;
     }
 
     /**
-     * Sets the value of the printObject property.
+     * Sets the value of the separator property.
      * 
      * @param value
      *     allowed object is
-     *     {@link YesNo }
+     *     {@link TimeSeparator }
      *     
      */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
+    public void setSeparator(TimeSeparator value) {
+        this.separator = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
+     * Gets the value of the valign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Valign }
+     *     
+     */
+    public Valign getValign() {
+        return valign;
+    }
+
+    /**
+     * Sets the value of the valign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Valign }
+     *     
+     */
+    public void setValign(Valign value) {
+        this.valign = value;
     }
 
     /**
@@ -237,6 +318,102 @@ public class Time {
      */
     public void setColor(java.lang.String value) {
         this.color = value;
+    }
+
+    /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
     }
 
     /**
@@ -336,99 +513,27 @@ public class Time {
     }
 
     /**
-     * Gets the value of the defaultX property.
+     * Gets the value of the printObject property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link YesNo }
      *     
      */
-    public BigDecimal getDefaultX() {
-        return defaultX;
+    public YesNo getPrintObject() {
+        return printObject;
     }
 
     /**
-     * Sets the value of the defaultX property.
+     * Sets the value of the printObject property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link YesNo }
      *     
      */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
-    }
-
-    /**
-     * Gets the value of the defaultY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultY() {
-        return defaultY;
-    }
-
-    /**
-     * Sets the value of the defaultY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
-    }
-
-    /**
-     * Gets the value of the relativeX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeX() {
-        return relativeX;
-    }
-
-    /**
-     * Sets the value of the relativeX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
     }
 
 }
