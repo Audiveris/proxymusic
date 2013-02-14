@@ -1,0 +1,169 @@
+Rebuilding
+
+ Rebuilding ProxyMusic is easy via Maven command:
+
+ <<<mvn clean install>>>
+
+ This command will rebuild the ProxyMusic jar files (binary, source and doc),
+taking as input the MusicXML schema definition file
+<<<src/main/xsd/musicxml.fixed.xsd>>>
+
+Building for a new MusicXML version
+
+ To support a new version of MusicXML schema, you need to provide a new 
+suitable file <<<src/main/resources/musicxml.fixed.xsd>>> and rebuild the project.
+
+ Why do we need a <fixed> schema file?
+ The Java classes generation is performed by running the standard Java tool 
+named <<xjc>> on a MusicXML schema definition file.
+Unfortunately, running this tool on the original schema file leads to 
+several error messages such as:
+
+ [<<xjc error messages:>>]
+
+--------------------------------------------
+xjc:
+ [echo] -- Generating Java classes from Schema ...
+ [exec] parsing a schema...
+ [exec] [ERROR] Element "link" shows up in more than one properties.
+ [exec] line 3909 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd
+ [exec] 
+ [exec] [ERROR] The following location is relevant to the above error
+ [exec] line 3903 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd
+ [exec] 
+ [exec] [ERROR] Element "part-group" shows up in more than one properties.
+ [exec] line 4086 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd
+ [exec] 
+ [exec] [ERROR] The following location is relevant to the above error
+ [exec] line 4084 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd
+ [exec] 
+ [exec] [ERROR] Property "Segno" is already defined. Use <jaxb:property> to resolve this conflict.
+ [exec] line 2061 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd
+ [exec] 
+ [exec] [ERROR] The following location is relevant to the above error
+ [exec] line 2068 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd
+ [exec] 
+ [exec] [ERROR] Property "Coda" is already defined. Use <jaxb:property> to resolve this conflict.
+ [exec] line 2062 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd
+ [exec] 
+ [exec] [ERROR] The following location is relevant to the above error
+ [exec] line 2069 of file:/U:/soft/proxymusic/schema-2.0/xsd/musicxml.xsd
+ [exec] 
+ [exec] Failed to parse a schema.
+ [exec] Result: -1
+--------------------------------------------
+
+[]
+
+ These can be considered as limitations of current xjc implementation rather
+than a defect in the schema definition.
+Anyway, we are left with two kinds of problems to fix:
+
+  * <<Attribute and Element with identical names:>>
+
+   This kind occurs within the definition of the "barline" type which exhibits
+an element and an attribute, both named "segno".
+This applies also to element and attribute named "coda".
+
+   The solution is to rename attribute <<<segno>>> as say <<<segnoAttribute>>>
+and similarly to rename attribute <<<coda>>> as  say <<<codaAttribute>>>.
+This is done via the external customization provided by file 
+<<<src/main/resources/custom.xjb>>> whose content follows:
+
+   [<<custom.xjb>>]
+
+--------------------------
+<!-- +=====================================================================+ -->
+<!-- |                                                                     | -->
+<!-- |                       c u s t o m . x j b                           | -->
+<!-- |                                                                     | -->
+<!-- | abstract: Customization for xjc utility                             | -->
+<!-- |                                                                     | -->
+<!-- +=====================================================================+ -->
+
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb"
+	  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	  version="2.0">
+
+    <!-- In 'barline' element, bind the 'segno' attribute to Java 'segnoAttribute' -->
+    <bindings schemaLocation="musicxml.fixed.xsd"
+	      node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='segno']">
+	<property name="segnoAttribute" />
+    </bindings>
+    
+    <!-- In 'barline' element, bind the 'coda' attribute to Java 'codaAttribute' -->
+    <bindings schemaLocation="musicxml.fixed.xsd"
+	      node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='coda']">
+	<property name="codaAttribute" />
+    </bindings>
+</bindings>
+-------------------------
+
+  []
+
+  * <<Multiple occurrences of the same property:>>
+
+   This kind occurs within the definition of the 'credit' type where the same
+property "link" appears on several locations. This applies also to property 
+"bookmark" in the same 'credit' type.
+There are about a dozen of similar cases and so far no external customization 
+seems able to fix them.
+
+    The best solution for the time being is to <manually simplify> the schema 
+definition file.
+This is the reason why there are 2 files in <<<src/main/resources>>> folder,
+one is the original file (<<<musicxml.xsd>>>) and the other is the manually 
+fixed version (<<<musicxml.fixed.xsd>>>).
+
+    The manual modifications can be easily found in the modified file, since 
+they are presented between <<<HB-old>>>, <<<HB-new>>> and <<<HB-end>>> marks.
+For example, here below is the modification applied to the 'credit' element 
+definition, where the "link" and "bookmark" elements appeared twice:
+
+  [<<Example of manual simplification:>>]
+
+--------------------------------
+<xs:complexType name="credit">
+    <xs:annotation>
+        <xs:documentation>
+            ...
+        </xs:documentation>
+    </xs:annotation>
+    <!-- HB-old	
+    <xs:sequence>
+        <xs:element name="credit-type" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:choice>
+            <xs:element name="credit-image" type="image"/>
+            <xs:sequence>
+                <xs:element name="credit-words" type="formatted-text"/>
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="credit-words" type="formatted-text"/>
+                </xs:sequence>
+            </xs:sequence>
+        </xs:choice>
+    </xs:sequence>-->
+    <!-- HB-new -->
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:choice>
+            <xs:element name="credit-type" type="xs:string"/>
+            <xs:element name="link" type="link"/>
+            <xs:element name="bookmark" type="bookmark"/>
+            <xs:element name="credit-image" type="image"/>
+            <xs:element name="credit-words" type="formatted-text"/>
+        </xs:choice>
+    </xs:sequence>
+    <!-- HB-end -->
+    <xs:attribute name="page" type="xs:positiveInteger"/>
+</xs:complexType>
+--------------------------------
+
+  []
+
+  <<Nota:>> <These modifications still allow the writing of any legal MusicXML
+file.
+They are just simplifications which relax some of the restrictions imposed by 
+the original schema.>

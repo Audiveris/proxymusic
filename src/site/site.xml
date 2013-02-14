@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <publishDate position="left" />
+    <version position="left" />
+    
+    <body>        
+        <menu name="Overview">
+            <item name="About" href="index.html" />
+            <item name="Goals" href="goals.html" />
+            <item name="Building" href="building.html" />
+            <item name="License" href="license.html" />
+            <item name="Download" href="http://kenai.com/projects/proxymusic/downloads" />
+        </menu>
+        
+        <menu name="Project">
+            <item name="Summary" href="project-summary.html"/>
+            <item name="Team" href="team-list.html"/>
+            <item name="Source repository" href="source-repository.html"/>
+            <item name="Issue tracking" href="issue-tracking.html"/>
+            <item name="Dependencies" href="dependencies.html"/>
+            <item name="Plugin management" href="plugin-management.html"/>
+            <item name="Project plugins" href="plugins.html"/>
+        </menu>
+        <menu name="Reports">
+            <item name="API" href="apidocs/index.html"/>
+            <item name="Tests API" href="testapidocs/index.html"/>            
+            <item name="Sources" href="xref/index.html"/>
+            <item name="Tests sources" href="xref-test/index.html"/>
+            <item name="Tests report" href="surefire-report.html"/>           
+            <item name="Tests coverage" href="cobertura/index.html"/>           
+        </menu>
+        <links>
+            <item name="Audiveris Ltd." 
+                  href="http://www.audiveris.org" 
+                  img="images/logos/logo-audiveris-98x40.png" />
+        </links>
+    </body>
+</project>

@@ -1,11 +1,2 @@
 .hgignore
-\.chg\..*$
-\.conflict\~$
-\.orig$
-\.orig\..*$
-\.rej$
-build
-dist
-manifest.mf
-nbproject
-model-3.0
+target

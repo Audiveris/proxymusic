@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.audiveris</groupId>
+    <artifactId>proxymusic</artifactId>
+    <version>3.0</version>
+    <packaging>jar</packaging>
+
+    <name>ProxyMusic</name>
+    <url>http://kenai.com/projects/proxymusic</url>
+    <description>
+        ProxyMusic provides a binding between Java objects in memory and
+        data formatted according to MusicXML 3.0
+    </description>
+    
+    <licenses>
+        <license>
+            <name>GNU General Lesser Public License (LGPL) version 2.1</name>
+            <url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
+        </license>
+    </licenses>
+    
+    <organization>
+        <name>Audiveris Ltd</name>
+        <url>http://www.audiveris.org</url>
+    </organization>
+    
+    <developers>
+        <developer>
+            <id>hbitteur</id>
+            <name>Hervé Bitteur</name>
+            <email>herve.bitteur@audiveris.org</email>
+            <organization>Audiveris Ltd</organization>
+            <organizationUrl>http://www.audiveris.org</organizationUrl>
+            <roles>
+                <role>administrator</role>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+            <properties>
+                <picUrl>images/Herve-64x64.png</picUrl>
+            </properties>
+        </developer>
+    </developers>
+    
+    <!-- Source Code Management -->
+    <scm>
+        <connection>scm:hg:https://hg.kenai.com/hg/proxymusic~hg</connection>
+        <developerConnection>scm:hg:https://hg.kenai.com/hg/proxymusic~hg</developerConnection>
+        <url>https://hg.kenai.com/hg/proxymusic~hg</url>
+    </scm>
+    
+    <!-- Issue management -->
+    <issueManagement>
+        <system>Jira</system>
+        <url>http://kenai.com/jira/browse/PROXYMUSIC/</url>
+    </issueManagement>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <distributionManagement>
+        <!-- Location where site is deployed - username/password for site.deployments in server.xml -->
+        <site>
+            <id>proxymusic-repo</id>
+            <name>Site deployments</name>
+            <!--            <url>dav:http://kenai.com/website/${project.artifactId}/</url>-->
+            <!--             <url>https://kenai.com/website/${project.artifactId}/</url>-->
+            <!--             <url>ssh://kenai.com/website/${project.artifactId}/</url>-->
+            <!--            <url>https://kenai.com/proxymusic/website</url>-->
+            <!--            <url>scp://kenai.com/website/proxymusic/</url>-->
+            <url>scp://kenai.com/proxymusic/website/</url>
+        </site>
+    </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <defaultGoal>install</defaultGoal>
+        <!--        <finalName>${project.name}-${project.version}-r${hg-revision}</finalName>-->
+        
+        <extensions>
+            <!-- For deploying using webdav -->
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>2.3</version>
+            </extension>
+        </extensions>
+        
+        <plugins>
+            
+            <!-- Enforce JDK 7 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.2</version>
+                <executions>
+                    <execution>
+                        <id>enforce-java</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>1.7</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+                     
+            <!-- Ant tasks for Hg info and Schema processing -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <exportAntProperties>true</exportAntProperties>
+                            <tasks>                                
+                                <property name="program.name" 
+                                          value="${project.name}">
+                                </property>
+                                <property name="program.version"
+                                          value="${project.version}">
+                                </property>
+                                <ant antfile="src/main/resources/ant-tasks.xml" 
+                                     dir="${basedir}" 
+                                     target="generate-program-identification"
+                                     inheritRefs="true" />
+                                <ant antfile="src/main/resources/ant-tasks.xml"
+                                     dir="${basedir}" 
+                                     target="generate-java-classes" 
+                                     inheritRefs="true" />
+                            </tasks>
+                            <sourceRoot>
+                                ${project.build.directory}/generated-sources/java
+                            </sourceRoot>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>             
+            
+            <!-- Building a Jar of sources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- Building a Jar of JavaDoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- Building web site -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-descriptor</id>
+                        <goals>
+                            <goal>attach-descriptor</goal>
+                        </goals>
+                    </execution>
+                </executions>                   
+                <configuration>
+                    <reportPlugins>
+                        <!-- Standard maven reports -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>2.6</version>
+                        </plugin>  
+                                             
+                        <!-- JavaDoc -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>2.9</version>
+                        </plugin>
+            
+                        <!-- Java cross references -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-jxr-plugin</artifactId>
+                            <version>2.3</version>
+                        </plugin>
+
+                        <!-- Unitary tests report -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-surefire-report-plugin</artifactId>   
+                            <version>2.6</version>   
+                        </plugin>  
+
+                        <!-- Unitary tests coverage -->
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>cobertura-maven-plugin</artifactId>
+                            <version>2.5.2</version>
+                        </plugin>
+                        
+                    </reportPlugins>
+                </configuration> 
+            </plugin>
+            
+        </plugins>
+        
+    </build>
+
+</project>
+<!--
+[DEBUG] Lifecycle default -> [validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy]
+[DEBUG] Lifecycle clean -> [pre-clean, clean, post-clean]
+[DEBUG] Lifecycle site -> [pre-site, site, post-site, site-deploy]
+-->
+        
+<!-- Hg information -->
+<!--            <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>buildnumber-maven-plugin</artifactId>
+    <version>1.1</version>
+    <executions>
+        <execution>
+            <phase>validate</phase>
+            <goals>
+                <goal>create</goal>
+                <goal>hgchangeset</goal>
+            </goals>
+        </execution>
+    </executions>
+    <configuration>
+        <doCheck>false</doCheck>
+        <doUpdate>false</doUpdate>
+    </configuration>
+</plugin>   -->
+            
+<!--            <plugin>                            
+    <artifactId>maven-mercurial-build-number-plugin</artifactId>
+    <version>1.0</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>set-build-number</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>-->
+            
+<!-- Entries in Jar manifest -->
+<!--            <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <version>2.1</version>
+    <configuration>
+        <archive>
+            <manifest>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+            <manifestEntries>
+                <Implementation-Build>${buildNumber}</Implementation-Build>
+                <Mercurial-Revision>${changeSet}</Mercurial-Revision>
+            </manifestEntries>
+        </archive>
+    </configuration>
+</plugin>-->

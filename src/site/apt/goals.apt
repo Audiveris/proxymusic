@@ -1,0 +1,40 @@
+Goals
+
+ ProxyMusic allows to marshal / unmarshal Java objects in memory to / from 
+MusicXML 3.0 data in a Document, a stream or a file.
+
+ This binding provides an easy way for Java programs dealing with music symbolic 
+information (such as score scanners, music editors, music sequencers, etc) 
+to read or write files in MusicXML.
+
+Implementation
+
+ All MusicXML elements and attributes are implemented as 250+ Java classes that
+ are automatically generated from the MusicXML defining shema as found on
+{{http://www.makemusic.com/musicxml/specification}}
+
+ The main advantage of this automated approach is to result in an efficient and 
+error-free implementation.
+
+Use
+
+ The binding is made available for any Java application as a dedicated jar file.
+
+ A few examples of use:
+
+   *   A small example is available in the proxymusic.util package in the test 
+branch, its name is <<<proxymusic.util.HelloWorldTest.java>>>
+This example performs marshalling and unmarshalling of the classical HelloWorld
+as available in the MusicXML tutorial.
+
+   *   Another small example, focused on the marshalling and the unmarshalling
+of a part-list element, is available as <<<proxymusic.util.ScorePartTest.java>>> 
+
+   *   A real size example is provided by the companion <<Audiveris>> project
+available on {{http://www.audiveris.org}}.
+Audiveris is an Optical Music Recognition software (OMR) which uses ProxyMusic
+to handle the marshalling layer.
+For detailed information, refer to Audiveris <<<ScoreExporter>>> Java class.
+
+ A utility class, named <<<proxymusic.util.Marshalling>>>, is available to 
+ease the handling of both marshalling and unmarshalling. 
