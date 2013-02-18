@@ -64,24 +64,6 @@ public class Marshalling
 {
     //~ Static fields/initializers ---------------------------------------------
 
-    /** Containing package. */
-    private static final Package pmPackage = ObjectFactory.class.getPackage();
-
-    /** Precise tool name, example: "ProxyMusic". */
-    public static final String specificationTitle = (pmPackage.getSpecificationTitle() != null)
-            ? pmPackage.getSpecificationTitle()
-            : ProgramIdentification.NAME;
-
-    /** Supported MusicXML version, example: "1.1", "2.0", "3.0". */
-    public static final String specificationVersion = (pmPackage.getSpecificationVersion() != null)
-            ? pmPackage.getSpecificationVersion()
-            : ProgramIdentification.VERSION;
-
-    /** Precise revision, example: "107". */
-    public static final String implementationVersion = (pmPackage.getImplementationVersion() != null)
-            ? pmPackage.getImplementationVersion()
-            : ProgramIdentification.REVISION;
-
     /** [Un]marshalling context for use with JAXB. */
     private static JAXBContext jaxbContext;
 
@@ -96,7 +78,7 @@ public class Marshalling
     /** The DOCTYPE statement for xml. */
     private static final String DOCTYPE_LINE = "<!DOCTYPE score-partwise PUBLIC"
                                                + " \"-//Recordare//DTD MusicXML "
-                                               + specificationVersion
+                                               + ProgramId.VERSION
                                                + " Partwise//EN\"" + " \""
                                                + DTD_URL + "\">\n";
 
@@ -294,12 +276,10 @@ public class Marshalling
         ObjectFactory factory = new ObjectFactory();
 
         // Inject version
-        if (specificationVersion != null) {
-            scorePartwise.setVersion(specificationVersion);
-        }
+        scorePartwise.setVersion(ProgramId.VERSION);
 
         // Inject signature if so desired
-        if (injectSignature && (specificationTitle != null)) {
+        if (injectSignature) {
             Identification identification = scorePartwise.getIdentification();
 
             if (identification == null) {
@@ -319,8 +299,9 @@ public class Marshalling
             encoding.getEncodingDateOrEncoderOrSoftware()
                     .add(
                     factory.createEncodingSoftware(
-                    specificationTitle + " " + specificationVersion + "."
-                    + implementationVersion));
+                    ProgramId.NAME + " "
+                    + ProgramId.VERSION + "."
+                    + ProgramId.REVISION));
 
             // [Encoding]/EncodingDate
             try {

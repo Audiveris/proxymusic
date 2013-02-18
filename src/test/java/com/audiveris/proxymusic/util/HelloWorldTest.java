@@ -43,7 +43,7 @@ public class HelloWorldTest
 {
     //~ Static fields/initializers ---------------------------------------------
 
-    private static final String versionData = ProgramIdentification.VERSION;
+    private static final String versionData = ProgramId.VERSION;
 
     private static final AttrData attrData = new AttrData(
             new BigDecimal(1),
@@ -112,8 +112,8 @@ public class HelloWorldTest
         try {
             instance.tryUnmarshal();
             System.out.println(
-                    "Unmarshalling done in " + (System.currentTimeMillis() - start)
-                    + " ms");
+                    "Unmarshalling done in "
+                    + (System.currentTimeMillis() - start) + " ms");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -196,10 +196,8 @@ public class HelloWorldTest
             throws Exception
     {
         System.out.println(
-                "HelloWorldtest. " + " specificationTitle:"
-                + Marshalling.specificationTitle + " specificationVersion:"
-                + Marshalling.specificationVersion + " implementationVersion:"
-                + Marshalling.implementationVersion);
+                "HelloWorldtest. " + " name:" + ProgramId.NAME + " version:"
+                + ProgramId.VERSION + " revision:" + ProgramId.REVISION);
     }
 
     //-----------------//
@@ -353,9 +351,7 @@ public class HelloWorldTest
     {
         Dumper.dump(scr);
 
-        if (Marshalling.specificationVersion != null) {
-            assertEquals(versionData, scr.getVersion());
-        }
+        assertEquals(versionData, scr.getVersion());
 
         checkPartList(scr.getPartList());
 
@@ -372,7 +368,8 @@ public class HelloWorldTest
     //------------------//
     /**
      * Build a ScorePartwise instance from scratch, using the same musical
-     * information as provided on MusicXML site through the HelloWorldTest example.
+     * information as provided on MusicXML site through the HelloWorldTest
+     * example.
      *
      * @return the populated instance
      */

@@ -27,37 +27,40 @@ import java.util.List;
  * @author Hervé Bitteur
  */
 public class ScorePartTest
-    extends TestCase
+        extends TestCase
 {
     //~ Static fields/initializers ---------------------------------------------
 
     /**
-     *  <part-list>
-     *    <score-part id="P1">
-     *      <part-name print-object="no">Voice</part-name>
-     *      <score-instrument id="P1-I3">
-     *        <instrument-name>Voice</instrument-name>
-     *      </score-instrument>
-     *      <midi-instrument id="P1-I3">
-     *        <midi-channel>1</midi-channel>
-     *        <midi-program>55</midi-program>
-     *      </midi-instrument>
-     *    </score-part>
-     *    <score-part id="P2">
-     *      <part-name print-object="no">Guitar</part-name>
-     *      <score-instrument id="P2-I2">
-     *        <instrument-name>Acoustic Guitar (steel)</instrument-name>
-     *      </score-instrument>
-     *      <midi-instrument id="P2-I2">
-     *        <midi-channel>2</midi-channel>
-     *        <midi-program>26</midi-program>
-     *      </midi-instrument>
-     *    </score-part>
-     *  </part-list>
+     * <part-list>
+     * <score-part id="P1">
+     * <part-name print-object="no">Voice</part-name>
+     * <score-instrument id="P1-I3">
+     * <instrument-name>Voice</instrument-name>
+     * </score-instrument>
+     * <midi-instrument id="P1-I3">
+     * <midi-channel>1</midi-channel>
+     * <midi-program>55</midi-program>
+     * </midi-instrument>
+     * </score-part>
+     * <score-part id="P2">
+     * <part-name print-object="no">Guitar</part-name>
+     * <score-instrument id="P2-I2">
+     * <instrument-name>Acoustic Guitar (steel)</instrument-name>
+     * </score-instrument>
+     * <midi-instrument id="P2-I2">
+     * <midi-channel>2</midi-channel>
+     * <midi-program>26</midi-program>
+     * </midi-instrument>
+     * </score-part>
+     * </part-list>
      */
-    private static final String versionData = ProgramIdentification.VERSION;
-    private static final int        dataNb = 2;
+    private static final String versionData = ProgramId.VERSION;
+
+    private static final int dataNb = 2;
+
     private static final PartData[] partData = new PartData[dataNb];
+
     private static final InstData[] instData = new InstData[dataNb];
 
     static {
@@ -69,7 +72,6 @@ public class ScorePartTest
     }
 
     //~ Instance fields --------------------------------------------------------
-
     /** Name of the temporary XML file */
     private final String FILE_NAME = "target/score-part-test.xml";
 
@@ -77,7 +79,6 @@ public class ScorePartTest
     private final ObjectFactory factory = new ObjectFactory();
 
     //~ Methods ----------------------------------------------------------------
-
     //------//
     // main //
     //------//
@@ -87,7 +88,7 @@ public class ScorePartTest
      * @param notUsed
      */
     public static void main (String... notUsed)
-        throws Exception
+            throws Exception
     {
         ScorePartTest instance = new ScorePartTest();
         instance.setUp();
@@ -100,7 +101,7 @@ public class ScorePartTest
     //-----------------//
     @Test
     public void testBothInOrder ()
-        throws Exception
+            throws Exception
     {
         System.out.println("Calling testBothInOrder...");
         tryMarshal();
@@ -122,7 +123,7 @@ public class ScorePartTest
             ScorePartwise scorePartwise = getScorePartwise();
 
             //  Finally, marshal the proxy
-            File         xmlFile = new File(FILE_NAME);
+            File xmlFile = new File(FILE_NAME);
             OutputStream os = new FileOutputStream(xmlFile);
 
             Marshalling.marshal(scorePartwise, os);
@@ -147,8 +148,8 @@ public class ScorePartTest
 
         //  Unmarshal the proxy
         try {
-            File          xmlFile = new File(FILE_NAME);
-            InputStream   is = new FileInputStream(xmlFile);
+            File xmlFile = new File(FILE_NAME);
+            InputStream is = new FileInputStream(xmlFile);
 
             ScorePartwise scorePartwise = Marshalling.unmarshal(is);
             System.out.println("Score imported from " + xmlFile);
@@ -167,19 +168,17 @@ public class ScorePartTest
     //-------//
     @Override
     protected void setUp ()
-        throws Exception
+            throws Exception
     {
         System.out.println(
-            "ScorePartTest. " + " specificationTitle:" +
-            Marshalling.specificationTitle + " specificationVersion:" +
-            Marshalling.specificationVersion + " implementationVersion:" +
-            Marshalling.implementationVersion);
+                "ScorePartTest. " + " name:" + ProgramId.NAME + " version:"
+                + ProgramId.VERSION + " revision:" + ProgramId.REVISION);
     }
 
     //-----------//
     // checkPart //
     //-----------//
-    private void checkPart (Part     part,
+    private void checkPart (Part part,
                             PartData pData)
     {
         Object obj = part.getId();
@@ -200,9 +199,9 @@ public class ScorePartTest
 
         for (int i = 0; i < dataNb; i++) {
             checkScorePart(
-                (ScorePart) objects.get(i),
-                partData[i],
-                instData[i]);
+                    (ScorePart) objects.get(i),
+                    partData[i],
+                    instData[i]);
         }
     }
 
@@ -210,8 +209,8 @@ public class ScorePartTest
     // checkScorePart //
     //----------------//
     private void checkScorePart (ScorePart scorePart,
-                                 PartData  pData,
-                                 InstData  iData)
+                                 PartData pData,
+                                 InstData iData)
     {
         assertNotNull(scorePart);
         Dumper.dump(scorePart, "from checkScorePart");
@@ -235,8 +234,8 @@ public class ScorePartTest
 
             MidiInstrument midiInstrument = (MidiInstrument) object;
             assertEquals(
-                iData.id,
-                ((ScoreInstrument) midiInstrument.getId()).getId());
+                    iData.id,
+                    ((ScoreInstrument) midiInstrument.getId()).getId());
             assertTrue(iData.channel == midiInstrument.getMidiChannel());
             assertTrue(iData.program == midiInstrument.getMidiProgram());
         }
@@ -268,17 +267,17 @@ public class ScorePartTest
     // feedInstrument //
     //----------------//
     private void feedInstrument (ScorePart scorePart,
-                                 InstData  data)
+                                 InstData data)
     {
         ScoreInstrument scoreInstrument = factory.createScoreInstrument();
         scorePart.getScoreInstrument()
-                 .add(scoreInstrument);
+                .add(scoreInstrument);
         scoreInstrument.setId(data.id);
         scoreInstrument.setInstrumentName(data.name);
 
         MidiInstrument midiInstrument = factory.createMidiInstrument();
         scorePart.getMidiDeviceAndMidiInstrument()
-                 .add(midiInstrument);
+                .add(midiInstrument);
         midiInstrument.setId(scoreInstrument);
         midiInstrument.setMidiChannel(data.channel);
         midiInstrument.setMidiProgram(data.program);
@@ -288,11 +287,11 @@ public class ScorePartTest
     // feedScorepart //
     //---------------//
     private ScorePart feedScorepart (ScorePartwise scorePartwise,
-                                     PartData      data)
+                                     PartData data)
     {
         // Scorepart in partList
         ScorePart scorePart = factory.createScorePart();
-        PartList  partList = scorePartwise.getPartList();
+        PartList partList = scorePartwise.getPartList();
         partList.getPartGroupOrScorePart()
                 .add(scorePart);
         scorePart.setId(data.id);
@@ -305,7 +304,7 @@ public class ScorePartTest
         // ScorePart in scorePartwise
         Part part = factory.createScorePartwisePart();
         scorePartwise.getPart()
-                     .add(part);
+                .add(part);
         part.setId(scorePart);
 
         return scorePart;
@@ -327,30 +326,31 @@ public class ScorePartTest
 
         for (int i = 0; i < dataNb; i++) {
             feedInstrument(
-                feedScorepart(scorePartwise, partData[i]),
-                instData[i]);
+                    feedScorepart(scorePartwise, partData[i]),
+                    instData[i]);
         }
 
         return scorePartwise;
     }
 
     //~ Inner Classes ----------------------------------------------------------
-
     private static class InstData
     {
         //~ Instance fields ----------------------------------------------------
 
         final String id;
+
         final String name;
-        final int    channel;
-        final int    program;
+
+        final int channel;
+
+        final int program;
 
         //~ Constructors -------------------------------------------------------
-
         public InstData (String id,
                          String name,
-                         int    channel,
-                         int    program)
+                         int channel,
+                         int program)
         {
             this.id = id;
             this.name = name;
@@ -364,10 +364,10 @@ public class ScorePartTest
         //~ Instance fields ----------------------------------------------------
 
         final String id;
+
         final String name;
 
         //~ Constructors -------------------------------------------------------
-
         public PartData (String id,
                          String name)
         {
