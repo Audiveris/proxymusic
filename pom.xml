@@ -158,6 +158,25 @@
                 </executions>
             </plugin>             
             
+            <!-- Entries in Jar manifest -->
+            <!-- NOTA: For this, we need exportAntProperties to work correctly
+            and this is not yet the case for Maven 3.0.4 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Implementation-Revision>${program.revision}</Implementation-Revision>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            
             <!-- Building a Jar of sources -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -283,22 +302,4 @@
             </goals>
         </execution>
     </executions>
-</plugin>-->
-            
-<!-- Entries in Jar manifest -->
-<!--            <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-jar-plugin</artifactId>
-    <version>2.1</version>
-    <configuration>
-        <archive>
-            <manifest>
-                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-            </manifest>
-            <manifestEntries>
-                <Implementation-Build>${buildNumber}</Implementation-Build>
-                <Mercurial-Revision>${changeSet}</Mercurial-Revision>
-            </manifestEntries>
-        </archive>
-    </configuration>
 </plugin>-->
