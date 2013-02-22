@@ -14,6 +14,9 @@ import com.audiveris.proxymusic.ScorePartwise.Part;
 
 import junit.framework.TestCase;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.junit.Test;
 
 import java.io.*;
@@ -30,6 +33,9 @@ public class ScorePartTest
         extends TestCase
 {
     //~ Static fields/initializers ---------------------------------------------
+
+    /** Usual logger utility */
+    private static final Logger logger = LoggerFactory.getLogger(ScorePartTest.class);
 
     /**
      * <part-list>
@@ -103,7 +109,7 @@ public class ScorePartTest
     public void testBothInOrder ()
             throws Exception
     {
-        System.out.println("Calling testBothInOrder...");
+        logger.info("Calling testBothInOrder...");
         tryMarshal();
         tryUnmarshal();
     }
@@ -116,7 +122,7 @@ public class ScorePartTest
      */
     public void tryMarshal ()
     {
-        System.out.println("Calling tryMarshal...");
+        logger.info("Calling tryMarshal...");
 
         try {
             // Get a populated score partwise
@@ -127,7 +133,7 @@ public class ScorePartTest
             OutputStream os = new FileOutputStream(xmlFile);
 
             Marshalling.marshal(scorePartwise, os);
-            System.out.println("Score exported to " + xmlFile);
+            logger.info("Score exported to {}", xmlFile);
             os.close();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -144,7 +150,7 @@ public class ScorePartTest
      */
     public void tryUnmarshal ()
     {
-        System.out.println("Calling tryUnmarshal...");
+        logger.info("Calling tryUnmarshal...");
 
         //  Unmarshal the proxy
         try {
@@ -152,7 +158,7 @@ public class ScorePartTest
             InputStream is = new FileInputStream(xmlFile);
 
             ScorePartwise scorePartwise = Marshalling.unmarshal(is);
-            System.out.println("Score imported from " + xmlFile);
+            logger.info("Score imported from {}", xmlFile);
             is.close();
 
             // Basic dump of the java objects
@@ -170,9 +176,8 @@ public class ScorePartTest
     protected void setUp ()
             throws Exception
     {
-        System.out.println(
-                "ScorePartTest. " + " name:" + ProgramId.NAME + " version:"
-                + ProgramId.VERSION + " revision:" + ProgramId.REVISION);
+        logger.info("ScorePartTest. name:{} version:{} revision:{}",
+                ProgramId.NAME, ProgramId.VERSION, ProgramId.REVISION);
     }
 
     //-----------//
@@ -183,7 +188,7 @@ public class ScorePartTest
     {
         Object obj = part.getId();
         assertNotNull(obj);
-        Dumper.dump(obj, "from checkPart");
+        logger.info(new Dumper.Column(obj, "from checkPart", 0).toString());
     }
 
     //---------------//
@@ -192,16 +197,13 @@ public class ScorePartTest
     private void checkPartList (PartList partList)
     {
         assertNotNull(partList);
-        Dumper.dump(partList);
+        logger.info(new Dumper.Column(partList, "", 0).toString());
 
         List<Object> objects = partList.getPartGroupOrScorePart();
         assertTrue(dataNb == objects.size());
 
         for (int i = 0; i < dataNb; i++) {
-            checkScorePart(
-                    (ScorePart) objects.get(i),
-                    partData[i],
-                    instData[i]);
+            checkScorePart((ScorePart) objects.get(i), partData[i], instData[i]);
         }
     }
 
@@ -213,7 +215,7 @@ public class ScorePartTest
                                  InstData iData)
     {
         assertNotNull(scorePart);
-        Dumper.dump(scorePart, "from checkScorePart");
+        logger.info(new Dumper.Column(scorePart, "from checkScorePart", 0).toString());
 
         assertEquals(pData.id, scorePart.getId());
         assertEquals(pData.name, scorePart.getPartName().getValue());
@@ -246,12 +248,12 @@ public class ScorePartTest
     //--------------------//
     private void checkScorePartwise (ScorePartwise scr)
     {
-        Dumper.dump(scr);
+        logger.info(new Dumper.Column(scr, "", 0).toString());
         assertEquals(versionData, scr.getVersion());
 
         Identification identification = scr.getIdentification();
         assertNotNull(identification);
-        Dumper.dump(identification);
+        logger.info(new Dumper.Column(identification, "", 0).toString());
 
         checkPartList(scr.getPartList());
 

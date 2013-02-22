@@ -17,6 +17,9 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.lang.String; // Do not remove this line
 import java.math.BigDecimal;
@@ -42,6 +45,9 @@ public class HelloWorldTest
         extends TestCase
 {
     //~ Static fields/initializers ---------------------------------------------
+
+    /** Usual logger utility */
+    private static final Logger logger = LoggerFactory.getLogger(HelloWorldTest.class);
 
     private static final String versionData = ProgramId.VERSION;
 
@@ -93,13 +99,12 @@ public class HelloWorldTest
         HelloWorldTest instance = new HelloWorldTest();
         instance.setUp();
 
-        System.out.println("Building jaxbContext...");
+        logger.info("Building jaxbContext...");
 
         long start = System.currentTimeMillis();
         Marshalling.getContext();
-        System.out.println(
-                "jaxbContext built in " + (System.currentTimeMillis() - start)
-                + " ms");
+        logger.info("jaxbContext built in {} ms",
+                System.currentTimeMillis() - start);
 
         try {
             instance.tryMarshal();
@@ -111,9 +116,8 @@ public class HelloWorldTest
 
         try {
             instance.tryUnmarshal();
-            System.out.println(
-                    "Unmarshalling done in "
-                    + (System.currentTimeMillis() - start) + " ms");
+            logger.info("Unmarshalling done in {} ms",
+                    System.currentTimeMillis() - start);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -126,7 +130,7 @@ public class HelloWorldTest
     public void testBothInOrder ()
             throws Exception
     {
-        System.out.println("Calling testBothInOrder...");
+        logger.info("Calling testBothInOrder...");
         tryMarshal();
         tryUnmarshal();
     }
@@ -140,7 +144,7 @@ public class HelloWorldTest
     public void tryMarshal ()
             throws Exception
     {
-        System.out.println("Calling tryMarshal...");
+        logger.info("Calling tryMarshal...");
 
         // Get a populated score partwise
         ScorePartwise scorePartwise = getScorePartwise();
@@ -152,10 +156,9 @@ public class HelloWorldTest
 
         Marshalling.marshal(scorePartwise, os);
 
-        System.out.println(
-                "Marshalling done in " + (System.currentTimeMillis() - start)
-                + " ms");
-        System.out.println("Score exported to " + xmlFile);
+        logger.info("Marshalling done in {} ms",
+                System.currentTimeMillis() - start);
+        logger.info("Score exported to {}", xmlFile);
         os.close();
     }
 
@@ -169,7 +172,7 @@ public class HelloWorldTest
     public void tryUnmarshal ()
             throws Exception
     {
-        System.out.println("Calling tryUnmarshal...");
+        logger.info("Calling tryUnmarshal...");
 
         //  Unmarshal the proxy
         File xmlFile = new File(FILE_NAME);
@@ -178,10 +181,9 @@ public class HelloWorldTest
 
         ScorePartwise scorePartwise = Marshalling.unmarshal(is);
 
-        System.out.println(
-                "Unmarshalling done in " + (System.currentTimeMillis() - start)
-                + " ms");
-        System.out.println("Score imported from " + xmlFile);
+        logger.info("Unmarshalling done in {} ms",
+                System.currentTimeMillis() - start);
+        logger.info("Score imported from {}", xmlFile);
         is.close();
 
         // Basic check of the java objects
@@ -195,9 +197,8 @@ public class HelloWorldTest
     protected void setUp ()
             throws Exception
     {
-        System.out.println(
-                "HelloWorldtest. " + " name:" + ProgramId.NAME + " version:"
-                + ProgramId.VERSION + " revision:" + ProgramId.REVISION);
+        logger.info("HelloWorldtest. name:{} version:{} revision:{}",
+                ProgramId.NAME, ProgramId.VERSION, ProgramId.REVISION);
     }
 
     //-----------------//
@@ -207,28 +208,24 @@ public class HelloWorldTest
                                   AttrData attrData)
     {
         assertNotNull(attr);
-        Dumper.dump(attr);
+        logger.info(new Dumper.Column(attr, "", 0).toString());
 
         assertEquals(attrData.divisions, attr.getDivisions());
         assertTrue(1 == attr.getKey().size());
 
-        Key key = attr.getKey()
-                .get(0);
-        Dumper.dump(key);
+        Key key = attr.getKey().get(0);
+        logger.info(new Dumper.Column(key, "", 0).toString());
         assertEquals(attrData.fifths, key.getFifths());
 
         assertTrue(1 == attr.getTime().size());
 
-        Time time = attr.getTime()
-                .get(0);
-        Dumper.dump(time);
+        Time time = attr.getTime().get(0);
+        logger.info(new Dumper.Column(time, "", 0).toString());
 
         ///for (JAXBElement<java.lang.String> elem : time.getBeatsAndBeatType()) {
         for (JAXBElement<java.lang.String> elem : time.getTimeSignature()) {
-            Dumper.dump(elem);
-
-            java.lang.String name = elem.getName()
-                    .getLocalPart();
+            logger.info(new Dumper.Column(elem, "", 0).toString());
+            java.lang.String name = elem.getName().getLocalPart();
 
             if (name.equals("beats")) {
                 assertEquals(attrData.beats, elem.getValue());
@@ -243,9 +240,8 @@ public class HelloWorldTest
 
         assertTrue(1 == attr.getClef().size());
 
-        Clef clef = attr.getClef()
-                .get(0);
-        Dumper.dump(clef);
+        Clef clef = attr.getClef().get(0);
+        logger.info(new Dumper.Column(clef, "", 0).toString());
         assertEquals(attrData.clefSign, clef.getSign());
         assertEquals(attrData.clefLine, clef.getLine());
     }
@@ -257,7 +253,7 @@ public class HelloWorldTest
                                MeasData measData)
     {
         assertNotNull(measure);
-        Dumper.dump(measure);
+        logger.info(new Dumper.Column(measure, "", 0).toString());
         assertEquals(measData.number, measure.getNumber());
 
         assertTrue(
@@ -284,7 +280,7 @@ public class HelloWorldTest
                             NoteData noteData)
     {
         assertNotNull(note);
-        Dumper.dump(note);
+        logger.info(new Dumper.Column(note, "", 0).toString());
 
         Pitch pitch = note.getPitch();
         assertEquals(noteData.pitchStep, pitch.getStep());
@@ -305,7 +301,7 @@ public class HelloWorldTest
     {
         Object id = part.getId();
         assertNotNull(id);
-        Dumper.dump(id, "from checkPart");
+        logger.info(new Dumper.Column(id, "from checkPart", 0).toString());
 
         List<Measure> measures = part.getMeasure();
         assertTrue(partData.measures.size() == measures.size());
@@ -321,7 +317,7 @@ public class HelloWorldTest
     private void checkPartList (PartList partList)
     {
         assertNotNull(partList);
-        Dumper.dump(partList);
+        logger.info(new Dumper.Column(partList, "", 0).toString());
 
         List<Object> objects = partList.getPartGroupOrScorePart();
         assertTrue(partNb == objects.size());
@@ -338,7 +334,7 @@ public class HelloWorldTest
                                  PartData partData)
     {
         assertNotNull(scorePart);
-        Dumper.dump(scorePart, "from checkScorePart");
+        logger.info(new Dumper.Column(scorePart, "from checkScorePart", 0).toString());
 
         assertEquals(partData.id, scorePart.getId());
         assertEquals(partData.name, scorePart.getPartName().getValue());
@@ -349,7 +345,7 @@ public class HelloWorldTest
     //--------------------//
     private void checkScorePartwise (ScorePartwise scr)
     {
-        Dumper.dump(scr);
+        logger.info(new Dumper.Column(scr, "", 0).toString());
 
         assertEquals(versionData, scr.getVersion());
 

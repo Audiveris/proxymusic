@@ -14,6 +14,9 @@ import com.audiveris.proxymusic.Identification;
 import com.audiveris.proxymusic.ObjectFactory;
 import com.audiveris.proxymusic.ScorePartwise;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.w3c.dom.Node;
 
 import org.xml.sax.EntityResolver;
@@ -31,7 +34,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.String; // Don't remove this line!
 import java.util.GregorianCalendar;
-import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -63,6 +65,9 @@ import javax.xml.transform.sax.SAXSource;
 public class Marshalling
 {
     //~ Static fields/initializers ---------------------------------------------
+
+    /** Usual logger utility */
+    private static final Logger logger = LoggerFactory.getLogger(Marshalling.class);
 
     /** [Un]marshalling context for use with JAXB. */
     private static JAXBContext jaxbContext;
@@ -103,7 +108,13 @@ public class Marshalling
     };
 
     //~ Constructors -----------------------------------------------------------
-    /** Not meant to be instantiated. */
+    //
+    //-------------//
+    // Marshalling //
+    //-------------//
+    /**
+     * Not meant to be instantiated
+     */
     private Marshalling ()
     {
     }
@@ -170,7 +181,7 @@ public class Marshalling
     {
         annotate(scorePartwise, injectSignature);
 
-        /* Marshal to temporary data */
+        /** Marshal to temporary data. */
         Marshaller m = getContext()
                 .createMarshaller();
         m.setProperty(Marshaller.JAXB_FRAGMENT, true);
@@ -181,7 +192,7 @@ public class Marshalling
         m.marshal(scorePartwise, stringWriter);
         stringWriter.flush();
 
-        /** Postprocessing (to remove the xmlns:ns2 stuff) */
+        /** Postprocessing (to remove the xmlns:ns2 stuff). */
         String data = stringWriter.toString();
 
         if (true) {
@@ -193,7 +204,7 @@ public class Marshalling
 
         stringWriter.close();
 
-        /** Finally, write out data to the UTF8 stream */
+        /** Finally, write out data to the UTF8 stream. */
         Writer out = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
         out.write(XML_LINE);
         out.write(DOCTYPE_LINE);
@@ -222,8 +233,7 @@ public class Marshalling
         annotate(scorePartwise, injectSignature);
 
         // Then the object to marshal
-        Marshaller m = getContext()
-                .createMarshaller();
+        Marshaller m = getContext().createMarshaller();
         m.setProperty(Marshaller.JAXB_FRAGMENT, true);
         m.marshal(scorePartwise, node);
     }
@@ -263,8 +273,8 @@ public class Marshalling
     //----------//
     /**
      * Annotate the scorePartwise tree with information about MusicXML
-     * version and, if so desired, with information about ProxyMusic
-     * and generation date.
+     * version and, if so desired, with signature composed of
+     * ProxyMusic version and date of marshalling.
      *
      * @param scorePartwise   the tree to annotate
      * @param injectSignature if true, ProxyMusic information is added
@@ -319,11 +329,7 @@ public class Marshalling
                 encoding.getEncodingDateOrEncoderOrSoftware()
                         .add(factory.createEncodingEncodingDate(gc));
             } catch (DatatypeConfigurationException ex) {
-                Logger.getLogger(Marshalling.class.getName())
-                        .log(
-                        java.util.logging.Level.SEVERE,
-                        "Cannot encode date",
-                        ex);
+                logger.error("Cannot encode date", ex);
             }
         }
     }

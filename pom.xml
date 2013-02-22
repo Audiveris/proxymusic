@@ -78,12 +78,30 @@
     </distributionManagement>
 
     <dependencies>
+        
+        <!-- Unitary tests framework -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <version>4.11</version>
             <scope>test</scope>
         </dependency>
+        
+        <!-- Logging facade API (with no imposed binding) -->
+        <dependency> 
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+        
+        <!-- Logging bindings, just for tests -->
+        <dependency>
+            <scope>test</scope>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.0.9</version>
+        </dependency>        
+        
     </dependencies>
     
     <build>
