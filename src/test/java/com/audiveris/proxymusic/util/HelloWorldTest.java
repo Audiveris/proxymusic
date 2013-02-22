@@ -208,23 +208,23 @@ public class HelloWorldTest
                                   AttrData attrData)
     {
         assertNotNull(attr);
-        logger.info(new Dumper.Column(attr, "", 0).toString());
+        logger.info(new Dumper.Column(attr).toString());
 
         assertEquals(attrData.divisions, attr.getDivisions());
         assertTrue(1 == attr.getKey().size());
 
         Key key = attr.getKey().get(0);
-        logger.info(new Dumper.Column(key, "", 0).toString());
+        logger.info(new Dumper.Column(key).toString());
         assertEquals(attrData.fifths, key.getFifths());
 
         assertTrue(1 == attr.getTime().size());
 
         Time time = attr.getTime().get(0);
-        logger.info(new Dumper.Column(time, "", 0).toString());
+        logger.info(new Dumper.Column(time).toString());
 
         ///for (JAXBElement<java.lang.String> elem : time.getBeatsAndBeatType()) {
         for (JAXBElement<java.lang.String> elem : time.getTimeSignature()) {
-            logger.info(new Dumper.Column(elem, "", 0).toString());
+            logger.info(new Dumper.Column(elem).toString());
             java.lang.String name = elem.getName().getLocalPart();
 
             if (name.equals("beats")) {
@@ -241,7 +241,7 @@ public class HelloWorldTest
         assertTrue(1 == attr.getClef().size());
 
         Clef clef = attr.getClef().get(0);
-        logger.info(new Dumper.Column(clef, "", 0).toString());
+        logger.info(new Dumper.Column(clef).toString());
         assertEquals(attrData.clefSign, clef.getSign());
         assertEquals(attrData.clefLine, clef.getLine());
     }
@@ -253,7 +253,7 @@ public class HelloWorldTest
                                MeasData measData)
     {
         assertNotNull(measure);
-        logger.info(new Dumper.Column(measure, "", 0).toString());
+        logger.info(new Dumper.Column(measure).toString());
         assertEquals(measData.number, measure.getNumber());
 
         assertTrue(
@@ -280,7 +280,7 @@ public class HelloWorldTest
                             NoteData noteData)
     {
         assertNotNull(note);
-        logger.info(new Dumper.Column(note, "", 0).toString());
+        logger.info(new Dumper.Column(note).toString());
 
         Pitch pitch = note.getPitch();
         assertEquals(noteData.pitchStep, pitch.getStep());
@@ -317,7 +317,7 @@ public class HelloWorldTest
     private void checkPartList (PartList partList)
     {
         assertNotNull(partList);
-        logger.info(new Dumper.Column(partList, "", 0).toString());
+        logger.info(new Dumper.Column(partList).toString());
 
         List<Object> objects = partList.getPartGroupOrScorePart();
         assertTrue(partNb == objects.size());
@@ -345,7 +345,7 @@ public class HelloWorldTest
     //--------------------//
     private void checkScorePartwise (ScorePartwise scr)
     {
-        logger.info(new Dumper.Column(scr, "", 0).toString());
+        logger.info(new Dumper.Column(scr).toString());
 
         assertEquals(versionData, scr.getVersion());
 

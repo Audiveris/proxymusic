@@ -159,11 +159,11 @@
                                 <property name="program.version"
                                           value="${project.version}">
                                 </property>
-                                <ant antfile="src/main/resources/ant-tasks.xml" 
+                                <ant antfile="ant-tasks.xml" 
                                      dir="${basedir}" 
                                      target="generate-program-id"
                                      inheritRefs="true" />
-                                <ant antfile="src/main/resources/ant-tasks.xml"
+                                <ant antfile="ant-tasks.xml"
                                      dir="${basedir}" 
                                      target="generate-java-classes" 
                                      inheritRefs="true" />

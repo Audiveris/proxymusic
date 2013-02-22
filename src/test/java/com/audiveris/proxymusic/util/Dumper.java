@@ -437,6 +437,23 @@ public abstract class Dumper
 
         //~ Constructors -------------------------------------------------------
 
+        public Column (Object obj)
+        {
+            this(obj, null, 0);
+        }
+
+        public Column (Object obj,
+                       String title)
+        {
+            this(obj, title, 0);
+        }
+
+        public Column (Object obj,
+                       int    level)
+        {
+            this(obj, null, level);
+        }
+
         public Column (Object obj,
                        String title,
                        int    level)

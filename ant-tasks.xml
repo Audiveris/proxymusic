@@ -77,7 +77,7 @@ public class ProgramId
             depends="generate-package-html"
             description="Generate Java classes from MusicXML schema">
         <echo message="-- Generating Java classes from Schema ..." />
-        <property name="xsd.dir" location="${basedir}/src/main/resources" /> 
+        <property name="xsd.dir" location="${basedir}/src/main/schema" /> 
 
         <!-- Not using ant task (no need for JAXB RI)-->
         <exec executable="${java.home}/../bin/xjc.exe">

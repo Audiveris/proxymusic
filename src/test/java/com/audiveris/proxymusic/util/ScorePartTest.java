@@ -188,7 +188,7 @@ public class ScorePartTest
     {
         Object obj = part.getId();
         assertNotNull(obj);
-        logger.info(new Dumper.Column(obj, "from checkPart", 0).toString());
+        logger.info(new Dumper.Column(obj, "from checkPart").toString());
     }
 
     //---------------//
@@ -197,7 +197,7 @@ public class ScorePartTest
     private void checkPartList (PartList partList)
     {
         assertNotNull(partList);
-        logger.info(new Dumper.Column(partList, "", 0).toString());
+        logger.info(new Dumper.Column(partList).toString());
 
         List<Object> objects = partList.getPartGroupOrScorePart();
         assertTrue(dataNb == objects.size());
@@ -215,7 +215,7 @@ public class ScorePartTest
                                  InstData iData)
     {
         assertNotNull(scorePart);
-        logger.info(new Dumper.Column(scorePart, "from checkScorePart", 0).toString());
+        logger.info(new Dumper.Column(scorePart, "from checkScorePart").toString());
 
         assertEquals(pData.id, scorePart.getId());
         assertEquals(pData.name, scorePart.getPartName().getValue());
@@ -248,12 +248,12 @@ public class ScorePartTest
     //--------------------//
     private void checkScorePartwise (ScorePartwise scr)
     {
-        logger.info(new Dumper.Column(scr, "", 0).toString());
+        logger.info(new Dumper.Column(scr).toString());
         assertEquals(versionData, scr.getVersion());
 
         Identification identification = scr.getIdentification();
         assertNotNull(identification);
-        logger.info(new Dumper.Column(identification, "", 0).toString());
+        logger.info(new Dumper.Column(identification).toString());
 
         checkPartList(scr.getPartList());
 
