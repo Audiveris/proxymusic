@@ -44,7 +44,7 @@ import javax.xml.bind.JAXBElement;
 public class HelloWorldTest
         extends TestCase
 {
-    //~ Static fields/initializers ---------------------------------------------
+    //~ Static fields/initializers -----------------------------------------------------------------
 
     /** Usual logger utility */
     private static final Logger logger = LoggerFactory.getLogger(HelloWorldTest.class);
@@ -59,16 +59,19 @@ public class HelloWorldTest
             ClefSign.G,
             new BigInteger("2"));
 
-    private static final NoteData noteData = new NoteData(
-            Step.C,
-            4,
-            new BigDecimal(4),
-            "whole");
+    private static final NoteData[] noteData = new NoteData[]{
+        // 0
+        new NoteData(Step.C, 4, new BigDecimal(4), "whole"),
+        // 1
+        new NoteData(Step.E, 4, new BigDecimal(4), "whole"),
+        // 2
+        new NoteData(Step.G, 4, new BigDecimal(4), "whole")
+    };
 
     private static final MeasData[] measData = new MeasData[]{
         new MeasData(
         "1",
-        Arrays.asList(attrData, noteData))
+        Arrays.asList(attrData, noteData[0], noteData[1], noteData[2]))
     };
 
     private static final PartData[] partData = new PartData[]{
@@ -80,11 +83,11 @@ public class HelloWorldTest
 
     private static final int partNb = partData.length;
 
-    //~ Instance fields --------------------------------------------------------
+    //~ Instance fields ----------------------------------------------------------------------------
     /** Name of the temporary XML file */
     private final String FILE_NAME = "target/hello-world-test.xml";
 
-    //~ Methods ----------------------------------------------------------------
+    //~ Methods ------------------------------------------------------------------------------------
     //------//
     // main //
     //------//
@@ -103,8 +106,7 @@ public class HelloWorldTest
 
         long start = System.currentTimeMillis();
         Marshalling.getContext();
-        logger.info("jaxbContext built in {} ms",
-                System.currentTimeMillis() - start);
+        logger.info("jaxbContext built in {} ms", System.currentTimeMillis() - start);
 
         try {
             instance.tryMarshal();
@@ -116,8 +118,7 @@ public class HelloWorldTest
 
         try {
             instance.tryUnmarshal();
-            logger.info("Unmarshalling done in {} ms",
-                    System.currentTimeMillis() - start);
+            logger.info("Unmarshalling done in {} ms", System.currentTimeMillis() - start);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -154,10 +155,9 @@ public class HelloWorldTest
         OutputStream os = new FileOutputStream(xmlFile);
         long start = System.currentTimeMillis();
 
-        Marshalling.marshal(scorePartwise, os);
+        Marshalling.marshal(scorePartwise, os, true, 2);
 
-        logger.info("Marshalling done in {} ms",
-                System.currentTimeMillis() - start);
+        logger.info("Marshalling done in {} ms", System.currentTimeMillis() - start);
         logger.info("Score exported to {}", xmlFile);
         os.close();
     }
@@ -181,8 +181,7 @@ public class HelloWorldTest
 
         ScorePartwise scorePartwise = Marshalling.unmarshal(is);
 
-        logger.info("Unmarshalling done in {} ms",
-                System.currentTimeMillis() - start);
+        logger.info("Unmarshalling done in {} ms", System.currentTimeMillis() - start);
         logger.info("Score imported from {}", xmlFile);
         is.close();
 
@@ -197,8 +196,11 @@ public class HelloWorldTest
     protected void setUp ()
             throws Exception
     {
-        logger.info("HelloWorldtest. name:{} version:{} revision:{}",
-                ProgramId.NAME, ProgramId.VERSION, ProgramId.REVISION);
+        logger.info(
+                "HelloWorldtest. name:{} version:{} revision:{}",
+                ProgramId.NAME,
+                ProgramId.VERSION,
+                ProgramId.REVISION);
     }
 
     //-----------------//
@@ -225,6 +227,7 @@ public class HelloWorldTest
         ///for (JAXBElement<java.lang.String> elem : time.getBeatsAndBeatType()) {
         for (JAXBElement<java.lang.String> elem : time.getTimeSignature()) {
             logger.info(new Dumper.Column(elem).toString());
+
             java.lang.String name = elem.getName().getLocalPart();
 
             if (name.equals("beats")) {
@@ -232,9 +235,7 @@ public class HelloWorldTest
             } else if (name.equals("beat-type")) {
                 assertEquals(attrData.beatType, elem.getValue());
             } else {
-                fail(
-                        "Unexpected attribute " + "name=" + name + " value="
-                        + elem.getValue());
+                fail("Unexpected attribute " + "name=" + name + " value=" + elem.getValue());
             }
         }
 
@@ -256,21 +257,16 @@ public class HelloWorldTest
         logger.info(new Dumper.Column(measure).toString());
         assertEquals(measData.number, measure.getNumber());
 
-        assertTrue(
-                measData.objects.size() == measure.getNoteOrBackupOrForward().size());
+        assertTrue(measData.objects.size() == measure.getNoteOrBackupOrForward().size());
 
-        for (int i = 0; i < measData.objects.size(); i++) {
-            Object obj = measure.getNoteOrBackupOrForward()
-                    .get(i);
-
-            if (obj instanceof Attributes) {
-                checkAttributes(
-                        (Attributes) obj,
-                        (AttrData) measData.objects.get(i));
-            } else if (obj instanceof Note) {
-                checkNote((Note) obj, (NoteData) measData.objects.get(i));
-            }
-        }
+        Object obj = measure.getNoteOrBackupOrForward().get(0);
+        checkAttributes((Attributes) obj, (AttrData) measData.objects.get(0));
+        obj = measure.getNoteOrBackupOrForward().get(1);
+        checkNote((Note) obj, (NoteData) measData.objects.get(1));
+        obj = measure.getNoteOrBackupOrForward().get(2);
+        checkNote((Note) obj, (NoteData) measData.objects.get(2));
+        obj = measure.getNoteOrBackupOrForward().get(3);
+        checkNote((Note) obj, (NoteData) measData.objects.get(3));
     }
 
     //-----------//
@@ -363,9 +359,8 @@ public class HelloWorldTest
     // getScorePartwise //
     //------------------//
     /**
-     * Build a ScorePartwise instance from scratch, using the same musical
-     * information as provided on MusicXML site through the HelloWorldTest
-     * example.
+     * Build a ScorePartwise instance from scratch, using the similar information as
+     * provided on MusicXML site through the HelloWorldTest example.
      *
      * @return the populated instance
      */
@@ -379,15 +374,13 @@ public class HelloWorldTest
 
         // No Version, we leave this to ProxyMusic
         ///scorePartwise.setVersion("1.1");
-
         // PartList
         PartList partList = factory.createPartList();
         scorePartwise.setPartList(partList);
 
         // Scorepart in partList
         ScorePart scorePart = factory.createScorePart();
-        partList.getPartGroupOrScorePart()
-                .add(scorePart);
+        partList.getPartGroupOrScorePart().add(scorePart);
         scorePart.setId("P1");
 
         PartName partName = factory.createPartName();
@@ -396,50 +389,41 @@ public class HelloWorldTest
 
         // ScorePart in scorePartwise
         ScorePartwise.Part part = factory.createScorePartwisePart();
-        scorePartwise.getPart()
-                .add(part);
+        scorePartwise.getPart().add(part);
         part.setId(scorePart);
 
         // Measure
         Measure measure = factory.createScorePartwisePartMeasure();
-        part.getMeasure()
-                .add(measure);
+        part.getMeasure().add(measure);
         measure.setNumber("1");
 
         // Attributes
         Attributes attributes = factory.createAttributes();
-        measure.getNoteOrBackupOrForward()
-                .add(attributes);
+        measure.getNoteOrBackupOrForward().add(attributes);
 
         // Divisions
         attributes.setDivisions(new BigDecimal(1));
 
         // Key
         Key key = factory.createKey();
-        attributes.getKey()
-                .add(key);
+        attributes.getKey().add(key);
         key.setFifths(new BigInteger("0"));
 
         // Time
         Time time = factory.createTime();
-        attributes.getTime()
-                .add(time);
-        time.getTimeSignature()
-                .add(factory.createTimeBeats("4"));
-        time.getTimeSignature()
-                .add(factory.createTimeBeatType("4"));
+        attributes.getTime().add(time);
+        time.getTimeSignature().add(factory.createTimeBeats("4"));
+        time.getTimeSignature().add(factory.createTimeBeatType("4"));
 
         // Clef
         Clef clef = factory.createClef();
-        attributes.getClef()
-                .add(clef);
+        attributes.getClef().add(clef);
         clef.setSign(ClefSign.G);
         clef.setLine(new BigInteger("2"));
 
-        // Note
+        // Note 0 ---
         Note note = factory.createNote();
-        measure.getNoteOrBackupOrForward()
-                .add(note);
+        measure.getNoteOrBackupOrForward().add(note);
 
         // Pitch
         Pitch pitch = factory.createPitch();
@@ -455,10 +439,48 @@ public class HelloWorldTest
         type.setValue("whole");
         note.setType(type);
 
+        // Note 1 ---
+        note = factory.createNote();
+        measure.getNoteOrBackupOrForward().add(note);
+        note.setChord(new Empty());
+
+        // Pitch
+        pitch = factory.createPitch();
+        note.setPitch(pitch);
+        pitch.setStep(Step.E);
+        pitch.setOctave(4);
+
+        // Duration
+        note.setDuration(new BigDecimal(4));
+
+        // Type
+        type = factory.createNoteType();
+        type.setValue("whole");
+        note.setType(type);
+
+        // Note 2 ---
+        note = factory.createNote();
+        measure.getNoteOrBackupOrForward().add(note);
+        note.setChord(new Empty());
+
+        // Pitch
+        pitch = factory.createPitch();
+        note.setPitch(pitch);
+        pitch.setStep(Step.G);
+        pitch.setOctave(4);
+
+        // Duration
+        note.setDuration(new BigDecimal(4));
+
+        // Type
+        type = factory.createNoteType();
+        type.setValue("whole");
+        note.setType(type);
+
         return scorePartwise;
     }
 
-    //~ Inner Classes ----------------------------------------------------------
+    //~ Inner Classes ------------------------------------------------------------------------------
     /**
      * <score-partwise xmlns:ns2="http://www.w3.org/1999/xlink" version="2.0">
      * <identification>
@@ -502,7 +524,7 @@ public class HelloWorldTest
      */
     private static class AttrData
     {
-        //~ Instance fields ----------------------------------------------------
+        //~ Instance fields ------------------------------------------------------------------------
 
         final BigDecimal divisions;
 
@@ -516,7 +538,7 @@ public class HelloWorldTest
 
         final BigInteger clefLine;
 
-        //~ Constructors -------------------------------------------------------
+        //~ Constructors ---------------------------------------------------------------------------
         public AttrData (BigDecimal divisions,
                          BigInteger fifths,
                          String beats,
@@ -535,13 +557,13 @@ public class HelloWorldTest
 
     private static class MeasData
     {
-        //~ Instance fields ----------------------------------------------------
+        //~ Instance fields ------------------------------------------------------------------------
 
         final String number;
 
         final List<Object> objects;
 
-        //~ Constructors -------------------------------------------------------
+        //~ Constructors ---------------------------------------------------------------------------
         public MeasData (String number,
                          List<Object> objects)
         {
@@ -552,7 +574,7 @@ public class HelloWorldTest
 
     private static class NoteData
     {
-        //~ Instance fields ----------------------------------------------------
+        //~ Instance fields ------------------------------------------------------------------------
 
         final Step pitchStep;
 
@@ -562,7 +584,7 @@ public class HelloWorldTest
 
         final String type;
 
-        //~ Constructors -------------------------------------------------------
+        //~ Constructors ---------------------------------------------------------------------------
         public NoteData (Step pitchStep,
                          int pitchOctave,
                          BigDecimal duration,
@@ -577,7 +599,7 @@ public class HelloWorldTest
 
     private static class PartData
     {
-        //~ Instance fields ----------------------------------------------------
+        //~ Instance fields ------------------------------------------------------------------------
 
         final String id;
 
@@ -585,7 +607,7 @@ public class HelloWorldTest
 
         final List<MeasData> measures;
 
-        //~ Constructors -------------------------------------------------------
+        //~ Constructors ---------------------------------------------------------------------------
         public PartData (String id,
                          String name,
                          List<MeasData> measures)

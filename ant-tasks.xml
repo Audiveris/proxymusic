@@ -57,35 +57,17 @@ public class ProgramId
         </echo> 
     </target>
     
-    <!-- generate-package-html -->
-    <target name="generate-package-html"
-            description="Write a package.html for generated classes">
-        <echo message="-- Writing to file ${generated.src.dir}/com/audiveris/proxymusic/package.html" />        
-        <mkdir dir="${generated.src.dir}/com/audiveris/proxymusic" />
-        <echo file="${generated.src.dir}/com/audiveris/proxymusic/package.html"><![CDATA[<!DOCTYPE html>
-<html>
-    <body>
-	Java classes generated from MusicXML schema
-    </body>
-</html>
-]]>
-        </echo>        
-    </target>
-    
     <!-- generate-java-classes -->
     <target name="generate-java-classes"
-            depends="generate-package-html"
             description="Generate Java classes from MusicXML schema">
         <echo message="-- Generating Java classes from Schema ..." />
         <property name="xsd.dir" location="${basedir}/src/main/schema" /> 
 
         <!-- Not using ant task (no need for JAXB RI)-->
         <exec executable="${java.home}/../bin/xjc.exe">
-            <!--            <arg line="-verbose"/>-->
             <arg line="-p com.audiveris.proxymusic"/>
             <arg line="-d ${generated.src.dir}"/>
             <arg line="-no-header"/>
-            <!--   	    <arg line="-extension"/>  -->
             <arg line="-b ${xsd.dir}/custom.xjb"/>
             <arg line="${xsd.dir}/musicxml.fixed.xsd"/>
         </exec>

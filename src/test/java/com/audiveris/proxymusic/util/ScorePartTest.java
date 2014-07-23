@@ -132,7 +132,7 @@ public class ScorePartTest
             File xmlFile = new File(FILE_NAME);
             OutputStream os = new FileOutputStream(xmlFile);
 
-            Marshalling.marshal(scorePartwise, os);
+            Marshalling.marshal(scorePartwise, os, true, 2);
             logger.info("Score exported to {}", xmlFile);
             os.close();
         } catch (Exception ex) {

@@ -59,6 +59,12 @@
         <url>http://kenai.com/jira/browse/PROXYMUSIC/</url>
     </issueManagement>
     
+    <!-- Continuous integration -->
+<!--    <ciManagement>
+        <system>hudson</system>
+        <url>http://PC-BUREAU:8080/job/ProxyMusic/</url>
+    </ciManagement>-->
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
