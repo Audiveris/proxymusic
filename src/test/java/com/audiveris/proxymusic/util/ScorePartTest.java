@@ -160,7 +160,7 @@ public class ScorePartTest
             File xmlFile = new File(TEMP_DIR, FILE_NAME);
             InputStream is = new FileInputStream(xmlFile);
 
-            ScorePartwise scorePartwise = Marshalling.unmarshal(is);
+            ScorePartwise scorePartwise = (ScorePartwise) Marshalling.unmarshal(is);
             logger.info("Score imported from {}", xmlFile);
             is.close();
 

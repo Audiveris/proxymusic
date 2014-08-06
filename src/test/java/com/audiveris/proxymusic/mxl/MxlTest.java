@@ -101,7 +101,7 @@ public class MxlTest
         RootFile first = mif.getRootFiles().get(0);
         ZipEntry zipEntry = mif.getEntry(first.fullPath);
         InputStream is = mif.getInputStream(zipEntry);
-        ScorePartwise newScorePartwise = Marshalling.unmarshal(is);
+        ScorePartwise newScorePartwise = (ScorePartwise) Marshalling.unmarshal(is);
         System.out.println(new Dumper.Column(newScorePartwise).toString());
         System.out.println(new Dumper.Column(newScorePartwise.getIdentification()).toString());
         System.out.println("Unmarshalled.");

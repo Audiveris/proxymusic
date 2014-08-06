@@ -188,8 +188,7 @@ public class HelloWorldTest
         InputStream is = new FileInputStream(xmlFile);
         long start = System.currentTimeMillis();
 
-        ///ScorePartwise scorePartwise = Marshalling.unmarshal(is);
-        ScorePartwise scorePartwise = (ScorePartwise) Marshalling.unmarshalAny(is);
+        ScorePartwise scorePartwise = (ScorePartwise) Marshalling.unmarshal(is);
 
         logger.info("Unmarshalling done in {} ms", System.currentTimeMillis() - start);
         logger.info("Score imported from {}", xmlFile);

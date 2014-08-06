@@ -19,18 +19,11 @@ import com.audiveris.proxymusic.opus.Opus;
 
 import org.w3c.dom.Node;
 
-import org.xml.sax.EntityResolver;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringBufferInputStream;
-import java.io.StringReader;
 import java.io.Writer;
 import java.lang.String; // Don't remove this line!
 import java.util.GregorianCalendar;
@@ -47,8 +40,6 @@ import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
@@ -57,7 +48,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import javax.xml.transform.sax.SAXSource;
 
 /**
  * Class {@code Marshalling} gathers static methods to marshal and to un-marshal {@link
@@ -96,26 +86,6 @@ public class Marshalling
     private static final String OPUS_DOCTYPE_LINE = "<!DOCTYPE opus PUBLIC"
                                                     + " \"-//Recordare//DTD MusicXML 3.0 Opus//EN\""
                                                     + " \"" + DTDS_URL + "/opus.dtd\">";
-
-    /**
-     * Specific entity resolver to filter out the DTDS_URL.
-     */
-    private static final EntityResolver filteringEntityResolver = new EntityResolver()
-    {
-        @Override
-        public InputSource resolveEntity (final String publicId,
-                                          final String systemId)
-                throws SAXException, IOException
-        {
-            if (systemId.startsWith(DTDS_URL)) {
-                // Return an empty input source
-                return new InputSource(new StringReader(""));
-            } else {
-                // Use the default behavior
-                return null;
-            }
-        }
-    };
 
     private static final XMLResolver filteringXMLResolver = new XMLResolver()
     {
@@ -295,43 +265,14 @@ public class Marshalling
     // unmarshal //
     //-----------//
     /**
-     * Un-marshal a ScorePartwise instance from an InputStream.
-     * <b>Nota:</b> The URLs of MusicXML DTD are specifically ignored by this method.
-     *
-     * @param is the input stream
-     * @return the scorePartwise root element
-     * @throws UnmarshallingException global exception (use getCause() for original exception)
-     */
-    public static ScorePartwise unmarshal (final InputStream is)
-            throws UnmarshallingException
-    {
-        try {
-            SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-            XMLReader xmlReader = saxParser.getXMLReader();
-            xmlReader.setEntityResolver(filteringEntityResolver);
-
-            SAXSource saxSource = new SAXSource(xmlReader, new InputSource(is));
-            Unmarshaller um = getContext(ScorePartwise.class).createUnmarshaller();
-            ScorePartwise partwise = (ScorePartwise) um.unmarshal(saxSource);
-
-            return partwise;
-        } catch (Exception ex) {
-            throw new UnmarshallingException(ex);
-        }
-    }
-
-    //--------------//
-    // unmarshalAny //
-    //--------------//
-    /**
-     * Un-marshal a ScorePartwise instance from an InputStream.
+     * Un-marshal a ScorePartwise instance or an Opus instance from an InputStream.
      * <b>Nota:</b> The URLs of MusicXML DTD are specifically ignored by this method.
      *
      * @param is the input stream
      * @return the root element (either Opus or ScorePartwise object)
      * @throws UnmarshallingException global exception (use getCause() for original exception)
      */
-    public static Object unmarshalAny (final InputStream is)
+    public static Object unmarshal (final InputStream is)
             throws UnmarshallingException
     {
         try {
@@ -366,37 +307,6 @@ public class Marshalling
             }
 
             return null;
-        } catch (Exception ex) {
-            throw new UnmarshallingException(ex);
-        }
-    }
-
-    //---------------//
-    // unmarshalOpus //
-    //---------------//
-    /**
-     * Un-marshal an Opus instance from an InputStream.
-     * <b>Nota:</b> The URLs of MusicXML DTD are specifically ignored by this method.
-     *
-     * @param is the input stream
-     * @return the opus root element
-     * @throws UnmarshallingException global exception (use getCause() for original exception)
-     */
-    public static Opus unmarshalOpus (final InputStream is)
-            throws UnmarshallingException
-    {
-        try {
-            SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-            XMLReader xmlReader = saxParser.getXMLReader();
-            xmlReader.setEntityResolver(filteringEntityResolver);
-
-            SAXSource saxSource = new SAXSource(xmlReader, new InputSource(is));
-            Unmarshaller um = getContext(Opus.class).createUnmarshaller();
-
-            JAXBElement<Opus> root = um.unmarshal(saxSource, Opus.class);
-            Opus opus = root.getValue();
-
-            return opus;
         } catch (Exception ex) {
             throw new UnmarshallingException(ex);
         }
@@ -513,6 +423,7 @@ public class Marshalling
 //     * href="http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java">Author
 //     * article</a>
 //     */
+//    @Deprecated
 //    public static String prettyFormat (String input,
 //                                       int indent)
 //            throws FormattingException
@@ -534,3 +445,85 @@ public class Marshalling
 //            throw new FormattingException(ex);
 //        }
 //    }
+//
+//    //---------------//
+//    // unmarshalOpus //
+//    //---------------//
+//    /**
+//     * Un-marshal an Opus instance from an InputStream.
+//     * <b>Nota:</b> The URLs of MusicXML DTD are specifically ignored by this method.
+//     *
+//     * @param is the input stream
+//     * @return the opus root element
+//     * @throws UnmarshallingException global exception (use getCause() for original exception)
+//     */
+//    @Deprecated
+//    public static Opus unmarshalOpus (final InputStream is)
+//            throws UnmarshallingException
+//    {
+//        try {
+//            SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+//            XMLReader xmlReader = saxParser.getXMLReader();
+//            xmlReader.setEntityResolver(filteringEntityResolver);
+//
+//            SAXSource saxSource = new SAXSource(xmlReader, new InputSource(is));
+//            Unmarshaller um = getContext(Opus.class).createUnmarshaller();
+//
+//            JAXBElement<Opus> root = um.unmarshal(saxSource, Opus.class);
+//            Opus opus = root.getValue();
+//
+//            return opus;
+//        } catch (Exception ex) {
+//            throw new UnmarshallingException(ex);
+//        }
+//    }
+//
+//    //-------------------//
+//    // unmarshalPartwise //
+//    //-------------------//
+//    /**
+//     * Un-marshal a ScorePartwise instance from an InputStream.
+//     * <b>Nota:</b> The URLs of MusicXML DTD are specifically ignored by this method.
+//     *
+//     * @param is the input stream
+//     * @return the scorePartwise root element
+//     * @throws UnmarshallingException global exception (use getCause() for original exception)
+//     */
+//    @Deprecated
+//    public static ScorePartwise unmarshalPartwise (final InputStream is)
+//            throws UnmarshallingException
+//    {
+//        try {
+//            SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+//            XMLReader xmlReader = saxParser.getXMLReader();
+//            xmlReader.setEntityResolver(filteringEntityResolver);
+//
+//            SAXSource saxSource = new SAXSource(xmlReader, new InputSource(is));
+//            Unmarshaller um = getContext(ScorePartwise.class).createUnmarshaller();
+//            ScorePartwise partwise = (ScorePartwise) um.unmarshal(saxSource);
+//
+//            return partwise;
+//        } catch (Exception ex) {
+//            throw new UnmarshallingException(ex);
+//        }
+//    }
+//
+//    /**
+//     * Specific entity resolver to filter out the DTDS_URL.
+//     */
+//    private static final EntityResolver filteringEntityResolver = new EntityResolver()
+//    {
+//        @Override
+//        public InputSource resolveEntity (final String publicId,
+//                                          final String systemId)
+//                throws SAXException, IOException
+//        {
+//            if (systemId.startsWith(DTDS_URL)) {
+//                // Return an empty input source
+//                return new InputSource(new StringReader(""));
+//            } else {
+//                // Use the default behavior
+//                return null;
+//            }
+//        }
+//    };

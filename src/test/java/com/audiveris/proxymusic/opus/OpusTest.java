@@ -77,8 +77,7 @@ public class OpusTest
 
         // Un-marshal
         InputStream is = new FileInputStream(file);
-        ///Opus newOpus = Marshalling.unmarshalOpus(is);
-        Opus newOpus = (Opus) Marshalling.unmarshalAny(is);
+        Opus newOpus = (Opus) Marshalling.unmarshal(is);
         System.out.println(new Dumper.Column(newOpus).toString());
     }
 }
