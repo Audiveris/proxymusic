@@ -2,7 +2,7 @@
 //                                                                            //
 //                         S c o r e P a r t T e s t                          //
 //                                                                            //
-//  Copyright © Hervé Bitteur and others 2000-2013. All rights reserved.      //
+//  Copyright © Hervé Bitteur and others 2000-2014. All rights reserved.      //
 //  This software is released under the GNU Lesser General Public License.    //
 //  Please see http://kenai.com/projects/proxymusic/ for bugs & suggestions.  //
 //----------------------------------------------------------------------------//
@@ -78,11 +78,14 @@ public class ScorePartTest
     }
 
     //~ Instance fields --------------------------------------------------------
-    /** Name of the temporary XML file */
-    private final String FILE_NAME = "target/score-part-test.xml";
-
     /** Factory for all proxymusic elements */
     private final ObjectFactory factory = new ObjectFactory();
+
+    /** Temporary area. */
+    private static final File TEMP_DIR = new File("target/temp");
+
+    /** Name of the temporary XML file. */
+    private static final String FILE_NAME = "score-part-test.xml";
 
     //~ Methods ----------------------------------------------------------------
     //------//
@@ -129,7 +132,7 @@ public class ScorePartTest
             ScorePartwise scorePartwise = getScorePartwise();
 
             //  Finally, marshal the proxy
-            File xmlFile = new File(FILE_NAME);
+            File xmlFile = new File(TEMP_DIR, FILE_NAME);
             OutputStream os = new FileOutputStream(xmlFile);
 
             Marshalling.marshal(scorePartwise, os, true, 2);
@@ -154,7 +157,7 @@ public class ScorePartTest
 
         //  Unmarshal the proxy
         try {
-            File xmlFile = new File(FILE_NAME);
+            File xmlFile = new File(TEMP_DIR, FILE_NAME);
             InputStream is = new FileInputStream(xmlFile);
 
             ScorePartwise scorePartwise = Marshalling.unmarshal(is);
@@ -178,6 +181,9 @@ public class ScorePartTest
     {
         logger.info("ScorePartTest. name:{} version:{} revision:{}",
                 ProgramId.NAME, ProgramId.VERSION, ProgramId.REVISION);
+
+        // Make sure the temp directory exists
+        TEMP_DIR.mkdirs();
     }
 
     //-----------//

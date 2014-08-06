@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -11,23 +11,20 @@
 
     <name>ProxyMusic</name>
     <url>http://kenai.com/projects/proxymusic</url>
-    <description>
-        ProxyMusic provides a binding between Java objects in memory and
-        data formatted according to MusicXML 3.0
-    </description>
-    
+    <description>ProxyMusic provides a binding between Java objects in memory and data formatted according to MusicXML 3.0</description>
+
     <licenses>
         <license>
             <name>GNU General Lesser Public License (LGPL) version 2.1</name>
             <url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
         </license>
     </licenses>
-    
+
     <organization>
         <name>Audiveris Ltd</name>
         <url>http://www.audiveris.org</url>
     </organization>
-    
+
     <developers>
         <developer>
             <id>hbitteur</id>
@@ -45,30 +42,30 @@
             </properties>
         </developer>
     </developers>
-    
+
     <!-- Source Code Management -->
     <scm>
         <connection>scm:hg:https://hg.kenai.com/hg/proxymusic~hg</connection>
         <developerConnection>scm:hg:https://hg.kenai.com/hg/proxymusic~hg</developerConnection>
         <url>https://hg.kenai.com/hg/proxymusic~hg</url>
     </scm>
-    
+
     <!-- Issue management -->
     <issueManagement>
         <system>Jira</system>
         <url>http://kenai.com/jira/browse/PROXYMUSIC/</url>
     </issueManagement>
-    
+
     <!-- Continuous integration -->
-<!--    <ciManagement>
+    <!--    <ciManagement>
         <system>hudson</system>
         <url>http://PC-BUREAU:8080/job/ProxyMusic/</url>
     </ciManagement>-->
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
     <distributionManagement>
         <!-- Location where site is deployed - username/password for site.deployments in server.xml -->
         <site>
@@ -84,7 +81,7 @@
     </distributionManagement>
 
     <dependencies>
-        
+
         <!-- Unitary tests framework -->
         <dependency>
             <groupId>junit</groupId>
@@ -92,28 +89,28 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-        
+
         <!-- Logging facade API (with no imposed binding) -->
-        <dependency> 
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.2</version>
         </dependency>
-        
+
         <!-- Logging bindings, just for tests -->
         <dependency>
             <scope>test</scope>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.0.9</version>
-        </dependency>        
-        
+        </dependency>
+
     </dependencies>
-    
+
     <build>
         <defaultGoal>install</defaultGoal>
         <!--        <finalName>${project.name}-${project.version}-r${hg-revision}</finalName>-->
-        
+
         <extensions>
             <!-- For deploying using webdav -->
             <extension>
@@ -122,9 +119,9 @@
                 <version>2.3</version>
             </extension>
         </extensions>
-        
+
         <plugins>
-            
+
             <!-- Enforce JDK 7 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -146,8 +143,44 @@
                     </execution>
                 </executions>
             </plugin>
-                     
-            <!-- Ant tasks for Hg info and Schema processing -->
+            
+            <!-- Generating Java sources from schemas -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <!-- for Opus -->
+                    <execution>
+                        <id>xjc-opus</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <schemaFiles>opus.xsd</schemaFiles>
+                            <packageName>com.audiveris.proxymusic.opus</packageName>
+                            <!-- no binding customization -->
+                            <bindingFiles>void.xjb</bindingFiles>
+                        </configuration>
+                    </execution>
+                    
+                    <!-- for MusicXML -->
+                    <execution>
+                        <id>xjc-musicxml</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <schemaFiles>musicxml.xsd</schemaFiles>
+                            <packageName>com.audiveris.proxymusic</packageName>
+                            <bindingFiles>musicxml.xjb</bindingFiles>
+                            <clearOutputDir>false</clearOutputDir>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Ant tasks for Hg info -->
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
@@ -158,20 +191,16 @@
                         </goals>
                         <configuration>
                             <exportAntProperties>true</exportAntProperties>
-                            <tasks>                                
-                                <property name="program.name" 
+                            <tasks>
+                                <property name="program.name"
                                           value="${project.name}">
                                 </property>
                                 <property name="program.version"
                                           value="${project.version}">
                                 </property>
-                                <ant antfile="ant-tasks.xml" 
-                                     dir="${basedir}" 
-                                     target="generate-program-id"
-                                     inheritRefs="true" />
                                 <ant antfile="ant-tasks.xml"
-                                     dir="${basedir}" 
-                                     target="generate-java-classes" 
+                                     dir="${basedir}"
+                                     target="generate-program-id"
                                      inheritRefs="true" />
                             </tasks>
                             <sourceRoot>
@@ -180,8 +209,8 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>             
-            
+            </plugin>
+
             <!-- Entries in Jar manifest -->
             <!-- NOTA: For this, we need exportAntProperties to work correctly
             and this is not yet the case for Maven 3.0.4 -->
@@ -200,7 +229,7 @@
                     </archive>
                 </configuration>
             </plugin>
-            
+
             <!-- Building a Jar of sources -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -215,7 +244,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <!-- Building a Jar of JavaDoc -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -230,7 +259,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <!-- Building web site -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -243,7 +272,7 @@
                             <goal>attach-descriptor</goal>
                         </goals>
                     </execution>
-                </executions>                   
+                </executions>
                 <configuration>
                     <reportPlugins>
                         <!-- Standard maven reports -->
@@ -251,15 +280,15 @@
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-project-info-reports-plugin</artifactId>
                             <version>2.6</version>
-                        </plugin>  
-                                             
+                        </plugin>
+
                         <!-- JavaDoc -->
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-javadoc-plugin</artifactId>
                             <version>2.9</version>
                         </plugin>
-            
+
                         <!-- Java cross references -->
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
@@ -270,9 +299,9 @@
                         <!-- Unitary tests report -->
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-surefire-report-plugin</artifactId>   
-                            <version>2.6</version>   
-                        </plugin>  
+                            <artifactId>maven-surefire-report-plugin</artifactId>
+                            <version>2.6</version>
+                        </plugin>
 
                         <!-- Unitary tests coverage -->
                         <plugin>
@@ -280,13 +309,13 @@
                             <artifactId>cobertura-maven-plugin</artifactId>
                             <version>2.5.2</version>
                         </plugin>
-                        
+
                     </reportPlugins>
-                </configuration> 
+                </configuration>
             </plugin>
-            
+
         </plugins>
-        
+
     </build>
 
 </project>
@@ -295,7 +324,7 @@
 [DEBUG] Lifecycle clean -> [pre-clean, clean, post-clean]
 [DEBUG] Lifecycle site -> [pre-site, site, post-site, site-deploy]
 -->
-        
+
 <!-- Hg information -->
 <!--            <plugin>
     <groupId>org.codehaus.mojo</groupId>
@@ -315,8 +344,8 @@
         <doUpdate>false</doUpdate>
     </configuration>
 </plugin>   -->
-            
-<!--            <plugin>                            
+
+<!--            <plugin>
     <artifactId>maven-mercurial-build-number-plugin</artifactId>
     <version>1.0</version>
     <executions>

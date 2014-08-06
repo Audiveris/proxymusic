@@ -2,7 +2,7 @@
 //                                                                            //
 //                        H e l l o W o r l d T e s t                         //
 //                                                                            //
-//  Copyright © Hervé Bitteur and others 2000-2013. All rights reserved.      //
+//  Copyright © Hervé Bitteur and others 2000-2014. All rights reserved.      //
 //  This software is released under the GNU Lesser General Public License.    //
 //  Please see http://kenai.com/projects/proxymusic/ for bugs & suggestions.  //
 //----------------------------------------------------------------------------//
@@ -83,9 +83,11 @@ public class HelloWorldTest
 
     private static final int partNb = partData.length;
 
-    //~ Instance fields ----------------------------------------------------------------------------
-    /** Name of the temporary XML file */
-    private final String FILE_NAME = "target/hello-world-test.xml";
+    /** Temporary area. */
+    private static final File TEMP_DIR = new File("target/temp");
+
+    /** Name of the temporary XML file. */
+    private static final String FILE_NAME = "hello-world-test.xml";
 
     //~ Methods ------------------------------------------------------------------------------------
     //------//
@@ -105,7 +107,7 @@ public class HelloWorldTest
         logger.info("Building jaxbContext...");
 
         long start = System.currentTimeMillis();
-        Marshalling.getContext();
+        Marshalling.getContext(ScorePartwise.class);
         logger.info("jaxbContext built in {} ms", System.currentTimeMillis() - start);
 
         try {
@@ -132,6 +134,13 @@ public class HelloWorldTest
             throws Exception
     {
         logger.info("Calling testBothInOrder...");
+
+        logger.info("Building Opus JAXB context");
+        Marshalling.getContext(Opus.class);
+
+        logger.info("Building ScorePartwise JAXB context");
+        Marshalling.getContext(ScorePartwise.class);
+
         tryMarshal();
         tryUnmarshal();
     }
@@ -151,7 +160,7 @@ public class HelloWorldTest
         ScorePartwise scorePartwise = getScorePartwise();
 
         //  Finally, marshal the proxy
-        File xmlFile = new File(FILE_NAME);
+        File xmlFile = new File(TEMP_DIR, FILE_NAME);
         OutputStream os = new FileOutputStream(xmlFile);
         long start = System.currentTimeMillis();
 
@@ -175,11 +184,12 @@ public class HelloWorldTest
         logger.info("Calling tryUnmarshal...");
 
         //  Unmarshal the proxy
-        File xmlFile = new File(FILE_NAME);
+        File xmlFile = new File(TEMP_DIR, FILE_NAME);
         InputStream is = new FileInputStream(xmlFile);
         long start = System.currentTimeMillis();
 
-        ScorePartwise scorePartwise = Marshalling.unmarshal(is);
+        ///ScorePartwise scorePartwise = Marshalling.unmarshal(is);
+        ScorePartwise scorePartwise = (ScorePartwise) Marshalling.unmarshalAny(is);
 
         logger.info("Unmarshalling done in {} ms", System.currentTimeMillis() - start);
         logger.info("Score imported from {}", xmlFile);
@@ -201,6 +211,9 @@ public class HelloWorldTest
                 ProgramId.NAME,
                 ProgramId.VERSION,
                 ProgramId.REVISION);
+
+        // Make sure the temp directory exists
+        TEMP_DIR.mkdirs();
     }
 
     //-----------------//

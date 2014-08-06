@@ -56,21 +56,5 @@ public class ProgramId
 }]]>
         </echo> 
     </target>
-    
-    <!-- generate-java-classes -->
-    <target name="generate-java-classes"
-            description="Generate Java classes from MusicXML schema">
-        <echo message="-- Generating Java classes from Schema ..." />
-        <property name="xsd.dir" location="${basedir}/src/main/schema" /> 
-
-        <!-- Not using ant task (no need for JAXB RI)-->
-        <exec executable="${java.home}/../bin/xjc.exe">
-            <arg line="-p com.audiveris.proxymusic"/>
-            <arg line="-d ${generated.src.dir}"/>
-            <arg line="-no-header"/>
-            <arg line="-b ${xsd.dir}/custom.xjb"/>
-            <arg line="${xsd.dir}/musicxml.fixed.xsd"/>
-        </exec>
-    </target>
 
 </project>

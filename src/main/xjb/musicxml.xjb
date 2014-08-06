@@ -1,8 +1,8 @@
 <!-- +=====================================================================+ -->
 <!-- |                                                                     | -->
-<!-- |                       c u s t o m . x j b                           | -->
+<!-- |                     m u s i c x m l . x j b                         | -->
 <!-- |                                                                     | -->
-<!-- | abstract: Customization for xjc utility                             | -->
+<!-- | abstract: Customization of xjc utility for musicxml.xsd             | -->
 <!-- |                                                                     | -->
 <!-- +=====================================================================+ -->
 
@@ -11,13 +11,13 @@
 	  version="2.0">
 
     <!-- In 'barline' element, bind the 'segno' attribute to Java 'segnoAttribute' -->
-    <bindings schemaLocation="musicxml.fixed.xsd"
+    <bindings schemaLocation="../xsd/musicxml.xsd"
 	      node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='segno']">
 	<property name="segnoAttribute" />
     </bindings>
     
     <!-- In 'barline' element, bind the 'coda' attribute to Java 'codaAttribute' -->
-    <bindings schemaLocation="musicxml.fixed.xsd"
+    <bindings schemaLocation="../xsd/musicxml.xsd"
 	      node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='coda']">
 	<property name="codaAttribute" />
     </bindings>

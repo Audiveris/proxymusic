@@ -5,13 +5,21 @@ Rebuilding
  <<<mvn clean install>>>
 
  This command will rebuild the ProxyMusic jar files (binary, source and doc),
-taking as input the MusicXML schema definition file
-<<<src/main/xsd/musicxml.fixed.xsd>>>
+taking as input the schema definition files
+<<<src/main/xsd/musicxml.xsd>>>
+and
+<<<src/main/xsd/opus.xsd>>>
+
+ Generating a local version of the whole ProxyMusic site is done via Maven command:
+
+ <<<mvn site>>>
+
+ (then use a webdav to upload Kenai site)
 
 Building for a new MusicXML version
 
  To support a new version of MusicXML schema, you need to provide a new 
-suitable file <<<src/main/resources/musicxml.fixed.xsd>>> and rebuild the project.
+suitable file <<<src/main/xsd/musicxml.xsd>>> and rebuild the project.
 
  Why do we need a <fixed> schema file?
  The Java classes generation is performed by running the standard Java tool 
@@ -68,14 +76,14 @@ This applies also to element and attribute named "coda".
    The solution is to rename attribute <<<segno>>> as say <<<segnoAttribute>>>
 and similarly to rename attribute <<<coda>>> as  say <<<codaAttribute>>>.
 This is done via the external customization provided by file 
-<<<src/main/resources/custom.xjb>>> whose content follows:
+<<<src/main/xjb/musicxml.xjb>>> whose content follows:
 
-   [<<custom.xjb>>]
+   [<<musicxml.xjb>>]
 
 --------------------------
 <!-- +=====================================================================+ -->
 <!-- |                                                                     | -->
-<!-- |                       c u s t o m . x j b                           | -->
+<!-- |                     m u s i c x m l . x j b                         | -->
 <!-- |                                                                     | -->
 <!-- | abstract: Customization for xjc utility                             | -->
 <!-- |                                                                     | -->
@@ -86,13 +94,13 @@ This is done via the external customization provided by file
 	  version="2.0">
 
     <!-- In 'barline' element, bind the 'segno' attribute to Java 'segnoAttribute' -->
-    <bindings schemaLocation="musicxml.fixed.xsd"
+    <bindings schemaLocation="../xsd/musicxml.xsd"
 	      node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='segno']">
 	<property name="segnoAttribute" />
     </bindings>
     
     <!-- In 'barline' element, bind the 'coda' attribute to Java 'codaAttribute' -->
-    <bindings schemaLocation="musicxml.fixed.xsd"
+    <bindings schemaLocation="../xsd/musicxml.xsd"
 	      node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='coda']">
 	<property name="codaAttribute" />
     </bindings>
@@ -112,8 +120,8 @@ seems able to fix them.
     The best solution for the time being is to <manually simplify> the schema 
 definition file.
 This is the reason why there are 2 files in <<<src/main/resources>>> folder,
-one is the original file (<<<musicxml.xsd>>>) and the other is the manually 
-fixed version (<<<musicxml.fixed.xsd>>>).
+one is the original file (<<<musicxml.org.xsd>>>) and the other is the manually 
+fixed version (<<<musicxml.xsd>>>).
 
     The manual modifications can be easily found in the modified file, since 
 they are presented between <<<HB-old>>>, <<<HB-new>>> and <<<HB-end>>> marks.
