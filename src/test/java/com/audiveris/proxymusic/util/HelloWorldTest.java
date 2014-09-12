@@ -12,6 +12,7 @@ package com.audiveris.proxymusic.util;
 import com.audiveris.proxymusic.*;
 import com.audiveris.proxymusic.ScorePartwise.Part;
 import com.audiveris.proxymusic.ScorePartwise.Part.Measure;
+import static com.audiveris.proxymusic.util.Marshalling.getContext;
 
 import junit.framework.TestCase;
 
@@ -28,10 +29,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Marshaller;
 
 /**
- * Class
- * <code>HelloWorldTest</code> mimics the usual "HelloWorld" as
+ * Class {@code HelloWorldTest} mimics the usual "HelloWorld" as
  * found in the MusicXML tutorial, by marshalling and unmarshalling a
  * hierarchy of Java objects rooted at a ScorePartwise instance to and
  * from a proper XML file.
@@ -46,7 +47,6 @@ public class HelloWorldTest
 {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** Usual logger utility */
     private static final Logger logger = LoggerFactory.getLogger(HelloWorldTest.class);
 
     private static final String versionData = ProgramId.VERSION;
@@ -135,67 +135,15 @@ public class HelloWorldTest
     {
         logger.info("Calling testBothInOrder...");
 
-        logger.info("Building Opus JAXB context");
-        Marshalling.getContext(Opus.class);
-
         logger.info("Building ScorePartwise JAXB context");
         Marshalling.getContext(ScorePartwise.class);
 
+        logger.info("Building Opus JAXB context");
+        Marshalling.getContext(Opus.class);
+
         tryMarshal();
+
         tryUnmarshal();
-    }
-
-    //------------//
-    // tryMarshal //
-    //------------//
-    /**
-     * Test the marshalling of a ScorePartwise instance
-     */
-    public void tryMarshal ()
-            throws Exception
-    {
-        logger.info("Calling tryMarshal...");
-
-        // Get a populated score partwise
-        ScorePartwise scorePartwise = getScorePartwise();
-
-        //  Finally, marshal the proxy
-        File xmlFile = new File(TEMP_DIR, FILE_NAME);
-        OutputStream os = new FileOutputStream(xmlFile);
-        long start = System.currentTimeMillis();
-
-        Marshalling.marshal(scorePartwise, os, true, 2);
-
-        logger.info("Marshalling done in {} ms", System.currentTimeMillis() - start);
-        logger.info("Score exported to {}", xmlFile);
-        os.close();
-    }
-
-    //---------------//
-    // tryUnmarshal //
-    //---------------//
-    /**
-     * Test the unmarshalling of a ScorePartwise instance from the XML file
-     * written by the testmarshal() method.
-     */
-    public void tryUnmarshal ()
-            throws Exception
-    {
-        logger.info("Calling tryUnmarshal...");
-
-        //  Unmarshal the proxy
-        File xmlFile = new File(TEMP_DIR, FILE_NAME);
-        InputStream is = new FileInputStream(xmlFile);
-        long start = System.currentTimeMillis();
-
-        ScorePartwise scorePartwise = (ScorePartwise) Marshalling.unmarshal(is);
-
-        logger.info("Unmarshalling done in {} ms", System.currentTimeMillis() - start);
-        logger.info("Score imported from {}", xmlFile);
-        is.close();
-
-        // Basic check of the java objects
-        checkScorePartwise(scorePartwise);
     }
 
     //-------//
@@ -355,6 +303,23 @@ public class HelloWorldTest
     {
         logger.info(new Dumper.Column(scr).toString());
 
+        {
+            // Work & Opus
+            Work work = scr.getWork();
+            assertNotNull(work);
+            logger.info(new Dumper.Column(work, 1).toString());
+
+            Opus opus = work.getOpus();
+            assertNotNull(opus);
+            logger.info(new Dumper.Column(opus, 2).toString());
+
+            String href = opus.getHref();
+            assertNotNull(href);
+
+            String actuate = opus.getActuate();
+            assertNotNull(actuate);
+        }
+
         assertEquals(versionData, scr.getVersion());
 
         checkPartList(scr.getPartList());
@@ -384,8 +349,24 @@ public class HelloWorldTest
         // Allocate the score partwise
         ScorePartwise scorePartwise = factory.createScorePartwise();
 
-        // No Version, we leave this to ProxyMusic
-        ///scorePartwise.setVersion("1.1");
+        {
+            // Work
+            Work work = factory.createWork();
+            scorePartwise.setWork(work);
+            work.setWorkTitle("Title for the work");
+            work.setWorkNumber("Number for the work");
+
+            // Work::Opus
+            Opus opus = factory.createOpus();
+            work.setOpus(opus);
+            opus.setHref("Href to opus");
+            opus.setType("Type of opus");
+            opus.setRole("Role of opus");
+            opus.setTitle("Title of opus");
+            opus.setShow("Show of opus");
+            opus.setActuate("Actuate of opus");
+        }
+
         // PartList
         PartList partList = factory.createPartList();
         scorePartwise.setPartList(partList);
@@ -492,48 +473,76 @@ public class HelloWorldTest
         return scorePartwise;
     }
 
-    //~ Inner Classes ------------------------------------------------------------------------------
+    //------------//
+    // tryMarshal //
+    //------------//
     /**
-     * <score-partwise xmlns:ns2="http://www.w3.org/1999/xlink" version="2.0">
-     * <identification>
-     * <encoding>
-     * <software>ProxyMusic MusicXML-2.0 JAXB-2.0 d</software>
-     * <encoding-date>2008-11-14T18:13:47.500+01:00</encoding-date>
-     * </encoding>
-     * </identification>
-     * <part-list>
-     * <score-part id="P1">
-     * <part-name>Music</part-name>
-     * </score-part>
-     * </part-list>
-     * <part id="P1">
-     * <measure number="1">
-     * <attributes>
-     * <divisions>1</divisions>
-     * <key>
-     * <fifths>0</fifths>
-     * </key>
-     * <time>
-     * <beats>4</beats>
-     * <beat-type>4</beat-type>
-     * </time>
-     * <clef>
-     * <sign>G</sign>
-     * <line>2</line>
-     * </clef>
-     * </attributes>
-     * <note>
-     * <pitch>
-     * <step>C</step>
-     * <octave>4</octave>
-     * </pitch>
-     * <duration>4</duration>
-     * <type>whole</type>
-     * </note>
-     * </measure>
-     * </part>
-     * </score-partwise>
+     * Test the marshaling of a ScorePartwise instance
      */
+    private void tryMarshal ()
+            throws Exception
+    {
+        logger.info("Calling tryMarshal...");
+
+        // Get a populated score partwise
+        ScorePartwise scorePartwise = getScorePartwise();
+
+        //  Finally, marshal the proxy
+        File xmlFile = new File(TEMP_DIR, FILE_NAME);
+        OutputStream os = new FileOutputStream(xmlFile);
+        long start = System.currentTimeMillis();
+
+        Marshalling.marshal(scorePartwise, os, true, 2);
+
+        logger.info("Marshalling done in {} ms", System.currentTimeMillis() - start);
+        logger.info("Score exported to {}", xmlFile);
+        os.close();
+    }
+
+    //--------------//
+    // tryUnmarshal //
+    //--------------//
+    /**
+     * Test the un-marshaling of a ScorePartwise instance from the XML file
+     * written by the tryMarshal() method.
+     */
+    private void tryUnmarshal ()
+            throws Exception
+    {
+        logger.info("Calling tryUnmarshal...");
+
+        //  Unmarshal the proxy
+        File xmlFile = new File(TEMP_DIR, FILE_NAME);
+        InputStream is = new FileInputStream(xmlFile);
+        long start = System.currentTimeMillis();
+
+        ScorePartwise scorePartwise = (ScorePartwise) Marshalling.unmarshal(is);
+
+        logger.info("Unmarshalling done in {} ms", System.currentTimeMillis() - start);
+        logger.info("Score imported from {}", xmlFile);
+        is.close();
+
+        // Basic check of the java objects
+        checkScorePartwise(scorePartwise);
+
+        // Display what we have got
+        System.out.println();
+        System.out.println("Raw output of un-marshalled data:");
+        System.out.println("---------------------------------");
+
+        Marshaller marshaller = getContext(ScorePartwise.class).createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        marshaller.marshal(scorePartwise, System.out);
+
+        System.out.println();
+        System.out.println("My marshalling of un-marshalled data:");
+        System.out.println("-------------------------------------");
+        Marshalling.marshal(scorePartwise, System.out, false, 2);
+        System.out.println();
+        System.out.println();
+    }
+
+    //~ Inner Classes ------------------------------------------------------------------------------
     private static class AttrData
     {
         //~ Instance fields ------------------------------------------------------------------------

@@ -243,6 +243,29 @@ public abstract class Mxl
         }
 
         /**
+         * Insert the provided RootFile as the FIRST entry.
+         * This can be called at any time, to populate the internal container in first position, and
+         * position the stream output accordingly.
+         *
+         * @param rootFile the provided RootFile
+         * @return the corresponding Zip entry
+         * @throws com.audiveris.proxymusic.mxl.Mxl.MxlException
+         */
+        public ZipEntry addFirstEntry (RootFile rootFile)
+                throws MxlException
+        {
+            try {
+                ZipEntry entry = new ZipEntry(rootFile.fullPath);
+                mos.putNextEntry(entry);
+                container.addFirstRootFile(rootFile);
+
+                return entry;
+            } catch (IOException ex) {
+                throw new MxlException(ex);
+            }
+        }
+
+        /**
          * Write the container and close the underlying output stream.
          *
          * @throws IOException
@@ -333,6 +356,19 @@ public abstract class Mxl
         }
 
         //~ Methods --------------------------------------------------------------------------------
+        //------------------//
+        // addFirstRootFile //
+        //------------------//
+        /**
+         * Add the rootFile entry to the container, in first position.
+         *
+         * @param rootFile the entry to add
+         */
+        public void addFirstRootFile (RootFile rootFile)
+        {
+            rootFiles.add(0, rootFile);
+        }
+
         //-------------//
         // addRootFile //
         //-------------//

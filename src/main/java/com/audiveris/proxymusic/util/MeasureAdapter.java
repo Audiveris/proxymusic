@@ -18,6 +18,7 @@ import javax.xml.stream.XMLStreamWriter;
 
 /**
  * Class {@code MeasureAdapter} inserts a comment line before marshalling a measure.
+ * (class no longer used, but kept as example)
  *
  * @author Hervé Bitteur
  */
