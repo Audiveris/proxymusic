@@ -17,6 +17,8 @@ import com.audiveris.proxymusic.ObjectFactory;
 import com.audiveris.proxymusic.ScorePartwise;
 import com.audiveris.proxymusic.opus.Opus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.w3c.dom.Node;
 
@@ -62,8 +64,7 @@ import javax.xml.stream.util.StreamReaderDelegate;
  * Several tricks are used to work around namespaces during marshalling and un-marshalling since
  * MusicXML does not support them
  * (MusicXML uses prefixed attribute names such as <i>xlink:href</i>, although it never binds the
- * xlink
- * prefix to its proper namespace URI).
+ * xlink prefix to its proper namespace URI).
  * <p>
  * No access to a DTD (local or remote) is made during the un-marshalling which ignores DTDs.
  * <p>
@@ -76,6 +77,9 @@ import javax.xml.stream.util.StreamReaderDelegate;
 public abstract class Marshalling
 {
     //~ Static fields/initializers -----------------------------------------------------------------
+
+    private static final Logger logger = LoggerFactory.getLogger(
+            Marshalling.class);
 
     /** JAXB contexts. */
     private static final Map<Class, JAXBContext> jaxbContextMap = new HashMap<Class, JAXBContext>();
@@ -184,7 +188,7 @@ public abstract class Marshalling
 
             // Marshalling
             marshaller.marshal(scorePartwise, writer);
-            out.flush();
+            writer.flush();
         } catch (Exception ex) {
             throw new MarshallingException(ex);
         }
@@ -208,6 +212,7 @@ public abstract class Marshalling
             Marshaller marshaller = getContext(Opus.class).createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
             marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             Writer out = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
             out.write(XML_LINE);
@@ -216,6 +221,7 @@ public abstract class Marshalling
 
             XMLOutputFactory outputFactory = XMLOutputFactory.newFactory();
             XMLStreamWriter writer = outputFactory.createXMLStreamWriter(out);
+
             // Our custom XmlStreamWriter for name-space, formatting and comment line
             writer = new MyStreamWriter(writer, 2);
 
@@ -223,7 +229,7 @@ public abstract class Marshalling
             com.audiveris.proxymusic.opus.ObjectFactory opusFactory = new com.audiveris.proxymusic.opus.ObjectFactory();
             JAXBElement<Opus> elem = opusFactory.createOpus(opus);
             marshaller.marshal(elem, writer);
-            out.flush();
+            writer.flush();
         } catch (Exception ex) {
             throw new MarshallingException(ex);
         }
@@ -340,6 +346,7 @@ public abstract class Marshalling
 
         // Inject signature if so desired
         if (injectSignature) {
+            // Identification
             Identification identification = scorePartwise.getIdentification();
 
             if (identification == null) {
@@ -355,12 +362,38 @@ public abstract class Marshalling
                 identification.setEncoding(encoding);
             }
 
-            // [Encoding]/Software
-            encoding.getEncodingDateOrEncoderOrSoftware().add(
+            // [Encoding]/Software (only if ProxyMusic is not already listed there)
+            List<JAXBElement<?>> list = encoding.getEncodingDateOrEncoderOrSoftware();
+            final String programName = ProgramId.NAME + " ";
+
+            for (Iterator<JAXBElement<?>> it = list.iterator(); it.hasNext();) {
+                JAXBElement<?> element = it.next();
+
+                if (element.getName().getLocalPart().equals("software")) {
+                    Object obj = element.getValue();
+
+                    if (obj instanceof String && ((String) obj).startsWith(programName)) {
+                        // Remove it
+                        it.remove();
+
+                        break;
+                    }
+                }
+            }
+
+            list.add(
                     factory.createEncodingSoftware(
                             ProgramId.NAME + " " + ProgramId.VERSION + "." + ProgramId.REVISION));
 
-            // [Encoding]/EncodingDate
+            // [Encoding]/EncodingDate (overwrite any existing date)
+            for (Iterator<JAXBElement<?>> it = list.iterator(); it.hasNext();) {
+                if (it.next().getName().getLocalPart().equals("encoding-date")) {
+                    it.remove();
+
+                    break;
+                }
+            }
+
             // Use date without time information (patch by lasconic)
             // Output:     2012-05-03
             // instead of: 2012-05-03T16:17:51.250+02:00
@@ -372,8 +405,7 @@ public abstract class Marshalling
                     DatatypeConstants.FIELD_UNDEFINED,
                     DatatypeConstants.FIELD_UNDEFINED,
                     DatatypeConstants.FIELD_UNDEFINED);
-            encoding.getEncodingDateOrEncoderOrSoftware().add(
-                    factory.createEncodingEncodingDate(gc));
+            list.add(factory.createEncodingEncodingDate(gc));
         }
     }
 
@@ -500,19 +532,19 @@ public abstract class Marshalling
      * Class {@code MyStreamWriter} removes the namespaces from the marshal operation.
      * <p>
      * It is a wrapper for an XMLStreamWriter that intercepts and removes the relevant namespace
-     * info.
-     * It does so by treating all namespace declarations as default namespaces.
+     * info. It does so by treating all namespace declarations as default namespaces.
      * <p>
      * The "xlink:" prefix is preserved for relevant attributes (opus).
      * <p>
      * It also performs formatting on the fly, if a non-null indentation value was provided.
-     * TODO: Still to be checked for writeEmptyElement and writeProcessingInstruction
+     * <p>
+     * Detected empty elements are written as one (empty) element rather than start + end tags.
      * <p>
      * It also inserts a comment line just before a part or measure element begins.
      *
      * @author Blaise Doughan (namespace handling)
      * @see <a href="http://stackoverflow.com/a/5722013">Blaise article</a>
-     * @author Hervé Bitteur (formatting)
+     * @author Hervé Bitteur (other features)
      */
     private static class MyStreamWriter
             extends StreamWriterDelegate
@@ -530,6 +562,9 @@ public abstract class Marshalling
 
         /** Are we closing element(s)?. */
         private boolean closing;
+
+        /** Pending element if any. (meant to handle empty elements) */
+        private PendingElement pending;
 
         //~ Constructors ---------------------------------------------------------------------------
         /**
@@ -551,9 +586,6 @@ public abstract class Marshalling
         }
 
         //~ Methods --------------------------------------------------------------------------------
-        //---------------------//
-        // setNamespaceContext //
-        //---------------------//
         @Override
         public void setNamespaceContext (NamespaceContext context)
                 throws XMLStreamException
@@ -561,33 +593,139 @@ public abstract class Marshalling
             // void (we keep using our own NamespaceContext)
         }
 
-        //--------------//
-        // writeComment //
-        //--------------//
+        @Override
+        public void writeAttribute (String localName,
+                                    String value)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeAttribute(localName, value);
+        }
+
+        @Override
+        public void writeAttribute (String namespaceURI,
+                                    String localName,
+                                    String value)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeAttribute(namespaceURI, localName, value);
+        }
+
+        @Override
+        public void writeAttribute (String prefix,
+                                    String namespaceURI,
+                                    String localName,
+                                    String value)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeAttribute(prefix, namespaceURI, localName, value);
+        }
+
+        @Override
+        public void writeCData (String data)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeCData(data);
+        }
+
+        @Override
+        public void writeCharacters (String text)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeCharacters(text);
+        }
+
+        @Override
+        public void writeCharacters (char[] text,
+                                     int start,
+                                     int len)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeCharacters(text, start, len);
+        }
+
         @Override
         public void writeComment (String data)
                 throws XMLStreamException
         {
+            checkPending();
             indentComment();
 
             super.writeComment(data);
         }
 
-        //-----------------//
-        // writeEndElement //
-        //-----------------//
+        @Override
+        public void writeDTD (String dtd)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeDTD(dtd);
+        }
+
+        @Override
+        public void writeDefaultNamespace (String namespaceURI)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeDefaultNamespace(namespaceURI);
+        }
+
+        @Override
+        public void writeEmptyElement (String localName)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeEmptyElement(localName);
+        }
+
+        @Override
+        public void writeEmptyElement (String namespaceURI,
+                                       String localName)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeEmptyElement(namespaceURI, localName);
+        }
+
+        @Override
+        public void writeEmptyElement (String prefix,
+                                       String localName,
+                                       String namespaceURI)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeEmptyElement(prefix, localName, namespaceURI);
+        }
+
         @Override
         public void writeEndElement ()
                 throws XMLStreamException
         {
-            indentEnd();
-
-            super.writeEndElement();
+            if (pending != null) {
+                // The end is immediately following the start, with nothing in between:
+                // So, write an empty element, instead of start + end
+                pending.writeEmpty();
+                indentEnd();
+                pending = null;
+            } else {
+                indentEnd();
+                super.writeEndElement();
+            }
         }
 
-        //----------------//
-        // writeNamespace //
-        //----------------//
+        @Override
+        public void writeEntityRef (String name)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeEntityRef(name);
+        }
+
         @Override
         public void writeNamespace (String prefix,
                                     String namespaceURI)
@@ -596,51 +734,68 @@ public abstract class Marshalling
             // void (we don't output this information)
         }
 
-        //-------------------//
-        // writeStartElement //
-        //-------------------//
+        @Override
+        public void writeProcessingInstruction (String target)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeProcessingInstruction(target);
+        }
+
+        @Override
+        public void writeProcessingInstruction (String target,
+                                                String data)
+                throws XMLStreamException
+        {
+            checkPending();
+            super.writeProcessingInstruction(target, data);
+        }
+
         @Override
         public void writeStartElement (String localName)
                 throws XMLStreamException
         {
+            checkPending();
             indentStart(localName);
 
-            super.writeStartElement(localName);
+            // We don't write the element start now, but save it as pending
+            pending = new PendingElement(localName);
         }
 
-        //-------------------//
-        // writeStartElement //
-        //-------------------//
         @Override
         public void writeStartElement (String namespaceURI,
                                        String localName)
                 throws XMLStreamException
         {
+            checkPending();
             indentStart(localName);
 
-            super.writeStartElement(namespaceURI, localName);
+            // We don't write the element start now, but save it as pending
+            pending = new PendingElement2(namespaceURI, localName);
         }
 
-        //-------------------//
-        // writeStartElement //
-        //-------------------//
         @Override
         public void writeStartElement (String prefix,
                                        String localName,
                                        String namespaceURI)
                 throws XMLStreamException
         {
+            checkPending();
             indentStart(localName);
 
-            super.writeStartElement("", localName, namespaceURI);
+            // We don't write the element start now, but save it as pending
+            pending = new PendingElement3(prefix, localName, namespaceURI);
+        }
 
-            if ((namespaceURI != null) && (namespaceURI.length() > 0)) {
-                String currentDefaultNS = nc.getNamespaceURI("");
-
-                if (!namespaceURI.equals(currentDefaultNS)) {
-                    writeDefaultNamespace(namespaceURI);
-                    nc.setDefaultNS(namespaceURI);
-                }
+        //--------------//
+        // checkPending //
+        //--------------//
+        private void checkPending ()
+                throws XMLStreamException
+        {
+            if (pending != null) {
+                pending.writeStart();
+                pending = null;
             }
         }
 
@@ -655,10 +810,10 @@ public abstract class Marshalling
         private void doIndent ()
                 throws XMLStreamException
         {
-            writeCharacters("\n");
+            super.writeCharacters("\n");
 
             for (int i = 0; i < level; i++) {
-                writeCharacters(INDENT);
+                super.writeCharacters(INDENT);
             }
         }
 
@@ -740,14 +895,111 @@ public abstract class Marshalling
             if (INDENT != null) {
                 // Insert visible comment lines only for measures and parts
                 if (localName.equals("measure")) {
-                    writeComment("=======================================================");
+                    doIndent();
+                    super.writeComment("=======================================================");
                 } else if (localName.equals("part")) {
-                    writeComment("= = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
+                    doIndent();
+                    super.writeComment("= = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
                 }
 
                 doIndent();
                 level++;
                 closing = false;
+            }
+        }
+
+        //~ Inner Classes --------------------------------------------------------------------------
+        /**
+         * Class meant to save a starting element with its parameters.
+         */
+        private class PendingElement
+        {
+            //~ Instance fields --------------------------------------------------------------------
+
+            final String localName;
+
+            //~ Constructors -----------------------------------------------------------------------
+            public PendingElement (String localName)
+            {
+                this.localName = localName;
+            }
+
+            //~ Methods ----------------------------------------------------------------------------
+            /** Write an empty element. */
+            public void writeEmpty ()
+                    throws XMLStreamException
+            {
+                getParent().writeEmptyElement(localName);
+            }
+
+            /** Write just the element start. */
+            public void writeStart ()
+                    throws XMLStreamException
+            {
+                getParent().writeStartElement(localName);
+            }
+        }
+
+        private class PendingElement2
+                extends PendingElement
+        {
+            //~ Instance fields --------------------------------------------------------------------
+
+            final String namespaceURI;
+
+            //~ Constructors -----------------------------------------------------------------------
+            public PendingElement2 (String namespaceURI,
+                                    String localName)
+            {
+                super(localName);
+                this.namespaceURI = namespaceURI;
+            }
+
+            //~ Methods ----------------------------------------------------------------------------
+            @Override
+            public void writeEmpty ()
+                    throws XMLStreamException
+            {
+                getParent().writeEmptyElement(namespaceURI, localName);
+            }
+
+            @Override
+            public void writeStart ()
+                    throws XMLStreamException
+            {
+                getParent().writeStartElement(namespaceURI, localName);
+            }
+        }
+
+        private class PendingElement3
+                extends PendingElement2
+        {
+            //~ Instance fields --------------------------------------------------------------------
+
+            final String prefix;
+
+            //~ Constructors -----------------------------------------------------------------------
+            public PendingElement3 (String prefix,
+                                    String localName,
+                                    String namespaceURI)
+            {
+                super(namespaceURI, localName);
+                this.prefix = prefix;
+            }
+
+            //~ Methods ----------------------------------------------------------------------------
+            @Override
+            public void writeEmpty ()
+                    throws XMLStreamException
+            {
+                getParent().writeEmptyElement(prefix, localName, namespaceURI);
+            }
+
+            @Override
+            public void writeStart ()
+                    throws XMLStreamException
+            {
+                getParent().writeStartElement(prefix, localName, namespaceURI);
             }
         }
     }
@@ -787,55 +1039,5 @@ public abstract class Marshalling
 //            return xmlOutput.getWriter().toString();
 //        } catch (Exception ex) {
 //            throw new FormattingException(ex);
-//        }
-//    }
-//
-//    //---------//
-//    // marshal // Works OK too
-//    //---------//
-//    /**
-//     * Marshal the provided Opus instance to an OutputStream.
-//     * <p>
-//     * Nota: We marshal to a temporary data string to remove the opus unwanted namespace binding
-//     * xmlns:xlink="http://www.w3.org/1999/xlink"
-//     *
-//     * @param opus the root opus element
-//     * @param os   the output stream (not closed by this method)
-//     * @throws MarshallingException global exception (use getCause() for original exception)
-//     */
-//    public static void marshal (final Opus opus,
-//                                final OutputStream os)
-//            throws MarshallingException
-//    {
-//        try {
-//            Marshaller marshaller = getContext(Opus.class).createMarshaller();
-//            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
-//            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
-//            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-//
-//            // Marshal to temporary data string
-//            StringWriter stringWriter = new StringWriter();
-//            com.audiveris.proxymusic.opus.ObjectFactory opusFactory = new com.audiveris.proxymusic.opus.ObjectFactory();
-//            JAXBElement<Opus> elem = opusFactory.createOpus(opus);
-//            marshaller.marshal(elem, stringWriter);
-//            stringWriter.flush();
-//
-//            // Post-processing to remove unwanted xlink namespace binding
-//            String data = stringWriter.toString();
-//            stringWriter.close();
-//
-//            data = data.replaceAll(" xmlns:xlink=\"" + XLINK_NAMESPACE_URI + "\"", "");
-//
-//            //            }
-//            // Finally, write out data to the UTF8 stream
-//            Writer writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-//            writer.write(XML_LINE);
-//            writer.write("\n");
-//            writer.write(OPUS_DOCTYPE_LINE);
-//            writer.write("\n");
-//            writer.write(data);
-//            writer.flush();
-//        } catch (Exception ex) {
-//            throw new MarshallingException(ex);
 //        }
 //    }
