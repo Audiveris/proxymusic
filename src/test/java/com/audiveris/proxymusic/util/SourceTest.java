@@ -16,7 +16,7 @@ import com.audiveris.proxymusic.Miscellaneous;
 import com.audiveris.proxymusic.MiscellaneousField;
 import com.audiveris.proxymusic.Opus;
 import com.audiveris.proxymusic.ScorePartwise;
-import com.audiveris.proxymusic.util.Source.PageSystems;
+import com.audiveris.proxymusic.util.Source.SheetSystems;
 
 import junit.framework.TestCase;
 
@@ -161,17 +161,20 @@ public class SourceTest
         Source source = new Source();
         source.setFile("miscellaneous.png");
 
-        PageSystems pageSystems = new PageSystems(1);
-        pageSystems.getSystems().add(1);
-        pageSystems.getSystems().add(2);
-        source.getPages().add(pageSystems);
+        source.setOffset(10);
 
-        source.getPages().add(new PageSystems(2));
+        SheetSystems sheetSystems = new SheetSystems(1);
+        sheetSystems.getSystems().add(1);
+        sheetSystems.getSystems().add(2);
+        source.getSheets().add(sheetSystems);
 
-        source.getPages().add(pageSystems = new PageSystems(3));
-        pageSystems.getSystems().add(1);
+        source.getSheets().add(new SheetSystems(2));
+
+        source.getSheets().add(sheetSystems = new SheetSystems(3));
+        sheetSystems.getSystems().add(1);
 
         source.encode(scorePartwise);
+        logger.info("Source buit as {}", source);
     }
 
     //-------------//
@@ -189,130 +192,4 @@ public class SourceTest
             logger.info("miscellaneous-field name:{} value:'{}'", name, value);
         }
     }
-
-    //
-    //    //------------------//
-    //    // getScorePartwise //
-    //    //------------------//
-    //    /**
-    //     * Build a ScorePartwise instance from scratch, using the similar information as
-    //     * provided on MusicXML site through the HelloWorldTest example.
-    //     *
-    //     * @return the populated instance
-    //     */
-    //    private ScorePartwise getScorePartwise ()
-    //    {
-    //        // Generated factory for all proxymusic elements
-    //        ObjectFactory factory = new ObjectFactory();
-    //
-    //        // Allocate the score partwise
-    //        ScorePartwise scorePartwise = factory.createScorePartwise();
-    //
-    //        // No Version, we leave this to ProxyMusic
-    //        ///scorePartwise.setVersion("1.1");
-    //        // PartList
-    //        PartList partList = factory.createPartList();
-    //        scorePartwise.setPartList(partList);
-    //
-    //        // Scorepart in partList
-    //        ScorePart scorePart = factory.createScorePart();
-    //        partList.getPartGroupOrScorePart().add(scorePart);
-    //        scorePart.setId("P1");
-    //
-    //        PartName partName = factory.createPartName();
-    //        scorePart.setPartName(partName);
-    //        partName.setValue("Music");
-    //
-    //        // ScorePart in scorePartwise
-    //        ScorePartwise.Part part = factory.createScorePartwisePart();
-    //        scorePartwise.getPart().add(part);
-    //        part.setId(scorePart);
-    //
-    //        // Measure
-    //        ScorePartwise.Part.Measure measure = factory.createScorePartwisePartMeasure();
-    //        part.getMeasure().add(measure);
-    //        measure.setNumber("1");
-    //
-    //        // Attributes
-    //        Attributes attributes = factory.createAttributes();
-    //        measure.getNoteOrBackupOrForward().add(attributes);
-    //
-    //        // Divisions
-    //        attributes.setDivisions(new BigDecimal(1));
-    //
-    //        // Key
-    //        Key key = factory.createKey();
-    //        attributes.getKey().add(key);
-    //        key.setFifths(new BigInteger("0"));
-    //
-    //        // Time
-    //        Time time = factory.createTime();
-    //        attributes.getTime().add(time);
-    //        time.getTimeSignature().add(factory.createTimeBeats("4"));
-    //        time.getTimeSignature().add(factory.createTimeBeatType("4"));
-    //
-    //        // Clef
-    //        Clef clef = factory.createClef();
-    //        attributes.getClef().add(clef);
-    //        clef.setSign(ClefSign.G);
-    //        clef.setLine(new BigInteger("2"));
-    //
-    //        // Note 0 ---
-    //        Note note = factory.createNote();
-    //        measure.getNoteOrBackupOrForward().add(note);
-    //
-    //        // Pitch
-    //        Pitch pitch = factory.createPitch();
-    //        note.setPitch(pitch);
-    //        pitch.setStep(Step.C);
-    //        pitch.setOctave(4);
-    //
-    //        // Duration
-    //        note.setDuration(new BigDecimal(4));
-    //
-    //        // Type
-    //        NoteType type = factory.createNoteType();
-    //        type.setValue("whole");
-    //        note.setType(type);
-    //
-    //        // Note 1 ---
-    //        note = factory.createNote();
-    //        measure.getNoteOrBackupOrForward().add(note);
-    //        note.setChord(new Empty());
-    //
-    //        // Pitch
-    //        pitch = factory.createPitch();
-    //        note.setPitch(pitch);
-    //        pitch.setStep(Step.E);
-    //        pitch.setOctave(4);
-    //
-    //        // Duration
-    //        note.setDuration(new BigDecimal(4));
-    //
-    //        // Type
-    //        type = factory.createNoteType();
-    //        type.setValue("whole");
-    //        note.setType(type);
-    //
-    //        // Note 2 ---
-    //        note = factory.createNote();
-    //        measure.getNoteOrBackupOrForward().add(note);
-    //        note.setChord(new Empty());
-    //
-    //        // Pitch
-    //        pitch = factory.createPitch();
-    //        note.setPitch(pitch);
-    //        pitch.setStep(Step.G);
-    //        pitch.setOctave(4);
-    //
-    //        // Duration
-    //        note.setDuration(new BigDecimal(4));
-    //
-    //        // Type
-    //        type = factory.createNoteType();
-    //        type.setValue("whole");
-    //        note.setType(type);
-    //
-    //        return scorePartwise;
-    //    }
 }

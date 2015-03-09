@@ -360,11 +360,11 @@ public class HelloWorldTest
             Opus opus = factory.createOpus();
             work.setOpus(opus);
             opus.setHref("Href to opus");
-            opus.setType("Type of opus");
-            opus.setRole("Role of opus");
-            opus.setTitle("Title of opus");
-            opus.setShow("Show of opus");
-            opus.setActuate("Actuate of opus");
+            opus.setType("simple");
+            opus.setRole("Role of opus"); // Some text
+            opus.setTitle("Title of opus"); // Some text
+            opus.setShow("new"); // new, replace, embed, other, none
+            opus.setActuate("onLoad"); // onRequest, onLoad, other, none
         }
 
         // PartList
