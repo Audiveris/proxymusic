@@ -27,37 +27,39 @@ import java.util.List;
 /**
  * Class {@code Source} precisely describes the source of a ScorePartwise.
  * <p>
- * Within a given input file (or uri), perhaps composed of several page images, the relevant pages
+ * Within a given input file (or uri), perhaps composed of several sheet images, the relevant sheets
  * are listed, each with the systems processed for the ScorePartwise instance at hand.
  * <p>
- * A page with no system processed (for example because it is made of text only), could explicitly
- * appear but with an empty sequence of system numbers (this is recommended), or the page could not
+ * A sheet with no system processed (for example because it is made of text only), could explicitly
+ * appear but with an empty sequence of system numbers (this is recommended), or the sheet could not
  * appear at all in this source structure.
  * <p>
- * In the following example, the ScorePartwise spans the first 3 pages of the input file, with
- * page #2 being "empty", and only the first system in page #3.
+ * In the following example, the ScorePartwise spans the first 3 sheets of the input file, with
+ * sheet #2 being "empty", and only the first system in sheet #3.
  * Another ScorePartwise instance, typically representing a following movement, could start with the
- * same page #3, but from system 2.
+ * same sheet #3, but from system 2.
  * <p>
  * In MusicXML, such Source data is encoded using the miscellaneous element.
  * <br/>
  * Using file:
  * <pre>
  * &lt;miscellaneous&gt;
- *     &lt;miscellaneous-field name="input-file"&gt;D:\soft\scores\morphology\recordare\MozartTrio.png&lt;/miscellaneous-field&gt;
- *     &lt;miscellaneous-field name="input-page-1"&gt;1 2&lt;/miscellaneous-field&gt;
- *     &lt;miscellaneous-field name="input-page-2"&gt;&lt;/miscellaneous-field&gt;
- *     &lt;miscellaneous-field name="input-page-3"&gt;1&lt;/miscellaneous-field&gt;
+ *     &lt;miscellaneous-field name="source-file"&gt;D:\soft\scores\morphology\recordare\MozartTrio.png&lt;/miscellaneous-field&gt;
+ *     &lt;miscellaneous-field name="source-offset"&gt;4&lt;/miscellaneous-field&gt;
+ *     &lt;miscellaneous-field name="source-sheet-1"&gt;1 2&lt;/miscellaneous-field&gt;
+ *     &lt;miscellaneous-field name="source-sheet-2"&gt;&lt;/miscellaneous-field&gt;
+ *     &lt;miscellaneous-field name="source-sheet-3"&gt;1&lt;/miscellaneous-field&gt;
  * &lt;/miscellaneous&gt;
  * </pre>
  * <p>
  * Using uri:
  * <pre>
  * &lt;miscellaneous&gt;
- *     &lt;miscellaneous-field name="input-uri"&gt;file:///MozartTrio.png&lt;/miscellaneous-field&gt;
- *     &lt;miscellaneous-field name="input-page-1"&gt;1 2&lt;/miscellaneous-field&gt;
- *     &lt;miscellaneous-field name="input-page-2"&gt;&lt;/miscellaneous-field&gt;
- *     &lt;miscellaneous-field name="input-page-3"&gt;1&lt;/miscellaneous-field&gt;
+ *     &lt;miscellaneous-field name="source-uri"&gt;file:///MozartTrio.png&lt;/miscellaneous-field&gt;
+ *     &lt;miscellaneous-field name="source-offset"&gt;4&lt;/miscellaneous-field&gt;
+ *     &lt;miscellaneous-field name="source-sheet-1"&gt;1 2&lt;/miscellaneous-field&gt;
+ *     &lt;miscellaneous-field name="source-sheet-2"&gt;&lt;/miscellaneous-field&gt;
+ *     &lt;miscellaneous-field name="source-sheet-3"&gt;1&lt;/miscellaneous-field&gt;
  * &lt;/miscellaneous&gt;
  * </pre>
  *
@@ -71,17 +73,20 @@ public class Source
 
     private static final String SOURCE_PREFIX = "source-";
 
-    private static final String PAGE_PREFIX = "page-";
+    private static final String SHEET_PREFIX = "sheet-";
 
     //~ Instance fields ----------------------------------------------------------------------------
     /** Path to source image file, if any. */
     private String file;
 
+    /** Sheet offset with respect to full work. */
+    private int offset;
+
     /** Source image URI, if any. */
     private URI uri;
 
-    /** Systems processed in each image page. */
-    private final List<PageSystems> pages = new ArrayList<PageSystems>();
+    /** Systems processed in each image sheet. */
+    private final List<SheetSystems> sheets = new ArrayList<SheetSystems>();
 
     //~ Methods ------------------------------------------------------------------------------------
     //--------//
@@ -115,12 +120,14 @@ public class Source
                     source.file = value;
                 } else if (tail.equals("uri")) {
                     source.uri = URI.create(value);
-                } else if (tail.startsWith(PAGE_PREFIX)) {
-                    String numStr = tail.substring(PAGE_PREFIX.length());
+                } else if (tail.equals("offset")) {
+                    source.offset = Integer.decode(value);
+                } else if (tail.startsWith(SHEET_PREFIX)) {
+                    String numStr = tail.substring(SHEET_PREFIX.length());
                     int num = Integer.decode(numStr);
-                    PageSystems page = new PageSystems(num);
-                    source.pages.add(page);
-                    page.getSystems().addAll(parseInts(value));
+                    SheetSystems sheet = new SheetSystems(num);
+                    source.sheets.add(sheet);
+                    sheet.getSystems().addAll(parseInts(value));
                 }
             }
         }
@@ -160,10 +167,16 @@ public class Source
             field.setValue(uri.toString());
         }
 
-        for (PageSystems page : pages) {
+        if (offset != 0) {
             misc.getMiscellaneousField().add(field = factory.createMiscellaneousField());
-            field.setName(SOURCE_PREFIX + PAGE_PREFIX + page.pageNumber);
-            field.setValue(packInts(page.getSystems()));
+            field.setName(SOURCE_PREFIX + "offset");
+            field.setValue("" + offset);
+        }
+
+        for (SheetSystems sheet : sheets) {
+            misc.getMiscellaneousField().add(field = factory.createMiscellaneousField());
+            field.setName(SOURCE_PREFIX + SHEET_PREFIX + sheet.sheetNumber);
+            field.setValue(packInts(sheet.getSystems()));
         }
     }
 
@@ -176,11 +189,19 @@ public class Source
     }
 
     /**
-     * @return the pageSystems
+     * @return the offset
      */
-    public List<PageSystems> getPages ()
+    public int getOffset ()
     {
-        return pages;
+        return offset;
+    }
+
+    /**
+     * @return the sheetSystems
+     */
+    public List<SheetSystems> getSheets ()
+    {
+        return sheets;
     }
 
     /**
@@ -197,6 +218,14 @@ public class Source
     public void setFile (String file)
     {
         this.file = file;
+    }
+
+    /**
+     * @param offset the offset to set
+     */
+    public void setOffset (int offset)
+    {
+        this.offset = offset;
     }
 
     /**
@@ -219,8 +248,12 @@ public class Source
             sb.append("uri=").append(uri);
         }
 
-        for (PageSystems page : pages) {
-            sb.append(" ").append(page);
+        if (offset != 0) {
+            sb.append(" offset=").append(offset);
+        }
+
+        for (SheetSystems sheet : sheets) {
+            sb.append(" ").append(sheet);
         }
 
         sb.append("}");
@@ -282,26 +315,26 @@ public class Source
     }
 
     //~ Inner Classes ------------------------------------------------------------------------------
-    //-------------//
-    // PageSystems //
-    //-------------//
+    //--------------//
+    // SheetSystems //
+    //--------------//
     /**
-     * Describes which systems were processed in this page.
+     * Describes which systems were processed in this sheet.
      */
-    public static class PageSystems
+    public static class SheetSystems
     {
         //~ Instance fields ------------------------------------------------------------------------
 
-        /** Page number within source file, starting from 1. */
-        final int pageNumber;
+        /** Sheet number within source file, starting from 1. */
+        final int sheetNumber;
 
         /** Sequence of systems processed, starting from 1. */
         private final List<Integer> systems = new ArrayList<Integer>();
 
         //~ Constructors ---------------------------------------------------------------------------
-        public PageSystems (int pageNumber)
+        public SheetSystems (int sheetNumber)
         {
-            this.pageNumber = pageNumber;
+            this.sheetNumber = sheetNumber;
         }
 
         //~ Methods --------------------------------------------------------------------------------
@@ -316,8 +349,8 @@ public class Source
         @Override
         public String toString ()
         {
-            StringBuilder sb = new StringBuilder("page");
-            sb.append("#").append(pageNumber);
+            StringBuilder sb = new StringBuilder("sheet");
+            sb.append("#").append(sheetNumber);
             sb.append("[");
 
             boolean first = true;

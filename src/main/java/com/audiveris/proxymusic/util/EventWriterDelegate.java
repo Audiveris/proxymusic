@@ -12,7 +12,6 @@
 package com.audiveris.proxymusic.util;
 
 import javax.xml.namespace.NamespaceContext;
-import javax.xml.stream.Location;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLStreamException;
