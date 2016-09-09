@@ -15,16 +15,10 @@
     <!-- retrieve-id -->
     <target name="retrieve-id"
             description="Retrieve Hg information">
-        <exec executable="hg"
-              outputproperty="program.revision">
-            <arg line='log -r tip --template "{rev}"' />
+        <exec executable="git" outputproperty="program.revision">
+            <arg line='log -1 --pretty=format:"%h"' />
         </exec>
         <echo message="-- program.revision=${program.revision}" />
-        <exec executable="hg"
-              outputproperty="program.build">
-            <arg line='log -r tip --template "{node|short}"' />
-        </exec>
-        <echo message="-- program.build=${program.build}" />
     </target>
         
     <!-- generate-program-id -->
@@ -50,9 +44,6 @@ public class ProgramId
 
     /** Precise program revision: {@value} */
     public static final java.lang.String REVISION = "${program.revision}";
-
-    /** Precise program build: {@value} */
-    public static final java.lang.String BUILD = "${program.build}";
 }]]>
         </echo> 
     </target>
