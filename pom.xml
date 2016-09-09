@@ -6,7 +6,7 @@
 
     <groupId>org.audiveris</groupId>
     <artifactId>proxymusic</artifactId>
-    <version>3.0</version>
+    <version>3.0.1</version>
     <packaging>jar</packaging>
 
     <name>ProxyMusic</name>
