@@ -10,13 +10,13 @@
     <packaging>jar</packaging>
 
     <name>ProxyMusic</name>
-    <url>http://kenai.com/projects/proxymusic</url>
+    <url>https://github.com/Audiveris/proxymusic</url>
     <description>ProxyMusic provides a binding between Java objects in memory and data formatted according to MusicXML 3.0</description>
 
     <licenses>
         <license>
-            <name>GNU General Lesser Public License (LGPL) version 2.1</name>
-            <url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
+            <name>GNU General Lesser Public License (LGPL) version 3.0</name>
+            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
         </license>
     </licenses>
 
@@ -43,17 +43,21 @@
         </developer>
     </developers>
 
+    <prerequisites>
+        <maven>3.0</maven>
+    </prerequisites>
+
     <!-- Source Code Management -->
     <scm>
-        <connection>scm:hg:https://hg.kenai.com/hg/proxymusic~hg</connection>
-        <developerConnection>scm:hg:https://hg.kenai.com/hg/proxymusic~hg</developerConnection>
-        <url>https://hg.kenai.com/hg/proxymusic~hg</url>
+        <connection>scm:git:git://github.com/Audiveris/proxymusic.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/Audiveris/proxymusic.git</developerConnection>
+        <url>https://github.com/Audiveris/proxymusic</url>
     </scm>
 
     <!-- Issue management -->
     <issueManagement>
-        <system>Jira</system>
-        <url>http://kenai.com/jira/browse/PROXYMUSIC/</url>
+        <system>GitHub Issues</system>
+        <url>https://github.com/Audiveris/proxymusic/issues</url>
     </issueManagement>
 
     <!-- Continuous integration -->
