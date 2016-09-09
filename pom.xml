@@ -159,7 +159,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <!-- configure Maven to use JDK 7 for compilation -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -171,7 +171,7 @@
                     <testTarget>1.7</testTarget>
                 </configuration>
             </plugin>
-            
+
             <!-- Set system property to allow JAXB access to external schema -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -193,7 +193,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <!-- Generating Java sources from schemas -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -213,7 +213,7 @@
                             <bindingFiles>void.xjb</bindingFiles>
                         </configuration>
                     </execution>
-                    
+
                     <!-- for MusicXML -->
                     <execution>
                         <id>xjc-musicxml</id>
@@ -378,40 +378,3 @@
     </build>
 
 </project>
-<!--
-[DEBUG] Lifecycle default -> [validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy]
-[DEBUG] Lifecycle clean -> [pre-clean, clean, post-clean]
-[DEBUG] Lifecycle site -> [pre-site, site, post-site, site-deploy]
--->
-
-<!-- Hg information -->
-<!--            <plugin>
-    <groupId>org.codehaus.mojo</groupId>
-    <artifactId>buildnumber-maven-plugin</artifactId>
-    <version>1.1</version>
-    <executions>
-        <execution>
-            <phase>validate</phase>
-            <goals>
-                <goal>create</goal>
-                <goal>hgchangeset</goal>
-            </goals>
-        </execution>
-    </executions>
-    <configuration>
-        <doCheck>false</doCheck>
-        <doUpdate>false</doUpdate>
-    </configuration>
-</plugin>   -->
-
-<!--            <plugin>
-    <artifactId>maven-mercurial-build-number-plugin</artifactId>
-    <version>1.0</version>
-    <executions>
-        <execution>
-            <goals>
-                <goal>set-build-number</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>-->
