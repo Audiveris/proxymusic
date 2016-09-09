@@ -32,9 +32,9 @@
             depends="retrieve-id"
             description="Write a Java class to gather program identification">
         <echo message="-- Writing to file ${generated.src.dir}/com/audiveris/proxymusic/util/ProgramId.java" />
-        <mkdir dir="${generated.src.dir}/com/audiveris/proxymusic/util" />
-        <echo file="${generated.src.dir}/com/audiveris/proxymusic/util/ProgramId.java"><![CDATA[
-package com.audiveris.proxymusic.util;
+        <mkdir dir="${generated.src.dir}/org/audiveris/proxymusic/util" />
+        <echo file="${generated.src.dir}/org/audiveris/proxymusic/util/ProgramId.java"><![CDATA[
+package org.audiveris.proxymusic.util;
 
 /** 
  * Class {@code ProgramId} provides full program identification.

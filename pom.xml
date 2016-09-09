@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.audiveris</groupId>
+    <groupId>org.audiveris</groupId>
     <artifactId>proxymusic</artifactId>
     <version>3.0</version>
     <packaging>jar</packaging>
@@ -204,7 +204,7 @@
                         </goals>
                         <configuration>
                             <schemaFiles>opus.xsd</schemaFiles>
-                            <packageName>com.audiveris.proxymusic.opus</packageName>
+                            <packageName>org.audiveris.proxymusic.opus</packageName>
                             <!-- no binding customization -->
                             <bindingFiles>void.xjb</bindingFiles>
                         </configuration>
@@ -218,7 +218,7 @@
                         </goals>
                         <configuration>
                             <schemaFiles>musicxml.xsd</schemaFiles>
-                            <packageName>com.audiveris.proxymusic</packageName>
+                            <packageName>org.audiveris.proxymusic</packageName>
                             <bindingFiles>musicxml.xjb</bindingFiles>
                             <clearOutputDir>false</clearOutputDir>
                         </configuration>

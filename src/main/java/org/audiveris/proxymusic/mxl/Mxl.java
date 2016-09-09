@@ -9,7 +9,7 @@
 //  Goto http://kenai.com/projects/proxymusic to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
 // </editor-fold>
-package com.audiveris.proxymusic.mxl;
+package org.audiveris.proxymusic.mxl;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -226,7 +226,7 @@ public abstract class Mxl
          *
          * @param rootFile the provided RootFile
          * @return the corresponding Zip entry
-         * @throws com.audiveris.proxymusic.mxl.Mxl.MxlException
+         * @throws org.audiveris.proxymusic.mxl.Mxl.MxlException
          */
         public ZipEntry addEntry (RootFile rootFile)
                 throws MxlException
@@ -249,7 +249,7 @@ public abstract class Mxl
          *
          * @param rootFile the provided RootFile
          * @return the corresponding Zip entry
-         * @throws com.audiveris.proxymusic.mxl.Mxl.MxlException
+         * @throws org.audiveris.proxymusic.mxl.Mxl.MxlException
          */
         public ZipEntry addFirstEntry (RootFile rootFile)
                 throws MxlException

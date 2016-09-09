@@ -7,7 +7,7 @@
 //  Please see http://kenai.com/projects/proxymusic/ for bugs & suggestions.  //
 //----------------------------------------------------------------------------//
 //
-package com.audiveris.proxymusic.util;
+package org.audiveris.proxymusic.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

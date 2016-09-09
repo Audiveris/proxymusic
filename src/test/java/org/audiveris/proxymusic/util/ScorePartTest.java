@@ -7,10 +7,10 @@
 //  Please see http://kenai.com/projects/proxymusic/ for bugs & suggestions.  //
 //----------------------------------------------------------------------------//
 //
-package com.audiveris.proxymusic.util;
+package org.audiveris.proxymusic.util;
 
-import com.audiveris.proxymusic.*;
-import com.audiveris.proxymusic.ScorePartwise.Part;
+import org.audiveris.proxymusic.*;
+import org.audiveris.proxymusic.ScorePartwise.Part;
 
 import junit.framework.TestCase;
 

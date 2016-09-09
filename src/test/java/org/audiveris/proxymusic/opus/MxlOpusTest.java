@@ -9,14 +9,14 @@
 //  Goto http://kenai.com/projects/audiveris to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
 // </editor-fold>
-package com.audiveris.proxymusic.opus;
+package org.audiveris.proxymusic.opus;
 
-import com.audiveris.proxymusic.ScorePartwise;
-import com.audiveris.proxymusic.mxl.Mxl;
-import com.audiveris.proxymusic.mxl.RootFile;
-import com.audiveris.proxymusic.util.DummyGenerator;
-import com.audiveris.proxymusic.util.Dumper;
-import com.audiveris.proxymusic.util.Marshalling;
+import org.audiveris.proxymusic.ScorePartwise;
+import org.audiveris.proxymusic.mxl.Mxl;
+import org.audiveris.proxymusic.mxl.RootFile;
+import org.audiveris.proxymusic.util.DummyGenerator;
+import org.audiveris.proxymusic.util.Dumper;
+import org.audiveris.proxymusic.util.Marshalling;
 
 import junit.framework.TestCase;
 

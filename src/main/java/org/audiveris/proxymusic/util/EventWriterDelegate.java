@@ -9,7 +9,7 @@
 //  Goto http://kenai.com/projects/audiveris to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
 // </editor-fold>
-package com.audiveris.proxymusic.util;
+package org.audiveris.proxymusic.util;
 
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLEventReader;

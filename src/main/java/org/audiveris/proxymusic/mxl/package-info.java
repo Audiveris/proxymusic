@@ -2,4 +2,4 @@
  * Support for MXL (compressed) MusicXml.
  */
 
-package com.audiveris.proxymusic.mxl;
+package org.audiveris.proxymusic.mxl;

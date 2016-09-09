@@ -9,24 +9,24 @@
 //  Goto http://kenai.com/projects/audiveris to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
 // </editor-fold>
-package com.audiveris.proxymusic.util;
+package org.audiveris.proxymusic.util;
 
-import com.audiveris.proxymusic.Attributes;
-import com.audiveris.proxymusic.Clef;
-import com.audiveris.proxymusic.ClefSign;
-import com.audiveris.proxymusic.Identification;
-import com.audiveris.proxymusic.Key;
-import com.audiveris.proxymusic.Note;
-import com.audiveris.proxymusic.NoteType;
-import com.audiveris.proxymusic.ObjectFactory;
-import com.audiveris.proxymusic.PartList;
-import com.audiveris.proxymusic.PartName;
-import com.audiveris.proxymusic.Pitch;
-import com.audiveris.proxymusic.ScorePart;
-import com.audiveris.proxymusic.ScorePartwise;
-import com.audiveris.proxymusic.Step;
-import com.audiveris.proxymusic.Time;
-import com.audiveris.proxymusic.TypedText;
+import org.audiveris.proxymusic.Attributes;
+import org.audiveris.proxymusic.Clef;
+import org.audiveris.proxymusic.ClefSign;
+import org.audiveris.proxymusic.Identification;
+import org.audiveris.proxymusic.Key;
+import org.audiveris.proxymusic.Note;
+import org.audiveris.proxymusic.NoteType;
+import org.audiveris.proxymusic.ObjectFactory;
+import org.audiveris.proxymusic.PartList;
+import org.audiveris.proxymusic.PartName;
+import org.audiveris.proxymusic.Pitch;
+import org.audiveris.proxymusic.ScorePart;
+import org.audiveris.proxymusic.ScorePartwise;
+import org.audiveris.proxymusic.Step;
+import org.audiveris.proxymusic.Time;
+import org.audiveris.proxymusic.TypedText;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

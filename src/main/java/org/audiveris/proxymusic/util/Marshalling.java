@@ -9,13 +9,13 @@
 //  Go to http://kenai.com/projects/proxymusic/ to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
 // </editor-fold>
-package com.audiveris.proxymusic.util;
+package org.audiveris.proxymusic.util;
 
-import com.audiveris.proxymusic.Encoding;
-import com.audiveris.proxymusic.Identification;
-import com.audiveris.proxymusic.ObjectFactory;
-import com.audiveris.proxymusic.ScorePartwise;
-import com.audiveris.proxymusic.opus.Opus;
+import org.audiveris.proxymusic.Encoding;
+import org.audiveris.proxymusic.Identification;
+import org.audiveris.proxymusic.ObjectFactory;
+import org.audiveris.proxymusic.ScorePartwise;
+import org.audiveris.proxymusic.opus.Opus;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -226,7 +226,7 @@ public abstract class Marshalling
             writer = new MyStreamWriter(writer, 2);
 
             // Marshalling
-            com.audiveris.proxymusic.opus.ObjectFactory opusFactory = new com.audiveris.proxymusic.opus.ObjectFactory();
+            org.audiveris.proxymusic.opus.ObjectFactory opusFactory = new org.audiveris.proxymusic.opus.ObjectFactory();
             JAXBElement<Opus> elem = opusFactory.createOpus(opus);
             marshaller.marshal(elem, writer);
             writer.flush();

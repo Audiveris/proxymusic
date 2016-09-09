@@ -9,7 +9,7 @@
 //  Goto http://kenai.com/projects/proxymusic to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
 // </editor-fold>
-package com.audiveris.proxymusic.mxl;
+package org.audiveris.proxymusic.mxl;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
