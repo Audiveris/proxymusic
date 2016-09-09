@@ -4,9 +4,9 @@
 //                                                                                                //
 //------------------------------------------------------------------------------------------------//
 // <editor-fold defaultstate="collapsed" desc="hdr">
-//  Copyright © Herve Bitteur and others 2000-2014. All rights reserved.
-//  This software is released under the GNU General Public License.
-//  Goto http://kenai.com/projects/audiveris to report bugs or suggestions.
+//  Copyright © Herve Bitteur and others 2000-2016. All rights reserved.
+//  This software is released under the GNU Lesser General Public License v3.
+//  Go to https://github.com/Audiveris/proxymusic/issues to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
 // </editor-fold>
 package org.audiveris.proxymusic.util;

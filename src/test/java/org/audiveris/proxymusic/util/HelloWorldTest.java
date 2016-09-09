@@ -1,11 +1,11 @@
-//----------------------------------------------------------------------------//
-//                                                                            //
-//                        H e l l o W o r l d T e s t                         //
-//                                                                            //
-//  Copyright © Hervé Bitteur and others 2000-2014. All rights reserved.      //
-//  This software is released under the GNU Lesser General Public License.    //
-//  Please see http://kenai.com/projects/proxymusic/ for bugs & suggestions.  //
-//----------------------------------------------------------------------------//
+//------------------------------------------------------------------------------//
+//                                                                              //
+//                        H e l l o W o r l d T e s t                           //
+//                                                                              //
+//  Copyright © Hervé Bitteur and others 2000-2016. All rights reserved.        //
+//  This software is released under the GNU Lesser General Public License v3.   //
+//  See https://github.com/Audiveris/proxymusic/issues for bugs & suggestions.  //
+//------------------------------------------------------------------------------//
 //
 package org.audiveris.proxymusic.util;
 
