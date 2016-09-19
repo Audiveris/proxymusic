@@ -70,19 +70,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- Location where site is deployed - username/password for site.deployments in server.xml 
     <distributionManagement>
-        <!-- Location where site is deployed - username/password for site.deployments in server.xml -->
         <site>
             <id>proxymusic-repo</id>
             <name>Site deployments</name>
-            <!--            <url>dav:http://kenai.com/website/${project.artifactId}/</url>-->
-            <!--             <url>https://kenai.com/website/${project.artifactId}/</url>-->
-            <!--             <url>ssh://kenai.com/website/${project.artifactId}/</url>-->
-            <!--            <url>https://kenai.com/proxymusic/website</url>-->
-            <!--            <url>scp://kenai.com/website/proxymusic/</url>-->
             <url>scp://kenai.com/proxymusic/website/</url>
         </site>
     </distributionManagement>
+    -->
 
     <profiles>
         <profile>
@@ -137,7 +133,6 @@
         </extensions>
 
         <plugins>
-
             <!-- Enforce JDK 7 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -372,9 +367,37 @@
                     </reportPlugins>
                 </configuration>
             </plugin>
+            
+            <!-- Signing artifacts -->            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
+            <!-- Upload artifacts to Nexus staging repository to be synced into Maven Central Repository -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.3</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org</nexusUrl>
+                    <!-- <stagingProfileId>???</stagingProfileId> -->
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            
         </plugins>
-
     </build>
-
 </project>
