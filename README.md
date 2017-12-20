@@ -43,4 +43,4 @@ A few examples of use:
 * Another small example, focused on the marshalling and the unmarshalling of a part-list element, is available as ```proxymusic.util.ScorePartTest.java```.
 * For marshalling and unmarshalling Opus entities, see simple ```proxymusic.opus.OpusTest.java``` example or more realistic ```proxymusic.opus.MxlOpusTest.java``` example.
 * For dealing with compressed .mxl files, see ```proxymusic.mxl.MxlTest.java``` example or ```proxymusic.opus.MxlOpusTest.java```.
-* A real size example is provided by the companion [Audiveris project](https://github.com/Audiveris/audiveris-v5). Audiveris is an Optical Music Recognition software (OMR) which uses ProxyMusic to handle the marshalling layer. For detailed information, refer to Audiveris BookExporter Java class.
+* A real size example is provided by the companion [Audiveris project](https://github.com/Audiveris/audiveris-v5). Audiveris is an Optical Music Recognition software (OMR) which uses ProxyMusic to handle the marshalling layer. For detailed information, refer to Audiveris ScoreExporter and PartwiseBuilder Java classes.
