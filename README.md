@@ -23,6 +23,7 @@ The main advantage of this automated approach is to result in an efficient and e
 
 # Building
 
+
 Building ProxyMusic is easily achieved with the following terminal command:
 
 ```mvn clean install```
@@ -32,7 +33,7 @@ taking as input the schema definition files ```src/main/xsd/musicxml.xsd``` and 
 
 # Usage
 
-The ProxyMusic binding is made available for any Java application as a dedicated jar file.
+The latest ProxyMusic release is available on [Maven Central](https://mvnrepository.com/artifact/org.audiveris/proxymusic/3.0.1) and thus can be easily integrated in a Gradle or Maven build. Alternatively, it's possible to [build a local artifact](#building).
 
 A utility class, named proxymusic.util.Marshalling, is available to ease the handling
 of both marshalling and unmarshalling of ScorePartwise and Opus entities.`
@@ -43,4 +44,4 @@ A few examples of use:
 * Another small example, focused on the marshalling and the unmarshalling of a part-list element, is available as ```proxymusic.util.ScorePartTest.java```.
 * For marshalling and unmarshalling Opus entities, see simple ```proxymusic.opus.OpusTest.java``` example or more realistic ```proxymusic.opus.MxlOpusTest.java``` example.
 * For dealing with compressed .mxl files, see ```proxymusic.mxl.MxlTest.java``` example or ```proxymusic.opus.MxlOpusTest.java```.
-* A real size example is provided by the companion [Audiveris project](https://github.com/Audiveris/audiveris-v5). Audiveris is an Optical Music Recognition software (OMR) which uses ProxyMusic to handle the marshalling layer. For detailed information, refer to Audiveris ScoreExporter and PartwiseBuilder Java classes.
+* A real size example is provided by the companion [Audiveris project](https://github.com/Audiveris/audiveris-v5). Audiveris is an Optical Music Recognition software (OMR) which uses ProxyMusic to handle the marshalling layer. For detailed information, refer to Audiveris [ScoreExporter](https://github.com/Audiveris/audiveris/blob/master/src/main/org/audiveris/omr/score/ScoreExporter.java) and [PartwiseBuilder](https://github.com/Audiveris/audiveris/blob/master/src/main/org/audiveris/omr/score/PartwiseBuilder.java) Java classes.
