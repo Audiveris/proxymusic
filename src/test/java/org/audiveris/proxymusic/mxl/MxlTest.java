@@ -4,7 +4,7 @@
 //                                                                                                //
 //------------------------------------------------------------------------------------------------//
 // <editor-fold defaultstate="collapsed" desc="hdr">
-//  Copyright © Herve Bitteur and others 2000-2016. All rights reserved.
+//  Copyright © Audiveris 2022. All rights reserved.
 //  This software is released under the GNU Lesser General Public License v3.
 //  Go to https://github.com/Audiveris/proxymusic/issues to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
@@ -43,15 +43,23 @@ public class MxlTest
     //~ Methods ------------------------------------------------------------------------------------
 
     public static void main (String... args)
-            throws JAXBException, FileNotFoundException, IOException, Mxl.MxlException,
-                   Marshalling.MarshallingException, Marshalling.UnmarshallingException
+            throws JAXBException,
+                   FileNotFoundException,
+                   IOException,
+                   Mxl.MxlException,
+                   Marshalling.MarshallingException,
+                   Marshalling.UnmarshallingException
     {
         new MxlTest().play(args[0]);
     }
 
     public void play (String fileName)
-            throws JAXBException, FileNotFoundException, IOException, Mxl.MxlException,
-                   Marshalling.MarshallingException, Marshalling.UnmarshallingException
+            throws JAXBException,
+                   FileNotFoundException,
+                   IOException,
+                   Mxl.MxlException,
+                   Marshalling.MarshallingException,
+                   Marshalling.UnmarshallingException
     {
         System.out.println("Building contexts ...");
         Marshalling.getContext(ScorePartwise.class);
@@ -94,8 +102,12 @@ public class MxlTest
 
     @Test
     public void test ()
-            throws JAXBException, FileNotFoundException, IOException, Mxl.MxlException,
-                   Marshalling.MarshallingException, Marshalling.UnmarshallingException
+            throws JAXBException,
+                   FileNotFoundException,
+                   IOException,
+                   Mxl.MxlException,
+                   Marshalling.MarshallingException,
+                   Marshalling.UnmarshallingException
     {
         File dir = new File("target/temp");
         dir.mkdirs();

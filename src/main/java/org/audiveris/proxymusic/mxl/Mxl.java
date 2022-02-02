@@ -4,7 +4,7 @@
 //                                                                                                //
 //------------------------------------------------------------------------------------------------//
 // <editor-fold defaultstate="collapsed" desc="hdr">
-//  Copyright © Herve Bitteur and others 2000-2016. All rights reserved.
+//  Copyright © Audiveris 2022. All rights reserved.
 //  This software is released under the GNU Lesser General Public License v3.
 //  Go to https://github.com/Audiveris/proxymusic/issues to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
@@ -51,6 +51,14 @@ public abstract class Mxl
 
     /** Container [un]marshalling context. */
     private static JAXBContext containerContext;
+
+    //~ Constructors -------------------------------------------------------------------------------
+    /**
+     * Not meant to be instantiated.
+     */
+    private Mxl ()
+    {
+    }
 
     //~ Methods ------------------------------------------------------------------------------------
     //------------//
@@ -103,7 +111,10 @@ public abstract class Mxl
          * @throws JAXBException
          */
         public Input (File file)
-                throws FileNotFoundException, IOException, MxlException, JAXBException
+                throws FileNotFoundException,
+                       IOException,
+                       MxlException,
+                       JAXBException
         {
             zipFile = new ZipFile(file);
 

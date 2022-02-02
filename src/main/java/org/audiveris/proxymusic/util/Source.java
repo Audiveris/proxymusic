@@ -4,7 +4,7 @@
 //                                                                                                //
 //------------------------------------------------------------------------------------------------//
 // <editor-fold defaultstate="collapsed" desc="hdr">
-//  Copyright © Herve Bitteur and others 2000-2016. All rights reserved.
+//  Copyright © Audiveris 2022. All rights reserved.
 //  This software is released under the GNU Lesser General Public License v3.
 //  Go to https://github.com/Audiveris/proxymusic/issues to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
@@ -40,7 +40,7 @@ import java.util.List;
  * same sheet #3, but from system 2.
  * <p>
  * In MusicXML, such Source data is encoded using the miscellaneous element.
- * <br/>
+ * <br>
  * Using file:
  * <pre>
  * &lt;miscellaneous&gt;
@@ -86,7 +86,7 @@ public class Source
     private URI uri;
 
     /** Systems processed in each image sheet. */
-    private final List<SheetSystems> sheets = new ArrayList<SheetSystems>();
+    private final List<SheetSystems> sheets = new ArrayList<>();
 
     //~ Methods ------------------------------------------------------------------------------------
     //--------//
@@ -296,7 +296,7 @@ public class Source
      */
     private static List<Integer> parseInts (String str)
     {
-        final List<Integer> intList = new ArrayList<Integer>();
+        final List<Integer> intList = new ArrayList<>();
         final String[] tokens = str.split("\\s+");
 
         for (String token : tokens) {
@@ -329,7 +329,7 @@ public class Source
         final int sheetNumber;
 
         /** Sequence of systems processed, starting from 1. */
-        private final List<Integer> systems = new ArrayList<Integer>();
+        private final List<Integer> systems = new ArrayList<>();
 
         //~ Constructors ---------------------------------------------------------------------------
         public SheetSystems (int sheetNumber)

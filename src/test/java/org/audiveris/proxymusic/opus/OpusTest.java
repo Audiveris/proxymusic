@@ -4,7 +4,7 @@
 //                                                                                                //
 //------------------------------------------------------------------------------------------------//
 // <editor-fold defaultstate="collapsed" desc="hdr">
-//  Copyright © Herve Bitteur and others 2000-2016. All rights reserved.
+//  Copyright © Audiveris 2022. All rights reserved.
 //  This software is released under the GNU Lesser General Public License v3.
 //  Go to https://github.com/Audiveris/proxymusic/issues to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
@@ -14,9 +14,9 @@ package org.audiveris.proxymusic.opus;
 import org.audiveris.proxymusic.util.Dumper;
 import org.audiveris.proxymusic.util.Marshalling;
 
-import junit.framework.TestCase;
-
 import org.junit.Test;
+
+import junit.framework.TestCase;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,32 +32,32 @@ import java.io.OutputStream;
  * @author Hervé Bitteur
  */
 public class OpusTest
-    extends TestCase
+        extends TestCase
 {
     //~ Methods ------------------------------------------------------------------------------------
 
     @Test
     public void test ()
-        throws Exception
+            throws Exception
     {
         System.out.println("OpusTest.test()");
 
         File dir = new File("target/temp");
         dir.mkdirs();
 
-        File          file = new File(dir, "my-opus.xml");
-        OutputStream  os = new FileOutputStream(file);
+        File file = new File(dir, "my-opus.xml");
+        OutputStream os = new FileOutputStream(file);
 
         // Allocate the top opus
         ObjectFactory opusFactory = new ObjectFactory();
-        Opus          topOpus = opusFactory.createOpus();
+        Opus topOpus = opusFactory.createOpus();
         topOpus.setTitle("This is the top opus");
         topOpus.setVersion("3.0");
 
         {
             // score 1 within opus
             final String entryName = "myfirstscore.xml";
-            Score        score = opusFactory.createScore();
+            Score score = opusFactory.createScore();
             score.setHref(entryName);
             score.setTitle("The first score");
             score.setNewPage(YesNo.YES);
@@ -67,7 +67,7 @@ public class OpusTest
         {
             // score 2 within opus
             final String entryName = "mysecondscore.xml";
-            Score        score = opusFactory.createScore();
+            Score score = opusFactory.createScore();
             score.setHref(entryName);
             score.setTitle("The second score");
             score.setNewPage(YesNo.NO);
@@ -77,7 +77,7 @@ public class OpusTest
         {
             // linked opus
             final String entryName = "linked-opus.xml";
-            OpusLink     opusLink = opusFactory.createOpusLink();
+            OpusLink opusLink = opusFactory.createOpusLink();
             opusLink.setTitle("Link to another opus");
             opusLink.setHref(entryName);
             topOpus.getOpusOrOpusLinkOrScore().add(opusLink);
@@ -105,7 +105,7 @@ public class OpusTest
 
         // Un-marshal
         InputStream is = new FileInputStream(file);
-        Opus        newOpus = (Opus) Marshalling.unmarshal(is);
+        Opus newOpus = (Opus) Marshalling.unmarshal(is);
         System.out.println(new Dumper.Column(newOpus, "(unmarshalled opus)").toString());
 
         for (Object item : topOpus.getOpusOrOpusLinkOrScore()) {

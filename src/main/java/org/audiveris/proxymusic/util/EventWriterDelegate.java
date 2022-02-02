@@ -4,7 +4,7 @@
 //                                                                                                //
 //------------------------------------------------------------------------------------------------//
 // <editor-fold defaultstate="collapsed" desc="hdr">
-//  Copyright © Herve Bitteur and others 2000-2016. All rights reserved.
+//  Copyright © Audiveris 2022. All rights reserved.
 //  This software is released under the GNU Lesser General Public License v3.
 //  Go to https://github.com/Audiveris/proxymusic/issues to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
@@ -53,7 +53,7 @@ public class EventWriterDelegate
             throws XMLStreamException
     {
         System.out.println(
-                "Delegate.add type=" + event.getEventType()  + " " + event);
+                "Delegate.add type=" + event.getEventType() + " " + event);
         writer.add(event);
     }
 

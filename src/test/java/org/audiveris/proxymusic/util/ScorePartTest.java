@@ -1,12 +1,14 @@
-//------------------------------------------------------------------------------//
-//                                                                              //
-//                        S c o r e P a r t T e s t                             //
-//                                                                              //
-//  Copyright © Hervé Bitteur and others 2000-2016. All rights reserved.        //
-//  This software is released under the GNU Lesser General Public License v3.   //
-//  See https://github.com/Audiveris/proxymusic/issues for bugs & suggestions.  //
-//------------------------------------------------------------------------------//
-//
+//------------------------------------------------------------------------------------------------//
+//                                                                                                //
+//                                S c o r e P a r t T e s t                                       //
+//                                                                                                //
+//------------------------------------------------------------------------------------------------//
+// <editor-fold defaultstate="collapsed" desc="hdr">
+//  Copyright © Audiveris 2022. All rights reserved.
+//  This software is released under the GNU Lesser General Public License v3.
+//  Go to https://github.com/Audiveris/proxymusic/issues to report bugs or suggestions.
+//------------------------------------------------------------------------------------------------//
+// </editor-fold>
 package org.audiveris.proxymusic.util;
 
 import org.audiveris.proxymusic.*;
@@ -180,7 +182,7 @@ public class ScorePartTest
             throws Exception
     {
         logger.info("ScorePartTest. name:{} version:{} revision:{}",
-                ProgramId.NAME, ProgramId.VERSION, ProgramId.REVISION);
+                    ProgramId.NAME, ProgramId.VERSION, ProgramId.REVISION);
 
         // Make sure the temp directory exists
         TEMP_DIR.mkdirs();
@@ -327,7 +329,6 @@ public class ScorePartTest
         ScorePartwise scorePartwise = factory.createScorePartwise();
 
         // No Version, we leave this to ProxyMusic
-
         // PartList
         PartList partList = factory.createPartList();
         scorePartwise.setPartList(partList);

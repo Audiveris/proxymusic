@@ -1,12 +1,14 @@
-//------------------------------------------------------------------------------//
-//                                                                              //
-//                                D u m p e r                                   //
-//                                                                              //
-//  Copyright © Hervé Bitteur and others 2000-2016. All rights reserved.        //
-//  This software is released under the GNU Lesser General Public License v3.   //
-//  See https://github.com/Audiveris/proxymusic/issues for bugs & suggestions.  //
-//------------------------------------------------------------------------------//
-//
+//------------------------------------------------------------------------------------------------//
+//                                                                                                //
+//                                         D u m p e r                                            //
+//                                                                                                //
+//------------------------------------------------------------------------------------------------//
+// <editor-fold defaultstate="collapsed" desc="hdr">
+//  Copyright © Audiveris 2022. All rights reserved.
+//  This software is released under the GNU Lesser General Public License v3
+//  Go to https://github.com/Audiveris/proxymusic/issues to report bugs or suggestions.
+//------------------------------------------------------------------------------------------------//
+// </editor-fold>
 package org.audiveris.proxymusic.util;
 
 import java.lang.reflect.Field;
@@ -15,36 +17,32 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Class <code>Dumper</code> is a debugging utility that reports, 
+ * Class <code>Dumper</code> is a debugging utility that reports,
  * in a brute force manner, any internal data of a class instance.
- *
- * <p> When used on a class instance, all class internal fields which are
+ * <p>
+ * When used on a class instance, all class internal fields which are
  * considered as "relevant" are printed using their toString() method, then we
  * walk up the inheritance tree and repeat the same actions, until there is no
  * more superclass or until the superclass we have reached is considered as
- * non-relevant. </p>
- *
- * <p> A (super)class is considered "relevant" if the static method
+ * non-relevant.
+ * <p>
+ * A (super)class is considered "relevant" if the static method
  * <code>isClassRelevant(class)</code> returns true. This method can be
- * overridden in a subclass of Dumper to adapt to local needs. </p>
- *
- * <p> A field is considered "relevant" if the following condition if the method
+ * overridden in a subclass of Dumper to adapt to local needs.
+ * <p>
+ * A field is considered "relevant" if the following condition if the method
  * <code>isFieldRelevant(field)</code> returns true. Similarly, the behavior of
- * this predicate can be customized by subclassing the Dumper class. </p>
- *
- * <p> There are several kinds of print outs available through subclassing. Each
+ * this predicate can be customized by subclassing the Dumper class.
+ * <p>
+ * There are several kinds of print outs available through subclassing. Each
  * of them export two public methods: <code>dump()</code> which prints the
  * result on default output stream, and <code>dumpOf()</code> which simply
  * returns the generated dump string.
- *
- * <ul> <li> <b>Column</b> a dump with one line per field </li>
- *
+ * <ul>
+ * <li> <b>Column</b> a dump with one line per field </li>
  * <li> <b>Row</b> a dump with all information on one row </li>
- *
  * <li> <b>Html</b> an Html stream with fields arranged in tables </li>
- *
  * </ul>
- *
  * Here are some examples of use:
  * <pre>
  * // Using the predefined static helper methods
@@ -64,7 +62,7 @@ import java.util.Map;
  */
 public abstract class Dumper
 {
-    //~ Instance fields --------------------------------------------------------
+    //~ Instance fields ----------------------------------------------------------------------------
 
     /**
      * The object to be dumped
@@ -90,14 +88,13 @@ public abstract class Dumper
      */
     protected Class cl;
 
-    //~ Constructors -----------------------------------------------------------
-
+    //~ Constructors -------------------------------------------------------------------------------
     /**
      * Creates a new Dumper.
      *
      * @param obj the object instance to be dumped.
      */
-    private Dumper (Object  obj,
+    private Dumper (Object obj,
                     boolean useHtml)
     {
         // (re)Allocate the string buffer
@@ -109,8 +106,7 @@ public abstract class Dumper
         cl = obj.getClass();
     }
 
-    //~ Methods ----------------------------------------------------------------
-
+    //~ Methods ------------------------------------------------------------------------------------
     //-----------------//
     // isClassRelevant //
     //-----------------//
@@ -131,7 +127,7 @@ public abstract class Dumper
         //               !cl.getName()
         //                  .startsWith("javax.");
         return (cl != null) && cl.getName()
-                                 .startsWith("omr.");
+                .startsWith("omr.");
     }
 
     //-----------------//
@@ -154,7 +150,7 @@ public abstract class Dumper
 
         // We don't print non-user visible entities
         if (field.getName()
-                 .indexOf('$') != -1) {
+                .indexOf('$') != -1) {
             return false;
         }
 
@@ -186,7 +182,7 @@ public abstract class Dumper
      * @param level the indentation level (0 means no indentation)
      */
     public static void dump (Object obj,
-                             int    level)
+                             int level)
     {
         dump(obj, null, level);
     }
@@ -220,7 +216,7 @@ public abstract class Dumper
      */
     public static void dump (Object obj,
                              String title,
-                             int    level)
+                             int level)
     {
         new Column(obj, title, level).print();
     }
@@ -315,18 +311,18 @@ public abstract class Dumper
 
         int i = 0;
 
-        for (Object obj : col) {
+        for (Object object : col) {
             if (i++ > 0) {
                 sb.append(useHtml ? ",<br/>" : ",");
             }
 
             // Safeguard action when the object is a big collection
             if (i > MAX_COLLECTION_INDEX) {
-                sb.append(" ... " + col.size() + " items");
+                sb.append(" ... ").append(col.size()).append(" items");
 
                 break;
             } else {
-                sb.append(obj);
+                sb.append(object);
             }
         }
 
@@ -413,7 +409,6 @@ public abstract class Dumper
     }
 
     //~ Inner Classes ----------------------------------------------------------
-
     //--------//
     // Column //
     //--------//
@@ -423,20 +418,20 @@ public abstract class Dumper
      * left indented, according to the specified indentation level.
      */
     public static class Column
-        extends Dumper
+            extends Dumper
     {
         //~ Static fields/initializers -----------------------------------------
 
         private static final String MEMBER_GAP = "   ";
+
         private static final String INDENT_GAP = ".  ";
 
         //~ Instance fields ----------------------------------------------------
+        private final String title;
 
-        private final String       title;
         private final StringBuffer prefix;
 
         //~ Constructors -------------------------------------------------------
-
         public Column (Object obj)
         {
             this(obj, null, 0);
@@ -449,14 +444,14 @@ public abstract class Dumper
         }
 
         public Column (Object obj,
-                       int    level)
+                       int level)
         {
             this(obj, null, level);
         }
 
         public Column (Object obj,
                        String title,
-                       int    level)
+                       int level)
         {
             super(obj, false);
 
@@ -476,7 +471,6 @@ public abstract class Dumper
         }
 
         //~ Methods ------------------------------------------------------------
-
         @Override
         protected void printClassProlog ()
         {
@@ -485,10 +479,10 @@ public abstract class Dumper
             if (obj.getClass() == cl) {
                 sb.append("\n");
                 sb.append(prefix)
-                  .append(cl.getName());
+                        .append(cl.getName());
                 sb.append(" ")
-                  .append(title)
-                  .append(":");
+                        .append(title)
+                        .append(":");
             }
         }
 
@@ -498,9 +492,9 @@ public abstract class Dumper
         {
             sb.append("\n");
             sb.append(prefix)
-              .append(MEMBER_GAP);
+                    .append(MEMBER_GAP);
             sb.append(name)
-              .append("=");
+                    .append("=");
             super.printField(name, value);
         }
     }
@@ -513,7 +507,7 @@ public abstract class Dumper
      * fields in a table.
      */
     public static class Html
-        extends Dumper
+            extends Dumper
     {
         //~ Constructors -------------------------------------------------------
 
@@ -523,16 +517,15 @@ public abstract class Dumper
         }
 
         //~ Methods ------------------------------------------------------------
-
         @Override
         public String toString ()
         {
             // Style
             sb.append("<style> td {")
-              .append(" font-family: Lucida Console, Verdana, sans-serif;")
-              .append(" font-size: 9px;")
-              .append(" font-style: normal;")
-              .append("} </style>");
+                    .append(" font-family: Lucida Console, Verdana, sans-serif;")
+                    .append(" font-size: 9px;")
+                    .append(" font-style: normal;")
+                    .append("} </style>");
 
             // Table begin
             sb.append("<table border=0 cellpadding=3>");
@@ -552,8 +545,8 @@ public abstract class Dumper
         {
             // Class name
             sb.append("<tr><td colspan=2><font color='BLUE'>")
-              .append(cl.getName())
-              .append("</font></td></tr>");
+                    .append(cl.getName())
+                    .append("</font></td></tr>");
         }
 
         @Override
@@ -565,15 +558,15 @@ public abstract class Dumper
 
             // First the field name
             sb.append("<td align='right'><font color='RED'>")
-              .append(name)
-              .append("</font></td>");
+                    .append(name)
+                    .append("</font></td>");
 
             // Then the field value
             sb.append("<td>");
             super.printField(name, value);
 
             sb.append("</td>")
-              .append("</tr>");
+                    .append("</tr>");
         }
     }
 
@@ -585,7 +578,7 @@ public abstract class Dumper
      * on the same line.
      */
     public static class Row
-        extends Dumper
+            extends Dumper
     {
         //~ Constructors -------------------------------------------------------
 
@@ -595,7 +588,6 @@ public abstract class Dumper
         }
 
         //~ Methods ------------------------------------------------------------
-
         @Override
         protected void printClassEpilog ()
         {
@@ -614,7 +606,7 @@ public abstract class Dumper
             }
 
             sb.append(cl.getName())
-              .append(":");
+                    .append(":");
         }
 
         @Override
@@ -623,7 +615,7 @@ public abstract class Dumper
         {
             sb.append(" ");
             sb.append(name)
-              .append("=");
+                    .append("=");
             super.printField(name, value);
         }
     }

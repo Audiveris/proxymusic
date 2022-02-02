@@ -1,12 +1,14 @@
-//------------------------------------------------------------------------------//
-//                                                                              //
-//                        H e l l o W o r l d T e s t                           //
-//                                                                              //
-//  Copyright © Hervé Bitteur and others 2000-2016. All rights reserved.        //
-//  This software is released under the GNU Lesser General Public License v3.   //
-//  See https://github.com/Audiveris/proxymusic/issues for bugs & suggestions.  //
-//------------------------------------------------------------------------------//
-//
+//------------------------------------------------------------------------------------------------//
+//                                                                                                //
+//                                 H e l l o W o r l d T e s t                                    //
+//                                                                                                //
+//------------------------------------------------------------------------------------------------//
+// <editor-fold defaultstate="collapsed" desc="hdr">
+//  Copyright © Audiveris 2022. All rights reserved.
+//  This software is released under the GNU Lesser General Public License v3.
+//  Go to https://github.com/Audiveris/proxymusic/issues to report bugs or suggestions.
+//------------------------------------------------------------------------------------------------//
+// </editor-fold>
 package org.audiveris.proxymusic.util;
 
 import org.audiveris.proxymusic.*;
@@ -37,7 +39,7 @@ import javax.xml.bind.Marshaller;
  * hierarchy of Java objects rooted at a ScorePartwise instance to and
  * from a proper XML file.
  * It does so by using the Marshalling utility class.
- *
+ * <p>
  * This class version is meant to test MusicXML 3.0
  *
  * @author Hervé Bitteur

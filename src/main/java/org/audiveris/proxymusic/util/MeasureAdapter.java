@@ -4,7 +4,7 @@
 //                                                                                                //
 //------------------------------------------------------------------------------------------------//
 // <editor-fold defaultstate="collapsed" desc="hdr">
-//  Copyright © Herve Bitteur and others 2000-2016. All rights reserved.
+//  Copyright © Audiveris 2022. All rights reserved.
 //  This software is released under the GNU Lesser General Public License v3.
 //  Go to https://github.com/Audiveris/proxymusic/issues to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
@@ -23,14 +23,13 @@ import javax.xml.stream.XMLStreamWriter;
  * @author Hervé Bitteur
  */
 public class MeasureAdapter
-    extends XmlAdapter<Measure, Measure>
+        extends XmlAdapter<Measure, Measure>
 {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private XMLStreamWriter xmlStreamWriter;
 
     //~ Constructors -------------------------------------------------------------------------------
-
     /**
      * Creates a new {@code MeasureAdapter} object.
      */
@@ -49,10 +48,9 @@ public class MeasureAdapter
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
     @Override
     public Measure marshal (Measure measure)
-        throws Exception
+            throws Exception
     {
         xmlStreamWriter.writeComment("=======================================================");
 
@@ -61,7 +59,7 @@ public class MeasureAdapter
 
     @Override
     public Measure unmarshal (Measure measure)
-        throws Exception
+            throws Exception
     {
         return measure;
     }

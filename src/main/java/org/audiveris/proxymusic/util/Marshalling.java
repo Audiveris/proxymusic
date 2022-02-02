@@ -4,7 +4,7 @@
 //                                                                                                //
 //------------------------------------------------------------------------------------------------//
 // <editor-fold defaultstate="collapsed" desc="hdr">
-//  Copyright © Herve Bitteur and others 2000-2016. All rights reserved.
+//  Copyright © Audiveris 2022. All rights reserved.
 //  This software is released under the GNU Lesser General Public License v3.
 //  Go to https://github.com/Audiveris/proxymusic/issues to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.lang.String; // Don't remove this line!
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -78,11 +77,10 @@ public abstract class Marshalling
 {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            Marshalling.class);
+    private static final Logger logger = LoggerFactory.getLogger(Marshalling.class);
 
     /** JAXB contexts. */
-    private static final Map<Class, JAXBContext> jaxbContextMap = new HashMap<Class, JAXBContext>();
+    private static final Map<Class, JAXBContext> jaxbContextMap = new HashMap<>();
 
     /** The XML document statement. */
     private static final String XML_LINE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
@@ -100,14 +98,16 @@ public abstract class Marshalling
             "actuate");
 
     /** The DOCTYPE statement for PARTWISE. */
-    private static final String PARTWISE_DOCTYPE_LINE = "<!DOCTYPE score-partwise PUBLIC \"-//Recordare//DTD MusicXML "
-                                                        + ProgramId.VERSION
-                                                        + " Partwise//EN\" \"http://www.musicxml.org/dtds/partwise.dtd\">";
+    private static final String PARTWISE_DOCTYPE_LINE
+            = "<!DOCTYPE score-partwise PUBLIC \"-//Recordare//DTD MusicXML "
+                      + ProgramId.VERSION
+                      + " Partwise//EN\" \"http://www.musicxml.org/dtds/partwise.dtd\">";
 
     /** The DOCTYPE statement for OPUS. */
-    private static final String OPUS_DOCTYPE_LINE = "<!DOCTYPE opus PUBLIC \"-//Recordare//DTD MusicXML "
-                                                    + ProgramId.VERSION
-                                                    + " Opus//EN\" \"http://www.musicxml.org/dtds/opus.dtd\">";
+    private static final String OPUS_DOCTYPE_LINE
+            = "<!DOCTYPE opus PUBLIC \"-//Recordare//DTD MusicXML "
+                      + ProgramId.VERSION
+                      + " Opus//EN\" \"http://www.musicxml.org/dtds/opus.dtd\">";
 
     //~ Constructors -------------------------------------------------------------------------------
     /**
@@ -226,7 +226,8 @@ public abstract class Marshalling
             writer = new MyStreamWriter(writer, 2);
 
             // Marshalling
-            org.audiveris.proxymusic.opus.ObjectFactory opusFactory = new org.audiveris.proxymusic.opus.ObjectFactory();
+            org.audiveris.proxymusic.opus.ObjectFactory opusFactory
+                    = new org.audiveris.proxymusic.opus.ObjectFactory();
             JAXBElement<Opus> elem = opusFactory.createOpus(opus);
             marshaller.marshal(elem, writer);
             writer.flush();
@@ -460,6 +461,7 @@ public abstract class Marshalling
         private String defaultNS = "";
 
         //~ Methods --------------------------------------------------------------------------------
+        @Override
         public String getNamespaceURI (String prefix)
         {
             if ("".equals(prefix)) {
@@ -469,6 +471,7 @@ public abstract class Marshalling
             return null;
         }
 
+        @Override
         public String getPrefix (String namespaceURI)
         {
             // Trick for xlink:...
@@ -479,6 +482,7 @@ public abstract class Marshalling
             return "";
         }
 
+        @Override
         public Iterator getPrefixes (String namespaceURI)
         {
             return null;

@@ -4,7 +4,7 @@
 //                                                                                                //
 //------------------------------------------------------------------------------------------------//
 // <editor-fold defaultstate="collapsed" desc="hdr">
-//  Copyright © Herve Bitteur and others 2000-2016. All rights reserved.
+//  Copyright © Audiveris 2022. All rights reserved.
 //  This software is released under the GNU Lesser General Public License v3.
 //  Go to https://github.com/Audiveris/proxymusic/issues to report bugs or suggestions.
 //------------------------------------------------------------------------------------------------//
@@ -37,7 +37,7 @@ import java.io.OutputStream;
  * @author Hervé Bitteur
  */
 public class SourceTest
-    extends TestCase
+        extends TestCase
 {
     //~ Static fields/initializers -----------------------------------------------------------------
 
@@ -50,13 +50,12 @@ public class SourceTest
     private static final String FILE_NAME = "source-test.xml";
 
     //~ Methods ------------------------------------------------------------------------------------
-
     //-----------------//
     // testBothInOrder //
     //-----------------//
     @Test
     public void testBothInOrder ()
-        throws Exception
+            throws Exception
     {
         logger.info("Calling testBothInOrder...");
 
@@ -77,7 +76,7 @@ public class SourceTest
      * Test the marshalling of a ScorePartwise instance
      */
     public void tryMarshal ()
-        throws Exception
+            throws Exception
     {
         logger.info("Calling tryMarshal...");
 
@@ -88,9 +87,9 @@ public class SourceTest
         addSource(scorePartwise);
 
         //  Finally, marshal the proxy
-        File         xmlFile = new File(TEMP_DIR, FILE_NAME);
+        File xmlFile = new File(TEMP_DIR, FILE_NAME);
         OutputStream os = new FileOutputStream(xmlFile);
-        long         start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
 
         Marshalling.marshal(scorePartwise, os, true, 2);
 
@@ -107,14 +106,14 @@ public class SourceTest
      * written by the testmarshal() method.
      */
     public void tryUnmarshal ()
-        throws Exception
+            throws Exception
     {
         logger.info("Calling tryUnmarshal...");
 
         //  Unmarshal the proxy
-        File          xmlFile = new File(TEMP_DIR, FILE_NAME);
-        InputStream   is = new FileInputStream(xmlFile);
-        long          start = System.currentTimeMillis();
+        File xmlFile = new File(TEMP_DIR, FILE_NAME);
+        InputStream is = new FileInputStream(xmlFile);
+        long start = System.currentTimeMillis();
 
         ScorePartwise scorePartwise = (ScorePartwise) Marshalling.unmarshal(is);
 
@@ -135,13 +134,13 @@ public class SourceTest
     //-------//
     @Override
     protected void setUp ()
-        throws Exception
+            throws Exception
     {
         logger.info(
-            "SourceTest. name:{} version:{} revision:{}",
-            ProgramId.NAME,
-            ProgramId.VERSION,
-            ProgramId.REVISION);
+                "SourceTest. name:{} version:{} revision:{}",
+                ProgramId.NAME,
+                ProgramId.VERSION,
+                ProgramId.REVISION);
 
         // Make sure the temp directory exists
         TEMP_DIR.mkdirs();
@@ -184,7 +183,7 @@ public class SourceTest
     {
         // Inspect the miscellaneous stuff
         Identification identification = scorePartwise.getIdentification();
-        Miscellaneous  misc = identification.getMiscellaneous();
+        Miscellaneous misc = identification.getMiscellaneous();
 
         for (MiscellaneousField field : misc.getMiscellaneousField()) {
             String name = field.getName();
