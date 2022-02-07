@@ -6,7 +6,7 @@
 
     <groupId>org.audiveris</groupId>
     <artifactId>proxymusic</artifactId>
-    <version>3.0.2</version>
+    <version>4.0.1</version>
     <packaging>jar</packaging>
 
     <name>ProxyMusic</name>
@@ -132,7 +132,6 @@
     
     <build>
         <defaultGoal>install</defaultGoal>
-        <!--        <finalName>${project.name}-${project.version}-r${hg-revision}</finalName>-->
 
         <extensions>
             <!-- For deploying using webdav -->
@@ -217,6 +216,12 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxb2-maven-plugin</artifactId>
                 <version>2.4</version>
+                
+                <configuration>
+                    <!-- Copy source XSD files into resulting jar -->
+                    <xsdPathWithinArtifact>META-INF/jaxb/xsd</xsdPathWithinArtifact>
+                </configuration>   
+                             
                 <executions>
                     <!-- for Opus -->
                     <execution>
@@ -235,7 +240,7 @@
                             </xjbSources>
                         </configuration>
                     </execution>
-
+                    
                     <!-- for MusicXML -->
                     <execution>
                         <id>xjc-musicxml</id>
@@ -243,7 +248,6 @@
                             <goal>xjc</goal>
                         </goals>
                         <configuration>
-                            <clearOutputDir>false</clearOutputDir>
                             <sources>
                                 <source>src/main/xsd/musicxml.xsd</source>
                             </sources>
@@ -251,6 +255,7 @@
                             <xjbSources>
                                 <xjbSource>src/main/xjb/musicxml.xjb</xjbSource>
                             </xjbSources>
+                            <clearOutputDir>false</clearOutputDir>
                         </configuration>
                     </execution>
                 </executions> 
@@ -275,11 +280,17 @@
                     </dependency>
 
 <!-- CALL FOR HELP:
-    Even though the following dependency is already declared at project level,
+
+    1/ Even though the following dependency on jaxb-runtime is already declared at project level,
     it is included here at plugin level, otherwise the plugin execution fails with this message:
         Execution xjc-opus of goal org.codehaus.mojo:jaxb2-maven-plugin:2.4:xjc failed:
         A required class was missing while executing org.codehaus.mojo:jaxb2-maven-plugin:2.4:xjc:
         com/sun/xml/bind/Utils
+                            
+    2/ If it is included here only, then compiling the test programs fails with this message:
+        javax.xml.bind.JAXBException: Implementation of JAXB-API has not been found on module path or classpath.
+                            
+    Go figure!
 -->
                     <dependency>
                       <groupId>org.glassfish.jaxb</groupId>
@@ -288,13 +299,15 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
-            <!-- Ant tasks for Git info -->
+            
+            <!-- Ant tasks -->
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>3.0.0</version>
                 <executions>
                     <execution>
+                        <!-- Generate ProgramId.java based on Git info-->
+                        <id>generate-program-id</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>run</goal>
@@ -315,6 +328,25 @@
                             </target>
                         </configuration>
                     </execution>
+                    
+                    <execution>
+                        <!-- Fix javadoc tags in generated JAXB sources -->
+                        <id>fix-tags</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <exportAntProperties>true</exportAntProperties>
+                            <target>
+                                <ant antfile="ant-tasks.xml"
+                                     dir="${basedir}"
+                                     target="fix-tags"
+                                     inheritRefs="true" />
+                            </target>
+                        </configuration>
+                    </execution>
+                    
                 </executions>
             </plugin>
             
@@ -407,7 +439,7 @@
             </plugin>
             
             <!-- Signing artifacts -->            
-            <plugin>
+<!--            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>3.0.1</version>
@@ -420,7 +452,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
             <!-- Upload artifacts to Nexus staging repository to be synced into Maven Central Repository -->
             <plugin>

@@ -40,7 +40,7 @@ import javax.xml.bind.Marshaller;
  * from a proper XML file.
  * It does so by using the Marshalling utility class.
  * <p>
- * This class version is meant to test MusicXML 3.0
+ * This class version is meant to test MusicXML 4.0
  *
  * @author Hervé Bitteur
  */
@@ -471,6 +471,8 @@ public class HelloWorldTest
         type = factory.createNoteType();
         type.setValue("whole");
         note.setType(type);
+
+        logger.info(new Dumper.Column(scorePartwise).toString());
 
         return scorePartwise;
     }

@@ -69,6 +69,11 @@ Anyway, we are left with two kinds of problems to fix:
 
   * <<Attribute and Element with identical names:>>
 
+com.sun.istack.SAXParseException2: Property "Segno" is already defined. Use &lt;jaxb:property> to resolve this conflict.
+
+com.sun.istack.SAXParseException2: Property "Coda" is already defined. Use &lt;jaxb:property> to resolve this conflict.
+
+
    This kind occurs within the definition of the "barline" type which exhibits
 an element and an attribute, both named "segno".
 This applies also to element and attribute named "coda".
@@ -85,7 +90,7 @@ This is done via the external customization provided by file
 <!-- |                                                                     | -->
 <!-- |                     m u s i c x m l . x j b                         | -->
 <!-- |                                                                     | -->
-<!-- | abstract: Customization for xjc utility                             | -->
+<!-- | abstract: Customization of xjc utility for musicxml.xsd             | -->
 <!-- |                                                                     | -->
 <!-- +=====================================================================+ -->
 
@@ -95,14 +100,14 @@ This is done via the external customization provided by file
 
     <!-- In 'barline' element, bind the 'segno' attribute to Java 'segnoAttribute' -->
     <bindings schemaLocation="../xsd/musicxml.xsd"
-	      node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='segno']">
-	<property name="segnoAttribute" />
+              node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='segno']">
+        <property name="segnoAttribute" />
     </bindings>
     
     <!-- In 'barline' element, bind the 'coda' attribute to Java 'codaAttribute' -->
     <bindings schemaLocation="../xsd/musicxml.xsd"
-	      node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='coda']">
-	<property name="codaAttribute" />
+              node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='coda']">
+        <property name="codaAttribute" />
     </bindings>
 </bindings>
 -------------------------
@@ -119,9 +124,6 @@ seems able to fix them.
 
     The best solution for the time being is to <manually simplify> the schema 
 definition file.
-This is the reason why there are 2 files in <<<src/main/resources>>> folder,
-one is the original file (<<<musicxml.org.xsd>>>) and the other is the manually 
-fixed version (<<<musicxml.xsd>>>).
 
     The manual modifications can be easily found in the modified file, since 
 they are presented between <<<HB-old>>>, <<<HB-new>>> and <<<HB-end>>> marks.
@@ -137,36 +139,45 @@ definition, where the "link" and "bookmark" elements appeared twice:
             ...
         </xs:documentation>
     </xs:annotation>
-    <!-- HB-old	
-    <xs:sequence>
-        <xs:element name="credit-type" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:choice>
-            <xs:element name="credit-image" type="image"/>
-            <xs:sequence>
+        <!--HB-old	
+        <xs:sequence>
+			<xs:element name="credit-type" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:choice>
+				<xs:element name="credit-image" type="image"/>
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="credit-words" type="formatted-text-id"/>
+						<xs:element name="credit-symbol" type="formatted-symbol-id"/>
+					</xs:choice>
+					<xs:sequence minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:choice>
+							<xs:element name="credit-words" type="formatted-text-id"/>
+							<xs:element name="credit-symbol" type="formatted-symbol-id"/>
+						</xs:choice>
+					</xs:sequence>
+				</xs:sequence>
+			</xs:choice>
+		</xs:sequence>
+        -->
+		<!-- HB-new -->
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:choice>
+                <xs:element name="credit-type" type="xs:string"/>
+                <xs:element name="link" type="link"/>
+                <xs:element name="bookmark" type="bookmark"/>
+                <xs:element name="credit-image" type="image"/>
                 <xs:element name="credit-words" type="formatted-text"/>
-                <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                    <xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/>
-                    <xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/>
-                    <xs:element name="credit-words" type="formatted-text"/>
-                </xs:sequence>
-            </xs:sequence>
-        </xs:choice>
-    </xs:sequence>-->
-    <!-- HB-new -->
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-        <xs:choice>
-            <xs:element name="credit-type" type="xs:string"/>
-            <xs:element name="link" type="link"/>
-            <xs:element name="bookmark" type="bookmark"/>
-            <xs:element name="credit-image" type="image"/>
-            <xs:element name="credit-words" type="formatted-text"/>
-        </xs:choice>
-    </xs:sequence>
-    <!-- HB-end -->
-    <xs:attribute name="page" type="xs:positiveInteger"/>
-</xs:complexType>
+                <xs:element name="credit-symbol" type="formatted-text"/>
+            </xs:choice>
+        </xs:sequence>
+		<!-- HB-end -->
+		<xs:attribute name="page" type="xs:positiveInteger"/>
+		<xs:attributeGroup ref="optional-unique-id"/>
+	</xs:complexType>
 --------------------------------
 
   []

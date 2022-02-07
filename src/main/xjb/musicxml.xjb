@@ -13,12 +13,12 @@
     <!-- In 'barline' element, bind the 'segno' attribute to Java 'segnoAttribute' -->
     <bindings schemaLocation="../xsd/musicxml.xsd"
               node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='segno']">
-	<property name="segnoAttribute" />
+        <property name="segnoAttribute" />
     </bindings>
     
     <!-- In 'barline' element, bind the 'coda' attribute to Java 'codaAttribute' -->
     <bindings schemaLocation="../xsd/musicxml.xsd"
               node="/xs:schema/xs:complexType[@name='barline']/xs:attribute[@name='coda']">
-	<property name="codaAttribute" />
+        <property name="codaAttribute" />
     </bindings>
 </bindings>
