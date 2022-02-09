@@ -382,9 +382,7 @@ public abstract class Marshalling
                 }
             }
 
-            list.add(
-                    factory.createEncodingSoftware(
-                            ProgramId.NAME + " " + ProgramId.VERSION + "." + ProgramId.REVISION));
+            list.add(factory.createEncodingSoftware(ProgramId.NAME + " " + ProgramId.VERSION));
 
             // [Encoding]/EncodingDate (overwrite any existing date)
             for (Iterator<JAXBElement<?>> it = list.iterator(); it.hasNext();) {

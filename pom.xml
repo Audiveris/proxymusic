@@ -6,12 +6,12 @@
 
     <groupId>org.audiveris</groupId>
     <artifactId>proxymusic</artifactId>
-    <version>4.0.1</version>
     <packaging>jar</packaging>
+    <version>4.0.1</version>
 
     <name>ProxyMusic</name>
     <url>https://github.com/Audiveris/proxymusic</url>
-    <description>ProxyMusic provides a binding between Java objects in memory and data formatted according to MusicXML 3.0</description>
+    <description>ProxyMusic provides a binding between Java objects in memory and data formatted according to MusicXML 4.0</description>
 
     <licenses>
         <license>
@@ -55,12 +55,6 @@
         <system>GitHub Issues</system>
         <url>https://github.com/Audiveris/proxymusic/issues</url>
     </issueManagement>
-
-    <!-- Continuous integration -->
-    <!--    <ciManagement>
-        <system>hudson</system>
-        <url>http://PC-BUREAU:8080/job/ProxyMusic/</url>
-    </ciManagement>-->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -173,6 +167,7 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.9.0</version>
                     <configuration>
+                        <useIncrementalCompilation>false</useIncrementalCompilation>
                         <source>17</source>
                         <target>17</target>
                         <testSource>17</testSource>
@@ -189,7 +184,6 @@
         </pluginManagement>
 
         <plugins>
-            <!-- Set system property to allow JAXB access to external schema -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
@@ -201,9 +195,23 @@
                         </goals>
                         <configuration>
                             <properties>
+                                <!-- Allow JAXB access to external schema -->
                                 <property>
                                     <name>javax.xml.accessExternalSchema</name>
                                     <value>all</value>
+                                </property>
+                                
+                                <!-- 
+                                    Workaround for deploy phase.
+                                    Setting property is useless, but is kept here so that you can
+                                    by yourself issue the following command:
+                                    export MAVEN_OPTS="..."
+                                    Where ... is replaced verbatim by the property value
+                                    Including the double dashes that cannot be put in this comment!
+                                -->                                                              
+                                <property>
+                                    <name>MAVEN_OPTS</name>
+                                    <value>--add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/java.text=ALL-UNNAMED --add-opens java.desktop/java.awt.font=ALL-UNNAMED</value>
                                 </property>
                             </properties>
                         </configuration>
@@ -281,7 +289,7 @@
 
 <!-- CALL FOR HELP:
 
-    1/ Even though the following dependency on jaxb-runtime is already declared at project level,
+    1/ Even though the following dependency on 'jaxb-runtime' is already declared at project level,
     it is included here at plugin level, otherwise the plugin execution fails with this message:
         Execution xjc-opus of goal org.codehaus.mojo:jaxb2-maven-plugin:2.4:xjc failed:
         A required class was missing while executing org.codehaus.mojo:jaxb2-maven-plugin:2.4:xjc:
@@ -306,21 +314,17 @@
                 <version>3.0.0</version>
                 <executions>
                     <execution>
-                        <!-- Generate ProgramId.java based on Git info-->
+                        <!-- Generate class ProgramId.java -->
                         <id>generate-program-id</id>
-                        <phase>generate-sources</phase>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
                             <exportAntProperties>true</exportAntProperties>
                             <target>
-                                <property name="program.name"
-                                          value="${project.name}">
-                                </property>
-                                <property name="program.version"
-                                          value="${project.version}">
-                                </property>
+                                <property name="program.name" value="${project.name}" />
+                                <property name="program.version" value="${project.version}" />
                                 <ant antfile="ant-tasks.xml"
                                      dir="${basedir}"
                                      target="generate-program-id"
@@ -350,25 +354,7 @@
                 </executions>
             </plugin>
             
-            <!-- Add generated ProgramId to the sources to be compiled -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.3.0</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>${project.build.directory}/generated-sources/java</sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>                
-
-            <!-- Entries in Jar manifest -->
+            <!-- Building a Jar of class binaries -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -383,13 +369,13 @@
                         </manifestEntries>
                     </archive>
                     <excludes>
-                        <!-- Otherwise, we get both .java and .class files in jar -->
+                        <!-- Otherwise, we get both .java and .class files in jar ??? -->
                         <exclude>**/*.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
 
-            <!-- Building a Jar of sources -->
+            <!-- Building a Jar of class sources -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -423,7 +409,7 @@
                 </executions>
             </plugin>
 
-            <!-- Building web site -->
+            <!-- Building web site (?) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
@@ -438,8 +424,8 @@
                 </executions>
             </plugin>
             
-            <!-- Signing artifacts -->            
-<!--            <plugin>
+            <!-- Signing artifacts (mandatory for upload) -->            
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>3.0.1</version>
@@ -452,7 +438,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
 
             <!-- Upload artifacts to Nexus staging repository to be synced into Maven Central Repository -->
             <plugin>
@@ -462,6 +448,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
+<!--                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>-->
                     <nexusUrl>https://oss.sonatype.org</nexusUrl>
                     <!-- <stagingProfileId>???</stagingProfileId> -->
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
@@ -471,7 +458,8 @@
         </plugins>
     </build>
     
-    <reporting> <!-- Web site? -->
+     <!-- For a web site (not really used) -->
+    <reporting>
         <plugins>
             <!-- Standard maven reports -->
             <plugin>
@@ -506,11 +494,11 @@
             </plugin>
 
             <!-- Unitary tests coverage -->
-            <plugin>
+<!--            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.7</version>
-            </plugin>
+            </plugin>-->
         </plugins>
     </reporting>
 </project>

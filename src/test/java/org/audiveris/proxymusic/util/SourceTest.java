@@ -136,11 +136,7 @@ public class SourceTest
     protected void setUp ()
             throws Exception
     {
-        logger.info(
-                "SourceTest. name:{} version:{} revision:{}",
-                ProgramId.NAME,
-                ProgramId.VERSION,
-                ProgramId.REVISION);
+        logger.info("SourceTest. name:{} version:{}", ProgramId.NAME, ProgramId.VERSION);
 
         // Make sure the temp directory exists
         TEMP_DIR.mkdirs();

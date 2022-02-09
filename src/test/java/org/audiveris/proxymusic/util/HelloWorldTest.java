@@ -155,11 +155,7 @@ public class HelloWorldTest
     protected void setUp ()
             throws Exception
     {
-        logger.info(
-                "HelloWorldtest. name:{} version:{} revision:{}",
-                ProgramId.NAME,
-                ProgramId.VERSION,
-                ProgramId.REVISION);
+        logger.info("HelloWorldtest. name:{} version:{}", ProgramId.NAME, ProgramId.VERSION);
 
         // Make sure the temp directory exists
         TEMP_DIR.mkdirs();

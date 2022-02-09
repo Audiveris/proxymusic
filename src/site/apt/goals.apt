@@ -19,7 +19,7 @@ to read or write files in MusicXML.
 
 Implementation
 
- All MusicXML elements and attributes are implemented as 250+ Java classes that
+ All MusicXML elements and attributes are implemented as about 325 Java classes that
  are automatically generated from the MusicXML defining shema as found on
 {{http://www.makemusic.com/musicxml/specification}}
 

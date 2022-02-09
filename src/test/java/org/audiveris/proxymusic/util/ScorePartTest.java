@@ -181,8 +181,7 @@ public class ScorePartTest
     protected void setUp ()
             throws Exception
     {
-        logger.info("ScorePartTest. name:{} version:{} revision:{}",
-                    ProgramId.NAME, ProgramId.VERSION, ProgramId.REVISION);
+        logger.info("ScorePartTest. name:{} version:{}", ProgramId.NAME, ProgramId.VERSION);
 
         // Make sure the temp directory exists
         TEMP_DIR.mkdirs();
