@@ -12,6 +12,7 @@
 package org.audiveris.proxymusic.mxl;
 
 import java.io.BufferedOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -91,6 +92,7 @@ public abstract class Mxl
      * Class {@code Input} allows to read a .mxl file.
      */
     public static class Input
+            implements Closeable
     {
         //~ Instance fields ------------------------------------------------------------------------
 
@@ -99,6 +101,9 @@ public abstract class Mxl
 
         /** MXL container. */
         private final Container container;
+
+        /** Flag to indicate if the zip file has already been closed. */
+        private boolean closed;
 
         //~ Constructors ---------------------------------------------------------------------------
         /**
@@ -166,6 +171,23 @@ public abstract class Mxl
         {
             return Collections.unmodifiableList(container.rootFiles);
         }
+
+        /**
+         * Close the underlying zip file.
+         *
+         * @throws IOException propagated from {@link ZipFile#close()}
+         */
+        @Override
+        public void close ()
+                throws IOException
+        {
+            if (closed) {
+                return;
+            }
+            zipFile.close();
+            closed = true;
+        }
+
     }
 
     //--------------//

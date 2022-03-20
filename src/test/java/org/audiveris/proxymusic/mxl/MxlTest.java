@@ -82,21 +82,21 @@ public class MxlTest
 
         System.out.println("Unmarshalling ...");
 
-        Mxl.Input mif = new Mxl.Input(new File(fileName));
+        try (Mxl.Input mif = new Mxl.Input(new File(fileName))) {
+            for (RootFile rootFile : mif.getRootFiles()) {
+                System.out.println("   " + rootFile);
 
-        for (RootFile rootFile : mif.getRootFiles()) {
-            System.out.println("   " + rootFile);
+                ZipEntry zipEntry = mif.getEntry(rootFile.fullPath);
+                System.out.println("   entryTime: " + new Date(zipEntry.getTime()));
+            }
 
-            ZipEntry zipEntry = mif.getEntry(rootFile.fullPath);
-            System.out.println("   entryTime: " + new Date(zipEntry.getTime()));
+            RootFile first = mif.getRootFiles().get(0);
+            ZipEntry zipEntry = mif.getEntry(first.fullPath);
+            InputStream is = mif.getInputStream(zipEntry);
+            ScorePartwise newScorePartwise = (ScorePartwise) Marshalling.unmarshal(is);
+            System.out.println(new Dumper.Column(newScorePartwise).toString());
+            System.out.println(new Dumper.Column(newScorePartwise.getIdentification()).toString());
         }
-
-        RootFile first = mif.getRootFiles().get(0);
-        ZipEntry zipEntry = mif.getEntry(first.fullPath);
-        InputStream is = mif.getInputStream(zipEntry);
-        ScorePartwise newScorePartwise = (ScorePartwise) Marshalling.unmarshal(is);
-        System.out.println(new Dumper.Column(newScorePartwise).toString());
-        System.out.println(new Dumper.Column(newScorePartwise.getIdentification()).toString());
         System.out.println("Unmarshalled.");
     }
 
