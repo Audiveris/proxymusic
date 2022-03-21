@@ -7,7 +7,7 @@
     <groupId>org.audiveris</groupId>
     <artifactId>proxymusic</artifactId>
     <packaging>jar</packaging>
-    <version>4.0.1</version>
+    <version>4.0.2</version>
 
     <name>ProxyMusic</name>
     <url>https://github.com/Audiveris/proxymusic</url>
