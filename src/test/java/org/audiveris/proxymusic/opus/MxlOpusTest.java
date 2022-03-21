@@ -18,6 +18,7 @@ import org.audiveris.proxymusic.util.DummyGenerator;
 import org.audiveris.proxymusic.util.Dumper;
 import org.audiveris.proxymusic.util.Marshalling;
 
+import org.junit.After;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +28,7 @@ import junit.framework.TestCase;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.zip.ZipEntry;
@@ -76,6 +78,15 @@ public class MxlOpusTest
         // Test in that order
         storing();
         reloading();
+    }
+
+    @After
+    public void cleanup()
+            throws IOException
+    {
+        if (mi != null) {
+            mi.close();
+        }
     }
 
     //-------------//
