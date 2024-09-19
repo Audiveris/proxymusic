@@ -11,6 +11,16 @@
 // </editor-fold>
 package org.audiveris.proxymusic.mxl;
 
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.File;
@@ -26,16 +36,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Class {@code Mxl} handles the compressed MXL format, through its provided
@@ -72,7 +72,7 @@ public abstract class Mxl
      * @exception JAXBException if anything goes wrong
      */
     private static JAXBContext getContext ()
-            throws JAXBException
+        throws JAXBException
     {
         // Lazy creation
         if (containerContext == null) {
@@ -116,10 +116,7 @@ public abstract class Mxl
          * @throws JAXBException
          */
         public Input (File file)
-                throws FileNotFoundException,
-                       IOException,
-                       MxlException,
-                       JAXBException
+                throws FileNotFoundException, IOException, MxlException, JAXBException
         {
             zipFile = new ZipFile(file);
 
@@ -144,7 +141,7 @@ public abstract class Mxl
          * @throws IOException
          */
         public ZipEntry getEntry (String entryName)
-                throws IOException
+            throws IOException
         {
             return zipFile.getEntry(entryName);
         }
@@ -157,7 +154,7 @@ public abstract class Mxl
          * @throws IOException
          */
         public InputStream getInputStream (ZipEntry zipEntry)
-                throws IOException
+            throws IOException
         {
             return zipFile.getInputStream(zipEntry);
         }
@@ -179,7 +176,7 @@ public abstract class Mxl
          */
         @Override
         public void close ()
-                throws IOException
+            throws IOException
         {
             if (closed) {
                 return;
@@ -262,7 +259,7 @@ public abstract class Mxl
          * @throws org.audiveris.proxymusic.mxl.Mxl.MxlException
          */
         public ZipEntry addEntry (RootFile rootFile)
-                throws MxlException
+            throws MxlException
         {
             try {
                 ZipEntry entry = new ZipEntry(rootFile.fullPath);
@@ -285,7 +282,7 @@ public abstract class Mxl
          * @throws org.audiveris.proxymusic.mxl.Mxl.MxlException
          */
         public ZipEntry addFirstEntry (RootFile rootFile)
-                throws MxlException
+            throws MxlException
         {
             try {
                 ZipEntry entry = new ZipEntry(rootFile.fullPath);
@@ -304,7 +301,7 @@ public abstract class Mxl
          * @throws IOException
          */
         public void close ()
-                throws IOException
+            throws IOException
         {
             if (closed) {
                 return;
@@ -352,7 +349,7 @@ public abstract class Mxl
             //~ Methods ----------------------------------------------------------------------------
             @Override
             public void close ()
-                    throws IOException
+                throws IOException
             {
                 // Write the container data
                 Output.this.close();

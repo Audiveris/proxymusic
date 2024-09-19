@@ -22,6 +22,12 @@ import org.slf4j.LoggerFactory;
 
 import org.w3c.dom.Node;
 
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
+
 import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -34,11 +40,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
@@ -89,25 +90,18 @@ public abstract class Marshalling
     private static final String XLINK_NAMESPACE_URI = "http://www.w3.org/1999/xlink";
 
     /** The collection of all supported attributes with xlink: prefix. */
-    private static final List<String> XLINK_ATTRIBUTES = Arrays.asList(
-            "href",
-            "type",
-            "role",
-            "title",
-            "show",
-            "actuate");
+    private static final List<String> XLINK_ATTRIBUTES =
+            Arrays.asList("href", "type", "role", "title", "show", "actuate");
 
     /** The DOCTYPE statement for PARTWISE. */
-    private static final String PARTWISE_DOCTYPE_LINE
-            = "<!DOCTYPE score-partwise PUBLIC \"-//Recordare//DTD MusicXML "
-                      + ProgramId.VERSION
-                      + " Partwise//EN\" \"http://www.musicxml.org/dtds/partwise.dtd\">";
+    private static final String PARTWISE_DOCTYPE_LINE =
+            "<!DOCTYPE score-partwise PUBLIC \"-//Recordare//DTD MusicXML " + ProgramId.VERSION
+                    + " Partwise//EN\" \"http://www.musicxml.org/dtds/partwise.dtd\">";
 
     /** The DOCTYPE statement for OPUS. */
-    private static final String OPUS_DOCTYPE_LINE
-            = "<!DOCTYPE opus PUBLIC \"-//Recordare//DTD MusicXML "
-                      + ProgramId.VERSION
-                      + " Opus//EN\" \"http://www.musicxml.org/dtds/opus.dtd\">";
+    private static final String OPUS_DOCTYPE_LINE =
+            "<!DOCTYPE opus PUBLIC \"-//Recordare//DTD MusicXML " + ProgramId.VERSION
+                    + " Opus//EN\" \"http://www.musicxml.org/dtds/opus.dtd\">";
 
     //~ Constructors -------------------------------------------------------------------------------
     /**
@@ -130,7 +124,7 @@ public abstract class Marshalling
      * @exception JAXBException if anything goes wrong
      */
     public static JAXBContext getContext (Class classe)
-            throws JAXBException
+        throws JAXBException
     {
         // Lazy creation
         JAXBContext context = jaxbContextMap.get(classe);
@@ -166,7 +160,7 @@ public abstract class Marshalling
                                 final OutputStream os,
                                 final boolean injectSignature,
                                 final Integer indentation)
-            throws MarshallingException
+        throws MarshallingException
     {
         try {
             // Inject version & signature
@@ -206,7 +200,7 @@ public abstract class Marshalling
      */
     public static void marshal (final Opus opus,
                                 final OutputStream os)
-            throws MarshallingException
+        throws MarshallingException
     {
         try {
             Marshaller marshaller = getContext(Opus.class).createMarshaller();
@@ -226,8 +220,8 @@ public abstract class Marshalling
             writer = new MyStreamWriter(writer, 2);
 
             // Marshalling
-            org.audiveris.proxymusic.opus.ObjectFactory opusFactory
-                    = new org.audiveris.proxymusic.opus.ObjectFactory();
+            org.audiveris.proxymusic.opus.ObjectFactory opusFactory =
+                    new org.audiveris.proxymusic.opus.ObjectFactory();
             JAXBElement<Opus> elem = opusFactory.createOpus(opus);
             marshaller.marshal(elem, writer);
             writer.flush();
@@ -250,7 +244,7 @@ public abstract class Marshalling
     public static void marshal (final ScorePartwise scorePartwise,
                                 final Node node,
                                 final boolean injectSignature)
-            throws MarshallingException
+        throws MarshallingException
     {
         try {
             annotate(scorePartwise, injectSignature);
@@ -276,7 +270,7 @@ public abstract class Marshalling
      * @throws UnmarshallingException global exception (use getCause() for original exception)
      */
     public static Object unmarshal (final InputStream is)
-            throws UnmarshallingException
+        throws UnmarshallingException
     {
         try {
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -337,7 +331,7 @@ public abstract class Marshalling
      */
     private static void annotate (final ScorePartwise scorePartwise,
                                   final boolean injectSignature)
-            throws DatatypeConfigurationException
+        throws DatatypeConfigurationException
     {
         // Predefined factory for all proxymusic elements
         ObjectFactory factory = new ObjectFactory();
@@ -396,9 +390,8 @@ public abstract class Marshalling
             // Use date without time information (patch by lasconic)
             // Output:     2012-05-03
             // instead of: 2012-05-03T16:17:51.250+02:00
-            XMLGregorianCalendar gc = DatatypeFactory.newInstance()
-                    .newXMLGregorianCalendar(
-                            new GregorianCalendar());
+            XMLGregorianCalendar gc =
+                    DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar());
             gc.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
             gc.setTime(
                     DatatypeConstants.FIELD_UNDEFINED,
@@ -574,7 +567,6 @@ public abstract class Marshalling
          *
          * @param writer      the real XML stream writer
          * @param indentValue desired indentation value, if any (null, 0 or n)
-         *
          * @throws XMLStreamException for any processing error
          */
         public MyStreamWriter (XMLStreamWriter writer,
@@ -590,7 +582,7 @@ public abstract class Marshalling
         //~ Methods --------------------------------------------------------------------------------
         @Override
         public void setNamespaceContext (NamespaceContext context)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             // void (we keep using our own NamespaceContext)
         }
@@ -598,7 +590,7 @@ public abstract class Marshalling
         @Override
         public void writeAttribute (String localName,
                                     String value)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeAttribute(localName, value);
@@ -608,7 +600,7 @@ public abstract class Marshalling
         public void writeAttribute (String namespaceURI,
                                     String localName,
                                     String value)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeAttribute(namespaceURI, localName, value);
@@ -619,7 +611,7 @@ public abstract class Marshalling
                                     String namespaceURI,
                                     String localName,
                                     String value)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeAttribute(prefix, namespaceURI, localName, value);
@@ -627,7 +619,7 @@ public abstract class Marshalling
 
         @Override
         public void writeCData (String data)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeCData(data);
@@ -635,7 +627,7 @@ public abstract class Marshalling
 
         @Override
         public void writeCharacters (String text)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeCharacters(text);
@@ -645,7 +637,7 @@ public abstract class Marshalling
         public void writeCharacters (char[] text,
                                      int start,
                                      int len)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeCharacters(text, start, len);
@@ -653,7 +645,7 @@ public abstract class Marshalling
 
         @Override
         public void writeComment (String data)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             indentComment();
@@ -663,7 +655,7 @@ public abstract class Marshalling
 
         @Override
         public void writeDTD (String dtd)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeDTD(dtd);
@@ -671,7 +663,7 @@ public abstract class Marshalling
 
         @Override
         public void writeDefaultNamespace (String namespaceURI)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeDefaultNamespace(namespaceURI);
@@ -679,7 +671,7 @@ public abstract class Marshalling
 
         @Override
         public void writeEmptyElement (String localName)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeEmptyElement(localName);
@@ -688,7 +680,7 @@ public abstract class Marshalling
         @Override
         public void writeEmptyElement (String namespaceURI,
                                        String localName)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeEmptyElement(namespaceURI, localName);
@@ -698,7 +690,7 @@ public abstract class Marshalling
         public void writeEmptyElement (String prefix,
                                        String localName,
                                        String namespaceURI)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeEmptyElement(prefix, localName, namespaceURI);
@@ -706,7 +698,7 @@ public abstract class Marshalling
 
         @Override
         public void writeEndElement ()
-                throws XMLStreamException
+            throws XMLStreamException
         {
             if (pending != null) {
                 // The end is immediately following the start, with nothing in between:
@@ -722,7 +714,7 @@ public abstract class Marshalling
 
         @Override
         public void writeEntityRef (String name)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeEntityRef(name);
@@ -731,14 +723,14 @@ public abstract class Marshalling
         @Override
         public void writeNamespace (String prefix,
                                     String namespaceURI)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             // void (we don't output this information)
         }
 
         @Override
         public void writeProcessingInstruction (String target)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeProcessingInstruction(target);
@@ -747,7 +739,7 @@ public abstract class Marshalling
         @Override
         public void writeProcessingInstruction (String target,
                                                 String data)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             super.writeProcessingInstruction(target, data);
@@ -755,7 +747,7 @@ public abstract class Marshalling
 
         @Override
         public void writeStartElement (String localName)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             indentStart(localName);
@@ -767,7 +759,7 @@ public abstract class Marshalling
         @Override
         public void writeStartElement (String namespaceURI,
                                        String localName)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             indentStart(localName);
@@ -780,7 +772,7 @@ public abstract class Marshalling
         public void writeStartElement (String prefix,
                                        String localName,
                                        String namespaceURI)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             checkPending();
             indentStart(localName);
@@ -793,7 +785,7 @@ public abstract class Marshalling
         // checkPending //
         //--------------//
         private void checkPending ()
-                throws XMLStreamException
+            throws XMLStreamException
         {
             if (pending != null) {
                 pending.writeStart();
@@ -810,7 +802,7 @@ public abstract class Marshalling
          * @throws XMLStreamException
          */
         private void doIndent ()
-                throws XMLStreamException
+            throws XMLStreamException
         {
             super.writeCharacters("\n");
 
@@ -853,7 +845,7 @@ public abstract class Marshalling
          * @throws XMLStreamException
          */
         private void indentComment ()
-                throws XMLStreamException
+            throws XMLStreamException
         {
             if (INDENT != null) {
                 doIndent();
@@ -869,7 +861,7 @@ public abstract class Marshalling
          * @throws XMLStreamException
          */
         private void indentEnd ()
-                throws XMLStreamException
+            throws XMLStreamException
         {
             if (INDENT != null) {
                 level--;
@@ -892,7 +884,7 @@ public abstract class Marshalling
          * @throws XMLStreamException
          */
         private void indentStart (String localName)
-                throws XMLStreamException
+            throws XMLStreamException
         {
             if (INDENT != null) {
                 // Insert visible comment lines only for measures and parts
@@ -929,14 +921,14 @@ public abstract class Marshalling
             //~ Methods ----------------------------------------------------------------------------
             /** Write an empty element. */
             public void writeEmpty ()
-                    throws XMLStreamException
+                throws XMLStreamException
             {
                 getParent().writeEmptyElement(localName);
             }
 
             /** Write just the element start. */
             public void writeStart ()
-                    throws XMLStreamException
+                throws XMLStreamException
             {
                 getParent().writeStartElement(localName);
             }
@@ -960,14 +952,14 @@ public abstract class Marshalling
             //~ Methods ----------------------------------------------------------------------------
             @Override
             public void writeEmpty ()
-                    throws XMLStreamException
+                throws XMLStreamException
             {
                 getParent().writeEmptyElement(namespaceURI, localName);
             }
 
             @Override
             public void writeStart ()
-                    throws XMLStreamException
+                throws XMLStreamException
             {
                 getParent().writeStartElement(namespaceURI, localName);
             }
@@ -992,14 +984,14 @@ public abstract class Marshalling
             //~ Methods ----------------------------------------------------------------------------
             @Override
             public void writeEmpty ()
-                    throws XMLStreamException
+                throws XMLStreamException
             {
                 getParent().writeEmptyElement(prefix, localName, namespaceURI);
             }
 
             @Override
             public void writeStart ()
-                    throws XMLStreamException
+                throws XMLStreamException
             {
                 getParent().writeStartElement(prefix, localName, namespaceURI);
             }

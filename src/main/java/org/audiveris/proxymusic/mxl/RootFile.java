@@ -11,10 +11,10 @@
 // </editor-fold>
 package org.audiveris.proxymusic.mxl;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * Class {@code RootFile} represents a file entry in MXL Container.
@@ -31,7 +31,8 @@ public class RootFile
     public static final String MUSICXML_MEDIA_TYPE = "application/vnd.recordare.musicxml+xml";
 
     /** Media type for a compressed MusicXML file. */
-    public static final String COMPRESSED_MUSICXML_MEDIA_TYPE = "application/vnd.recordare.musicxml";
+    public static final String COMPRESSED_MUSICXML_MEDIA_TYPE =
+            "application/vnd.recordare.musicxml";
 
     //~ Instance fields ----------------------------------------------------------------------------
     /** Full path. Path relative to the root folder of the zip file */

@@ -13,7 +13,8 @@ package org.audiveris.proxymusic.util;
 
 import org.audiveris.proxymusic.ScorePartwise.Part.Measure;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+
 import javax.xml.stream.XMLStreamWriter;
 
 /**
@@ -50,7 +51,7 @@ public class MeasureAdapter
     //~ Methods ------------------------------------------------------------------------------------
     @Override
     public Measure marshal (Measure measure)
-            throws Exception
+        throws Exception
     {
         xmlStreamWriter.writeComment("=======================================================");
 
@@ -59,7 +60,7 @@ public class MeasureAdapter
 
     @Override
     public Measure unmarshal (Measure measure)
-            throws Exception
+        throws Exception
     {
         return measure;
     }

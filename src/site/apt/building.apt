@@ -186,3 +186,12 @@ definition, where the "link" and "bookmark" elements appeared twice:
 file.
 They are just simplifications which relax some of the restrictions imposed by 
 the original schema.>
+
+  []
+
+  * <<Same name for group and included element:>>
+
+  There is a group named "beat-unit" which contains an element also named "beat-unit",
+and this confuses <<xjc>>.
+
+   We have renamed the group as "beat-unit-group" and the problem is now fixed.

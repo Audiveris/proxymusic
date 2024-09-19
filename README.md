@@ -1,3 +1,5 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.audiveris/proxymusic/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.audiveris/proxymusic)
+
 # ProxyMusic
 
 ProxyMusic allows to marshal/unmarshal Java objects in memory to/from MusicXML 4.0

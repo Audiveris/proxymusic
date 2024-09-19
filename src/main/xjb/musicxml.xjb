@@ -6,9 +6,9 @@
 <!-- |                                                                     | -->
 <!-- +=====================================================================+ -->
 
-<bindings xmlns="http://java.sun.com/xml/ns/jaxb"
+<bindings xmlns="https://jakarta.ee/xml/ns/jaxb"
 	  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	  version="2.0">
+	  version="3.0">
 
     <!-- In 'barline' element, bind the 'segno' attribute to Java 'segnoAttribute' -->
     <bindings schemaLocation="../xsd/musicxml.xsd"

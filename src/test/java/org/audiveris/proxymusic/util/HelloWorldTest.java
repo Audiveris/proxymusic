@@ -16,22 +16,21 @@ import org.audiveris.proxymusic.ScorePartwise.Part;
 import org.audiveris.proxymusic.ScorePartwise.Part.Measure;
 import static org.audiveris.proxymusic.util.Marshalling.getContext;
 
-import junit.framework.TestCase;
-
-import org.junit.Test;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.junit.Test;
+
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.Marshaller;
+import junit.framework.TestCase;
+
 import java.io.*;
-import java.lang.String; // Do not remove this line
+import java.lang.String;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Marshaller;
 
 /**
  * Class {@code HelloWorldTest} mimics the usual "HelloWorld" as
@@ -61,27 +60,31 @@ public class HelloWorldTest
             ClefSign.G,
             new BigInteger("2"));
 
-    private static final NoteData[] noteData = new NoteData[]{
-        // 0
-        new NoteData(Step.C, 4, new BigDecimal(4), "whole"),
-        // 1
-        new NoteData(Step.E, 4, new BigDecimal(4), "whole"),
-        // 2
-        new NoteData(Step.G, 4, new BigDecimal(4), "whole")
-    };
+    private static final NoteData[] noteData = new NoteData[]
+    {
+            // 0
+            new NoteData(Step.C, 4, new BigDecimal(4), "whole"),
+            // 1
+            new NoteData(Step.E, 4, new BigDecimal(4), "whole"),
+            // 2
+            new NoteData(Step.G, 4, new BigDecimal(4), "whole") };
 
-    private static final MeasData[] measData = new MeasData[]{
-        new MeasData(
-        "1",
-        Arrays.asList(attrData, noteData[0], noteData[1], noteData[2]))
-    };
+    private static final DirectionData directionData =
+            new DirectionData("quarter", 1, "c. 100-120", YesNo.YES, new BigDecimal(110));
 
-    private static final PartData[] partData = new PartData[]{
-        new PartData(
-        "P1",
-        "Music",
-        Arrays.asList(measData))
-    };
+    private static final MeasData[] measData = new MeasData[]
+    {
+            new MeasData(
+                    "1",
+                    Arrays.asList(
+                            attrData,
+                            directionData,
+                            noteData[0],
+                            noteData[1],
+                            noteData[2])) };
+
+    private static final PartData[] partData = new PartData[]
+    { new PartData("P1", "Music", Arrays.asList(measData)) };
 
     private static final int partNb = partData.length;
 
@@ -101,7 +104,7 @@ public class HelloWorldTest
      * @param notUsed
      */
     public static void main (String... notUsed)
-            throws Exception
+        throws Exception
     {
         HelloWorldTest instance = new HelloWorldTest();
         instance.setUp();
@@ -133,7 +136,7 @@ public class HelloWorldTest
     //-----------------//
     @Test
     public void testBothInOrder ()
-            throws Exception
+        throws Exception
     {
         logger.info("Calling testBothInOrder...");
 
@@ -153,7 +156,7 @@ public class HelloWorldTest
     //-------//
     @Override
     protected void setUp ()
-            throws Exception
+        throws Exception
     {
         logger.info("HelloWorldtest. name:{} version:{}", ProgramId.NAME, ProgramId.VERSION);
 
@@ -217,14 +220,51 @@ public class HelloWorldTest
 
         assertTrue(measData.objects.size() == measure.getNoteOrBackupOrForward().size());
 
-        Object obj = measure.getNoteOrBackupOrForward().get(0);
-        checkAttributes((Attributes) obj, (AttrData) measData.objects.get(0));
-        obj = measure.getNoteOrBackupOrForward().get(1);
-        checkNote((Note) obj, (NoteData) measData.objects.get(1));
-        obj = measure.getNoteOrBackupOrForward().get(2);
-        checkNote((Note) obj, (NoteData) measData.objects.get(2));
-        obj = measure.getNoteOrBackupOrForward().get(3);
-        checkNote((Note) obj, (NoteData) measData.objects.get(3));
+        int i = -1;
+        Object obj = measure.getNoteOrBackupOrForward().get(++i);
+        checkAttributes((Attributes) obj, (AttrData) measData.objects.get(i));
+
+        // Direction / Metronome / Tempo
+        obj = measure.getNoteOrBackupOrForward().get(++i);
+        checkDirection((Direction) obj, (DirectionData) measData.objects.get(i));
+
+        obj = measure.getNoteOrBackupOrForward().get(++i);
+        checkNote((Note) obj, (NoteData) measData.objects.get(i));
+        obj = measure.getNoteOrBackupOrForward().get(++i);
+        checkNote((Note) obj, (NoteData) measData.objects.get(i));
+        obj = measure.getNoteOrBackupOrForward().get(++i);
+        checkNote((Note) obj, (NoteData) measData.objects.get(i));
+    }
+
+    //----------------//
+    // checkDirection //
+    //----------------//
+    private void checkDirection (Direction direction,
+                                 DirectionData directionData)
+    {
+        assertNotNull(direction);
+        logger.info(new Dumper.Column(direction).toString());
+
+        DirectionType type = direction.getDirectionType().get(0);
+        Metronome metronome = type.getMetronome();
+        logger.info(new Dumper.Column(metronome).toString());
+
+        String beatUnit = metronome.getBeatUnit();
+        assertEquals(directionData.beatUnit, beatUnit);
+
+        int dots = metronome.getBeatUnitDot().size();
+        assertEquals(directionData.dots, dots);
+
+        PerMinute pm = metronome.getPerMinute();
+        logger.info(new Dumper.Column(pm).toString());
+        assertEquals(directionData.perMinute, pm.getValue());
+
+        YesNo yn = metronome.getParentheses();
+        assertEquals(directionData.parentheses, yn);
+
+        Sound sound = direction.getSound();
+        logger.info(new Dumper.Column(sound).toString());
+        assertEquals(directionData.tempo, sound.getTempo());
     }
 
     //-----------//
@@ -412,6 +452,33 @@ public class HelloWorldTest
         clef.setSign(ClefSign.G);
         clef.setLine(new BigInteger("2"));
 
+        // Direction / Metronome / Sound
+        Direction direction = factory.createDirection();
+        DirectionType directionType = factory.createDirectionType();
+        direction.getDirectionType().add(directionType);
+
+        Metronome metronome = factory.createMetronome();
+        metronome.setBeatUnit(directionData.beatUnit);
+        for (int i = 0; i < directionData.dots; i++) {
+            metronome.getBeatUnitDot().add(factory.createEmpty());
+        }
+
+        // Doesn't seem to be recognized by Finale or MuseScore
+        //        BeatUnitTied but = factory.createBeatUnitTied();
+        //        but.setBeatUnit("eighth");
+        //        metronome.getBeatUnitTied().add(but);
+
+        PerMinute perMinute = factory.createPerMinute();
+        perMinute.setValue(directionData.perMinute);
+        metronome.setPerMinute(perMinute);
+        metronome.setParentheses(directionData.parentheses);
+        directionType.setMetronome(metronome);
+
+        Sound sound = factory.createSound();
+        sound.setTempo(directionData.tempo);
+        direction.setSound(sound);
+        measure.getNoteOrBackupOrForward().add(direction);
+
         // Note 0 ---
         Note note = factory.createNote();
         measure.getNoteOrBackupOrForward().add(note);
@@ -480,7 +547,7 @@ public class HelloWorldTest
      * Test the marshaling of a ScorePartwise instance
      */
     private void tryMarshal ()
-            throws Exception
+        throws Exception
     {
         logger.info("Calling tryMarshal...");
 
@@ -507,7 +574,7 @@ public class HelloWorldTest
      * written by the tryMarshal() method.
      */
     private void tryUnmarshal ()
-            throws Exception
+        throws Exception
     {
         logger.info("Calling tryUnmarshal...");
 
@@ -573,6 +640,32 @@ public class HelloWorldTest
             this.beatType = beatType;
             this.clefSign = clefSign;
             this.clefLine = clefLine;
+        }
+    }
+
+    private static class DirectionData
+    {
+        final String beatUnit;
+
+        final int dots;
+
+        final String perMinute;
+
+        final YesNo parentheses;
+
+        final BigDecimal tempo;
+
+        public DirectionData (String beatUnit,
+                              int dots,
+                              String perMinute,
+                              YesNo parentheses,
+                              BigDecimal tempo)
+        {
+            this.beatUnit = beatUnit;
+            this.dots = dots;
+            this.perMinute = perMinute;
+            this.parentheses = parentheses;
+            this.tempo = tempo;
         }
     }
 
